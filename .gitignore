@@ -10,6 +10,8 @@ kubeconfig
 # terraform
 .terraform
 terraform/k3s-cluster/.terraform.lock.hcl
+terraform/k3s-cluster/terraform.tfstate.backup
+terraform/k3s-cluster/.terraform.tfstate.lock.info
 *_ssh_private_key
 *.tfstate
 *.auto.tfvars
