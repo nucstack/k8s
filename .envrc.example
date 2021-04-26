@@ -1,0 +1,25 @@
+#shellcheck disable=SC2148,SC2155
+export KUBECONFIG=$(expand_path ./kubeconfig)
+
+# bootstrap
+export PERSONAL_KEY_NAME="FirstName LastName (US) <email>"
+export PERSONAL_KEY_FP="xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export FLUX_KEY_NAME="ClusterName (Flux) <email>"
+export FLUX_KEY_FP="xxxxxxxxxxxxxxxxxxxxxxxxx"
+export BOOTSTRAP_CLOUDFLARE_EMAIL="email"
+export BOOTSTRAP_CLOUDFLARE_TOKEN="xxxxxxxxxxxxxxxxxxxxxxx"
+export BOOTSTRAP_GITHUB_REPOSITORY="https://github.com/<RepoName>"
+export BOOTSTRAP_GITHUB_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export BOOTSTRAP_GITHUB_USER=user
+export BOOTSTRAP_DOMAIN="example.com"
+export BOOTSTRAP_METALLB_LB_RANGE="192.168.0.100-192.168.0.120"
+export BOOTSTRAP_INGRESS_NGINX_LB="192.168.0.101"
+
+# CoreDNS DNS resolver
+export K3S_RESOLV_CONF="192.168.0.1"
+
+# proxmox
+export PM_TLS_INSECURE=false
+export PM_API_URL="https://proxmox.example.com/api2/json"
+export PM_PASS="xxxxxxxxxxxxx"
+export PM_USER="user@pve"

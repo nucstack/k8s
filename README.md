@@ -160,8 +160,9 @@ export FLUX_KEY_FP=AB675CE4CC64251G3S9AE1DAA88ARRTY2C009E2D
 ```sh
 k3sup install \
     --host=169.254.1.1 \
-    --user=k8s-at-home \
+    --user=k3s \
     --k3s-version=v1.20.5+k3s1 \
+    --ssh-key terraform/k3s-cluster/staging_ssh_private_key \
     --k3s-extra-args="--disable servicelb --disable traefik"
 ```
 
@@ -172,7 +173,8 @@ k3sup join \
     --host=169.254.1.2 \
     --server-host=169.254.1.1 \
     --k3s-version=v1.20.5+k3s1 \
-    --user=k8s-at-home
+    --user=k3s \
+    --ssh-key terraform/k3s-cluster/staging_ssh_private_key
 ```
 
 4. Verify the nodes are online
