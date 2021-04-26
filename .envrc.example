@@ -1,0 +1,8 @@
+#shellcheck disable=SC2148,SC2155
+export KUBECONFIG=$(expand_path ./kubeconfig)
+
+# proxmox
+PM_TLS_INSECURE=false
+PM_API_URL="https://proxmox.example.com/api2/json"
+PM_PASS="xxxxxxxxxxxxx"
+PM_USER="user@pve"

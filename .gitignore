@@ -10,7 +10,8 @@ kubeconfig
 # terraform
 .terraform
 terraform/k3s-cluster/.terraform.lock.hcl
-.envrc
 *_ssh_private_key
 *.tfstate
 *.auto.tfvars
+
+.envrc
