@@ -2,7 +2,7 @@
 export KUBECONFIG=$(expand_path ./kubeconfig)
 
 # proxmox
-PM_TLS_INSECURE=false
-PM_API_URL="https://proxmox.example.com/api2/json"
-PM_PASS="xxxxxxxxxxxxx"
-PM_USER="user@pve"
+export PM_TLS_INSECURE=false
+export PM_API_URL="https://proxmox.example.com/api2/json"
+export PM_PASS="xxxxxxxxxxxxx"
+export PM_USER="user@pve"
