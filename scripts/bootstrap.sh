@@ -28,7 +28,7 @@ fi
 
 # setup k3s nodes
 if [[ ! -z ${nodes} ]]; then
-  for node in ${nodes//,/ } ; do 
+  for node in ${nodes//,/ } ; do
     k3sup join \
       --host="${node}" \
       --server-host="${master}" \
