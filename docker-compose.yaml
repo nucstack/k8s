@@ -1,0 +1,30 @@
+version: "3.4"
+services:
+  builder:
+    environment:
+      HISTFILE: /bash_history/.bash_history      
+    image: registry.feelingsmachine.com/builder:latest
+    network_mode: host
+    build:
+      context: ./docker/builder
+    working_dir: /app
+    volumes:
+      - .:/app:rw
+      - bashhistory:/bash_history
+      - ~/.gnupg:/root/.gnupg
+
+  # custom image for rtlamr-collect
+  rtlamr-collect:
+    image: registry.feelingsmachine.com/rtlamr-collect:0.0.5
+    build:
+      context: ./docker/rtlamr-collect
+
+  # custom image for rsyslog
+  rsyslog:
+    image: registry.feelingsmachine.com/rsyslog:0.0.1
+    build:
+      context: ./docker/rsyslog
+
+volumes:
+  # useful to maintain history
+  bashhistory:      
