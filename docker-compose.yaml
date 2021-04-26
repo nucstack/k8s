@@ -1,0 +1,18 @@
+version: "3.4"
+services:
+  builder:
+    environment:
+      HISTFILE: /bash_history/.bash_history      
+    image: registry.feelingsmachine.com/builder:latest
+    network_mode: host
+    build:
+      context: ./docker/builder
+    working_dir: /app
+    volumes:
+      - .:/app:rw
+      - bashhistory:/bash_history
+      - ~/.gnupg:/root/.gnupg
+
+volumes:
+  # useful to maintain history
+  bashhistory:      
