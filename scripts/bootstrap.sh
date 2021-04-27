@@ -26,6 +26,8 @@ if [[ ! -z ${master} ]]; then
     --k3s-extra-args="--disable servicelb --disable traefik"
 fi
 
+sleep 30
+
 # setup k3s nodes
 if [[ ! -z ${nodes} ]]; then
   for node in ${nodes//,/ } ; do
