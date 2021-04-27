@@ -1,0 +1,158 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: openldap-data
+  namespace: security
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: openldap-config
+  namespace: security
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openldap
+  namespace: security
+  labels:
+    app.kubernetes.io/name: openldap
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openldap
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openldap
+    spec:
+      containers:
+        - name: openldap
+          image: osixia/openldap:1.5.0
+          volumeMounts:
+            - name: config
+              mountPath: /etc/ldap/slapd.d
+            - name: data
+              mountPath: /var/lib/ldap
+          imagePullPolicy: "Always"
+          env:
+            - name: LDAP_LOG_LEVEL
+              value: "256"
+            - name: LDAP_ORGANISATION
+              value: "${SECRET_DOMAIN}"
+            - name: LDAP_DOMAIN
+              value: "${SECRET_DOMAIN}"
+            - name: LDAP_READONLY_USER
+              value: "false"
+            - name: LDAP_RFC2307BIS_SCHEMA
+              value: "false"
+            - name: LDAP_BACKEND
+              value: "mdb"
+            - name: LDAP_TLS
+              value: "false"
+            - name: LDAP_TLS_ENFORCE
+              value: "false"
+            # - name: LDAP_TLS_CIPHER_SUITE
+            #   value: "SECURE256:+SECURE128:-VERS-TLS-ALL:+VERS-TLS1.2:-RSA:-DHE-DSS:-CAMELLIA-128-CBC:-CAMELLIA-256-CBC"
+            - name: LDAP_REPLICATION
+              value: "false"
+            - name: KEEP_EXISTING_CONFIG
+              value: "true"
+            - name: LDAP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: adminpassword
+                  name: openldap
+            - name: LDAP_CONFIG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: adminpassword
+                  name: openldap
+          ports:
+            - name: tcp-ldap
+              containerPort: 389
+        - name: phpldapadmin
+          image: osixia/phpldapadmin:0.9.0
+          imagePullPolicy: "Always"
+          env:
+            - name: PHPLDAPADMIN_LDAP_HOSTS
+              value: "openldap"
+            - name: PHPLDAPADMIN_HTTPS
+              value: "false"
+            - name: PHPLDAPADMIN_TRUST_PROXY_SSL
+              value: "true"                
+            - name: PHPLDAPADMIN_LDAP_CLIENT_TLS
+              value: "false"                                       
+          ports:
+            - name: tcp-ldap-ui
+              containerPort: 80
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: openldap-data
+        - name: config
+          persistentVolumeClaim:
+            claimName: openldap-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap
+  namespace: security
+  labels:
+    app.kubernetes.io/name: openldap
+spec:
+  ports:    
+    - name: tcp-ldap-ui
+      port: 80
+      targetPort: tcp-ldap-ui
+    - name: tcp-ldap
+      port: 389
+      targetPort: tcp-ldap            
+  selector:
+    app.kubernetes.io/name: openldap
+---    
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openldap-phpldapadmin
+  namespace: security
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Method $request_method;
+spec:
+  rules:
+  - host: "phpldapadmin.${SECRET_DOMAIN}"
+    http:
+      paths:
+      - backend:
+          service:
+            name: openldap
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - "phpldapadmin.${SECRET_DOMAIN}"
+    secretName: phpldapadmin-tls

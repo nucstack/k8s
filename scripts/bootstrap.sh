@@ -57,7 +57,7 @@ envsubst < ./tmpl/.sops.yaml > ./.sops.yaml
 envsubst < ./tmpl/cluster-secrets.yaml > ./cluster/base/cluster-secrets.yaml
 envsubst < ./tmpl/cluster-settings.yaml > ./cluster/base/cluster-settings.yaml
 envsubst < ./tmpl/gotk-sync.yaml > ./cluster/base/flux-system/gotk-sync.yaml
-envsubst < ./tmpl/secret.enc.yaml > ./cluster/core/cert-manager/secret.enc.yaml
+envsubst < ./tmpl/cloudflare.secret.enc.yaml > ./cluster/core/cert-manager/secret.enc.yaml
 
 # # generate encrypted secrets
 sops --encrypt --in-place ./cluster/base/cluster-secrets.yaml

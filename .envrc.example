@@ -13,6 +13,14 @@ export BOOTSTRAP_DOMAIN="example.com"
 export BOOTSTRAP_METALLB_LB_RANGE="192.168.0.100-192.168.0.120"
 export BOOTSTRAP_INGRESS_NGINX_LB="192.168.0.101"
 
+# ldap
+export LDAP_ADMIN_USERNAME="admin"
+export LDAP_ADMIN_PASSWORD="xxxxxxxxx"
+export LDAP_USERS="user1,user2"
+export LDAP_GROUP="users"
+export LDAP_PASSWORDS="12345,67890"
+export LDAP_ROOT="dc=example,dc=com"
+
 # proxmox
 export PM_TLS_INSECURE=false
 export PM_API_URL="https://proxmox.example.com/api2/json"

@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: openldap-tls-cert
+  namespace: security
+spec:
+  secretName: openldap-tls-cert
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  # keySize: 2048
+  # keyAlgorithm: rsa
+  # keyEncoding: pkcs1
+  # usages:
+  #   - digital signature
+  #   - key encipherment
+  #   - server auth    
+  commonName: "ldap.${BOOTSTRAP_DOMAIN}"
+  dnsNames:
+    - "ldap.${BOOTSTRAP_DOMAIN}"
+    
