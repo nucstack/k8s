@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -26,13 +27,13 @@ roleRef:
   kind: ClusterRole
   name: nudl
 subjects:
-  - kind: ServiceAccount
-    name: nudl
-    namespace: home-automation
+- kind: ServiceAccount
+  name: nudl
+  namespace: home-automation
 ---
 kind: DaemonSet
 apiVersion: apps/v1
-metadata: 
+metadata:
   name: nudl
   namespace: home-automation
   labels:
@@ -57,7 +58,7 @@ spec:
           requests:
             cpu: 100m
             memory: 150Mi
-        args: 
+        args:
         - --label-prefix=device
         - --hostname=$(NODE_NAME)
         - --human-readable=false
