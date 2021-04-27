@@ -62,5 +62,3 @@ envsubst < ./tmpl/secret.enc.yaml > ./cluster/core/cert-manager/secret.enc.yaml
 # # generate encrypted secrets
 sops --encrypt --in-place ./cluster/base/cluster-secrets.yaml
 sops --encrypt --in-place ./cluster/core/cert-manager/secret.enc.yaml
-
-kubectl --kubeconfig="${kubeconfig_path}" apply --kustomize=./cluster/base/flux-system
