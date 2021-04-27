@@ -17,3 +17,5 @@ terraform/k3s-cluster/.terraform.tfstate.lock.info
 *.auto.tfvars
 
 .envrc
+terraform/k8s-cluster/terraform.tfstate.backup
+terraform/k8s-cluster/.terraform.lock.hcl
