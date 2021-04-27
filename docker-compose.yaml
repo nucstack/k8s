@@ -12,6 +12,7 @@ services:
       - .:/app:rw
       - bashhistory:/bash_history
       - ~/.gnupg:/root/.gnupg
+      - ~/.gitconfig:/root/.gitconfig
 
 volumes:
   # useful to maintain history
