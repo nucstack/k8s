@@ -15,8 +15,7 @@ spec:
   # usages:
   #   - digital signature
   #   - key encipherment
-  #   - server auth    
+  #   - server auth
   commonName: "ldap.${BOOTSTRAP_DOMAIN}"
   dnsNames:
     - "ldap.${BOOTSTRAP_DOMAIN}"
-    

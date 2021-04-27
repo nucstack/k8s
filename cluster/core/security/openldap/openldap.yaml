@@ -25,7 +25,7 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: longhorn
-  volumeMode: Filesystem  
+  volumeMode: Filesystem
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -98,9 +98,9 @@ spec:
             - name: PHPLDAPADMIN_HTTPS
               value: "false"
             - name: PHPLDAPADMIN_TRUST_PROXY_SSL
-              value: "true"                
+              value: "true"
             - name: PHPLDAPADMIN_LDAP_CLIENT_TLS
-              value: "false"                                       
+              value: "false"
           ports:
             - name: tcp-ldap-ui
               containerPort: 80
@@ -154,5 +154,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - "phpldapadmin.${SECRET_DOMAIN}"
+      - "phpldapadmin.${SECRET_DOMAIN}"
     secretName: phpldapadmin-tls
