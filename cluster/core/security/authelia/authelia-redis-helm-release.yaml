@@ -6,8 +6,6 @@ metadata:
   namespace: security
 spec:
   dependsOn:
-    - name: sealed-secrets
-      namespace: security
     - name: longhorn
       namespace: longhorn-system
   interval: 5m
