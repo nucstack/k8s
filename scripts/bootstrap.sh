@@ -4,7 +4,7 @@ environment=${environment:-staging}
 playbook=${playbook:-kubespray}
 
 playbook_path="/app/external/${playbook}"
-kubeconfig_path="${playbook_path}/inventory/${environment}/artifacts/kubeconfig"
+kubeconfig_path="${playbook_path}/inventory/${environment}/artifacts/external_kubeconfig"
 
 args
 while [ $# -gt 0 ]; do
