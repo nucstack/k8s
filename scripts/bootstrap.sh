@@ -34,7 +34,6 @@ ansible-playbook \
   -i "${playbook_path}/inventory/${environment}/hosts.yml" \
   --become --become-user root \
   -u "${user}" \
-
   -e "kubeconfig_localhost=true ${extra_vars}" \
   "${playbook_path}/cluster.yml" -b -v \
   --private-key="/app/terraform/k8s-cluster/${environment}_ssh_private_key"
