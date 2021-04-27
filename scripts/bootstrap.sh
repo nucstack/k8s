@@ -1,8 +1,44 @@
 #!/usr/bin/env bash
 
-set -eou pipefail
+environment=${environment:-staging}
 
-# pre flight flux check
+# args
+while [ $# -gt 0 ]; do
+
+   if [[ $1 == *"--"* ]]; then
+        param="${1/--/}"
+        declare $param="$2"        
+   fi
+
+  shift
+done
+
+echo "environment:${environment}"
+echo "master:${master}"
+echo "nodes:${nodes}"
+
+# setup k3s master
+if [[ ! -z ${master} ]]; then   
+  k3sup install --host=${master} \
+    --user=k3s \
+    --k3s-version=v1.20.5+k3s1 \
+    --ssh-key "terraform/k3s-cluster/${environment}_ssh_private_key" \
+    --k3s-extra-args="--disable servicelb --disable traefik"
+fi
+
+# setup k3s nodes
+if [[ ! -z ${nodes} ]]; then
+  for node in ${nodes//,/ } ; do
+    k3sup join \
+      --host="${node}" \
+      --server-host="${master}" \
+      --k3s-version=v1.20.5+k3s1 \
+      --user=k3s \
+      --ssh-key "terraform/k3s-cluster/${environment}_ssh_private_key"
+  done
+fi
+
+# pre flight check
 flux --kubeconfig=./kubeconfig check --pre
 
 # create flux namespace
