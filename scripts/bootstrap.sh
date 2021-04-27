@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 environment=${environment:-staging}
+playbook=${playbook:-kubespray}
 
-# args
+playbook_path="/app/external/${playbook}"
+kubeconfig_path="${playbook_path}/inventory/${environment}/artifacts/admin.conf"
+
+args
 while [ $# -gt 0 ]; do
 
    if [[ $1 == *"--"* ]]; then
@@ -13,52 +17,48 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-echo "environment:${environment}"
-echo "master:${master}"
-echo "nodes:${nodes}"
+echo "environment: ${environment}"
+echo "playbook: ${playbook}"
+echo "user: ${user}"
+echo "nodes: ${nodes}"
 
-# setup k3s master
-if [[ ! -z ${master} ]]; then   
-  k3sup install --host=${master} \
-    --user=k3s \
-    --k3s-version=v1.20.5+k3s1 \
-    --ssh-key "terraform/k3s-cluster/${environment}_ssh_private_key" \
-    --k3s-extra-args="--disable servicelb --disable traefik"
-fi
+# setup k8s
 
-sleep 30
+# create inventory
+CONFIG_FILE="${playbook_path}/inventory/${environment}/hosts.yml" \
+python3 "${playbook_path}/contrib/inventory_builder/inventory.py" ${nodes[@]}
 
-# setup k3s nodes
-if [[ ! -z ${nodes} ]]; then
-  for node in ${nodes//,/ } ; do
-    k3sup join \
-      --host="${node}" \
-      --server-host="${master}" \
-      --k3s-version=v1.20.5+k3s1 \
-      --user=k3s \
-      --ssh-key "terraform/k3s-cluster/${environment}_ssh_private_key"
-  done
-fi
+# deploy k8s via ansible
+ANSIBLE_HOST_KEY_CHECKING=False \
+ansible-playbook \
+  -i "${playbook_path}/inventory/${environment}/hosts.yml" \
+  --become --become-user root \
+  -u "${user}" \
+  -e "kubeconfig_localhost=true ${extra_vars}" \
+  "${playbook_path}/cluster.yml" -b -v \
+  --private-key="/app/terraform/k8s-cluster/${environment}_ssh_private_key"
 
-# pre flight check
-flux --kubeconfig=./kubeconfig check --pre
+sleep 60
 
-# create flux namespace
-kubectl --kubeconfig=./kubeconfig create namespace flux-system --dry-run=client -o yaml | kubectl --kubeconfig=./kubeconfig apply -f -
+# # pre flight check
+flux --kubeconfig="${kubeconfig_path}" check --pre
 
-# create secret from gpg key
+# # create flux namespace
+kubectl --kubeconfig="${kubeconfig_path}" create namespace flux-system --dry-run=client -o yaml | kubectl --kubeconfig="${kubeconfig_path}" apply -f -
+
+# # create secret from gpg key
 gpg --export-secret-keys --armor "${FLUX_KEY_FP}" |
-kubectl --kubeconfig=./kubeconfig create secret generic sops-gpg \
+kubectl --kubeconfig="${kubeconfig_path}" create secret generic sops-gpg \
     --namespace=flux-system \
     --from-file=sops.asc=/dev/stdin
 
-# generate configs/secrets from envs
+# # generate configs/secrets from envs
 envsubst < ./tmpl/.sops.yaml > ./.sops.yaml
 envsubst < ./tmpl/cluster-secrets.yaml > ./cluster/base/cluster-secrets.yaml
 envsubst < ./tmpl/cluster-settings.yaml > ./cluster/base/cluster-settings.yaml
 envsubst < ./tmpl/gotk-sync.yaml > ./cluster/base/flux-system/gotk-sync.yaml
 envsubst < ./tmpl/secret.enc.yaml > ./cluster/core/cert-manager/secret.enc.yaml
 
-# generate encrypted secrets
+# # generate encrypted secrets
 sops --encrypt --in-place ./cluster/base/cluster-secrets.yaml
 sops --encrypt --in-place ./cluster/core/cert-manager/secret.enc.yaml

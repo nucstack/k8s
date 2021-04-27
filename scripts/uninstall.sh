@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 environment=${environment:-staging}
+playbook=${playbook:-kubespray}
 
-# args
+playbook_path="/app/external/${playbook}"
+kubeconfig_path="${playbook_path}/inventory/${environment}/artifacts/admin.conf"
+
+args
 while [ $# -gt 0 ]; do
 
    if [[ $1 == *"--"* ]]; then
@@ -13,18 +17,22 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-echo "environment:${environment}"
-echo "master:${master}"
-echo "nodes:${nodes}"
+echo "environment: ${environment}"
+echo "playbook: ${playbook}"
+echo "user: ${user}"
+echo "nodes: ${nodes}"
 
-# uninstall k3s master
-if [[ ! -z ${master} ]]; then
-  ssh k3s@${master} -i "terraform/k3s-cluster/${environment}_ssh_private_key" k3s-uninstall.sh
-fi
+# setup k8s
 
-# uninstall k3s nodes
-if [[ ! -z ${nodes} ]]; then
-  for node in ${nodes//,/ } ; do
-    ssh k3s@${node} -i "terraform/k3s-cluster/${environment}_ssh_private_key" k3s-agent-uninstall.sh
-  done
-fi
+# create inventory
+CONFIG_FILE="${playbook_path}/inventory/${environment}/hosts.yml" \
+python3 "${playbook_path}/contrib/inventory_builder/inventory.py" ${nodes[@]}
+
+# deploy k8s via ansible
+ANSIBLE_HOST_KEY_CHECKING=False \
+ansible-playbook \
+  -i "${playbook_path}/inventory/${environment}/hosts.yml" \
+  --become --become-user root \
+  -u "${user}" \
+  "${playbook_path}/reset.yml" -b -v \
+  --private-key="/app/terraform/k8s-cluster/${environment}_ssh_private_key"
