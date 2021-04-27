@@ -1,6 +1,13 @@
 #shellcheck disable=SC2148,SC2155
 export KUBECONFIG=$(expand_path ./kubeconfig)
 
+# authelia
+export AUTHELIA_SMTP_USERNAME="someuser@gmail.com"
+export AUTHELIA_SMTP_PASSWORD="xxxxxxxxxx"
+export AUTHELIA_SMTP_IDENT="localhost"
+export AUTHELIA_POSTGRES_PASSWORD="xxxxxxxxxx"
+export AUTHELIA_REDIS_PASSWORD="xxxxxxxxxx"
+
 # bootstrap
 export PERSONAL_KEY_NAME="FirstName LastName (US) <email>"
 export PERSONAL_KEY_FP="xxxxxxxxxxxxxxxxxxxxxxxxxxx"
