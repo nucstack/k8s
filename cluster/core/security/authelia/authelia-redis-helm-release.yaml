@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia-redis
+  namespace: security
+spec:
+  dependsOn:
+    - name: sealed-secrets
+      namespace: security
+    - name: longhorn
+      namespace: longhorn-system
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami/
+      chart: redis
+      version: 12.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  timeout: 10m
+  values:
+    master:
+      persistence:
+        enabled: false
+        storageClass: "longhorn"
+        size: 1Gi
+    slave:
+      persistence:
+        enabled: false
+        storageClass: "longhorn"
+        size: 1Gi
+  valuesFrom:
+    - kind: Secret
+      name: authelia-redis-helm-values
