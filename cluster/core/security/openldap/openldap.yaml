@@ -120,16 +120,16 @@ metadata:
   labels:
     app.kubernetes.io/name: openldap
 spec:
-  ports:    
+  ports:
     - name: tcp-ldap-ui
       port: 80
       targetPort: tcp-ldap-ui
     - name: tcp-ldap
       port: 389
-      targetPort: tcp-ldap            
+      targetPort: tcp-ldap
   selector:
     app.kubernetes.io/name: openldap
----    
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -142,17 +142,17 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Method $request_method;
 spec:
   rules:
-  - host: "phpldapadmin.${SECRET_DOMAIN}"
-    http:
-      paths:
-      - backend:
-          service:
-            name: openldap
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: "phpldapadmin.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: openldap
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-      - "phpldapadmin.${SECRET_DOMAIN}"
-    secretName: phpldapadmin-tls
+    - hosts:
+        - "phpldapadmin.${SECRET_DOMAIN}"
+      secretName: phpldapadmin-tls
