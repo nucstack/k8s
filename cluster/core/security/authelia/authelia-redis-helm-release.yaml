@@ -34,7 +34,7 @@ spec:
     timeout: 10m
     recreate: true
     cleanupOnFail: true
-  timeout: 10m      
+  timeout: 10m
   values:
     master:
       persistence:
@@ -47,5 +47,5 @@ spec:
         storageClass: "longhorn"
         size: 1Gi
   valuesFrom:
-  - kind: Secret
-    name: authelia-redis-helm-values
+    - kind: Secret
+      name: authelia-redis-helm-values

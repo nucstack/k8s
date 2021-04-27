@@ -10,7 +10,7 @@ spec:
       namespace: security
   interval: 5m
   chart:
-    spec:   
+    spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami/
       chart: postgresql
       version: 10.3.13
@@ -32,7 +32,7 @@ spec:
     timeout: 10m
     recreate: true
     cleanupOnFail: true
-  timeout: 10m      
+  timeout: 10m
   values:
     persistence:
       enabled: false
@@ -41,5 +41,5 @@ spec:
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
   valuesFrom:
-  - kind: Secret
-    name: authelia-postgres-helm-values
+    - kind: Secret
+      name: authelia-postgres-helm-values

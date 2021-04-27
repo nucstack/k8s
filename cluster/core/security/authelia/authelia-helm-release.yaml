@@ -71,5 +71,5 @@ spec:
           port: 6379
           database_index: 0
   valuesFrom:
-  - kind: Secret
-    name: authelia-helm-values
+    - kind: Secret
+      name: authelia-helm-values
