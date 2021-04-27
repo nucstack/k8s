@@ -16,6 +16,6 @@ spec:
   #   - digital signature
   #   - key encipherment
   #   - server auth
-  commonName: "ldap.${BOOTSTRAP_DOMAIN}"
+  commonName: "ldap.${SECRET_DOMAIN}"
   dnsNames:
-    - "ldap.${BOOTSTRAP_DOMAIN}"
+    - "ldap.${SECRET_DOMAIN}"
