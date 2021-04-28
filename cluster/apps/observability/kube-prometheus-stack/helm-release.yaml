@@ -224,6 +224,19 @@ spec:
     prometheus:
       fullnameOverride: prometheus
       prometheusSpec:
+        thanos:
+          image: thanosio/thanos:v0.17.2
+          version: v0.17.2
+          # Thanos chart will generate the secret: thanos
+          objectStorageConfig:
+            name: thanos
+            key: object-store.yaml
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi        
         storageSpec:
           volumeClaimTemplate:
             spec:
