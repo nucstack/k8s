@@ -72,24 +72,24 @@ spec:
               - "grafana.${SECRET_DOMAIN}"
       fullnameOverride: grafana
       enabled: true
-      # sidecar:
-      #   dashboards:
-      #     enabled: false
-      #     searchNamespace: ALL
-      #   datasources:
-      #     enabled: false
-      #     defaultDatasourceEnabled: false
-      # plugins:
-      #   - natel-discrete-panel
-      #   - pr0ps-trackmap-panel
-      #   - grafana-piechart-panel
-      #   - vonage-status-panel
-      #   - grafana-worldmap-panel
-      #   - btplc-status-dot-panel
-      #   - cloudflare-app
-      #   - grafana-kubernetes-app
-      #   - grafana-clock-panel
-      #   - camptocamp-prometheus-alertmanager-datasource
+      sidecar:
+        dashboards:
+          enabled: true
+          searchNamespace: ALL
+        datasources:
+          enabled: true
+          defaultDatasourceEnabled: false
+      plugins:
+        - natel-discrete-panel
+        - pr0ps-trackmap-panel
+        - grafana-piechart-panel
+        - vonage-status-panel
+        - grafana-worldmap-panel
+        - btplc-status-dot-panel
+        - cloudflare-app
+        - grafana-kubernetes-app
+        - grafana-clock-panel
+        - camptocamp-prometheus-alertmanager-datasource
       # dashboardProviders:
       #   dashboardproviders.yaml:
       #     apiVersion: 1
@@ -171,36 +171,36 @@ spec:
       #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
       #       datasource: Prometheus
 
-      # additionalDataSources:
-      #   - name: Prometheus
-      #     type: prometheus
-      #     access: proxy
-      #     url: http://thanos-query-http:10902/
-      #     isDefault: true
-      #   - name: loki
-      #     type: loki
-      #     access: proxy
-      #     url: http://loki.observability.svc.cluster.local:3100
-      #   - name: rtlamr-collect
-      #     type: influxdb
-      #     access: proxy
-      #     database: meters
-      #     user: "${SECRET_INFLUXDB_USER}"
-      #     url: http://influxdb.observability.svc.cluster.local:8086
-      #     jsonData:
-      #       timeInterval: "15s"
-      #     secureJsonData:
-      #       password: "${SECRET_INFLUXDB_PASSWORD}"
-      #   - name: home-assistant
-      #     type: influxdb
-      #     access: proxy
-      #     database: home_assistant
-      #     user: "${SECRET_INFLUXDB_USER}"
-      #     url: http://influxdb.observability.svc.cluster.local:8086
-      #     jsonData:
-      #       timeInterval: "15s"
-      #     secureJsonData:
-      #       password: "${SECRET_INFLUXDB_PASSWORD}"
+      additionalDataSources:
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://thanos-query-http:10902/
+          isDefault: true
+        - name: loki
+          type: loki
+          access: proxy
+          url: http://loki.observability.svc.cluster.local:3100
+        - name: rtlamr-collect
+          type: influxdb
+          access: proxy
+          database: meters
+          user: "${SECRET_INFLUXDB_USER}"
+          url: http://influxdb.observability.svc.cluster.local:8086
+          jsonData:
+            timeInterval: "15s"
+          secureJsonData:
+            password: "${SECRET_INFLUXDB_PASSWORD}"
+        - name: home-assistant
+          type: influxdb
+          access: proxy
+          database: home_assistant
+          user: "${SECRET_INFLUXDB_USER}"
+          url: http://influxdb.observability.svc.cluster.local:8086
+          jsonData:
+            timeInterval: "15s"
+          secureJsonData:
+            password: "${SECRET_INFLUXDB_PASSWORD}"
       # grafana.ini:
       #   allow_embedding: true
       #   auth.ldap:
