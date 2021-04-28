@@ -19,6 +19,12 @@ services:
     build:
       context: ./docker/rtlamr-collect
 
+  # custom image for rsyslog
+  rsyslog:
+    image: ${PRIVATE_REGISTRY}/rsyslog:0.0.1
+    build:
+      context: ./docker/rsyslog
+
 volumes:
   # useful to maintain history
   bashhistory:
