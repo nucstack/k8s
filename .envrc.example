@@ -63,6 +63,9 @@ export PM_API_URL="https://proxmox.example.com/api2/json"
 export PM_PASS="xxxxxxxxxxxxx"
 export PM_USER="user@pve"
 
+# rsyslog
+export RSYSLOG_LB_IP="192.168.0.100"
+
 # rtlamr-collect
 export RTLAMR_METERS="<meter-id-1>,<meter-id-2>"
 export RTLAMR_MSGTYPE="scm,scm+"

@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rsyslog-config
+  namespace: observability
+  labels:
+    app.kubernetes.io/name: rsyslog
+    app.kubernetes.io/instance: rsyslog
+data:
+  rsyslog.conf: |
+    #$DebugLevel 2
+    $ModLoad imudp
+    $UDPServerRun 514
+    *.* @@(o)loki-promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsyslog
+  namespace: observability
+  labels:
+    app.kubernetes.io/name: rsyslog
+    app.kubernetes.io/instance: rsyslog
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rsyslog
+      app.kubernetes.io/instance: rsyslog
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rsyslog
+        app.kubernetes.io/instance: rsyslog
+    spec:
+      containers:
+        - name: rsyslog
+          image: "${SECRET_PRIVATE_REGISTRY}/rsyslog:0.0.1"
+          imagePullPolicy: "Always"
+          ports:
+            - name: default
+              containerPort: 514
+              protocol: UDP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /etc/rsyslog.conf
+              readOnly: true
+              name: config
+              subPath: rsyslog.conf
+      volumes:
+        - name: config
+          configMap:
+            name: rsyslog-config
+            items:
+              - key: rsyslog.conf
+                path: rsyslog.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsyslog
+  namespace: observability
+  labels:
+    app.kubernetes.io/name: rsyslog
+    app.kubernetes.io/instance: rsyslog
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  loadBalancerIP: "${SECRET_RSYSLOG_LB_IP}"
+  sessionAffinity: None
+  ports:
+    - port: 514
+      targetPort: default
+      protocol: UDP
+      name: default
+  selector:
+    app.kubernetes.io/name: rsyslog
+    app.kubernetes.io/instance: rsyslog
