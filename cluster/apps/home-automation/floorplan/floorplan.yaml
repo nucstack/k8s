@@ -1,0 +1,92 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: floorplan
+  namespace: home-automation
+  labels:
+    app.kubernetes.io/name: floorplan
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: floorplan
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: floorplan
+    spec:
+      containers:
+        - name: floorplan
+          image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.1
+          imagePullPolicy: "Always"                                     
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: 250m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi              
+          livenessProbe:
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 30              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: floorplan
+  namespace: home-automation
+  labels:
+    app.kubernetes.io/name: floorplan
+spec:
+  ports:    
+    - name: http
+      port: 80
+      targetPort: http     
+  selector:
+    app.kubernetes.io/name: floorplan
+---    
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: floorplan
+  namespace: home-automation
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "floorplan.${SECRET_DOMAIN}"
+    http:
+      paths:
+      - backend:
+          service:
+            name: floorplan
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - "floorplan.${SECRET_DOMAIN}"
+    secretName: floorplan-tls
