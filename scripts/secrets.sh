@@ -17,6 +17,22 @@ sops --encrypt --in-place ./cluster/core/security/authelia/authelia-redis.secret
 envsubst < ./cluster/apps/observability/botkube/botkube.secrets.enc.template > ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 
+# home-assistant
+envsubst < ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.template > ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
+
+# mosquitto
+envsubst < ./cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.template > ./cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.yaml
+
+# zigbee2mqtt
+envsubst < ./cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.template > ./cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
+
+# zwavejs2mqtt
+envsubst < ./cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.template > ./cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
+
 # kube-prometheus-stack
 envsubst < ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.template > ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
