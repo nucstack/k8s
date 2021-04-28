@@ -188,10 +188,10 @@ spec:
           secureJsonData:
             password: "${SECRET_INFLUXDB_PASSWORD}"
       grafana.ini:
-        allow_embedding: true
+        allow_embedding: "true"
         auth.ldap:
-          enabled: true
-          allow_sign_up: true
+          enabled: "true"
+          allow_sign_up: "true"
           config_file: /etc/grafana/ldap.toml
         security:
           disable_initial_admin_creation: false
