@@ -7,6 +7,7 @@ export PERSONAL_KEY_FP="xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 export FLUX_KEY_NAME="ClusterName (Flux) <email>"
 export FLUX_KEY_FP="xxxxxxxxxxxxxxxxxxxxxxxxx"
 export PRIVATE_REGISTRY="docker-registry"
+export DOCKER_PULL_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 # authelia
 export AUTHELIA_SMTP_USERNAME="someuser@someprovider.com"
