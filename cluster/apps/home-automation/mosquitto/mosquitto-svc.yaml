@@ -1,0 +1,24 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mosquitto
+  namespace: home-automation
+  labels:
+    app.kubernetes.io/instance: mosquitto
+    app.kubernetes.io/name: mosquitto
+spec:
+  ports:
+    - name: mqtt
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+    - name: websocket
+      protocol: TCP
+      port: 9001
+      targetPort: 9001
+  selector:
+    app.kubernetes.io/instance: mosquitto
+    app.kubernetes.io/name: mosquitto
+  type: LoadBalancer
+  loadBalancerIP: "${SECRET_MQTT_LB_IP}"

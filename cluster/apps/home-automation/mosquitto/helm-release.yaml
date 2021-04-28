@@ -1,0 +1,126 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mosquitto
+  namespace: home-automation
+spec:
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: mosquitto
+      version: 2.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 10m
+  install:
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  timeout: 10m
+  values:
+    probes:
+      startup:
+        enabled: false
+    service:
+      type: LoadBalancer
+      loadBalancerIP: "${SECRET_MQTT_LB_IP}"
+      port:
+        port: 1883
+        name: mqtt
+    auth:
+      enabled: true
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: 250m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    command:
+      - "/usr/sbin/mosquitto"
+    args:
+      - "-c"
+      - "/mosquitto/conf/mosquitto.conf"
+    initContainers:
+      - name: ca-export
+        image: ubuntu:21.04
+        command: ["/usr/bin/csplit"]
+        args:
+          - "-z"
+          - "-k"
+          - "-f"
+          - "/ca/ca"
+          - "/certs/tls.crt"
+          - "/-----BEGIN CERTIFICATE-----/"
+          - "{1}"
+        volumeMounts:
+          - name: certs
+            mountPath: /certs
+            readOnly: false
+          - name: ca
+            mountPath: /ca
+      - name: encrypt
+        image: eclipse-mosquitto:2.0.7
+        env:
+          - name: MQTT_USER
+            valueFrom:
+              secretKeyRef:
+                name: mosquitto-creds
+                key: mqtt-user
+          - name: MQTT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mosquitto-creds
+                key: mqtt-password
+        command: ["/usr/bin/mosquitto_passwd"]
+        args:
+          - '-b'
+          - '-c'
+          - '/secrets/mosquitto-creds'
+          - '$(MQTT_USER)'
+          - '$(MQTT_PASSWORD)'
+        volumeMounts:
+          - name: mosquitto-creds
+            mountPath: /secrets
+            readOnly: false
+    additionalVolumes:
+      - name: ca
+        emptyDir: {}
+      - name: certs
+        secret:
+          secretName: mosquitto-tls-cert
+      - name: mosquitto-conf
+        configMap:
+          name: mosquitto-conf
+      - name: mosquitto-creds
+        emptyDir: {}
+    additionalVolumeMounts:
+      - name: certs
+        mountPath: "/certs"
+        readOnly: true
+      - name: ca
+        mountPath: "/ca"
+        readOnly: true
+      - name: mosquitto-conf
+        mountPath: "/mosquitto/conf"
+        readOnly: true
+      - name: mosquitto-creds
+        mountPath: "/secrets"
+        readOnly: true
