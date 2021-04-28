@@ -58,7 +58,7 @@ spec:
             - source_labels: ['__syslog_message_hostname']
               target_label: 'host'
             - source_labels: ['__syslog_message_app_name']
-              target_label: 'application'          
+              target_label: 'application'
       syslogService:
         enabled: true
         type: ClusterIP
@@ -69,6 +69,6 @@ spec:
       enabled: false
       sidecar:
       datasources:
-        enabled: true      
+        enabled: true
     prometheus:
       enabled: false
