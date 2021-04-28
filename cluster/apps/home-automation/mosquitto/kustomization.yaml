@@ -6,4 +6,8 @@ resources:
   - mosquitto.secrets.enc.yaml
   - configmap.yaml
   - helm-release.yaml
-  #- mosquitto-svc.yaml
+patches:
+  - path: patch.svc.mosquitto.yaml
+    target:
+      kind: Service
+      name: "mosquitto"
