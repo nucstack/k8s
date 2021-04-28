@@ -17,7 +17,7 @@ sops --encrypt --in-place ./cluster/core/security/authelia/authelia-redis.secret
 envsubst < ./cluster/apps/observability/botkube/botkube.secrets.enc.template > ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 
-# Kube-prometheus-stack
+# kube-prometheus-stack
 envsubst < ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.template > ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
 
@@ -28,3 +28,7 @@ sops --encrypt --in-place ./cluster/apps/observability/influxdb/influxdb.secret.
 # openldap
 envsubst < ./cluster/core/security/openldap/openldap.secret.enc.template > ./cluster/core/security/openldap/openldap.secret.enc.yaml
 sops --encrypt --in-place ./cluster/core/security/openldap/openldap.secret.enc.yaml
+
+# rtlamr-collect
+envsubst < ./cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.template > ./cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
