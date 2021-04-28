@@ -17,6 +17,10 @@ sops --encrypt --in-place ./cluster/core/security/authelia/authelia-redis.secret
 envsubst < ./cluster/apps/observability/botkube/botkube.secrets.enc.template > ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 
+# floorplan
+envsubst < ./cluster/apps/home-automation/floorplan/floorplan.secrets.enc.template > ./cluster/apps/home-automation/floorplan/floorplan.secrets.enc.yaml
+sops --encrypt --in-place ./cluster/apps/home-automation/floorplan/floorplan.secrets.enc.yaml
+
 # home-assistant
 envsubst < ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.template > ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
