@@ -10,7 +10,6 @@ spec:
       protocol: TCP
       port: 1883
       targetPort: mqtt
-      nodePort: 30639
     - name: websocket
       protocol: TCP
       port: 9001
