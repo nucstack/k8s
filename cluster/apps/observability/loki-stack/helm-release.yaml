@@ -67,8 +67,7 @@ spec:
       enabled: false
     grafana:
       enabled: false
-      sidecar:
       datasources:
-        enabled: true
+        enabled: false
     prometheus:
       enabled: false
