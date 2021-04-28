@@ -26,12 +26,11 @@ spec:
         memory: 128Mi
     env:
       TZ: "America/New_York"
-    prometheus:
-      serviceMonitor:
-        enabled: true
-    env:
       UP_UNIFI_DEFAULT_URL: "${SECRET_UNIFI_URL}"
       UP_UNIFI_DEFAULT_USER: "${SECRET_UNIFI_USERNAME}"
       UP_UNIFI_DEFAULT_PASS: "${SECRET_UNIFI_PASSWORD}"
       UP_PROMETHEUS_DISABLE: false
       UP_INFLUXDB_DISABLE: true
+    prometheus:
+      serviceMonitor:
+        enabled: true
