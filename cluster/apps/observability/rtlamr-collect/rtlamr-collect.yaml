@@ -27,7 +27,7 @@ spec:
         - name: rtlamr-collect
           securityContext:
             privileged: true
-          image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.5
+          image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.2
           imagePullPolicy: IfNotPresent
           env:
             - name: INTERVAL
