@@ -15,8 +15,7 @@ spec:
   # usages:
   #   - digital signature
   #   - key encipherment
-  #   - server auth    
+  #   - server auth
   commonName: "mqtt.${SECRET_DOMAIN}"
   dnsNames:
     - "mqtt.${SECRET_DOMAIN}"
-    
