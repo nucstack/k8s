@@ -5,8 +5,8 @@ metadata:
   name: grafana-dashboards
   namespace: observability
   labels:
-     grafana_dashboard: "1"
-     namespace: observability
+    grafana_dashboard: "1"
+    namespace: observability
 data:
   utility-meters.json: |-
     {
