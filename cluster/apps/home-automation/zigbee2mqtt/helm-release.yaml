@@ -1,0 +1,122 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: zigbee2mqtt
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: zigbee2mqtt
+      version: 7.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: koenkk/zigbee2mqtt
+      tag: 1.18.2
+    resources:
+      limits:
+        cpu: 250m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    env:
+      TZ: America/New_York
+      ZIGBEE2MQTT_DATA: /data
+    config:
+      homeassistant: true
+      device_options:
+        retain: true
+      permit_join: false
+      mqtt:
+        base_topic: zigbee2mqtt
+        server: "mqtt://mqtt.${SECRET_DOMAIN}:1883"
+      frontend:
+        port: 8080
+      experimental:
+        new_api: true
+      advanced:
+        log_output:
+          - console
+    securityContext:
+      privileged: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "device/1a86_7523"
+                  operator: In
+                  values:
+                    - "true"
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 3.9.2
+        workingDir: '/config'
+        args:
+          - --user-data-dir
+          - '/config/.vscode'
+          - --auth
+          - 'none'
+          - --extensions-dir
+          - '/config/.vscode'
+        ingress:
+          enabled: false
+        volumeMounts:
+          - name: config
+            mountPath: /config
+    initContainers:
+      - name: copy
+        image: busybox:1.32.0
+        command: ["/bin/sh", "-c", "cp /config/configuration.yaml /config/devices.yaml  /data"]
+        volumeMounts:
+          - name: zigbee2mqtt-config
+            mountPath: /config
+          - name: config
+            mountPath: /data
+    additionalVolumeMounts:
+      - name: usb
+        mountPath: /dev/ttyUSB0
+    additionalVolumes:
+      - name: zigbee2mqtt-config
+        secret:
+          secretName: zigbee2mqtt-config
+      - name: usb
+        hostPath:
+          path: /dev/ttyUSB0
+    persistence:
+      config:
+        enabled: true
+        storageClass: "longhorn"
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        mountPath: "/data"
+    ingress:
+      annotations:
+        nginx.org/websocket-services: zigbee2mqtt
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+        nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+        nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+        nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Method $request_method;
+      enabled: true
+      hosts:
+        - host: "zigbee2mqtt.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - "zigbee2mqtt.${SECRET_DOMAIN}"
+          secretName: zigbee2mqtt-tls
