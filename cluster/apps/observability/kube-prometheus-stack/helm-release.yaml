@@ -72,156 +72,156 @@ spec:
               - "grafana.${SECRET_DOMAIN}"
       fullnameOverride: grafana
       enabled: true
-      sidecar:
-        dashboards:
-          enabled: false
-          searchNamespace: ALL
-        datasources:
-          enabled: false
-          defaultDatasourceEnabled: false
-      plugins:
-        - natel-discrete-panel
-        - pr0ps-trackmap-panel
-        - grafana-piechart-panel
-        - vonage-status-panel
-        - grafana-worldmap-panel
-        - btplc-status-dot-panel
-        - cloudflare-app
-        - grafana-kubernetes-app
-        - grafana-clock-panel
-        - camptocamp-prometheus-alertmanager-datasource
-      dashboardProviders:
-        dashboardproviders.yaml:
-          apiVersion: 1
-          providers:
-            - name: 'default'
-              orgId: 1
-              folder: ''
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/default
-      dashboards:
-        default:
-          # Core
-          cert-manager:
-            url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
-            datasource: Prometheus
-          sealed-secrets:
-            url: https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/master/contrib/prometheus-mixin/dashboards/sealed-secrets-controller.json
-            datasource: Prometheus
-          nginx-controller:
-            url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-            datasource: Prometheus
-          nginx-request-handling:
-            url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-            datasource: Prometheus
-          # Thanos
-          thanos-overview:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/overview.json
-            datasource: Prometheus
-          thanos-compact:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/compact.json
-            datasource: Prometheus
-          thanos-querier:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/query.json
-            datasource: Prometheus
-          thanos-store:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/store.json
-            datasource: Prometheus
-          thanos-receiver:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/receive.json
-            datasource: Prometheus
-          thanos-sidecar:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/sidecar.json
-            datasource: Prometheus
-          thanos-ruler:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/rule.json
-            datasource: Prometheus
-          thanos-replicate:
-            url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/bucket-replicate.json
-            datasource: Prometheus
+      # sidecar:
+      #   dashboards:
+      #     enabled: false
+      #     searchNamespace: ALL
+      #   datasources:
+      #     enabled: false
+      #     defaultDatasourceEnabled: false
+      # plugins:
+      #   - natel-discrete-panel
+      #   - pr0ps-trackmap-panel
+      #   - grafana-piechart-panel
+      #   - vonage-status-panel
+      #   - grafana-worldmap-panel
+      #   - btplc-status-dot-panel
+      #   - cloudflare-app
+      #   - grafana-kubernetes-app
+      #   - grafana-clock-panel
+      #   - camptocamp-prometheus-alertmanager-datasource
+      # dashboardProviders:
+      #   dashboardproviders.yaml:
+      #     apiVersion: 1
+      #     providers:
+      #       - name: 'default'
+      #         orgId: 1
+      #         folder: ''
+      #         type: file
+      #         disableDeletion: false
+      #         editable: true
+      #         options:
+      #           path: /var/lib/grafana/dashboards/default
+      # dashboards:
+      #   default:
+      #     # Core
+      #     cert-manager:
+      #       url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
+      #       datasource: Prometheus
+      #     sealed-secrets:
+      #       url: https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/master/contrib/prometheus-mixin/dashboards/sealed-secrets-controller.json
+      #       datasource: Prometheus
+      #     nginx-controller:
+      #       url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+      #       datasource: Prometheus
+      #     nginx-request-handling:
+      #       url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+      #       datasource: Prometheus
+      #     # Thanos
+      #     thanos-overview:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/overview.json
+      #       datasource: Prometheus
+      #     thanos-compact:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/compact.json
+      #       datasource: Prometheus
+      #     thanos-querier:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/query.json
+      #       datasource: Prometheus
+      #     thanos-store:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/store.json
+      #       datasource: Prometheus
+      #     thanos-receiver:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/receive.json
+      #       datasource: Prometheus
+      #     thanos-sidecar:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/sidecar.json
+      #       datasource: Prometheus
+      #     thanos-ruler:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/rule.json
+      #       datasource: Prometheus
+      #     thanos-replicate:
+      #       url: https://raw.githubusercontent.com/thanos-io/thanos/b5431c44a6f40fd8f2aef54747dd1eaf9dfcbd25/examples/dashboards/bucket-replicate.json
+      #       datasource: Prometheus
 
-          # Flux/GOTK
-          toolkit-cluster:
-            url: https://raw.githubusercontent.com/fluxcd/toolkit/main/manifests/monitoring/grafana/dashboards/cluster.json
-            datasource: Prometheus
-          toolkit-control-plane:
-            url: https://raw.githubusercontent.com/fluxcd/toolkit/main/manifests/monitoring/grafana/dashboards/control-plane.json
-            datasource: Prometheus
+      #     # Flux/GOTK
+      #     toolkit-cluster:
+      #       url: https://raw.githubusercontent.com/fluxcd/toolkit/main/manifests/monitoring/grafana/dashboards/cluster.json
+      #       datasource: Prometheus
+      #     toolkit-control-plane:
+      #       url: https://raw.githubusercontent.com/fluxcd/toolkit/main/manifests/monitoring/grafana/dashboards/control-plane.json
+      #       datasource: Prometheus
 
-          # Unifi
-          unifi-poller-client-dpi:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20DPI%20-%20Prometheus.json
-            datasource: Prometheus
-          unifi-poller-client-insights:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20Insights%20-%20Prometheus.json
-            datasource: Prometheus
-          unifi-poller-network-sites:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Network%20Sites%20-%20Prometheus.json
-            datasource: Prometheus
-          unifi-poller-uap-insights:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20UAP%20Insights%20-%20Prometheus.json
-            datasource: Prometheus
-          unifi-poller-usg-insights:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USG%20Insights%20-%20Prometheus.json
-            datasource: Prometheus
-          unifi-poller-usw-insights:
-            url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
-            datasource: Prometheus
+      #     # Unifi
+      #     unifi-poller-client-dpi:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20DPI%20-%20Prometheus.json
+      #       datasource: Prometheus
+      #     unifi-poller-client-insights:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20Insights%20-%20Prometheus.json
+      #       datasource: Prometheus
+      #     unifi-poller-network-sites:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Network%20Sites%20-%20Prometheus.json
+      #       datasource: Prometheus
+      #     unifi-poller-uap-insights:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20UAP%20Insights%20-%20Prometheus.json
+      #       datasource: Prometheus
+      #     unifi-poller-usg-insights:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USG%20Insights%20-%20Prometheus.json
+      #       datasource: Prometheus
+      #     unifi-poller-usw-insights:
+      #       url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
+      #       datasource: Prometheus
 
-      additionalDataSources:
-        - name: Prometheus
-          type: prometheus
-          access: proxy
-          url: http://thanos-query-http:10902/
-          isDefault: true
-        - name: loki
-          type: loki
-          access: proxy
-          url: http://loki.observability.svc.cluster.local:3100
-        - name: rtlamr-collect
-          type: influxdb
-          access: proxy
-          database: meters
-          user: "${SECRET_INFLUXDB_USER}"
-          url: http://influxdb.observability.svc.cluster.local:8086
-          jsonData:
-            timeInterval: "15s"
-          secureJsonData:
-            password: "${SECRET_INFLUXDB_PASSWORD}"
-        - name: home-assistant
-          type: influxdb
-          access: proxy
-          database: home_assistant
-          user: "${SECRET_INFLUXDB_USER}"
-          url: http://influxdb.observability.svc.cluster.local:8086
-          jsonData:
-            timeInterval: "15s"
-          secureJsonData:
-            password: "${SECRET_INFLUXDB_PASSWORD}"
-      grafana.ini:
-        allow_embedding: true
-        auth.ldap:
-          enabled: true
-          allow_sign_up: true
-          config_file: /etc/grafana/ldap.toml
-        security:
-          disable_initial_admin_creation: false
-        users:
-          viewers_can_edit: false
-        auth:
-          disable_login_form: false
-          disable_signout_menu: false
-        auth.anonymous:
-          enabled: false
-          org_role: default
-        server:
-          root_url: "https://grafana.${SECRET_DOMAIN}"
-      ldap:
-        enabled: true
-        existingSecret: grafana-ldap-config
+      # additionalDataSources:
+      #   - name: Prometheus
+      #     type: prometheus
+      #     access: proxy
+      #     url: http://thanos-query-http:10902/
+      #     isDefault: true
+      #   - name: loki
+      #     type: loki
+      #     access: proxy
+      #     url: http://loki.observability.svc.cluster.local:3100
+      #   - name: rtlamr-collect
+      #     type: influxdb
+      #     access: proxy
+      #     database: meters
+      #     user: "${SECRET_INFLUXDB_USER}"
+      #     url: http://influxdb.observability.svc.cluster.local:8086
+      #     jsonData:
+      #       timeInterval: "15s"
+      #     secureJsonData:
+      #       password: "${SECRET_INFLUXDB_PASSWORD}"
+      #   - name: home-assistant
+      #     type: influxdb
+      #     access: proxy
+      #     database: home_assistant
+      #     user: "${SECRET_INFLUXDB_USER}"
+      #     url: http://influxdb.observability.svc.cluster.local:8086
+      #     jsonData:
+      #       timeInterval: "15s"
+      #     secureJsonData:
+      #       password: "${SECRET_INFLUXDB_PASSWORD}"
+      # grafana.ini:
+      #   allow_embedding: true
+      #   auth.ldap:
+      #     enabled: true
+      #     allow_sign_up: true
+      #     config_file: /etc/grafana/ldap.toml
+      #   security:
+      #     disable_initial_admin_creation: false
+      #   users:
+      #     viewers_can_edit: false
+      #   auth:
+      #     disable_login_form: false
+      #     disable_signout_menu: false
+      #   auth.anonymous:
+      #     enabled: false
+      #     org_role: default
+      #   server:
+      #     root_url: "https://grafana.${SECRET_DOMAIN}"
+      # ldap:
+      #   enabled: true
+      #   existingSecret: grafana-ldap-config
     prometheus:
       fullnameOverride: prometheus
       prometheusSpec:
