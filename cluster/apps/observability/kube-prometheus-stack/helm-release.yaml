@@ -194,14 +194,14 @@ spec:
           allow_sign_up: "true"
           config_file: /etc/grafana/ldap.toml
         security:
-          disable_initial_admin_creation: false
+          disable_initial_admin_creation: "false"
         users:
-          viewers_can_edit: false
+          viewers_can_edit: "false"
         auth:
-          disable_login_form: false
-          disable_signout_menu: false
+          disable_login_form: "false"
+          disable_signout_menu: "false"
         auth.anonymous:
-          enabled: false
+          enabled: "false"
           org_role: default
         server:
           root_url: "https://grafana.${SECRET_DOMAIN}"
