@@ -76,8 +76,6 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt
           kubernetes.io/ingress.allow-http: "false"
         hosts:
           - "grafana.${SECRET_DOMAIN}"
@@ -94,10 +92,10 @@ spec:
         tag: 7.3.6
       sidecar:
         dashboards:
-          enabled: true
+          enabled: false
           searchNamespace: ALL
         datasources:
-          enabled: true
+          enabled: false
           defaultDatasourceEnabled: false
       plugins:
         - natel-discrete-panel
