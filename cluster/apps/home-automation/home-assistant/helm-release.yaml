@@ -55,7 +55,7 @@ spec:
               pathType: Prefix
       tls:
         - hosts:
-            - "hass..${SECRET_DOMAIN}"
+            - "hass.${SECRET_DOMAIN}"
           secretName: home-assistant-tls
     additionalVolumes:
       - name: deploy-key
