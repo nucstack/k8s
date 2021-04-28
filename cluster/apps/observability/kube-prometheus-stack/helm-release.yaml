@@ -13,7 +13,7 @@ spec:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts/
       chart: kube-prometheus-stack
-      version: 13.5.1
+      version: 15.2.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -38,11 +38,6 @@ spec:
   values:
     prometheusOperator:
       enabled: true
-      admissionWebhooks:
-        patch:
-          image:
-            repository: jettech/kube-webhook-certgen
-            tag: v1.5.1
     kubeControllerManager:
       serviceMonitor:
         https: true
