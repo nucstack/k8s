@@ -1,0 +1,37 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: unifi-poller
+  namespace: observability
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: unifi-poller
+      version: 7.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi      
+    env:
+      TZ: "America/New_York"
+    prometheus:
+      serviceMonitor:
+        enabled: true
+    env:
+      UP_UNIFI_DEFAULT_URL: "${SECRET_UNIFI_URL}"
+      UP_UNIFI_DEFAULT_USER: "${SECRET_UNIFI_USERNAME}"
+      UP_UNIFI_DEFAULT_PASS: "${SECRET_UNIFI_PASSWORD}"
+      UP_PROMETHEUS_DISABLE: false
+      UP_INFLUXDB_DISABLE: true           
