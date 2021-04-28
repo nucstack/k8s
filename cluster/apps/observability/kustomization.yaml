@@ -10,3 +10,4 @@ resources:
   - rsyslog
   - rtlamr-collect
   - thanos
+  - unifi-poller
