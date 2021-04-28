@@ -74,10 +74,10 @@ spec:
       enabled: true
       sidecar:
         dashboards:
-          enabled: true
+          enabled: false
           searchNamespace: ALL
         datasources:
-          enabled: true
+          enabled: false
           defaultDatasourceEnabled: false
       plugins:
         - natel-discrete-panel
