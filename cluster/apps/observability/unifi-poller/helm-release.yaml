@@ -23,7 +23,7 @@ spec:
         memory: 128Mi
       requests:
         cpu: 100m
-        memory: 128Mi      
+        memory: 128Mi
     env:
       TZ: "America/New_York"
     prometheus:
@@ -34,4 +34,4 @@ spec:
       UP_UNIFI_DEFAULT_USER: "${SECRET_UNIFI_USERNAME}"
       UP_UNIFI_DEFAULT_PASS: "${SECRET_UNIFI_PASSWORD}"
       UP_PROMETHEUS_DISABLE: false
-      UP_INFLUXDB_DISABLE: true           
+      UP_INFLUXDB_DISABLE: true
