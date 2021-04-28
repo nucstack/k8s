@@ -17,6 +17,10 @@ sops --encrypt --in-place ./cluster/core/security/authelia/authelia-redis.secret
 envsubst < ./cluster/apps/observability/botkube/botkube.secrets.enc.template > ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 
+# influxdb
+envsubst < ./cluster/apps/observability/influxdb/influxdb.secret.enc.template > ./cluster/apps/observability/influxdb/influxdb.secret.enc.yaml
+sops --encrypt --in-place ./cluster/apps/observability/influxdb/influxdb.secret.enc.yaml
+
 # openldap
 envsubst < ./cluster/core/security/openldap/openldap.secret.enc.template > ./cluster/core/security/openldap/openldap.secret.enc.yaml
 sops --encrypt --in-place ./cluster/core/security/openldap/openldap.secret.enc.yaml
