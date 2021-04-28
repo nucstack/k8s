@@ -24,16 +24,46 @@ export BOOTSTRAP_INGRESS_NGINX_LB="192.168.0.101"
 export BOTKUBE_SLACK_CHANNEL="slack-channel"
 export BOTKUBE_SLACK_TOKEN="xxxxxxxxxxxxxxxxxxxxxxx"
 
+# home-assistant
+export HASS_HACS_TOKEN="xxxxxxxxxxxxxxxxxxxxxxx"    
+export HASS_LOCATION_LAT="00.000000"
+export HASS_LOCATION_LONG="-00.000000"
+export HASS_ALARM_CODE="1234"
+export HASS_MAGICMIRROR_APIKEY="apiKey: xxxxxxxxxxxxxxxxxxxxxxx"
+export HASS_GIT_REPO="git@github.com:user/home-assistant-repo.git"
+export HASS_DEPLOY_KEY_B64="xxxxxxxxxxxxxxxxxxxxxxx"
+export HASS_POSTGRES_USER="xxxxxxxxxxxxxxxxxxxxxxx"
+export HASS_POSTGRES_PASSWORD="xxxxxxxxxxxxxxxxxxxxxxx"
+export HASS_POSTGRES_DATABASE="xxxxxxxxxxxxxxxxxxxxxxx"
+
+# influxdb
+INFLUXDB_USER="xxxxxxxxxxxxxxxxxxxxxxx"
+INFLUXDB_PASSWORD="xxxxxxxxxxxxxxxxxxxxxxx"
+
 # ldap
-export LDAP_ADMIN_USERNAME="admin"
-export LDAP_ADMIN_PASSWORD="xxxxxxxxx"
+export LDAP_ADMIN_USERNAME="xxxxxxxxxxxxxxxxxxxxxxx"
+export LDAP_ADMIN_PASSWORD="xxxxxxxxxxxxxxxxxxxxxxx"
 export LDAP_USERS="user1,user2"
 export LDAP_GROUP="users"
 export LDAP_PASSWORDS="12345,67890"
 export LDAP_ROOT="dc=example,dc=com"
+
+# mosquitto
+export MQTT_USER="xxxxxxxxxxxxxxxxxxxxxxx"
+export MQTT_PASSWORD="xxxxxxxxxxxxxxxxxxxxxxx"
+
+# nfs
+export NFS_HOST="192.168.0.100"
+export NFS_BACKUP_PATH="/some/backup/path"
 
 # proxmox
 export PM_TLS_INSECURE=false
 export PM_API_URL="https://proxmox.example.com/api2/json"
 export PM_PASS="xxxxxxxxxxxxx"
 export PM_USER="user@pve"
+
+# zigbee
+export ZIGBEE_NETWORK_KEY="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1"
+
+# zwave
+export ZWAVE_NETWORK_KEY="xxxxxxxxxxxxxxxxxxxxxxx"
