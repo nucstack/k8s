@@ -7,4 +7,5 @@ resources:
   - kube-prometheus-stack
   - loki-stack
   - metrics-server
+  - rtlamr-collect
   - thanos
