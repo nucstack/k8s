@@ -17,13 +17,6 @@ sops --encrypt --in-place ./cluster/core/security/authelia/authelia-redis.secret
 envsubst < ./cluster/apps/observability/botkube/botkube.secrets.enc.template > ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 sops --encrypt --in-place ./cluster/apps/observability/botkube/botkube.secrets.enc.yaml
 
-# kube-prometheus-stack
-envsubst < ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap-config.secrets.enc.template > ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap-config.secrets.enc.yaml
-sops --encrypt --in-place ./cluster/apps/observability/kube-prometheus-stack/grafana-ldap-config.secrets.enc.yaml
-
-envsubst < ./cluster/apps/observability/kube-prometheus-stack/grafana-datasources.secrets.enc.template > ./cluster/apps/observability/kube-prometheus-stack/grafana-datasources.secrets.enc.yaml
-sops --encrypt --in-place ./cluster/apps/observability/kube-prometheus-stack/grafana-datasources.secrets.enc.yaml
-
 # openldap
 envsubst < ./cluster/core/security/openldap/openldap.secret.enc.template > ./cluster/core/security/openldap/openldap.secret.enc.yaml
 sops --encrypt --in-place ./cluster/core/security/openldap/openldap.secret.enc.yaml
