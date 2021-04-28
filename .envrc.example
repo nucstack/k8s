@@ -20,6 +20,10 @@ export BOOTSTRAP_DOMAIN="example.com"
 export BOOTSTRAP_METALLB_LB_RANGE="192.168.0.100-192.168.0.120"
 export BOOTSTRAP_INGRESS_NGINX_LB="192.168.0.101"
 
+# botkube
+export BOTKUBE_SLACK_CHANNEL="slack-channel"
+export BOTKUBE_SLACK_TOKEN="xxxxxxxxxxxxxxxxxxxxxxx"
+
 # ldap
 export LDAP_ADMIN_USERNAME="admin"
 export LDAP_ADMIN_PASSWORD="xxxxxxxxx"
