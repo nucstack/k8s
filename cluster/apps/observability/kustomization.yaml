@@ -5,6 +5,5 @@ resources:
   - botkube
   - influxdb
   - kube-prometheus-stack
-  - loki-stack
   - metrics-server
   - thanos
