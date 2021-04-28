@@ -7,6 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: mosquitto
     app.kubernetes.io/name: mosquitto
+    meta.helm.sh/release-namespace: home-automation
 spec:
   ports:
     - name: mqtt
