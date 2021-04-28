@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtlamr-collect
+  namespace: observability
+  labels:
+    app.kubernetes.io/name: rtlamr-collect
+    app.kubernetes.io/instance: rtlamr-collect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: rtlamr-collect
+      app.kubernetes.io/name: rtlamr-collect
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: rtlamr-collect
+        app.kubernetes.io/name: rtlamr-collect
+    spec:
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: rtlamr-collect
+          securityContext:
+            privileged: true
+          image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.5
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: INTERVAL
+              value: "30"
+            - name: COLLECT_LOGLEVEL
+              value: "DEBUG"
+            - name: RTLAMR_FORMAT
+              value: "json"
+            - name: RTLAMR_FILTERID
+              valueFrom:
+                secretKeyRef:
+                  name: rtlamr-collect
+                  key: meters
+            - name: RTLAMR_MSGTYPE
+              valueFrom:
+                secretKeyRef:
+                  name: rtlamr-collect
+                  key: msgtype
+            - name: COLLECT_INFLUXDB_ORG
+              value: "home"
+            - name: COLLECT_INFLUXDB_BUCKET
+              value: "meters/autogen"
+            - name: COLLECT_INFLUXDB_MEASUREMENT
+              value: "utilities"
+            - name: COLLECT_INFLUXDB_HOSTNAME
+              value: "http://influxdb.observability.svc.cluster.local:8086"
+            - name: COLLECT_INFLUXDB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: rtlamr-collect
+                  key: influxdb-token
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 500m
+              memory: 128Mi
+          volumeMounts:
+            - name: usb
+              mountPath: /dev/swradio0
+      volumes:
+        - name: usb
+          hostPath:
+            path: /dev/swradio0
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: device/0bda_2838
+                    operator: In
+                    values:
+                      - 'true'

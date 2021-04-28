@@ -19,6 +19,7 @@ export BOOTSTRAP_GITHUB_REPOSITORY="https://github.com/<RepoName>"
 export BOOTSTRAP_DOMAIN="example.com"
 export BOOTSTRAP_METALLB_LB_RANGE="192.168.0.100-192.168.0.120"
 export BOOTSTRAP_INGRESS_NGINX_LB="192.168.0.101"
+export PRIVATE_REGISTRY="registry.example.com"
 
 # botkube
 export BOTKUBE_SLACK_CHANNEL="slack-channel"
@@ -61,6 +62,11 @@ export PM_TLS_INSECURE=false
 export PM_API_URL="https://proxmox.example.com/api2/json"
 export PM_PASS="xxxxxxxxxxxxx"
 export PM_USER="user@pve"
+
+# rtlamr-collect
+export RTLAMR_METERS="<meter-id-1>,<meter-id-2>"
+export RTLAMR_MSGTYPE="scm,scm+"
+export RTLAMR_INFLUXDB_DBNAME="rtlamr_collect"
 
 # unifi
 export UNIFI_URL="https://unifi.example.com"
