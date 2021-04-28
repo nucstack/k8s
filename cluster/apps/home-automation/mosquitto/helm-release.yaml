@@ -38,6 +38,7 @@ spec:
       startup:
         enabled: false
     service:
+      enabled: true
       type: LoadBalancer
       loadBalancerIP: "${SECRET_MQTT_LB_IP}"
       port:
