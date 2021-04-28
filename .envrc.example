@@ -62,6 +62,11 @@ export PM_API_URL="https://proxmox.example.com/api2/json"
 export PM_PASS="xxxxxxxxxxxxx"
 export PM_USER="user@pve"
 
+# unifi
+export UNIFI_URL="https://unifi.example.com"
+export UNIFI_USERNAME="xxxxxxxxxxxxxxx"
+export UNIFI_PASSWORD="xxxxxxxxxxxxxxx"
+
 # zigbee
 export ZIGBEE_NETWORK_KEY="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1"
 
