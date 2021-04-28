@@ -19,7 +19,7 @@ spec:
       containers:
         - name: floorplan
           image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.1
-          imagePullPolicy: "Always"                                     
+          imagePullPolicy: "Always"
           ports:
             - name: http
               containerPort: 8000
@@ -29,7 +29,7 @@ spec:
               memory: 128Mi
             requests:
               cpu: 100m
-              memory: 128Mi              
+              memory: 128Mi
           livenessProbe:
             tcpSocket:
               port: http
@@ -50,7 +50,7 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 5
             successThreshold: 1
-            failureThreshold: 30              
+            failureThreshold: 30
 ---
 apiVersion: v1
 kind: Service
@@ -60,13 +60,13 @@ metadata:
   labels:
     app.kubernetes.io/name: floorplan
 spec:
-  ports:    
+  ports:
     - name: http
       port: 80
-      targetPort: http     
+      targetPort: http
   selector:
     app.kubernetes.io/name: floorplan
----    
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -76,17 +76,17 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: "floorplan.${SECRET_DOMAIN}"
-    http:
-      paths:
-      - backend:
-          service:
-            name: floorplan
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: "floorplan.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: floorplan
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - "floorplan.${SECRET_DOMAIN}"
-    secretName: floorplan-tls
+    - hosts:
+        - "floorplan.${SECRET_DOMAIN}"
+      secretName: floorplan-tls
