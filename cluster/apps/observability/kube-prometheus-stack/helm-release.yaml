@@ -81,7 +81,6 @@ spec:
           defaultDatasourceEnabled: false
       plugins:
         - natel-discrete-panel
-        - pr0ps-trackmap-panel
         - grafana-piechart-panel
         - vonage-status-panel
         - grafana-worldmap-panel
