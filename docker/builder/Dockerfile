@@ -27,6 +27,7 @@ RUN apk --update --no-cache add \
   pinentry \
   git \
   jq \
+  rsync \
   yq \
   shellcheck \
   git-crypt \
@@ -116,8 +117,7 @@ RUN curl -sL -o task_linux_amd64.tar.gz https://github.com/go-task/task/releases
     chmod +x /usr/bin/task
 
 # Aliases because humans might use this :shrug:
-RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc && \
-    echo 'alias k="kubectl"' >> ~/.bashrc && \
+RUN echo 'alias k="kubectl"' >> ~/.bashrc && \
     echo 'alias t="terraform"' >> ~/.bashrc && \
     echo 'alias f="flux"' >> ~/.bashrc && \
     echo 'alias s="sops"' >> ~/.bashrc && \
