@@ -1,3 +1,0 @@
-[submodule "external/kubespray"]
-	path = external/kubespray
-	url = git@github.com:kubernetes-sigs/kubespray.git
