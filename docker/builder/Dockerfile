@@ -2,7 +2,6 @@ FROM alpine:3
 
 ARG ANSIBLE_VERSION=2.9
 ARG CONFTEST_VERSION=0.23.0
-ARG DIRENV_VERSION=2.28.0
 ARG FLUX_VERSION=0.12.3
 ARG HELM_VERSION=3.5.4
 ARG K3SUP_VERSION=0.10.2
@@ -36,10 +35,6 @@ RUN apk --update --no-cache add \
   sudo
 
 RUN apk --update --no-cache add --virtual build-dependencies
-
-# Install direnv
-RUN curl -sL -o /usr/bin/direnv https://github.com/direnv/direnv/releases/download/v${DIRENV_VERSION}/direnv.linux-amd64 && \
-    chmod +x /usr/bin/direnv
 
 # Install envsubst
 RUN apk add --update libintl && \
@@ -127,9 +122,6 @@ RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc && \
     echo 'alias f="flux"' >> ~/.bashrc && \
     echo 'alias s="sops"' >> ~/.bashrc && \
     echo 'alias reconcile="flux reconcile source git -n flux-system flux-system"' >> ~/.bashrc
-
-# direnv .envrc config
-RUN mkdir -p ~/.config/direnv/ && printf '[whitelist]\nprefix = ["/app"]' > ~/.config/direnv/config.toml
 
 # Cleanup
 RUN rm -rf /var/cache/apk/* 
