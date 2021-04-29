@@ -1,0 +1,22 @@
+---
+version: '3'
+
+env:
+  TF_IN_AUTOMATION: true  
+  TF_WORKSPACE: "{{.ENVIRONMENT}}"
+
+tasks:
+
+  init:
+    desc: Initialize terraform          
+    cmds:
+      - terraform init {{.TERRAFORM_DIR}}
+    silent: true
+  plan:
+    desc: plan terraform
+    cmds:
+      - terraform plan --var-file {{.TERRAFORM_DIR}}/{{.ENVIRONMENT}}.auto.tfvars {{.TERRAFORM_DIR}}
+  apply:
+    desc: apply terraform          
+    cmds:      
+      - terraform apply --var-file {{.TERRAFORM_DIR}}/{{.ENVIRONMENT}}.auto.tfvars {{.TERRAFORM_DIR}}

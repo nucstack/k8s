@@ -7,4 +7,36 @@ env:
 vars:
   ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
-  ANSIBLE_GROUPS: "k8s-master:k8s-worker"
+  ANSIBLE_PLAYBOOK: "kubespray"
+  ANSIBLE_HOSTS:
+    sh: "jq -jr '.resources[] | select((.module == \"module.k8s\") and .type == \"proxmox_vm_qemu\") | .instances[] | .attributes.name + \",\" + .attributes.ssh_host+ \" \"' {{.STATE_DIR}}/terraform.tfstate"
+tasks:
+
+  init:
+    desc: Generate host inventory
+    env:
+      CONFIG_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
+    cmds:
+      - mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
+      - python3 {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/contrib/inventory_builder/inventory.py {{.ANSIBLE_HOSTS}} {{.ANSIBLE_ADDITIONAL_HOSTS}}
+    silent: true
+
+  ping:
+    desc: Ping all k8s nodes
+    cmds:
+      - "ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml -u {{.SSH_USER}} --one-line -m ping"
+    silent: true
+
+  install:
+    desc: Install k8s
+    deps: [init, ping]
+    cmds:
+      - "ansible -i {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml"
+    silent: true
+
+  reset:
+    desc: Reset k8s
+    deps: [init, ping]
+    cmds:
+      - "ansible -i {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml"
+    silent: true

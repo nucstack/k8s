@@ -1,9 +1,12 @@
 ---
 version: '3'
 
+env:
+  KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+
 tasks:
 
-  fetch-kubeconfig:
+  kubeconfig:
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
     - "[ -d ~/.ssh ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
