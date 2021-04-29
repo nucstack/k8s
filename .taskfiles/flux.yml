@@ -7,7 +7,7 @@ env:
 tasks:
 
   bootstrap:
-    deps: [check,kube:kubeconfig]
+    deps: [check]
     desc: Flux bootstrap
     cmds:
       - kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
@@ -21,27 +21,28 @@ tasks:
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
 
   install:
-    deps: [check,kube:kubeconfig]
+    deps: [check]
     desc: Flux bootstrap
     cmds:
       - kubectl apply --kustomize={{.PROJECT_DIR}}/cluster/base/flux-system
 
   check:
-    deps: [check,kube:kubeconfig]
+    deps: [check]
     desc: Flux Preflight check
     cmds:
       - flux check --pre
 
   sync:
-    deps: [check,kube:kubeconfig]  
+    deps: [check]  
     desc: Sync flux-system with the Git Repository
     cmds:
       - flux reconcile source git flux-system
 
   secrets:
-    deps: [check,kube:kubeconfig]
+    deps: [check]
     desc: Reroll secrets
     cmds:
+      # common
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
@@ -94,4 +95,4 @@ tasks:
 
       # rtlamr-collect
       - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml      
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
