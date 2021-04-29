@@ -27,7 +27,6 @@ tasks:
       - kubectl apply --kustomize={{.PROJECT_DIR}}/cluster/base/flux-system
 
   check:
-    deps: [check]
     desc: Flux Preflight check
     cmds:
       - flux check --pre
