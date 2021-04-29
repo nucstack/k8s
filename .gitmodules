@@ -1,3 +1,3 @@
-[submodule "external/kubespray"]
-	path = external/kubespray
+[submodule "ansible/playbooks/kubespray"]
+	path = ansible/playbooks/kubespray
 	url = git@github.com:kubernetes-sigs/kubespray.git

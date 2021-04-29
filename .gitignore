@@ -4,20 +4,14 @@
 .DS_Store
 Thumbs.db
 # k8s
-kubeconfig
+*kubeconfig
 # vscode-sops
 .decrypted~*.yaml
 # terraform
 .terraform
-terraform/k3s-cluster/.terraform.lock.hcl
-terraform/k3s-cluster/terraform.tfstate.backup
-terraform/k3s-cluster/.terraform.tfstate.lock.info
 *_ssh_private_key
 *_ssh_public_key
-*.tfstate
+*.tfstate*
 *.auto.tfvars
-
-.envrc
-terraform/k8s-cluster/terraform.tfstate.backup
-terraform/k8s-cluster/.terraform.lock.hcl
-terraform/k8s-cluster/staging_ssh_public_key
+.terraform.lock.hcl
+*.env

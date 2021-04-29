@@ -1,0 +1,33 @@
+---
+version: '3'
+
+vars:
+  PROJECT_DIR:
+    sh: "git rev-parse --show-toplevel"
+  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"  
+  CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
+  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/cluster"
+  STATE_DIR: "{{.PROJECT_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
+  # the terraform state used to build instances contains some useful things
+  SSH_USER:
+    sh: "jq '.resources[] | select((.module == \"module.k8s\") and .type == \"proxmox_vm_qemu\") | .instances[0].attributes.ciuser' {{.STATE_DIR}}/terraform.tfstate"
+  SSH_PRIVATE_KEY:
+    sh: "jq '.resources[] | select((.module == \"module.k8s\") and .type == \"tls_private_key\") | .instances[0].attributes.private_key_pem' {{.STATE_DIR}}/terraform.tfstate"
+  SSH_PUBLIC_KEY:
+    sh: "jq '.resources[] | select((.module == \"module.k8s\") and .type == \"tls_private_key\") | .instances[0].attributes.public_key_openssh' {{.STATE_DIR}}/terraform.tfstate"
+  K8S_MASTER_IP:
+    sh: "jq '.resources[] | select((.module == \"module.k8s\") and .type == \"proxmox_vm_qemu\") | .instances[0].attributes.ssh_host' {{.STATE_DIR}}/terraform.tfstate | tr -d '\"'"
+
+dotenv: [".env"]
+  
+includes:
+  ansible: .taskfiles/ansible.yml
+  flux: .taskfiles/flux.yml
+  kube: .taskfiles/kube.yml
+  terraform: .taskfiles/terraform.yml
+
+tasks:
+  default:    
+    cmds:
+      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+    silent: true      

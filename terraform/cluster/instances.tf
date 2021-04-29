@@ -13,7 +13,7 @@ variable disk              {}
 variable network           {}
 variable nameserver        {}
 
-module "k3s" {
+module "k8s" {
   source      = "../modules/proxmox-vm"
 
   name              = var.name

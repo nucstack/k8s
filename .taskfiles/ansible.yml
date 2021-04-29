@@ -1,0 +1,53 @@
+---
+version: '3'
+
+env:
+  ANSIBLE_CONFIG: "{{.PROJECT_DIR}}/ansible/ansible.cfg"    
+  
+vars:  
+  ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
+  ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
+  ANSIBLE_PLAYBOOK: "kubespray"
+  ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
+  ANSIBLE_HOSTS:
+    sh: "jq -jr '.resources[] | select((.module == \"module.k8s\") and .type == \"proxmox_vm_qemu\") | .instances[] | .attributes.name + \",\" + .attributes.ssh_host+ \" \"' {{.STATE_DIR}}/terraform.tfstate"
+tasks:
+
+  init:
+    desc: Generate host inventory
+    env:
+      CONFIG_FILE: "{{.ANSIBLE_HOSTS_FILE}}"
+    cmds:
+      - mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
+      - cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample/group_vars {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/
+      - python3 {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/contrib/inventory_builder/inventory.py {{.ANSIBLE_HOSTS}} {{.ANSIBLE_ADDITIONAL_HOSTS}}
+    silent: true
+
+  ping:
+    desc: Ping all k8s nodes
+    cmds:
+      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
+    silent: true
+
+  k8s-install:
+    desc: Install k8s
+    deps: [ping]
+    cmds:
+      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
+    silent: true
+
+  k8s-reset:
+    desc: Reset k8s
+    deps: [ping]
+    cmds:
+      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
+      - rm {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+    silent: true
+
+  k8s-upgrade:
+    desc: Install k8s
+    deps: [ping]
+    cmds:
+      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"
+      - task kube:export-config
+    silent: true

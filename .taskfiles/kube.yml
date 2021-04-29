@@ -1,0 +1,15 @@
+---
+version: '3'
+
+env:
+  KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+
+tasks:
+
+  export-config:
+    desc: fetch kubeconfig from bootstrap k8s master
+    cmds:
+      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:/etc/kubernetes/admin.conf {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+      - sed -i 's/127.0.0.1/{{.K8S_MASTER_IP}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+      - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+    silent: true
