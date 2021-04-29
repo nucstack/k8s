@@ -11,6 +11,7 @@ ARG KUBESEAL_VERSION=0.15.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
 ARG SOPS_VERSION=3.7.1
+ARG TASK_VERSION=3.4.2
 ARG TERRAFORM_VERSION=0.14.8
 
 WORKDIR /
@@ -113,6 +114,11 @@ RUN ansible-galaxy collection install community.kubernetes && \
 # Install sops
 RUN curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
     mv sops /usr/bin && chmod +x /usr/bin/sops
+
+# Install task
+RUN curl -sL -o task_linux_amd64.tar.gz https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz && \
+    tar -C /usr/bin -xvzf task_linux_amd64.tar.gz && \
+    chmod +x /usr/bin/task
 
 # Aliases because humans might use this :shrug:
 RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc && \
