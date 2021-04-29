@@ -25,3 +25,9 @@ includes:
   flux: .taskfiles/flux.yml
   kube: .taskfiles/kube.yml
   terraform: .taskfiles/terraform.yml
+
+tasks:
+  default:    
+    cmds:
+      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+    silent: true      
