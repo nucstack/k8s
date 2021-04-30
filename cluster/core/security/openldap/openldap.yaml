@@ -86,6 +86,8 @@ spec:
               value: "256"
             - name: LDAP_ORGANISATION
               value: "${SECRET_DOMAIN}"
+            - name: DISABLE_CHOWN
+              value: "true"
             - name: LDAP_REMOVE_CONFIG_AFTER_SETUP
               value: "false"
             - name: LDAP_DOMAIN
