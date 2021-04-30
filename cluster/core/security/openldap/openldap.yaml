@@ -96,6 +96,8 @@ spec:
               value: "256"
             - name: LDAP_ORGANISATION
               value: "${SECRET_DOMAIN}"
+            - name: LDAP_REMOVE_CONFIG_AFTER_SETUP
+              value: "false"              
             - name: LDAP_DOMAIN
               value: "${SECRET_DOMAIN}"
             - name: LDAP_READONLY_USER
