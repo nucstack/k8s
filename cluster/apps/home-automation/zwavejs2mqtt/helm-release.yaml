@@ -5,6 +5,9 @@ metadata:
   name: zwavejs2mqtt
   namespace: home-automation
 spec:
+  dependsOn:
+    - name: mosquitto
+      namespace: home-automation
   interval: 5m
   chart:
     spec:
