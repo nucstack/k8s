@@ -40,6 +40,7 @@ tasks:
     deps: [ping]
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
+      - task kube:export-config
     silent: true
 
   k8s-reset:
@@ -51,9 +52,8 @@ tasks:
     silent: true
 
   k8s-upgrade:
-    desc: Install k8s
+    desc: Upgrade k8s
     deps: [ping]
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"
-      - task kube:export-config
+      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"      
     silent: true
