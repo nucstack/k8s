@@ -14,7 +14,7 @@ tasks:
       - gpg --export-secret-keys --armor {{.FLUX_KEY_FP}} | kubectl create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin
 
   install:
-    deps: [check,bootstrap]
+    deps: [check]
     desc: Flux bootstrap
     cmds:
       - kubectl apply --kustomize={{.PROJECT_DIR}}/cluster/base/flux-system
