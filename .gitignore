@@ -9,9 +9,5 @@ Thumbs.db
 .decrypted~*.yaml
 # terraform
 .terraform
-*_ssh_private_key
-*_ssh_public_key
-*.tfstate*
-*.auto.tfvars
 .terraform.lock.hcl
 *.env
