@@ -79,8 +79,8 @@ spec:
             - name: data
               mountPath: /var/lib/ldap
             - name: custom-ldif
-              mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
-              readOnly: false
+              mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom/custom.ldif
+              subPath: custom.ldif
           imagePullPolicy: "Always"
           env:
             - name: LDAP_LOG_LEVEL
@@ -143,6 +143,9 @@ spec:
         - name: custom-ldif
           configMap:
             name: openldap-custom-ldif
+            items:
+              - key: custom.ldif
+                path: custom.ldif
 ---
 apiVersion: v1
 kind: Service
