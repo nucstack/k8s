@@ -2,7 +2,6 @@
 variable name              {}
 variable description       {}
 variable username          {}
-variable password          {}
 variable environment       {}
 variable instances         {}
 variable template          {}
@@ -22,7 +21,6 @@ module "k8s" {
   environment       = var.environment
   template          = var.template
   username          = var.username
-  password          = var.password
 
   // resources    
   cpu_sockets       = var.cpu_sockets 
