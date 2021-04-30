@@ -85,6 +85,8 @@ spec:
           env:
             - name: LDAP_LOG_LEVEL
               value: "256"
+            - name: DISABLE_CHOWN
+              value: "true"
             - name: LDAP_ORGANISATION
               value: "${SECRET_DOMAIN}"
             - name: LDAP_DOMAIN
