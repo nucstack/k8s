@@ -32,7 +32,6 @@ tasks:
       - flux check --pre
 
   sync:
-    deps: [check]  
     desc: Sync flux-system with the Git Repository
     cmds:
       - flux reconcile source git flux-system
