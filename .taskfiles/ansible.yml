@@ -44,6 +44,13 @@ tasks:
       - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true
 
+  reboot:
+    desc: reboot all k8s nodes
+    deps: [export-sshkey]
+    cmds:
+      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
+    silent: true    
+
   k8s-install:
     desc: Install k8s
     deps: [ping]
