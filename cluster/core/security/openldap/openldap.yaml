@@ -27,6 +27,32 @@ spec:
   storageClassName: longhorn
   volumeMode: Filesystem
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openldap-custom-ldif
+  namespace: security
+data:
+  custom.ldif: |
+    # LDIF Export for {{ LDAP_BASE_DN }}
+    version: 1
+
+    dn: ou=groups,{{ LDAP_BASE_DN }}
+    objectclass: organizationalUnit
+    objectclass: top
+    ou: groups
+
+    dn: cn=admins,ou=groups,{{ LDAP_BASE_DN }}
+    cn: admins
+    member: cn=admin,{{ LDAP_BASE_DN }}
+    objectclass: groupOfNames
+    objectclass: top
+
+    dn: ou=users,{{ LDAP_BASE_DN }}
+    objectclass: organizationalUnit
+    objectclass: top
+    ou: users
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,6 +78,8 @@ spec:
               mountPath: /etc/ldap/slapd.d
             - name: data
               mountPath: /var/lib/ldap
+            - name: custom-ldif
+              mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
           imagePullPolicy: "Always"
           env:
             - name: LDAP_LOG_LEVEL
@@ -111,6 +139,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: openldap-config
+        - name: custom-ldif
+          configMap:
+            name: openldap-custom-ldif
 ---
 apiVersion: v1
 kind: Service
