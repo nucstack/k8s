@@ -7,7 +7,12 @@ variable environment {}
 variable description {
   default = null
 }
+
 variable username    {
+  default = null
+}
+
+variable password    {
   default = null
 }
 
