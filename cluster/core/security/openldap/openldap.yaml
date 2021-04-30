@@ -70,15 +70,6 @@ spec:
       labels:
         app.kubernetes.io/name: openldap
     spec:
-      initContainers:
-        - name: copy
-          image: busybox:1.32.0
-          command: ["/bin/sh", "-c", "cp /ldifs/*.ldif /data/"]
-          volumeMounts:
-            - name: custom-ldif
-              mountPath: /ldifs
-            - name: custom-ldif-path
-              mountPath: /data
       containers:
         - name: openldap
           image: osixia/openldap:1.5.0
@@ -87,9 +78,8 @@ spec:
               mountPath: /etc/ldap/slapd.d
             - name: data
               mountPath: /var/lib/ldap
-            - name: custom-ldif-path
+            - name: custom-ldif
               mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
-              readOnly: false
           imagePullPolicy: "Always"
           env:
             - name: LDAP_LOG_LEVEL
@@ -97,7 +87,7 @@ spec:
             - name: LDAP_ORGANISATION
               value: "${SECRET_DOMAIN}"
             - name: LDAP_REMOVE_CONFIG_AFTER_SETUP
-              value: "false"              
+              value: "false"
             - name: LDAP_DOMAIN
               value: "${SECRET_DOMAIN}"
             - name: LDAP_READONLY_USER
@@ -151,11 +141,12 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: openldap-config
-        - name: custom-ldif-path
-          emptyDir: {}
         - name: custom-ldif
           configMap:
             name: openldap-custom-ldif
+            items:
+              - key: custom.ldif
+                path: custom.ldif
 ---
 apiVersion: v1
 kind: Service
