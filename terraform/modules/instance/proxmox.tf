@@ -1,6 +1,6 @@
 
 resource "proxmox_vm_qemu" "vm" {
-  count       = length(var.instances)
+  count       = var.type == "virtual" ? length(var.instances) : 0
   os_type     = var.os_type
   target_node = var.target_node
   name        = format("%s-%s", var.name, element(random_string.suffix, count.index).result)
@@ -42,6 +42,6 @@ resource "proxmox_vm_qemu" "vm" {
   ipconfig0  = element(var.instances, count.index)
   nameserver = var.nameserver
   ciuser     = var.username != "" ? var.username : random_pet.username.id
-  cipassword = var.password != "" ? var.password : random_password.password.result  
-  sshkeys    = tls_private_key.ssh_key.public_key_openssh
+  cipassword = var.password != "" ? var.password : random_password.password.result
+  sshkeys    = var.ssh_authorized_key != "" ? var.ssh_authorized_key : tls_private_key.ssh_key.public_key_openssh
 }

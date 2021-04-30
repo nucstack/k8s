@@ -4,6 +4,11 @@ variable "environment" {
   default     = "staging"
 }
 
+variable "type" {
+  description = "instance types (virtual or physical)."
+  type        = string
+}
+
 variable "name" {
   description = "vm name prefix."
   type        = string
@@ -127,11 +132,4 @@ variable "ssh_authorized_key" {
   description = "ssh_authorized_key to add during cloudinit."
   type        = string
   default     = ""
-}
-
-variable "ssh_private_key" {
-  description = "ssh_private_key used during provision."
-  type        = string
-  default     = ""
-  sensitive   = true
 }

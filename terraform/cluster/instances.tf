@@ -1,20 +1,8 @@
-// define our tfvars
-variable name              {}
-variable description       {}
-variable username          {}
-variable environment       {}
-variable instances         {}
-variable template          {}
-variable cpu_sockets       {}
-variable cpu_cores         {}
-variable memory            {}
-variable disk              {}
-variable network           {}
-variable nameserver        {}
 
 module "k8s" {
-  source      = "../modules/proxmox-vm"
+  source      = "../modules/instance"
 
+  type              = var.type
   name              = var.name
   description       = var.description
   instances         = var.instances
