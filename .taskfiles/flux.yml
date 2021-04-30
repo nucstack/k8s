@@ -12,16 +12,9 @@ tasks:
     cmds:
       - kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
       - gpg --export-secret-keys --armor {{.FLUX_KEY_FP}} | kubectl create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin
-      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-sync.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
 
   install:
-    deps: [check]
+    deps: [check,bootstrap]
     desc: Flux bootstrap
     cmds:
       - kubectl apply --kustomize={{.PROJECT_DIR}}/cluster/base/flux-system
@@ -50,10 +43,15 @@ tasks:
     deps: [check]
     desc: Reroll secrets
     cmds:
-      # common
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
+      # common      
+      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-sync.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
+
 
       # authelia
       - envsubst < {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.yaml
