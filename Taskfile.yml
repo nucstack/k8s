@@ -23,5 +23,4 @@ dotenv: [".env"]
 includes:
   ansible: .taskfiles/ansible.yml
   flux: .taskfiles/flux.yml
-  kube: .taskfiles/kube.yml
   terraform: .taskfiles/terraform.yml

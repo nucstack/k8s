@@ -18,6 +18,15 @@ tasks:
       - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
     silent: true
 
+  export-kubeconfig:
+    deps: [export-sshkey]
+    desc: fetch kubeconfig from bootstrap k8s master
+    cmds:
+      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:/etc/kubernetes/admin.conf {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+      - sed -i 's/127.0.0.1/{{.K8S_MASTER_IP}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+      - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+    silent: true
+
   init:
     desc: Generate host inventory
     env:
@@ -40,7 +49,7 @@ tasks:
     deps: [ping]
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
-      - task kube:export-config
+      - task ansible:export-kubeconfig
     silent: true
 
   k8s-reset:
