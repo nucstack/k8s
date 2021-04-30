@@ -79,12 +79,12 @@ tasks:
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.yaml
 
       # zigbee2mqtt
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
+      #- envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
+      #- sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
 
       # zwavejs2mqtt
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
+      #- envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
+      #- sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
 
       # kube-prometheus-stack
       - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
