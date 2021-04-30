@@ -4,6 +4,7 @@ resources:
   - authelia.yaml
   - banzaicloud.yaml
   - bitnami.yaml
+  - emberstack.yaml
   - grafana-loki.yaml
   - influxdata.yaml
   - infracloudio.yaml

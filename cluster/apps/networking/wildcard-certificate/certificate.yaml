@@ -4,6 +4,8 @@ kind: Certificate
 metadata:
   name: "${SECRET_DOMAIN/./-}"
   namespace: networking
+  annotations:
+    reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
 spec:
   secretName: "${SECRET_DOMAIN/./-}-tls"
   issuerRef:
