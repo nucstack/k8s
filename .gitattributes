@@ -1,2 +1,4 @@
 secret.enc.yaml diff=sopsdiffer
 cluster-secrets.yaml diff=sopsdiffer
+*.tfstate* filter=git-crypt diff=git-crypt
+*.auto.tfvars filter=git-crypt diff=git-crypt
