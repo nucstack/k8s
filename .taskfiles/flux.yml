@@ -36,7 +36,17 @@ tasks:
     cmds:
       - flux reconcile source git flux-system
 
-  secrets:
+  uninstall:
+    desc: Remove flux-system deployment
+    cmds:
+      - flux uninstall -s --verbose
+
+  update:
+    desc: Update flux-system deployment
+    cmds:
+      - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-components.yaml"
+
+  roll-secrets:
     deps: [check]
     desc: Reroll secrets
     cmds:
