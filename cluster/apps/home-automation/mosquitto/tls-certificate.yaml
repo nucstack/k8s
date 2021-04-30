@@ -7,7 +7,7 @@ metadata:
 spec:
   secretName: mosquitto-tls-cert
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-staging
     kind: ClusterIssuer
   # keySize: 2048
   # keyAlgorithm: rsa
