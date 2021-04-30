@@ -80,6 +80,7 @@ spec:
               mountPath: /var/lib/ldap
             - name: custom-ldif
               mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom
+              readOnly: false
           imagePullPolicy: "Always"
           env:
             - name: LDAP_LOG_LEVEL
