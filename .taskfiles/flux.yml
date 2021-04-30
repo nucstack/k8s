@@ -52,7 +52,6 @@ tasks:
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
 
-
       # authelia
       - envsubst < {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.yaml
