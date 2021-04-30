@@ -13,6 +13,10 @@ vars:
     sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[] | .attributes.triggers.name + \",\" + .attributes.triggers.ipaddress + \" \"' {{.STATE_DIR}}/terraform.tfstate"
     
 tasks:
+  export-sshkey:
+    cmds:
+      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+    silent: true
 
   init:
     desc: Generate host inventory
@@ -26,6 +30,7 @@ tasks:
 
   ping:
     desc: Ping all k8s nodes
+    deps: [export-sshkey]
     cmds:
       - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true

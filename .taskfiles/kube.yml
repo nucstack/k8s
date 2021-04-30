@@ -5,7 +5,7 @@ env:
   KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
 
 tasks:
-  export-sshkey:    
+  export-sshkey:
     cmds:
       - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
     silent: true      
