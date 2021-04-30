@@ -5,8 +5,12 @@ env:
   KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
 
 tasks:
-
-  export-config:
+  export-sshkey:    
+    cmds:
+      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+    silent: true      
+  export-kubeconfig:
+    deps: [export-sshkey]
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
       - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:/etc/kubernetes/admin.conf {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"

@@ -2,7 +2,7 @@
 version: 2
 updates:
   - package-ecosystem: gitsubmodule
-    directory: '/external'
+    directory: '/ansible/playbooks'
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
