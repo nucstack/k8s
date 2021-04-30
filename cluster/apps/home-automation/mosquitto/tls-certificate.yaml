@@ -9,13 +9,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  # keySize: 2048
-  # keyAlgorithm: rsa
-  # keyEncoding: pkcs1
-  # usages:
-  #   - digital signature
-  #   - key encipherment
-  #   - server auth
   commonName: "mqtt.${SECRET_DOMAIN}"
   dnsNames:
     - "mqtt.${SECRET_DOMAIN}"
