@@ -30,7 +30,7 @@ spec:
     persistence:
       config:
         enabled: true
-        size: 20Gi
+        size: 10Gi
         storageClass: longhorn
     influxdb:
       enabled: false
@@ -38,7 +38,7 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        size: 20Gi
+        size: 10Gi
         storageClass: longhorn
     ingress:
       annotations:
