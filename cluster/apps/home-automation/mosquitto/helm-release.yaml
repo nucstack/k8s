@@ -57,23 +57,6 @@ spec:
       - "-c"
       - "/mosquitto/conf/mosquitto.conf"
     initContainers:
-      - name: ca-export
-        image: ubuntu:21.04
-        command: ["/usr/bin/csplit"]
-        args:
-          - "-z"
-          - "-k"
-          - "-f"
-          - "/ca/ca"
-          - "/certs/tls.crt"
-          - "/-----BEGIN CERTIFICATE-----/"
-          - "{1}"
-        volumeMounts:
-          - name: certs
-            mountPath: /certs
-            readOnly: false
-          - name: ca
-            mountPath: /ca
       - name: encrypt
         image: eclipse-mosquitto:2.0.7
         env:
@@ -99,23 +82,12 @@ spec:
             mountPath: /secrets
             readOnly: false
     additionalVolumes:
-      - name: ca
-        emptyDir: {}
-      - name: certs
-        secret:
-          secretName: mosquitto-tls-cert
       - name: mosquitto-conf
         configMap:
           name: mosquitto-conf
       - name: mosquitto-creds
         emptyDir: {}
     additionalVolumeMounts:
-      - name: certs
-        mountPath: "/certs"
-        readOnly: true
-      - name: ca
-        mountPath: "/ca"
-        readOnly: true
       - name: mosquitto-conf
         mountPath: "/mosquitto/conf"
         readOnly: true
