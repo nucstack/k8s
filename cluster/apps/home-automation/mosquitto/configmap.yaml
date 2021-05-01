@@ -12,9 +12,3 @@ data:
     persistence_location /mosquitto/data
     autosave_interval 1800
     password_file /secrets/mosquitto-creds
-    #listener 9001
-    #protocol websockets
-    #certfile /certs/tls.crt
-    #keyfile /certs/tls.key
-    #cafile /ca/ca00
-    #tls_version tlsv1.2
