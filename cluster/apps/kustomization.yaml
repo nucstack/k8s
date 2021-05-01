@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - networking
   - observability
-  - home-automation
+  #- home-automation
