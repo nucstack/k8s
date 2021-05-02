@@ -4,9 +4,7 @@ ARG ANSIBLE_VERSION=2.9
 ARG CONFTEST_VERSION=0.23.0
 ARG FLUX_VERSION=0.13.2
 ARG HELM_VERSION=3.5.4
-ARG K3SUP_VERSION=0.10.2
 ARG KUBECTL_VERSION=1.21.0
-ARG KUBESEAL_VERSION=0.15.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
 ARG SOPS_VERSION=3.7.1
@@ -54,10 +52,6 @@ RUN apk add --update --no-cache curl unzip ca-certificates && \
     chmod +x /usr/bin/helm && \
     rm -rf linux-amd64
 
-# Install kubeseal
-RUN curl -sL -o /usr/bin/kubeseal https://github.com/bitnami-labs/sealed-secrets/releases/download/v${KUBESEAL_VERSION}/kubeseal-linux-amd64 && \
-  chmod +x /usr/bin/kubeseal
-
 # Install flux
 RUN curl -sL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
   tar -C /usr/bin -xvzf flux.tar.gz && \
@@ -80,10 +74,6 @@ RUN curl -sL -o kubeval-linux-amd64.tar.gz https://github.com/instrumenta/kubeva
     tar -C /usr/bin -xvzf kubeval-linux-amd64.tar.gz && \
     chmod +x /usr/bin/kubeval
 
-# Install k3sup
-RUN curl -sL -o k3sup https://github.com/alexellis/k3sup/releases/download/${K3SUP_VERSION}/k3sup && \
-    mv k3sup /usr/bin && chmod +x /usr/bin/k3sup
-
 # Install ansible
 RUN apk --update add git python3 py-pip openssl ca-certificates && \
     apk --update add --virtual build-dependencies python3-dev libffi-dev openssl-dev build-base
@@ -98,14 +88,13 @@ RUN pip3 install --upgrade pip cffi && \
         pyOpenSSL \
         pre-commit
 
+RUN ansible-galaxy collection install community.kubernetes && \
+    ansible-galaxy collection install community.general
+
 # Install conftest
 RUN curl -sL -o conftest_Linux_x86_64.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
     tar -C /usr/bin -xvzf conftest_Linux_x86_64.tar.gz && \
     chmod +x /usr/bin/conftest
-
-RUN ansible-galaxy collection install community.kubernetes && \
-    ansible-galaxy collection install community.general && \
-    ansible-galaxy install geerlingguy.postgresql
 
 # Install sops
 RUN curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
