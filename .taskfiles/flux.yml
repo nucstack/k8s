@@ -101,3 +101,7 @@ tasks:
       # rtlamr-collect
       - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
+
+      # unifi-poller
+      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.yaml
