@@ -21,6 +21,13 @@ spec:
     - kind: Secret
       name: home-assistant-helm-values
   values:
+    resources:
+      limits:
+        cpu: 400m
+        memory: 1Gi
+      requests:
+        cpu: 150m
+        memory: 768Mi
     image:
       repository: homeassistant/home-assistant
       tag: 2021.4.1
