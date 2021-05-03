@@ -16,13 +16,34 @@ spec:
         name: jetstack-charts
         namespace: flux-system
   values:
+    resources:
+      limits:
+        cpu: 400m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
     installCRDs: false
     webhook:
+      resources:
+        limits:
+          cpu: 400m
+          memory: 64Mi
+        requests:
+          cpu: 100m
+          memory: 32Mi
       enabled: true
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
     - --dns01-recursive-nameservers-only
     cainjector:
+      resources:
+        limits:
+          cpu: 400m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi  
       replicaCount: 1
     podDnsPolicy: "None"
     podDnsConfig:
