@@ -9,7 +9,7 @@ ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
 ARG SOPS_VERSION=3.7.1
 ARG TASK_VERSION=3.4.2
-ARG TERRAFORM_VERSION=0.15.1
+ARG TERRAFORM_VERSION=0.14.8
 
 WORKDIR /
 
@@ -45,7 +45,7 @@ RUN apk --update --no-cache add --virtual .build-dep \
     sudo \
     yq
 
-    # Install required binaries
+# Install required binaries
 RUN \
     # ansible
     pip3 install --upgrade pip cffi && \
