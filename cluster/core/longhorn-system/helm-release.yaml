@@ -35,7 +35,7 @@ spec:
       defaultClass: true
       recurringJobs:
         enable: true
-        jobList: '[{"name":"backup", "task":"backup", "cron":"30 2 * * *", "retain":5}]'
+        jobList: '[{"name":"backup", "task":"backup", "cron":"30 2 * * 0", "retain":5}]'
     defaultSettings:
       backupTarget: "nfs://${SECRET_NFS_HOST}:${SECRET_NFS_BACKUP_PATH}"
     ingress:
