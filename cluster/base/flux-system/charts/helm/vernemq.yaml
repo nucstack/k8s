@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: sealed-secrets-charts
+  name: vernemq-charts
   namespace: flux-system
 spec:
   interval: 24h
-  url: https://bitnami-labs.github.io/sealed-secrets
+  url: https://vernemq.github.io/docker-vernemq
   timeout: 3m

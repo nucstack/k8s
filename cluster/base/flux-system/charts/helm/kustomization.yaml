@@ -9,11 +9,10 @@ resources:
   - infracloudio.yaml
   - jetstack.yaml
   - k8s-at-home.yaml
-  - kiali.yaml
   - kubernetes-sigs.yaml
   - kubernetes-stable.yaml
   - longhorn.yaml
   - nginx-stable.yaml
   - openldap.yaml
   - prometheus-community.yaml
-  - sealed-secrets.yaml
+  - vernemq.yaml
