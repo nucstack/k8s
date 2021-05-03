@@ -30,7 +30,7 @@ spec:
         memory: 768Mi
     image:
       repository: homeassistant/home-assistant
-      tag: 2021.4.1
+      tag: 2021.4.6
     env:
       TZ: "America/New_York"
     hostNetwork: false
