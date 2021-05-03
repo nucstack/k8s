@@ -11,6 +11,10 @@ tasks:
     desc: Flux bootstrap
     cmds:
       - kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
+      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml      
+      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-sync.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
       - gpg --export-secret-keys --armor {{.FLUX_KEY_FP}} | kubectl create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin
 
   install:
@@ -39,17 +43,16 @@ tasks:
     cmds:
       - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-components.yaml"
 
-  secrets:
-    desc: Reroll all secrets
-    deps: [app-secrets]
-    cmds:    
-      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml      
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-sync.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+  shared-secrets:
+    desc: Reroll shared cluster secrets    
+    cmds:
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+
+  shared-settings:
+    desc: Reroll shared cluster settings
+    cmds:
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
 
   app-secrets:
     var:
