@@ -1,0 +1,13 @@
+---
+version: '3'
+
+env:
+  KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+  POLICIES_PATH: "{{.PROJECT_DIR}}/external/k8s-security-policies"
+
+tasks:
+
+  conftest:
+    desc: perform kube policy evaluation
+    cmds:
+      - conftest test -o stdout -p /app{{.POLICIES_PATH}} --all-namespaces {{.CLUSTER_DIR}}
