@@ -16,6 +16,9 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: unifi-poller-helm-values
   values:
     resources:
       limits:
@@ -26,9 +29,6 @@ spec:
         memory: 128Mi
     env:
       TZ: "America/New_York"
-      UP_UNIFI_DEFAULT_URL: "${SECRET_UNIFI_URL}"
-      UP_UNIFI_DEFAULT_USER: "${SECRET_UNIFI_USERNAME}"
-      UP_UNIFI_DEFAULT_PASS: "${SECRET_UNIFI_PASSWORD}"
       UP_PROMETHEUS_DISABLE: false
       UP_INFLUXDB_DISABLE: true
     prometheus:

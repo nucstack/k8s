@@ -50,7 +50,7 @@ RUN \
     # ansible
     pip3 install --upgrade pip cffi && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install mitogen ansible-lint jmespath && \
+    pip3 install mitogen ansible-lint jmespath netaddr && \
     ansible-galaxy collection install community.kubernetes && \
     ansible-galaxy collection install community.general && \
     # conftest
