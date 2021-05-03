@@ -18,7 +18,7 @@ spec:
       interval: 5m
   valuesFrom:
     - kind: Secret
-      name: unifi-poller-helm-values  
+      name: unifi-poller-helm-values
   values:
     resources:
       limits:
