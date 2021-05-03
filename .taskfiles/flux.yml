@@ -39,69 +39,33 @@ tasks:
     cmds:
       - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-components.yaml"
 
-  roll-secrets:
-    deps: [check]
-    desc: Reroll secrets
-    cmds:
-      # common      
-      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+  secrets:
+    desc: Reroll all secrets
+    deps: [app-secrets]
+    cmds:    
+      - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml      
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
       - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-sync.yaml
       - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
 
-      # authelia
-      - envsubst < {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia.secret.enc.yaml
+  app-secrets:
+    var:
+      FILTER: "*"
+    desc: Reroll all template secrets by filter
+    cmds:
+      - "find {{.CLUSTER_DIR}} -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
 
-      - envsubst < {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-postgres.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-postgres.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-postgres.secret.enc.yaml
-
-      - envsubst < {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-redis.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-redis.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/security/authelia/authelia-redis.secret.enc.yaml
-
-      # botkube
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/botkube/botkube.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/botkube/botkube.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/botkube/botkube.secrets.enc.yaml
-
-      # floorplan
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/floorplan/floorplan.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/floorplan/floorplan.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/floorplan/floorplan.secrets.enc.yaml
-
-      # home-assistant
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/home-assistant/home-assistant.secrets.enc.yaml
-
-      # mosquitto
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/mosquitto/mosquitto.secrets.enc.yaml
-
-      # zigbee2mqtt
-      #- envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
-      #- sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zigbee2mqtt/zigbee2mqtt.secrets.enc.yaml
-
-      # zwavejs2mqtt
-      #- envsubst < {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
-      #- sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/home-automation/zwavejs2mqtt/zwavejs2mqtt.secrets.enc.yaml
-
-      # kube-prometheus-stack
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/kube-prometheus-stack/grafana-ldap.secret.enc.yaml
-
-      # influxdb
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/influxdb/influxdb.secret.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/influxdb/influxdb.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/influxdb/influxdb.secret.enc.yaml
-
-      # openldap
-      - envsubst < {{.PROJECT_DIR}}/cluster/core/security/openldap/openldap.secret.enc.template > {{.PROJECT_DIR}}/cluster/core/security/openldap/openldap.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/security/openldap/openldap.secret.enc.yaml
-
-      # rtlamr-collect
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/rtlamr-collect/rtlamr-collect.secrets.enc.yaml
-
-      # unifi-poller
-      - envsubst < {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.template > {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/apps/observability/unifi-poller/unifi-poller.secrets.enc.yaml
+  app-secret:
+    var:
+      TEMPLATE:
+    env:
+      TEMPLATE: "{{.TEMPLATE}}"
+    desc: Reroll individual app secret by template
+    cmds:
+      - "echo \"rolling secret: ${TEMPLATE%.template}\""
+      - "envsubst < ${TEMPLATE} > ${TEMPLATE%.template}.yaml"
+      - "sops --encrypt --in-place ${TEMPLATE%.template}.yaml 2> /dev/null"
+    silent: true
