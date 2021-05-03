@@ -39,8 +39,9 @@ tasks:
     cmds:
       - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/cluster/base/flux-system/gotk-components.yaml"
 
-  shared-secrets:
-    desc: Reroll shared secrets
+  secrets:
+    desc: Reroll all secrets
+    deps: [app-secrets]
     cmds:    
       - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml      
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-settings.yaml
@@ -50,18 +51,21 @@ tasks:
       - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/cluster/base/cluster-secrets.yaml
       - sops --encrypt --in-place {{.PROJECT_DIR}}/cluster/core/cert-manager/secret.enc.yaml
 
-  roll-secrets:
+  app-secrets:
     var:
       FILTER: "*"
-    desc: Reroll secrets
+    desc: Reroll all template secrets by filter
     cmds:
-      - "find {{.CLUSTER_DIR}} -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:roll-secret TEMPLATE={} \\;"
-  roll-secret:
+      - "find {{.CLUSTER_DIR}} -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
+
+  app-secret:
     var:
       TEMPLATE:
     env:
       TEMPLATE: "{{.TEMPLATE}}"
-    desc: Reroll secrets
+    desc: Reroll individual app secret by template
     cmds:
-      - envsubst < ${TEMPLATE} > ${TEMPLATE%.template}.yaml
-      - sops --encrypt --in-place ${TEMPLATE%.template}.yaml
+      - "echo \"rolling secret: ${TEMPLATE%.template}\""
+      - "envsubst < ${TEMPLATE} > ${TEMPLATE%.template}.yaml"
+      - "sops --encrypt --in-place ${TEMPLATE%.template}.yaml 2> /dev/null"
+    silent: true
