@@ -1,4 +1,36 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: floorplan-nginx-conf
+  namespace: home-automation
+data:
+  default.conf: |
+    types {
+        application/wasm    wasm;
+        application/wasm    wasm.gz;
+        application/wasm    wasm.unityweb;
+    }
+    server {
+        include /etc/nginx/mime.types;
+        listen       8000;
+        server_name  localhost;
+
+        location / {
+            root   /webgl;
+            index  index.html;
+        }
+
+        error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,12 +48,28 @@ spec:
       labels:
         app.kubernetes.io/name: floorplan
     spec:
-      imagePullSecrets:
-        - name: docker-secret
+      volumes:
+        - name: webgl-data
+          emptyDir: {}
+        - name: nginx-conf
+          configMap:
+            name: floorplan-nginx-conf
+      initContainers:
+        - name: webgl-data
+          image: busybox:1.32.0
+          command: ["/bin/sh", "-c", "wget <some-url> /webgl"]
+          volumeMounts:
+            - name: webgl-data
+              mountPath: /webgl
       containers:
         - name: floorplan
-          image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.1
+          image: nginx:1.20.0-alpine
           imagePullPolicy: "Always"
+          volumeMounts:
+            - name: webgl-data
+              mountPath: /webgl
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
           ports:
             - name: http
               containerPort: 8000
