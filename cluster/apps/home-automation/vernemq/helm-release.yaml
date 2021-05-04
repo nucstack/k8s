@@ -55,3 +55,12 @@ spec:
       - name: vernemq-certificates
         secretName: vernemq-certificates-secret
         path: /etc/ssl/vernemq
+    extraVolumes:
+      - name: acls
+        configMap:
+          name: vernemq-acls
+    extraVolumeMounts:
+      - name: acls
+        mountPath: /etc/vernemq/vmq.acl
+        subPath: vmq.acl
+        readOnly: true
