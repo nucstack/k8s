@@ -36,6 +36,9 @@ spec:
         enabled: true
       wss:
         enabled: true
+    envFrom:
+      - secretRef:
+        name: vernemq-users
     additionalEnv:
       - name: DOCKER_VERNEMQ_ACCEPT_EULA
         value: "yes"
