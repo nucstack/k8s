@@ -31,7 +31,7 @@ spec:
       type: LoadBalancer
       loadBalancerIP: "${SECRET_VERNEMQ_LB_IP}"
       mqtt:
-        enabled: false
+        enabled: true
       mqtts:
         enabled: true
       wss:
