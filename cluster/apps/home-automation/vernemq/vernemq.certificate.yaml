@@ -8,7 +8,7 @@ spec:
   secretName: vernemq-certificates-secret
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-staging
+    name: letsencrypt-production
   commonName: "mq.${SECRET_DOMAIN}"
   dnsNames:
     - "mq.${SECRET_DOMAIN}"
