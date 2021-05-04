@@ -37,13 +37,13 @@ spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
-        fsGroup: 1000    
+        fsGroup: 1000
       containers:
         - name: rsyslog
           image: "${SECRET_PRIVATE_REGISTRY}/rsyslog:0.0.2"
           imagePullPolicy: "Always"
           securityContext:
-            allowPrivilegeEscalation: false          
+            allowPrivilegeEscalation: false
           ports:
             - name: default
               containerPort: 514
