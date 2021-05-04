@@ -32,7 +32,7 @@ spec:
         memory: 256Mi
     env:
       TZ: America/New_York
-      ZIGBEE2MQTT_DATA: /app/data
+      ZIGBEE2MQTT_DATA: /data
     securityContext:
       privileged: true
     affinity:
@@ -47,13 +47,17 @@ spec:
     additionalVolumeMounts:
       - name: usb
         mountPath: /dev/ttyUSB0
+      - name: data
+        mountPath: /data
       - name: zigbee2mqtt-config
-        mountPath: /app/configuration.yaml
+        mountPath: /data/configuration.yaml
         subPath: configuration.yaml
       - name: zigbee2mqtt-config
-        mountPath: /app/devices.yaml
+        mountPath: /data/devices.yaml
         subPath: devices.yaml
     additionalVolumes:
+      - name: data
+        emptyDir: {}
       - name: zigbee2mqtt-config
         secret:
           secretName: zigbee2mqtt-config
