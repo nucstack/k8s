@@ -40,7 +40,7 @@ spec:
       permit_join: false
       mqtt:
         base_topic: zigbee2mqtt
-        server: "mqtt://mqtt.${SECRET_DOMAIN}:1883"
+        server: "mqtt://mq.${SECRET_DOMAIN}:1883"
       frontend:
         port: 8080
       experimental:
