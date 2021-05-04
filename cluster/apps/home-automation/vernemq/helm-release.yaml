@@ -17,19 +17,38 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
     replicaCount: 1
     serviceMonitor:
       create: true
     service:
       type: LoadBalancer
       loadBalancerIP: "${SECRET_VERNEMQ_LB_IP}"
-      ws:
-        enabled: true
       mqtt:
+        enabled: false
+      mqtts:
+        enabled: true
+      wss:
         enabled: true
     additionalEnv:
-    - name: DOCKER_VERNEMQ_ACCEPT_EULA
-      value: "yes"
-    - name: DOCKER_VERNEMQ_ALLOW_ANONYMOUS
-      value: "on"
+      - name: DOCKER_VERNEMQ_ACCEPT_EULA
+        value: "yes"
+      - name: DOCKER_VERNEMQ_ALLOW_ANONYMOUS
+        value: "on"
+      - name: DOCKER_VERNEMQ_LISTENER__SSL__CAFILE
+        value: "/etc/ssl/vernemq/tls.crt"
+      - name: DOCKER_VERNEMQ_LISTENER__SSL__CERTFILE
+        value: "/etc/ssl/vernemq/tls.crt"
+      - name: DOCKER_VERNEMQ_LISTENER__SSL__KEYFILE
+        value: "/etc/ssl/vernemq/tls.key"
     podAntiAffinity: hard
+    secretMounts:
+      - name: vernemq-certificates
+        secretName: vernemq-certificates-secret
+        path: /etc/ssl/vernemq
