@@ -47,10 +47,10 @@ spec:
       - name: usb
         mountPath: /dev/ttyUSB0
       - name: zigbee2mqtt-config
-        mountPath: /app/data/configuration.yaml
+        mountPath: /app/configuration.yaml
         subPath: configuration.yaml
       - name: zigbee2mqtt-config
-        mountPath: /app/data/devices.yaml
+        mountPath: /app/devices.yaml
         subPath: devices.yaml
     additionalVolumes:
       - name: zigbee2mqtt-config
