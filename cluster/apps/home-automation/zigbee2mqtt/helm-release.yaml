@@ -33,21 +33,6 @@ spec:
     env:
       TZ: America/New_York
       ZIGBEE2MQTT_DATA: /data
-    config:
-      homeassistant: true
-      device_options:
-        retain: true
-      permit_join: false
-      mqtt:
-        base_topic: zigbee2mqtt
-        server: "mqtt://mq.${SECRET_DOMAIN}:1883"
-      frontend:
-        port: 8080
-      experimental:
-        new_api: true
-      advanced:
-        log_output:
-          - console
     securityContext:
       privileged: true
     affinity:
