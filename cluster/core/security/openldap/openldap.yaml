@@ -44,15 +44,9 @@ spec:
       labels:
         app.kubernetes.io/name: openldap
     spec:
-      securityContext:
-        runAsUser: 911
-        runAsGroup: 911
-        fsGroup: 911
       containers:
         - name: openldap
           image: osixia/openldap:1.5.0
-          securityContext:
-            allowPrivilegeEscalation: false
           volumeMounts:
             - name: config
               mountPath: /etc/ldap/slapd.d
@@ -98,8 +92,6 @@ spec:
         - name: phpldapadmin
           image: osixia/phpldapadmin:0.9.0
           imagePullPolicy: "Always"
-          securityContext:
-            allowPrivilegeEscalation: false
           env:
             - name: PHPLDAPADMIN_LDAP_HOSTS
               value: "openldap"
