@@ -6,7 +6,7 @@ metadata:
   namespace: home-automation
 spec:
   dependsOn:
-    - name: mosquitto
+    - name: vernemq
       namespace: home-automation
   interval: 5m
   chart:
