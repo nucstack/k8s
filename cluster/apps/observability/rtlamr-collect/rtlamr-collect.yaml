@@ -22,6 +22,8 @@ spec:
         app.kubernetes.io/name: rtlamr-collect
     spec:
       securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001      
         fsGroup: 1001
       containers:
         - name: rtlamr-collect
@@ -29,6 +31,8 @@ spec:
             privileged: true
           image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.2
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false          
           env:
             - name: INTERVAL
               value: "30"

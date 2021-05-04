@@ -16,11 +16,17 @@ spec:
       labels:
         app.kubernetes.io/name: floorplan
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       imagePullSecrets:
         - name: docker-secret
       containers:
         - name: floorplan
           image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.1
+          securityContext:
+            allowPrivilegeEscalation: false
           imagePullPolicy: "Always"
           ports:
             - name: http
