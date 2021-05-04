@@ -45,9 +45,9 @@ spec:
         app.kubernetes.io/name: openldap
     spec:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 911
+        runAsGroup: 911
+        fsGroup: 911
       containers:
         - name: openldap
           image: osixia/openldap:1.5.0
