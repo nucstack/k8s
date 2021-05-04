@@ -52,6 +52,7 @@ spec:
       - name: zigbee2mqtt-config
         mountPath: /data/configuration.yaml
         subPath: configuration.yaml
+        readOnly: false
     additionalVolumes:
       - name: data
         emptyDir: {}
