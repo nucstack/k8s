@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   #- floorplan
   - home-assistant
-  - mosquitto
+  #- mosquitto
   - vernemq
   - zigbee2mqtt
   - zwavejs2mqtt
