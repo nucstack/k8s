@@ -7,6 +7,6 @@ metadata:
 data:
   vmq.acl: |
     user ${SECRET_VERNEMQ_USER1_USERNAME}
-    topic foo
-    topic read bar
-    topic write all
+    topic #
+    topic read #
+    topic write #
