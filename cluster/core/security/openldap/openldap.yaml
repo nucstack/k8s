@@ -53,6 +53,13 @@ spec:
             - name: data
               mountPath: /var/lib/ldap
           imagePullPolicy: "Always"
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           env:
             - name: LDAP_LOG_LEVEL
               value: "256"
@@ -92,6 +99,13 @@ spec:
         - name: phpldapadmin
           image: osixia/phpldapadmin:0.9.0
           imagePullPolicy: "Always"
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           env:
             - name: PHPLDAPADMIN_LDAP_HOSTS
               value: "openldap"
