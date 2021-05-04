@@ -1,0 +1,14 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: vernemq-certificates
+  namespace: home-automation
+spec:
+  secretName: vernemq-certificates-secret
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-staging
+  commonName: "mqtt.${SECRET_DOMAIN}"
+  dnsNames:
+    - "mqtt.${SECRET_DOMAIN}"
