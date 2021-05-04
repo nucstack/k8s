@@ -9,6 +9,6 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-staging
-  commonName: "mqtt.${SECRET_DOMAIN}"
+  commonName: "mq.${SECRET_DOMAIN}"
   dnsNames:
-    - "mqtt.${SECRET_DOMAIN}"
+    - "mq.${SECRET_DOMAIN}"
