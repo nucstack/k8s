@@ -61,6 +61,13 @@ spec:
       - name: usb
         hostPath:
           path: /dev/ttyUSB0
+    persistence:
+      config:
+        enabled: true
+        storageClass: "longhorn"
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        mountPath: "/data"          
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt
