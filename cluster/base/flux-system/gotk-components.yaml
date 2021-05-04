@@ -2524,7 +2524,7 @@ spec:
             memory: 1Gi
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -2596,8 +2596,8 @@ spec:
             cpu: 1000m
             memory: 1Gi
           requests:
-            cpu: 150m
-            memory: 300Mi
+            cpu: 100m
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -2752,8 +2752,8 @@ spec:
             cpu: 1000m
             memory: 1Gi
           requests:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 50m
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
