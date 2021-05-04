@@ -32,6 +32,7 @@ spec:
         memory: 256Mi
     env:
       TZ: America/New_York
+      ZIGBEE2MQTT_DATA: /app/data
     securityContext:
       privileged: true
     affinity:
