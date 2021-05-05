@@ -18,15 +18,9 @@ spec:
     spec:
       imagePullSecrets:
         - name: docker-secret
-      volumes:
-        - name: nginx-cache
-          emptyDir: {}
       containers:
         - name: floorplan
           image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.2
-          volumeMounts:
-            - name: nginx-cache
-              mountPath: /var/cache/nginx
           securityContext:
             allowPrivilegeEscalation: false
           imagePullPolicy: "Always"
