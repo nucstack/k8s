@@ -65,7 +65,7 @@ spec:
       codeserver:
         enabled: true
         git:
-          deployKeySecret: home-assistant-vscode       
+          deployKeySecret: home-assistant-vscode
         image:
           repository: codercom/code-server
           tag: 3.9.2
