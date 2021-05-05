@@ -60,9 +60,9 @@ RUN \
     chmod +x /usr/bin/conftest && \
     # envsubst
     cp /usr/bin/envsubst /usr/local/bin/envsubst && \
-    # fass-cli
-    curl -sL -o fass-cli https://github.com/openfaas/faas-cli/releases/download/${OPENFASS_VERSION}/faas-cli && \
-    mv fass-cli /usr/bin && chmod +x /usr/bin/fass-cli && \
+    # faas-cli
+    curl -sL -o faas-cli https://github.com/openfaas/faas-cli/releases/download/${OPENFASS_VERSION}/faas-cli && \
+    mv faas-cli /usr/bin && chmod +x /usr/bin/faas-cli && \
     # flux
     curl -sL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf flux.tar.gz && \
