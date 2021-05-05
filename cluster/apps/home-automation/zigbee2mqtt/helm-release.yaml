@@ -5,9 +5,6 @@ metadata:
   name: zigbee2mqtt
   namespace: home-automation
 spec:
-  dependsOn:
-    - name: vernemq
-      namespace: home-automation
   interval: 5m
   chart:
     spec:
