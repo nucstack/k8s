@@ -13,6 +13,7 @@ resources:
   - kubernetes-stable.yaml
   - longhorn.yaml
   - nginx-stable.yaml
+  - openfaas.yaml
   - openldap.yaml
   - prometheus-community.yaml
   - vernemq.yaml
