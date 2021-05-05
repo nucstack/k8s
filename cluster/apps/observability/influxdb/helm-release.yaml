@@ -42,7 +42,7 @@ spec:
       cpu: 1
     persistence:
       enabled: true
-      existingClaim: influxdb
+      existingClaim: influxdb-data
     setDefaultUser:
       enabled: true
       user:
