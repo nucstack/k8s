@@ -16,10 +16,6 @@ spec:
       labels:
         app.kubernetes.io/name: floorplan
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-      #   fsGroup: 1000
       imagePullSecrets:
         - name: docker-secret
       volumes:
