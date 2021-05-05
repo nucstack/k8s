@@ -52,6 +52,12 @@ spec:
         value: "/etc/ssl/vernemq/tls.crt"
       - name: DOCKER_VERNEMQ_LISTENER__SSL__KEYFILE
         value: "/etc/ssl/vernemq/tls.key"
+      - name: DOCKER_VERNEMQ_LISTENER__WSS__CAFILE
+        value: "/etc/ssl/vernemq/tls.crt"
+      - name: DOCKER_VERNEMQ_LISTENER__WSS__CERTFILE
+        value: "/etc/ssl/vernemq/tls.crt"
+      - name: DOCKER_VERNEMQ_LISTENER__WSS__KEYFILE
+        value: "/etc/ssl/vernemq/tls.key"
     podAntiAffinity: hard
     secretMounts:
       - name: vernemq-certificates
