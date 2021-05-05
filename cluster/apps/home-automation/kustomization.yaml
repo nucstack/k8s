@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - floorplan
   - home-assistant
+  - openfaas
   - vernemq
   - zigbee2mqtt
   - zwavejs2mqtt

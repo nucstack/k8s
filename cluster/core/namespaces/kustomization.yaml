@@ -7,4 +7,5 @@ resources:
 - metallb-system.yaml
 - networking.yaml
 - observability.yaml
+- openfaas-fn.yaml
 - security.yaml
