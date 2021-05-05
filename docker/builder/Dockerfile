@@ -7,6 +7,7 @@ ARG HELM_VERSION=3.5.4
 ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
+ARG OPENFAAS_VERSION=0.13.9
 ARG SOPS_VERSION=3.7.1
 ARG TASK_VERSION=3.4.2
 ARG TERRAFORM_VERSION=0.14.8
@@ -59,6 +60,9 @@ RUN \
     chmod +x /usr/bin/conftest && \
     # envsubst
     cp /usr/bin/envsubst /usr/local/bin/envsubst && \
+    # fass-cli
+    curl -sL -o fass-cli https://github.com/openfaas/faas-cli/releases/download/${OPENFASS_VERSION}/faas-cli && \
+    mv fass-cli /usr/bin && chmod +x /usr/bin/fass-cli && \
     # flux
     curl -sL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf flux.tar.gz && \
