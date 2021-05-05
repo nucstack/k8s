@@ -37,16 +37,12 @@ spec:
     persistence:
       config:
         enabled: true
-        size: 10Gi
+        size: 5Gi
         storageClass: longhorn
     influxdb:
       enabled: false
     postgresql:
-      enabled: true
-      persistence:
-        enabled: true
-        size: 10Gi
-        storageClass: longhorn
+      enabled: false
     ingress:
       annotations:
         nginx.org/websocket-services: home-assistant
