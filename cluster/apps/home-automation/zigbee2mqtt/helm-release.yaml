@@ -61,8 +61,7 @@ spec:
           path: /dev/ttyUSB0
     persistence:
       config:
-        enabled: true
-        existingClaim: zigbee2mqtt        
+        enabled: false
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt
