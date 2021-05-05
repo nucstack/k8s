@@ -63,7 +63,6 @@ spec:
       config:
         enabled: true
         existingClaim: zigbee2mqtt        
-        mountPath: "/data"          
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt

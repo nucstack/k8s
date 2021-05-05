@@ -100,4 +100,3 @@ spec:
       config:
         enabled: true
         existingClaim: zwavejs2mqtt
-        mountPath: "/usr/src/app/store"
