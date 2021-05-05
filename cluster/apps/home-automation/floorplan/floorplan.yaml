@@ -23,7 +23,7 @@ spec:
           emptyDir: {}
       containers:
         - name: floorplan
-          image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.1
+          image: ${SECRET_PRIVATE_REGISTRY}/floorplan:0.0.2
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
