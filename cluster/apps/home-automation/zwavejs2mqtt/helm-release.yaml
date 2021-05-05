@@ -102,7 +102,5 @@ spec:
     persistence:
       config:
         enabled: true
+        existingClaim: zwavejs2mqtt
         mountPath: "/usr/src/app/store"
-        storageClass: "longhorn"
-        accessMode: ReadWriteOnce
-        size: 2Gi
