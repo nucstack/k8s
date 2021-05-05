@@ -64,6 +64,8 @@ spec:
     addons:
       codeserver:
         enabled: true
+        git:
+          deployKeySecret: home-assistant-vscode       
         image:
           repository: codercom/code-server
           tag: 3.9.2
@@ -96,6 +98,4 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: deploy-key
-            mountPath: /secret
 
