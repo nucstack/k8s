@@ -37,8 +37,7 @@ spec:
     persistence:
       config:
         enabled: true
-        size: 5Gi
-        storageClass: longhorn
+        existingClaim: home-assistant
     influxdb:
       enabled: false
     postgresql:

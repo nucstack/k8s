@@ -42,10 +42,7 @@ spec:
       cpu: 1
     persistence:
       enabled: true
-      storageClass: "longhorn"
-      annotations:
-      accessMode: ReadWriteOnce
-      size: 15Gi
+      existingClaim: influxdb
     setDefaultUser:
       enabled: true
       user:

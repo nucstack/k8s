@@ -53,11 +53,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
+              existingClaim: alert-manager
     grafana:
       ingress:
         enabled: true
@@ -239,11 +235,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 20Gi
+              existingClaim: prometheus              
         retention: 4h
         resources:
           requests:
