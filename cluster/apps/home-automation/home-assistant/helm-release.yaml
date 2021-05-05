@@ -83,13 +83,13 @@ spec:
             nginx.ingress.kubernetes.io/configuration-snippet: more_set_headers "X-Forwarded-For $http_x_forwarded_for";
           enabled: true
           hosts:
-            - host: "vscode.hass.${SECRET_DOMAIN}"
+            - host: "vscode-hass.${SECRET_DOMAIN}"
               paths:
                 - path: /
                   pathType: Prefix
           tls:
             - hosts:
-                - "vscode.hass.${SECRET_DOMAIN}"
+                - "vscode-hass.${SECRET_DOMAIN}"
               secretName: vscode-home-assistant-tls
         volumeMounts:
           - name: config
