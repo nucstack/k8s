@@ -59,7 +59,8 @@ spec:
     additionalVolumes:
       - name: deploy-key
         secret:
-          secretName: home-assistant-vscode       
+          secretName: home-assistant-vscode      
+          defaultMode: 384 
     addons:
       codeserver:
         enabled: true
