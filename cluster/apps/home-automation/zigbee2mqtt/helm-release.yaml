@@ -46,10 +46,15 @@ spec:
         mountPath: /dev/ttyUSB0
       - name: data
         mountPath: /data
-      - name: zigbee2mqtt-config
-        mountPath: /data/configuration.yaml
-        subPath: configuration.yaml
-        readOnly: false
+    initContainers:
+      - name: copy
+        image: busybox:1.32.0
+        command: ["/bin/sh", "-c", "cp /config/configuration.yaml /config/devices.yaml /data"]
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: zigbee2mqtt-config
+            mountPath: /config
     additionalVolumes:
       - name: data
         emptyDir: {}
@@ -59,10 +64,6 @@ spec:
       - name: usb
         hostPath:
           path: /dev/ttyUSB0
-    persistence:
-      config:
-        enabled: false
-        existingClaim: zigbee2mqtt
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt
