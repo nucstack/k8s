@@ -104,9 +104,6 @@ spec:
           cert-manager:
             url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
             datasource: Prometheus
-          kuberhealthy:
-            url: https://raw.githubusercontent.com/Comcast/kuberhealthy/master/deploy/grafana/dashboard.json
-            datasource: Prometheus
           nginx-controller:
             url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
             datasource: Prometheus

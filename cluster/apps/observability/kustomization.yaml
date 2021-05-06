@@ -5,7 +5,6 @@ resources:
   - botkube
   - influxdb
   - kube-prometheus-stack
-  - kuberhealthy
   - loki-stack
   - metrics-server
   - rsyslog
