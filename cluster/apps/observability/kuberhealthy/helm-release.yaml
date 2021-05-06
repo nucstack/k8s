@@ -24,7 +24,7 @@ spec:
     spec:
       # renovate: registryUrl=https://comcast.github.io/kuberhealthy/helm-repos
       chart: kuberhealthy
-      version: 64
+      version: "64"
       sourceRef:
         kind: HelmRepository
         name: kuberhealthy-charts
