@@ -40,25 +40,6 @@ spec:
                   operator: In
                   values:
                     - "true"
-    addons:
-      codeserver:
-        enabled: true
-        image:
-          repository: codercom/code-server
-          tag: 3.9.2
-        workingDir: '/config'
-        args:
-          - --user-data-dir
-          - '/config/.vscode'
-          - --auth
-          - 'none'
-          - --extensions-dir
-          - '/config/.vscode'
-        ingress:
-          enabled: false
-        volumeMounts:
-          - name: config
-            mountPath: /usr/src/app/store
     initContainers:
       - name: copy
         image: busybox:1.32.0
