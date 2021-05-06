@@ -56,8 +56,6 @@ spec:
           - name: zigbee2mqtt-config
             mountPath: /config
     additionalVolumes:
-      # - name: data
-      #   emptyDir: {}
       - name: zigbee2mqtt-config
         secret:
           secretName: zigbee2mqtt-config
