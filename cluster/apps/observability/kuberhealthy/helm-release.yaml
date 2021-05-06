@@ -1,0 +1,138 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kuberhealthy
+  namespace: observability
+spec:
+  install:
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  timeout: 20m
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://comcast.github.io/kuberhealthy/helm-repos
+      chart: kuberhealthy
+      version: 64
+      sourceRef:
+        kind: HelmRepository
+        name: kuberhealthy-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    checkReaper:
+      maxKHJobAge: 15m
+      maxCheckPodAge: 72h
+      maxCompletedPodCount: 4
+      maxErrorPodCount: 4
+    resources:
+      requests:
+        cpu: 400m
+        memory: 300Mi
+      limits:
+        cpu: 2
+        memory: 1Gi
+    tolerations:
+      master: false
+    deployment:
+      replicas: 2
+      maxSurge: 0
+      maxUnavailable: 1
+      env:
+        CHECK_REAPER_RUN_INTERVAL: "30s"
+    securityContext:
+      enabled: true
+      runAsNonRoot: true
+      runAsUser: 999
+      fsGroup: 999
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+    check:
+      daemonset:
+        enabled: true
+        runInterval: 15m
+        timeout: 12m
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      deployment:
+        enabled: true
+        runInterval: 10m
+        timeout: 15m
+        resources:
+          requests:
+            cpu: 25m
+            memory: 15Mi
+          limits:
+            cpu: 40m
+      dnsInternal:
+        enabled: true
+        runInterval: 2m
+        timeout: 15m
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      dnsExternal:
+        enabled: false
+        runInterval: 2m
+        timeout: 15m
+        extraEnvs:
+          HOSTNAME: "google.com"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      podRestarts:
+        enabled: false
+        runInterval: 5m
+        timeout: 10m
+        allNamespaces: false
+        extraEnvs:
+          MAX_FAILURES_ALLOWED: "10"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      podStatus:
+        enabled: false
+        runInterval: 5m
+        timeout: 15m
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      storage:
+        enabled: false
+        storageClass: ["longhorn"]
+        runInterval: 5m
+        timeout: 10m
+        extraEnvs:
+          CHECK_STORAGE_IMAGE: bitnami/nginx:1.19
+          CHECK_STORAGE_INIT_IMAGE: bitnami/nginx:1.19
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+      networkConnection:
+        enabled: false
+        runInterval: 30m
+        timeout: 10m
+        extraEnvs:
+          CONNECTION_TARGET: "tcp://github.com:443"
+        resources:
+          requests:
+            memory: 5Mi
+            cpu: 10m
