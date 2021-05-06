@@ -97,6 +97,6 @@ spec:
           - name: config
             mountPath: /config
           - name: deploy-key
-            mountpath: /root/.ssh/id_rsa
+            mountPath: /root/.ssh/id_rsa
             subPath: id_rsa
 
