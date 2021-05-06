@@ -28,13 +28,9 @@ spec:
         proxy-body-size: "100m"
         use-forwarded-headers: "true"
       metrics:   
-        enabled: true
-        service:
-          annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/port: "10254"          
+        enabled: true        
         serviceMonitor:
-          enabled: false
+          enabled: true
       extraArgs:
         default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-tls"
       resources:
