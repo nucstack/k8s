@@ -44,26 +44,33 @@ spec:
     additionalVolumeMounts:
       - name: usb
         mountPath: /dev/ttyUSB0
-      - name: data
+      - name: config
         mountPath: /data
     initContainers:
       - name: copy
         image: busybox:1.32.0
         command: ["/bin/sh", "-c", "cp /config/configuration.yaml /config/devices.yaml /data"]
         volumeMounts:
-          - name: data
+          - name: config
             mountPath: /data
           - name: zigbee2mqtt-config
             mountPath: /config
     additionalVolumes:
-      - name: data
-        emptyDir: {}
+      # - name: data
+      #   emptyDir: {}
       - name: zigbee2mqtt-config
         secret:
           secretName: zigbee2mqtt-config
       - name: usb
         hostPath:
           path: /dev/ttyUSB0
+    persistence:
+      config:
+        enabled: true
+        storageClass: "longhorn"
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        mountPath: "/data"
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt
