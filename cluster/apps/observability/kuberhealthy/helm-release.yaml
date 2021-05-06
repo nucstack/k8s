@@ -36,6 +36,14 @@ spec:
       maxCheckPodAge: 72h
       maxCompletedPodCount: 4
       maxErrorPodCount: 4
+    prometheus:
+      enabled: true
+      name: "prometheus-operated"
+      serviceMonitor:
+        enabled: false
+      enableAlerting: true
+    app:
+      name: "kuberhealthy"
     resources:
       requests:
         cpu: 400m
