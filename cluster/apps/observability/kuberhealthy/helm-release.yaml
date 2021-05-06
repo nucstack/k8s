@@ -38,7 +38,7 @@ spec:
       maxErrorPodCount: 4
     prometheus:
       enabled: true
-      name: "prometheus-operated"
+      name: "prometheus"
       serviceMonitor:
         enabled: false
       enableAlerting: true
