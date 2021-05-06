@@ -21,10 +21,6 @@ spec:
         app.kubernetes.io/instance: rtlamr-collect
         app.kubernetes.io/name: rtlamr-collect
     spec:
-      securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
       containers:
         - name: rtlamr-collect
           securityContext:
