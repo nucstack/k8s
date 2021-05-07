@@ -23,11 +23,11 @@ spec:
   values:
     resources:
       limits:
+        cpu: 800m
+        memory: 2Gi
+      requests:
         cpu: 400m
         memory: 1Gi
-      requests:
-        cpu: 150m
-        memory: 768Mi
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2021.5.0
