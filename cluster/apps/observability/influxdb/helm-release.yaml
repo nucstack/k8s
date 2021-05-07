@@ -33,10 +33,10 @@ spec:
   values:
     requests:
       memory: 256Mi
-      cpu: 0.1
+      cpu: 100m
     limits:
       memory: 1Gi
-      cpu: 1
+      cpu: 200m
     persistence:
       enabled: true
       existingClaim: influxdb

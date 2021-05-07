@@ -30,10 +30,17 @@ spec:
   rollback:
     timeout: 10m
     recreate: true
-    cleanupOnFail: true    
+    cleanupOnFail: true
   timeout: 20m
   values:
     prometheusOperator:
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 50m
+        limits:
+          memory: 256Mi
+          cpu: 100m    
       enabled: true
     kubeControllerManager:
       serviceMonitor:
@@ -56,6 +63,13 @@ spec:
                 requests:
                   storage: 10Gi
     grafana:
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 50m
+        limits:
+          memory: 256Mi
+          cpu: 100m
       ingress:
         enabled: true
         annotations:
@@ -232,7 +246,7 @@ spec:
               memory: 128Mi
               cpu: 100m
             limits:
-              memory: 256Mi        
+              memory: 256Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -259,6 +273,20 @@ spec:
         podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
     kube-state-metrics:
+      resources:
+        requests:
+          memory: 32Mi
+          cpu: 50m
+        limits:
+          memory: 64Mi
+          cpu: 100m
       fullnameOverride: kube-state-metrics
     prometheus-node-exporter:
+      resources:
+        requests:
+          memory: 32Mi
+          cpu: 50m
+        limits:
+          memory: 64Mi
+          cpu: 100m
       fullnameOverride: node-exporter
