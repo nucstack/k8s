@@ -25,7 +25,7 @@ spec:
     - kind: Kustomization
       name: '*'
     - kind: HelmRepository
-      name: '*'      
+      name: '*'
     - kind: HelmChart
       name: '*'
 ---
@@ -44,6 +44,6 @@ spec:
     - kind: Kustomization
       name: '*'
     - kind: HelmRepository
-      name: '*'      
+      name: '*'
     - kind: HelmChart
       name: '*'
