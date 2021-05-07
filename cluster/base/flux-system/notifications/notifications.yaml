@@ -28,22 +28,3 @@ spec:
       name: '*'
     - kind: HelmChart
       name: '*'
----
-apiVersion: notification.toolkit.fluxcd.io/v1beta1
-kind: Alert
-metadata:
-  name: warnings
-  namespace: flux-system
-spec:
-  providerRef:
-    name: slack-notifications
-  eventSeverity: warning
-  eventSources:
-    - kind: GitRepository
-      name: '*'
-    - kind: Kustomization
-      name: '*'
-    - kind: HelmRepository
-      name: '*'
-    - kind: HelmChart
-      name: '*'
