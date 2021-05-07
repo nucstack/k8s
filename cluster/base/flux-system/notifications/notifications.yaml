@@ -27,4 +27,6 @@ spec:
     - kind: HelmRepository
       name: '*'
     - kind: HelmRelease
+      name: '*'
+    - kind: Pod
       name: '*'      
