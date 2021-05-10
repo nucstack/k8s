@@ -271,7 +271,7 @@ spec:
                 requests:
                   storage: 20Gi
         retention: 4h
-        replicas: 2
+        replicas: 1
         ruleSelector: {}
         ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
