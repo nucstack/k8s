@@ -61,7 +61,7 @@ spec:
         tls:
           - hosts:
               - "alerts.${SECRET_DOMAIN}"
-              secretName: alerts-tls
+            secretName: alerts-tls
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:
