@@ -45,7 +45,7 @@ spec:
       persistence:
         enabled: true
         size: 10Gi
-        storageClass: longhorn      
+        storageClass: longhorn
     ingress:
       annotations:
         nginx.org/websocket-services: home-assistant
