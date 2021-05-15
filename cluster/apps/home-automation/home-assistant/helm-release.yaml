@@ -23,10 +23,10 @@ spec:
   values:
     resources:
       limits:
-        cpu: 800m
+        cpu: 1500m
         memory: 2Gi
       requests:
-        cpu: 400m
+        cpu: 1000m
         memory: 1Gi
     image:
       repository: ghcr.io/home-assistant/home-assistant
