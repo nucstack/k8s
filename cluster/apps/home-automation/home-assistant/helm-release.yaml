@@ -46,6 +46,12 @@ spec:
         enabled: true
         size: 10Gi
         storageClass: longhorn
+      sidecars:
+        - name: pgadmin
+          image: dpage/pgadmin4:5.2
+          ports:
+            - name: http
+              containerPort: 80
     ingress:
       annotations:
         nginx.org/websocket-services: home-assistant
