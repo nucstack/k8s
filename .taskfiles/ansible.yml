@@ -44,6 +44,12 @@ tasks:
       - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true
 
+  usb:
+    desc: Ping all k8s nodes
+    deps: [export-sshkey]
+    cmds:
+      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a lsusb"
+
   reboot:
     desc: reboot all k8s nodes
     deps: [export-sshkey]
