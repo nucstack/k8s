@@ -11,8 +11,8 @@
       pause:
         seconds: 5
   tasks:
-    # - name: kill k3s
-    #   ansible.builtin.command: /usr/local/bin/k3s-killall.sh
+    - name: kill k3s
+      ansible.builtin.command: /usr/local/bin/k3s-killall.sh
     - name: uninstall k3s
       ansible.builtin.command:
         cmd: /usr/local/bin/k3s-uninstall.sh

@@ -3,6 +3,7 @@ k3s_control_node: true
 
 # k3s settings for all control-plane nodes
 k3s_server:
+  datastore-endpoint: postgres://k3s:38b245f4-078c-48d9-93c7-88ab90cd0132@192.168.10.2:45432/k3s?sslmode=disable
   node-ip: "{{ ansible_host }}"
   # tls-san:
   # - "k8s.example.com"
@@ -13,6 +14,7 @@ k3s_server:
   - servicelb
   - metrics-server
   - local-storage
+  flannel-backend: 'none'
   disable-network-policy: true
   disable-cloud-controller: true
   write-kubeconfig-mode: "644"
