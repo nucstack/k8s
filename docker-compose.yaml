@@ -12,6 +12,8 @@ services:
       - .:/app:rw
       - bashhistory:/bash_history
       - ~/.gnupg:/root/.gnupg
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
 
 volumes:
   # useful to maintain history
