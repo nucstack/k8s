@@ -1,8 +1,8 @@
 ---
 
 - hosts:
-  - master-nodes
-  - worker-nodes
+    - kube_control_plane
+    - kube_control_node
   become: true
   gather_facts: true
   any_errors_fatal: true
