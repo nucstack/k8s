@@ -53,6 +53,7 @@ RUN \
     pip3 install mitogen ansible-lint jmespath netaddr && \
     ansible-galaxy collection install community.kubernetes && \
     ansible-galaxy collection install community.general && \
+    ansible-galaxy install xanmanning.k3s && \
     # conftest
     curl -sL -o conftest_Linux_x86_64.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
     tar -C /usr/bin -xvzf conftest_Linux_x86_64.tar.gz && \
