@@ -10,3 +10,22 @@ Main Deviations from this template:
  - Added tasks to simplify deployment/bootstrap/initialize/secrets reroll
  - Added raspernetes `k8s-security-policies` and conftest
  - added `git-crypt` to allow for tracked encryption of secret things
+
+**Provisioning the cluster**
+```bash
+cp .env.example .env # update accordingly
+docker-compose run --rm builder
+task ansible:k8s-install
+```
+
+**Rerolling secrets**
+```bash
+task flux:app-secrets # FILTER=home-assistant
+task flux:shared-secrets
+```
+
+**Flux**
+```bash
+task flux:bootstrap
+task flux:install
+```
