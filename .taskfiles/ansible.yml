@@ -7,7 +7,7 @@ env:
 vars:  
   ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
-  ANSIBLE_PLAYBOOK: "kubespray"
+  ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
   ANSIBLE_HOSTS:
     sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[] | .attributes.triggers.name + \",\" + .attributes.triggers.ipaddress + \" \"' {{.STATE_DIR}}/terraform.tfstate"
