@@ -66,6 +66,7 @@ tasks:
     deps: [ping]
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
+      - task ansible:export-kubeconfig
     silent: true
 
   k8s-reset:
