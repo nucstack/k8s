@@ -27,7 +27,7 @@ tasks:
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
       - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
-      - sed -i 's/127.0.0.1/{{.K8S_MASTER_IP}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
+      - sed -i 's/127.0.0.1/{{.K8S_VIRTUAL_IP}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
       - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
 
@@ -66,7 +66,6 @@ tasks:
     deps: [ping]
     cmds:
       - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
-      - task ansible:export-kubeconfig
     silent: true
 
   k8s-reset:
