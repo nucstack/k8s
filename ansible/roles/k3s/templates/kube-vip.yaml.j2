@@ -50,19 +50,19 @@ spec:
         - manager
         env:
         - name: vip_arp
-          value: \"true\"
+          value: "true"
         - name: vip_interface
           value: {{ k3s_registration_interface }}
         - name: port
-          value: \"6443\"
+          value: "6443"
         - name: vip_cidr
-          value: \"32\"
+          value: "32"
         - name: cp_enable
-          value: \"true\"
+          value: "true"
         - name: cp_namespace
           value: kube-system
         - name: svc_enable
-          value: \"false\"
+          value: "false"
         - name: vip_address
           value: {{ k3s_registration_address }}
         image: plndr/kube-vip:0.3.4
