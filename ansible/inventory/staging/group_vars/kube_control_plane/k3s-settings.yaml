@@ -5,8 +5,8 @@ k3s_server:
   datastore-endpoint: "{{ lookup('env', 'K8S_DATASTORE_ENDPOINT') }}"
   node-ip: "{{ ansible_host }}"
   tls-san:
-  - "k8s.stg.nucstack.com"
-  - "192.168.8.100"
+  - "{{ lookup('env', 'K8S_HA_SAN') }}"
+  - "{{ lookup('env', 'K8S_HA_VIP') }}"
   docker: false
   disable:
   - traefik
