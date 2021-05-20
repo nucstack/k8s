@@ -2,7 +2,7 @@ FROM alpine:3.13
 
 ARG ANSIBLE_VERSION=2.10
 ARG CONFTEST_VERSION=0.24.0
-ARG FLUX_VERSION=0.13.3
+ARG FLUX_VERSION=0.13.4
 ARG HELM_VERSION=3.5.4
 ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
@@ -10,6 +10,11 @@ ARG KUSTOMIZE_VERSION=4.1.0
 ARG SOPS_VERSION=3.7.1
 ARG TASK_VERSION=3.4.2
 ARG TERRAFORM_VERSION=0.14.8
+
+ARG ANSIBLE_ROLE_K3S=2.9.1
+ARG ANSIBLE_COLLECTION_GENERAL=3.1.0
+ARG ANSIBLE_COLLECTION_K8S=1.2.1
+ARG ANSIBLE_ROLE_KERNEL=1.2.4
 
 WORKDIR /
 
@@ -51,9 +56,12 @@ RUN \
     pip3 install --upgrade pip cffi && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
     pip3 install mitogen ansible-lint jmespath netaddr && \
-    ansible-galaxy collection install community.kubernetes && \
-    ansible-galaxy collection install community.general && \
-    ansible-galaxy install xanmanning.k3s && \
+    # ansible collections
+    ansible-galaxy collection install "community.kubernetes:==${ANSIBLE_COLLECTION_K8S}" && \
+    ansible-galaxy collection install "community.general:==${ANSIBLE_COLLECTION_GENERAL}" && \
+    ansible-galaxy install "xanmanning.k3s,v${ANSIBLE_ROLE_K3S}" && \
+    ansible-galaxy install "accelize.linux_kernel,${ANSIBLE_ROLE_KERNEL}"
+RUN \
     # conftest
     curl -sL -o conftest_Linux_x86_64.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
     tar -C /usr/bin -xvzf conftest_Linux_x86_64.tar.gz && \
