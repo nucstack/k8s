@@ -65,10 +65,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: "longhorn"
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        mountPath: "/data"
+        existingClaim: zigbee2mqtt
     ingress:
       annotations:
         nginx.org/websocket-services: zigbee2mqtt
