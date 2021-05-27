@@ -65,6 +65,7 @@ spec:
           sslmode: disable
       session:
         redis:
+          enabledSecret: true
           host: authelia-redis-master
           port: 6379
           database_index: 0
