@@ -33,9 +33,6 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    image:
-      repository: quay.io/thanos/thanos
-      tag: v0.20.2
     query:
       replicaCount: 1
       replicaLabels:
