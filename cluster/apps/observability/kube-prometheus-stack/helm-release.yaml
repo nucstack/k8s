@@ -152,7 +152,7 @@ spec:
           type: prometheus          
           access: direct
           isDefault: true
-          url: http://prometheus-prometheus:9090
+          url: http://prometheus-operated:9090
         - name: loki
           type: loki
           access: proxy
