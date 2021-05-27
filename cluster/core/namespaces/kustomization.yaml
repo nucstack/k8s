@@ -9,4 +9,3 @@ resources:
   - observability.yaml
   - openfaas-fn.yaml
   - security.yaml
-  - system-upgrade.yaml
