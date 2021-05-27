@@ -48,7 +48,7 @@ spec:
         storageClass: longhorn
       sidecars:
         - name: pgadmin
-          image: dpage/pgadmin4:5.2
+          image: dpage/pgadmin4:5.3
           ports:
             - name: http
               containerPort: 80
