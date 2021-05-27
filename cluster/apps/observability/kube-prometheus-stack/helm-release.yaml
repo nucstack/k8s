@@ -148,9 +148,9 @@ spec:
             datasource: Prometheus
 
       additionalDataSources:
-        - name: prometheus
+        - name: Prometheus
           type: prometheus          
-          access: direct
+          access: proxy
           isDefault: true
           url: http://prometheus-operated:9090
         - name: loki
