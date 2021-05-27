@@ -42,7 +42,7 @@ spec:
                     - "true"
     initContainers:
       - name: copy
-        image: busybox:1.32.0
+        image: busybox:1.33.1
         command: ["/bin/sh", "-c", "cp /config/settings.json /config/nodes.json /usr/src/app/store/"]
         volumeMounts:
           - name: zwave2mqtt-config
