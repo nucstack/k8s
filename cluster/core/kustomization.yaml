@@ -6,4 +6,5 @@ resources:
 - cert-manager
 - longhorn-system
 - security
+- system-upgrade
 - nudl
