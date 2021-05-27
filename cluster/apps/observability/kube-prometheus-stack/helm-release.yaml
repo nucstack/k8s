@@ -220,7 +220,7 @@ spec:
       fullnameOverride: prometheus
       prometheusSpec:
         thanos:
-          image: thanosio/thanos:v0.17.2
+          image: thanosio/thanos:v0.20.2
           version: v0.17.2
           # Thanos chart will generate the secret: thanos
           objectStorageConfig:
