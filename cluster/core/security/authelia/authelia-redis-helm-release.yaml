@@ -31,16 +31,10 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
-    master:
-      persistence:
-        enabled: false
-        storageClass: "longhorn"
-        size: 1Gi
-    slave:
-      persistence:
-        enabled: false
-        storageClass: "longhorn"
-        size: 1Gi
+    replica:
+      replicaCount: 1
+    persistence:
+      enabled: false
   valuesFrom:
     - kind: Secret
       name: authelia-redis-helm-values
