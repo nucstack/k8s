@@ -34,22 +34,22 @@ spec:
   timeout: 20m
   values:
     prometheusOperator:
+      enabled: true
       resources:
         requests:
           memory: 128Mi
           cpu: 50m
         limits:
           memory: 256Mi
-          cpu: 100m    
-      enabled: true
+          cpu: 100m      
     kubeControllerManager:
       serviceMonitor:
-        https: true
-        insecureSkipVerify: true
+        https: false
+        insecureSkipVerify: false
     kubeScheduler:
       serviceMonitor:
-        https: true
-        insecureSkipVerify: true
+        https: false
+        insecureSkipVerify: false
     alertmanager:
       fullnameOverride: alertmanager
       enabled: true
@@ -170,7 +170,7 @@ spec:
         - name: Prometheus
           type: prometheus
           access: proxy
-          url: http://thanos-query-http:10902/
+          url: http://prometheus-operated:10901/
           isDefault: true
         - name: loki
           type: loki
