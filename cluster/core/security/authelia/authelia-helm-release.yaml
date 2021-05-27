@@ -58,6 +58,7 @@ spec:
         default_policy: one_factor
       storage:
         postgres:
+          enabled: true
           host: authelia-postgres-postgresql
           port: 5432
           database: authelia
@@ -65,7 +66,9 @@ spec:
           sslmode: disable
       session:
         redis:
-          enabledSecret: true
+          enabled: true
+          enabledSecret: false
+          username: ""
           host: authelia-redis-master
           port: 6379
           database_index: 0
