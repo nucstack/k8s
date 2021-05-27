@@ -209,8 +209,6 @@ spec:
 
     prometheus:
       fullnameOverride: prometheus
-      thanosService:
-        enabled: true
       prometheusSpec:
         thanos:
           image: thanosio/thanos:v0.20.2
