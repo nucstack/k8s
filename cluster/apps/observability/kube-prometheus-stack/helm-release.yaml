@@ -215,9 +215,6 @@ spec:
         thanos:
           image: thanosio/thanos:v0.20.2
           version: v0.17.2
-          # Thanos chart will generate the secret: thanos
-          objectStorageConfig:
-            name: thanos
         retention: 12h
         resources:
           requests:
