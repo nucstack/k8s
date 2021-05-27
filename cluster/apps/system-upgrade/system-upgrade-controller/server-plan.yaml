@@ -14,7 +14,7 @@ spec:
       - key: node-role.kubernetes.io/master
         operator: In
         values:
-        - "true"
+          - "true"
       - key: k3s-upgrade
         operator: In
         values:
