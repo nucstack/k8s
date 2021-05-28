@@ -39,8 +39,8 @@ spec:
     config:
       settings:
         clustername: "${ENVIRONMENT}"
-        #  kubectl:
-        #    enabled: "true"
+        kubectl:
+          enabled: "true"
       resources:
         - name: v1/pods                # Name of the resources e.g pod, deployment, ingress, etc. (Resource name must be in singular form)
           namespaces:
