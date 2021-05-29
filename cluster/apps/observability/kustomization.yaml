@@ -5,6 +5,7 @@ resources:
   - botkube
   - influxdb
   - kube-prometheus-stack
+  - linkerd
   - loki-stack
   - metrics-server
   - notifications
