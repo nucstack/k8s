@@ -4,6 +4,7 @@ ARG ANSIBLE_VERSION=2.10
 ARG CONFTEST_VERSION=0.24.0
 ARG FLUX_VERSION=0.14.1
 ARG HELM_VERSION=3.5.4
+ARG LINKERD_VERSION=2.10.2
 ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
@@ -89,6 +90,9 @@ RUN \
     tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
     rm -rf kustomize_linux_amd64.tar.gz && \
     chmod +x /usr/bin/kustomize && \
+    # linkerd
+    curl -sL -o linkerd https://github.com/linkerd/linkerd2/releases/download/stable-${LINKERD_VERSION}/linkerd2-cli-stable-${LINKERD_VERSION}-linux-amd64 && \
+    mv linkerd /usr/bin && chmod +x /usr/bin/linkerd && \    
     # sops
     curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
     mv sops /usr/bin && chmod +x /usr/bin/sops && \
