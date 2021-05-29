@@ -12,6 +12,7 @@ resources:
   - k8s-at-home.yaml
   - kubernetes-sigs.yaml
   - kubernetes-stable.yaml
+  - linkerd.yaml
   - longhorn.yaml
   - nginx-stable.yaml
   - openfaas.yaml

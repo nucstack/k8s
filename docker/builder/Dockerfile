@@ -9,6 +9,7 @@ ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
 ARG SOPS_VERSION=3.7.1
+ARG STEP_VERSION=0.15.16
 ARG TASK_VERSION=3.4.2
 ARG TERRAFORM_VERSION=0.14.8
 
@@ -96,6 +97,11 @@ RUN \
     # sops
     curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
     mv sops /usr/bin && chmod +x /usr/bin/sops && \
+    # step
+    curl -sL -o step.tar.gz https://github.com/smallstep/cli/releases/download/v${STEP_VERSION}/step_linux_${STEP_VERSION}_amd64.tar.gz && \
+    tar -xzvf step.tar.gz -C /usr/bin --strip-components=2 step_${STEP_VERSION}/bin/step && \
+    rm -rf step.tar.gz step_${STEP_VERSION} && \
+    chmod +x /usr/bin/step && \    
     # task
     curl -sL -o task_linux_amd64.tar.gz https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf task_linux_amd64.tar.gz && \
