@@ -1,0 +1,14 @@
+---
+version: '3'
+
+tasks:
+
+  generate-certs:
+    desc: generate linkerd certs
+    cmds:
+      - step certificate create identity.linkerd.cluster.local /tmp/linkerd-ca.crt /tmp/linkerd-ca.key --profile root-ca --no-password --insecure --san identity.linkerd.cluster.local -f
+      - step certificate create identity.linkerd.cluster.local /tmp/linkerd-issuer.crt /tmp/linkerd-issuer.key --ca /tmp/linkerd-ca.crt --ca-key /tmp/linkerd-ca.key --profile intermediate-ca --not-after 8760h --no-password --insecure --san identity.linkerd.cluster.local -f
+      - echo LINKERD_CA=\"$(cat /tmp/linkerd-ca.crt | base64 | tr -d '\n')\"
+      - echo LINKERD_CRT=\"$(cat /tmp/linkerd-issuer.crt | base64 | tr -d '\n')\"
+      - echo LINKERD_KEY=\"$(cat /tmp/linkerd-issuer.key | base64 | tr -d '\n')\"
+    silent: true
