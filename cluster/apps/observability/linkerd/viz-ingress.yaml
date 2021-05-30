@@ -17,7 +17,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
     nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
     nginx.ingress.kubernetes.io/auth-url: 'http://authelia.security.svc.cluster.local/api/verify'
-    nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Method $request_method;
     nginx.org/websocket-services: web
 spec:
   tls:
