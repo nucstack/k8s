@@ -4,6 +4,8 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  annotations:
+    linkerd.io/inject: enabled
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/part-of: flux
