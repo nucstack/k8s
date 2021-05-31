@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - linkerd-certs.secret.enc.yaml
   - helm-release.yaml
-  - viz-helm-release.yaml
-  - viz-ingress.yaml
