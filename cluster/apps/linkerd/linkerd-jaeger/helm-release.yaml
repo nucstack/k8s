@@ -2,14 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: linkerd-viz
+  name: linkerd-jaeger
   namespace: linkerd
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://helm.linkerd.io/stable
-      chart: linkerd-viz
+      chart: linkerd-jaeger
       version: 2.10.2
       sourceRef:
         kind: HelmRepository
@@ -33,9 +33,5 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    # prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local:9090"
-    # grafanaUrl: "http://grafana.observability.svc.cluster.local:3000"
-    grafana:    
-      enabled: true
-    prometheus:
-      enabled: true
+    installNamespace: false
+    namespace: linkerd
