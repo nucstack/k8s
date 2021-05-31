@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linkerd-jaeger-ingress
+  namespace: linkerd-jaeger
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/upstream-vhost: $service_name.$namespace.svc.cluster.local:16686
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Origin "";          
+    meta.helm.sh/release-name: linkerd-viz
+    meta.helm.sh/release-namespace: linkerd
+    nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+    nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+    nginx.ingress.kubernetes.io/auth-url: 'http://authelia.security.svc.cluster.local/api/verify'
+    nginx.org/websocket-services: jaeger
+spec:
+  tls:
+    - hosts:
+        - "jaeger.${SECRET_DOMAIN}"
+      secretName: linkerd-jaeger-tls
+  rules:
+    - host: "jaeger.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jaeger
+                port:
+                  number: 16686              
