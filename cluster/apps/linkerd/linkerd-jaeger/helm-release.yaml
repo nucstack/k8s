@@ -32,6 +32,3 @@ spec:
     recreate: true
     cleanupOnFail: true
   timeout: 20m
-  values:
-    installNamespace: false
-    namespace: linkerd

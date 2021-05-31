@@ -33,8 +33,6 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    installNamespace: false
-    namespace: linkerd
     # prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local:9090"
     # grafanaUrl: "http://grafana.observability.svc.cluster.local:3000"
     grafana:    
