@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: linkerd-viz
+  namespace: linkerd
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.linkerd.io/stable
+      chart: linkerd-viz
+      version: 2.10.2
+      sourceRef:
+        kind: HelmRepository
+        name: linkerd-charts
+        namespace: flux-system
+      interval: 10m
+  test:
+    enable: false
+  install:
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  timeout: 20m
+  values:
+    installNamespace: false
+    namespace: linkerd
+    # prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local:9090"
+    # grafanaUrl: "http://grafana.observability.svc.cluster.local:3000"
+    grafana:    
+      enabled: true
+    prometheus:
+      enabled: true
