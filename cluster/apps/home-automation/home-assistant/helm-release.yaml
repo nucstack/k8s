@@ -41,7 +41,7 @@ spec:
     influxdb:
       enabled: false
     postgresql:      
-      enabled: true
+      enabled: false
       persistence:
         enabled: true
         size: 10Gi
