@@ -89,7 +89,7 @@ spec:
           searchNamespace: ALL
         datasources:
           enabled: true
-          defaultDatasourceEnabled: false
+          defaultDatasourceEnabled: true
       plugins:
         - natel-discrete-panel
         - grafana-piechart-panel
@@ -167,11 +167,11 @@ spec:
             datasource: Prometheus
 
       additionalDataSources:
-        - name: Prometheus
-          type: prometheus
-          access: proxy
-          url: http://thanos-query-http:10902/
-          isDefault: true
+        # - name: Prometheus
+        #   type: prometheus
+        #   access: proxy
+        #   url: http://thanos-query-http:10902/
+        #   isDefault: true
         - name: loki
           type: loki
           access: proxy
