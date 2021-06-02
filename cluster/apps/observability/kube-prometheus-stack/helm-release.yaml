@@ -36,13 +36,13 @@ spec:
     defaultRules:
       create: false
     prometheusOperator:
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 50m
-        limits:
-          memory: 256Mi
-          cpu: 100m    
+      # resources:
+      #   requests:
+      #     memory: 128Mi
+      #     cpu: 50m
+      #   limits:
+      #     memory: 256Mi
+      #     cpu: 100m    
       enabled: true
     kubeControllerManager:
       serviceMonitor:
@@ -65,13 +65,13 @@ spec:
                 requests:
                   storage: 1Gi
     grafana:
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 50m
-        limits:
-          memory: 256Mi
-          cpu: 100m
+      # resources:
+      #   requests:
+      #     memory: 128Mi
+      #     cpu: 50m
+      #   limits:
+      #     memory: 256Mi
+      #     cpu: 100m
       ingress:
         enabled: true
         annotations:
@@ -232,20 +232,20 @@ spec:
             memory: 2560Mi
             cpu: '2000m'
     kube-state-metrics:
-      resources:
-        requests:
-          memory: 32Mi
-          cpu: 50m
-        limits:
-          memory: 64Mi
-          cpu: 100m
+      # resources:
+      #   requests:
+      #     memory: 32Mi
+      #     cpu: 50m
+      #   limits:
+      #     memory: 64Mi
+      #     cpu: 100m
       fullnameOverride: kube-state-metrics
     prometheus-node-exporter:
-      resources:
-        requests:
-          memory: 32Mi
-          cpu: 50m
-        limits:
-          memory: 64Mi
-          cpu: 100m
+      # resources:
+      #   requests:
+      #     memory: 32Mi
+      #     cpu: 50m
+      #   limits:
+      #     memory: 64Mi
+      #     cpu: 100m
       fullnameOverride: node-exporter
