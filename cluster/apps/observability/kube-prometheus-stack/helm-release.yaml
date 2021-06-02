@@ -33,14 +33,35 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    fullnameOverride: "prometheus"
+    prometheusOperator:
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 50m
+        limits:
+          memory: 256Mi
+          cpu: 100m    
+      enabled: true
+    kubeControllerManager:
+      serviceMonitor:
+        https: true
+        insecureSkipVerify: true
+    kubeScheduler:
+      serviceMonitor:
+        https: true
+        insecureSkipVerify: true
     alertmanager:
+      fullnameOverride: alertmanager
       enabled: true
       alertmanagerSpec:
-        resources:
-          requests:
-            memory: 400Mi
-
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 1Gi
     grafana:
       resources:
         requests:
@@ -195,22 +216,12 @@ spec:
       ldap:
         enabled: true
         existingSecret: grafana-ldap-config
-
-    kube-state-metrics:
-      resources:
-        requests:
-          memory: 32Mi
-          cpu: 50m
-        limits:
-          memory: 64Mi
-          cpu: 100m
-
     prometheus:
       fullnameOverride: prometheus
       prometheusSpec:
         thanos:
-          image: thanosio/thanos:v0.20.2
-          version: v0.17.2
+          image: thanosio/thanos
+          version: v0.20.2
           # Thanos chart will generate the secret: thanos
           objectStorageConfig:
             name: thanos
@@ -220,15 +231,7 @@ spec:
               memory: 128Mi
               cpu: 100m
             limits:
-              memory: 256Mi      
-        retention: 12h
-        # resources:
-        #   requests:
-        #     memory: '1536Mi'
-        #     cpu: '1000m'
-        #   limits:
-        #     memory: 2560Mi
-        #     cpu: '2000m'
+              memory: 256Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -237,7 +240,32 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
-
+        retention: 12h
+        resources:
+          requests:
+            memory: '1536Mi'
+            cpu: '1000m'
+          limits:
+            memory: 2560Mi
+            cpu: '2000m'
+        ruleSelector: {}
+        ruleNamespaceSelector: {}
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelector: {}
+        podMonitorNamespaceSelector: {}
+        podMonitorSelectorNilUsesHelmValues: false
+    kube-state-metrics:
+      resources:
+        requests:
+          memory: 32Mi
+          cpu: 50m
+        limits:
+          memory: 64Mi
+          cpu: 100m
+      fullnameOverride: kube-state-metrics
     prometheus-node-exporter:
       resources:
         requests:
@@ -247,13 +275,3 @@ spec:
           memory: 64Mi
           cpu: 100m
       fullnameOverride: node-exporter
-
-    prometheusOperator:
-      enabled: true
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 50m
-        limits:
-          memory: 256Mi
-          cpu: 100m
