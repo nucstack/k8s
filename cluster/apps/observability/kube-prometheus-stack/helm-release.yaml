@@ -36,7 +36,7 @@ spec:
     defaultRules:
       create: false
     prometheusOperator:
-      resources:false
+      resources:
         requests:
           memory: 128Mi
           cpu: 50m
