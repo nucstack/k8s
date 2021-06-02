@@ -50,18 +50,18 @@ spec:
     #   serviceMonitor:
     #     https: true
     #     insecureSkipVerify: true
-    # alertmanager:
-    #   fullnameOverride: alertmanager
-    #   enabled: true
-    #   alertmanagerSpec:
-    #     storage:
-    #       volumeClaimTemplate:
-    #         spec:
-    #           storageClassName: longhorn
-    #           accessModes: ["ReadWriteOnce"]
-    #           resources:
-    #             requests:
-    #               storage: 1Gi
+    alertmanager:
+      fullnameOverride: alertmanager
+      enabled: true
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 1Gi
     grafana:
       resources:
         requests:
