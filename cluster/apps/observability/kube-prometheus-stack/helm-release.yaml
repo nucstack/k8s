@@ -228,13 +228,13 @@ spec:
                 requests:
                   storage: 50Gi
         retention: 12h
-        resources:
-          requests:
-            memory: '1536Mi'
-            cpu: '1000m'
-          limits:
-            memory: 2560Mi
-            cpu: '2000m'
+        # resources:
+        #   requests:
+        #     memory: '1536Mi'
+        #     cpu: '1000m'
+        #   limits:
+        #     memory: 2560Mi
+        #     cpu: '2000m'
         ruleSelector: {}
         ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
