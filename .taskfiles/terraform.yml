@@ -10,7 +10,7 @@ tasks:
     desc: Initialize terraform
     dir: "{{.TERRAFORM_DIR}}"
     cmds:      
-      - terraform init
+      - terraform init -upgrade
     silent: true
   plan:
     desc: plan terraform
