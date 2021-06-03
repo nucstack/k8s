@@ -28,8 +28,8 @@ spec:
     serviceMonitor:
       create: true
     service:
-      annotations:
-        config.linkerd.io/opaque-ports: 1883,8883,8080,8443
+      # annotations:
+      #   config.linkerd.io/opaque-ports: 1883,8883,8080,8443
       type: LoadBalancer
       loadBalancerIP: "${SECRET_VERNEMQ_LB_IP}"
       mqtt:
