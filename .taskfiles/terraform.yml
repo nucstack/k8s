@@ -10,7 +10,7 @@ tasks:
     desc: Initialize terraform
     dir: "{{.TERRAFORM_DIR}}"
     cmds:      
-      - terraform init
+      - terraform init -upgrade
     silent: true
   plan:
     desc: plan terraform
@@ -26,3 +26,10 @@ tasks:
     dir: "{{.TERRAFORM_DIR}}"
     cmds:      
       - terraform apply --var-file {{.ENVIRONMENT}}.auto.tfvars
+  destroy:
+    desc: destroy terraform
+    env:
+      TF_CLI_ARGS: -input=false
+    dir: "{{.TERRAFORM_DIR}}"
+    cmds:      
+      - terraform destroy --var-file {{.ENVIRONMENT}}.auto.tfvars
