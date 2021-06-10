@@ -103,7 +103,4 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: deploy-key
-            mountPath: /root/.ssh/id_rsa
-            subPath: id_rsa
 
