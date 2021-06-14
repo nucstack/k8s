@@ -47,3 +47,11 @@ variable network     {
 variable nameserver  {
   default = null
 }
+
+variable tags {
+  default = {}
+}
+
+variable tailscale_auth_key {
+  default = null
+}

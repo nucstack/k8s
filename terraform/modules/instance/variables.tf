@@ -133,3 +133,16 @@ variable "ssh_authorized_key" {
   type        = string
   default     = ""
 }
+
+variable "tags" {
+  description = "tags to apply to instance."
+  type        = map(string)
+  default     = {}
+}
+
+variable "tailscale_auth_key" {
+  description = "auth key used to register nodes with tailscale"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

@@ -7,6 +7,7 @@ vars:
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"  
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/cluster"
+  PACKER_DIR: "{{.PROJECT_DIR}}/packer"
   STATE_DIR: "{{.TERRAFORM_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
   # the terraform state used to build instances contains some useful things
   SSH_USER:
@@ -25,4 +26,5 @@ includes:
   flux: .taskfiles/flux.yml
   kube: .taskfiles/kube.yml
   linkerd: .taskfiles/linkerd.yml
+  packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml
