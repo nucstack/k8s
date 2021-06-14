@@ -8,6 +8,7 @@ ARG LINKERD_VERSION=2.10.2
 ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.0
+ARG PACKER_VERSION=1.7.2
 ARG SOPS_VERSION=3.7.1
 ARG STEP_VERSION=0.15.16
 ARG TASK_VERSION=3.4.2
@@ -93,7 +94,13 @@ RUN \
     chmod +x /usr/bin/kustomize && \
     # linkerd
     curl -sL -o linkerd https://github.com/linkerd/linkerd2/releases/download/stable-${LINKERD_VERSION}/linkerd2-cli-stable-${LINKERD_VERSION}-linux-amd64 && \
-    mv linkerd /usr/bin && chmod +x /usr/bin/linkerd && \    
+    mv linkerd /usr/bin && chmod +x /usr/bin/linkerd && \
+    # packer
+    curl -sL -o packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip  && \
+    unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
+    mv packer /usr/bin/packer && \
+    chmod +x /usr/bin/packer && \
+    rm -rf packer_${PACKER_VERSION}_linux_amd64.zip && \
     # sops
     curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
     mv sops /usr/bin && chmod +x /usr/bin/sops && \

@@ -1,9 +1,9 @@
 
 terraform { 
   required_providers {
-    proxmox = {
-      source = "Telmate/proxmox"
-      version = "2.7.1"
-    }
+    aws = {
+      source = "hashicorp/aws"
+      version = "3.45.0"
+    }    
   }
 }
