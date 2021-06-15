@@ -1,13 +1,15 @@
 #!/bin/bash
 
 echo export TAILSCALE_AUTH_KEY="${TAILSCALE_AUTH_KEY}" >> /etc/profile
+echo export K8S_TOKEN="${K8S_TOKEN}" >> /etc/profile
 
 # register instance with tailscale
 sudo tailscale up --authkey "${TAILSCALE_AUTH_KEY}"
 
-# sudo k3s server --node-ip 10.10.10.1 --flannel-iface gre1 &
-# # Kubeconfig is written to /etc/rancher/k3s/k3s.yaml
-# sudo k3s kubectl get node
+TAILSCALE_IP=$(tailscale ip --4)
+
+# k3s server
+sudo k3s server --agent-token $K8S_TOKEN --node-ip $TAILSCALE_IP --flannel-iface tailscale0 &
 
 # # On a different node run the below. NODE_TOKEN comes from /var/lib/rancher/k3s/server/node-token
 # # on your server
