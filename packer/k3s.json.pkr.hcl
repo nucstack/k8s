@@ -1,23 +1,5 @@
 
-# Variables
-
-variable base_image {
-  type        = string
-  description = "reference image"
-  default     = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-}
-
-variable instance_type {
-  type        = string
-  description = "instance type"
-  default     = "t2.micro"
-}
-
-variable region {
-  type        = string
-  description = "region"
-  default     = "us-east-2"
-}
+// Common Variables
 
 variable role {
   type        = string
@@ -32,27 +14,28 @@ variable tags {
   }
 }
 
+// AWS
 data "amazon-ami" "base-image" {
   filters = {
-    name                = var.base_image
+    name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
     root-device-type    = "ebs"
     virtualization-type = "hvm"
   }
   most_recent = true
   owners      = ["099720109477"]
-  region      = var.region
+  region      = "us-east-2"
 }
 
 source "amazon-ebs" "amazon-ebs" {
   ami_description             = "role:${var.role}"
   ami_name                    = "${var.role}-{{ timestamp }}"
-  ami_regions                 = ["${var.region}"]
+  ami_regions                 = ["us-east-2"]
   ami_virtualization_type     = "hvm"
   associate_public_ip_address = true
   force_delete_snapshot       = true
   force_deregister            = true
-  instance_type               = var.instance_type
-  region                      = var.region
+  instance_type               = "t2.micro"
+  region                      = "us-east-2"
   source_ami                  = data.amazon-ami.base-image.id
   spot_price                  = "0"
   ssh_pty                     = true
@@ -60,6 +43,12 @@ source "amazon-ebs" "amazon-ebs" {
   ssh_username                = "ubuntu"
   tags                        = var.tags
 }
+
+// GCP
+// TBD
+
+// Azure
+// TBD
 
 build {
   sources = ["source.amazon-ebs.amazon-ebs"]
