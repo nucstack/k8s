@@ -5,11 +5,13 @@ echo export TAILSCALE_AUTH_KEY="${TAILSCALE_AUTH_KEY}" >> /etc/profile
 # register instance with tailscale
 sudo tailscale up --authkey "${TAILSCALE_AUTH_KEY}"
 
+sleep 10
+
 TAILSCALE_IP=$(tailscale ip --4)
 
 # k3s server
-sudo k3s server --node-ip $TAILSCALE_IP --flannel-iface tailscale0 &
+# k3s server --node-ip $TAILSCALE_IP --flannel-iface tailscale0
 
 # # On a different node run the below. NODE_TOKEN comes from /var/lib/rancher/k3s/server/node-token
 # # on your server
-# sudo k3s agent --server https://10.10.10.1:6443 --flannel-iface gre1 --node-ip 10.10.10.2 --token $NODE_TOKEN
+# sudo k3s agent --server https://10.10.10.1:6443 --flannel-iface tailscale0 --node-ip 10.10.10.2 --token $NODE_TOKEN

@@ -1,34 +1,12 @@
 
-data "aws_ami" "k3s-image" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["k3s-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-  owners = ["self"]
-}
-
 resource "aws_key_pair" "ssh-key" {
+  count      = var.type == "aws" ? 1 : 0
   key_name   = var.name
   public_key = var.ssh_authorized_key != "" ? var.ssh_authorized_key : tls_private_key.ssh_key.public_key_openssh
 }
 
-data "template_file" "bootstrap" {
-  template = file("${path.module}/scripts/k3s-bootstrap.sh.tmpl")
-  vars = {
-    TAILSCALE_AUTH_KEY = var.tailscale_auth_key
-  }
-}
-
 resource "aws_security_group" "ssh" {
+  count  = var.type == "aws" ? 1 : 0
   name   = "allow-ssh"
   description = "Allow TLS inbound traffic"  
   ingress {
@@ -51,9 +29,36 @@ resource "aws_security_group" "ssh" {
   }
 }
 
+data "aws_ami" "k3s-image" {
+  count       = var.type == "aws" ? 1 : 0
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["k3s-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+  owners = ["self"]
+}
+
+data "template_file" "bootstrap" {
+  count    = var.type == "aws" ? 1 : 0
+  template = file("${path.module}/scripts/k3s-bootstrap.sh.tmpl")
+  vars = {
+    TAILSCALE_AUTH_KEY = var.tailscale_auth_key
+  }
+}
+
 resource "aws_launch_template" "k3s" {
+  count         = var.type == "aws" ? 1 : 0
   name_prefix   = var.name
-  image_id      = data.aws_ami.k3s-image.id
+  image_id      = data.aws_ami.k3s-image.0.id
   instance_type = "t2.micro"
   instance_market_options {
     market_type = "spot"
@@ -66,11 +71,11 @@ resource "aws_launch_template" "k3s" {
   network_interfaces {
     associate_public_ip_address = false
     security_groups = [
-      aws_security_group.ssh.id
+      aws_security_group.ssh.0.id
     ]
   }
-  key_name = aws_key_pair.ssh-key.key_name
-  user_data = base64encode(data.template_file.bootstrap.rendered)
+  key_name = aws_key_pair.ssh-key.0.key_name
+  user_data = base64encode(data.template_file.bootstrap.0.rendered)
 
   tag_specifications {
     resource_type = "instance"
@@ -79,6 +84,7 @@ resource "aws_launch_template" "k3s" {
 }
 
 resource "aws_autoscaling_group" "k3s" {
+  count              = var.type == "aws" ? 1 : 0
   name               = var.name
   availability_zones = ["us-east-2a"]
   desired_capacity   = length(var.instances)
@@ -86,7 +92,7 @@ resource "aws_autoscaling_group" "k3s" {
   min_size           = 1
 
   launch_template {
-    id      = aws_launch_template.k3s.id
+    id      = aws_launch_template.k3s.0.id
     version = "$Latest"
   }
 }
