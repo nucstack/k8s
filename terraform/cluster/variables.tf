@@ -55,7 +55,3 @@ variable tags {
 variable tailscale_auth_key {
   default = null
 }
-
-variable k8s_token {
-  default = null
-}
