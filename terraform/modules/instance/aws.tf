@@ -25,6 +25,7 @@ data "template_file" "bootstrap" {
   template = file("${path.module}/scripts/k3s-bootstrap.sh.tmpl")
   vars = {
     TAILSCALE_AUTH_KEY = var.tailscale_auth_key
+    K8S_TOKEN          = var.k8s_token
   }
 }
 
