@@ -55,3 +55,15 @@ variable tags {
 variable tailscale_auth_key {
   default = null
 }
+
+variable db_name {
+  default = null
+}
+
+variable db_username {
+  default = null
+}
+
+variable db_password {
+  default = null
+}
