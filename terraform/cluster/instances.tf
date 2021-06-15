@@ -21,5 +21,4 @@ module "k8s" {
   network            = var.network
   nameserver         = var.nameserver
   tailscale_auth_key = var.tailscale_auth_key
-  k8s_token          = var.k8s_token
 }

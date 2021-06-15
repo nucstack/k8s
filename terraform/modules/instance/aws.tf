@@ -65,7 +65,7 @@ resource "aws_launch_template" "k3s" {
     http_put_response_hop_limit = 1
   }
   network_interfaces {
-    associate_public_ip_address = true
+    associate_public_ip_address = false
     security_groups = [
       aws_security_group.ssh.id
     ]
