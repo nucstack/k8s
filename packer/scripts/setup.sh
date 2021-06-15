@@ -15,6 +15,7 @@ sudo apt install -y curl vim jq git make unzip wget docker.io tailscale awscli
 sudo usermod -aG docker $USER
 
 # add k3s binary
-curl -sL -o usr/bin/k3s https://github.com/k3s-io/k3s/releases/download/${K3S_VERSION}/k3s
+curl -sL -o /usr/bin/k3s https://github.com/k3s-io/k3s/releases/download/${K3S_VERSION}/k3s
+chmod +x /usr/bin/k3s
 
 exit 0
