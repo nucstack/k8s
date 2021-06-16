@@ -1,16 +1,11 @@
-locals {  
-  tags = merge({
-    environment = var.environment
-  },
-    var.tags
-  )
-}
-
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr_block
   enable_dns_hostnames = var.enable_dns_hostnames
   enable_dns_support   = var.enable_dns_support
-  tags                 = local.tags
+  tags                 = {
+    Name        = "${var.environment}-vpc"
+    environment = var.environment
+  }
 }
 
 resource "aws_security_group" "default" {
@@ -31,5 +26,8 @@ resource "aws_security_group" "default" {
     protocol  = "-1"
     self      = "true"
   }
-  tags = local.tags
+  tags                 = {
+    Name        = "${var.environment}-default-sg"
+    environment = var.environment
+  }
 }

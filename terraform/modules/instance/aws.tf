@@ -2,8 +2,8 @@
 variable "vpcs" {  
   default = {
     staging = {
-      application_name     = "k3s"
-      image_name           = "k3s=*"
+      application_name     = "k3s-master"
+      image_name           = "k3s-*"
       region               = ["us-east-2"]
       availability_zones   = ["us-east-2a"]
       cidr_block           = "10.0.0.0/16"
@@ -36,7 +36,7 @@ module "subnet" {
 }
 
 // auto scaling instances
-module "instances" {
+module "k3s-masters" {
   source             = "../../modules/aws-auto-scaling-group"
   count              = var.type == "aws" ? length(tolist(element(module.subnet.0.private_subnets_id, 0))) : 0
   application_name   = var.vpcs[var.environment].application_name
