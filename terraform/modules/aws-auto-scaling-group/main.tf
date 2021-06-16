@@ -55,7 +55,9 @@ resource "aws_launch_template" "instance-template" {
 
   tag_specifications {
     resource_type = "instance"
-    tags          = var.tags
+    tags                 = {
+      Name             = "${var.application_name}-instance-template"      
+    }
   }
 }
 
@@ -71,4 +73,21 @@ resource "aws_autoscaling_group" "auto-scaling-group" {
     id      = aws_launch_template.instance-template.id
     version = "$Latest"
   }
+  tags = [
+    {
+      "key" = "Name"
+      "value" = "${var.application_name}-${var.environment}-asg"
+      "propagate_at_launch" = true
+    },
+    {
+      "key" = "application_name"
+      "value" = var.application_name
+      "propagate_at_launch" = true
+    },
+    {
+      "key" = "environment"
+      "value" = var.environment
+      "propagate_at_launch" = true
+    }        
+  ]
 }

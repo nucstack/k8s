@@ -19,7 +19,7 @@ resource "aws_nat_gateway" "nat" {
   depends_on    = [aws_internet_gateway.ig]
 
   tags = {
-    Name        = "nat"
+    Name        = "${var.environment}-nat"
     Environment = var.environment
   }
 }
@@ -32,7 +32,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name        = "${var.environment}-${element(var.availability_zones, count.index)}-public-subnet"
+    Name        = "public-${var.environment}-${element(var.availability_zones, count.index)}"
     Environment = var.environment
   }
 }
@@ -45,7 +45,7 @@ resource "aws_subnet" "private_subnet" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name        = "${var.environment}-${element(var.availability_zones, count.index)}-private-subnet"
+    Name        = "private-${var.environment}-${element(var.availability_zones, count.index)}"
     Environment = var.environment
   }
 }
@@ -54,7 +54,7 @@ resource "aws_route_table" "private" {
   vpc_id = var.vpc_id
 
   tags = {
-    Name        = "${var.environment}-private-route-table"
+    Name        = "${var.environment}-private"
     Environment = var.environment
   }
 }
@@ -63,7 +63,7 @@ resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
 
   tags = {
-    Name        = "${var.environment}-public-route-table"
+    Name        = "${var.environment}-public"
     Environment = var.environment
   }
 }

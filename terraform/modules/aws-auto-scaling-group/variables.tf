@@ -15,7 +15,7 @@ variable "subnet_id" {
 
 variable "image_name" {
   type        = string
-  description = "subnet id"
+  description = "image name"
 }
 
 variable "availability_zones" {
@@ -25,7 +25,7 @@ variable "availability_zones" {
 
 variable "instance_type" {
   type        = string
-  description = "subnet id"
+  description = "instance type"
   default     = "t2.micro"
 }
 
