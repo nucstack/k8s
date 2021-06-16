@@ -5,7 +5,8 @@ variable "application_name" {
 }
 
 variable "environment" {
-  description = "The Deployment environment"
+  description = "environment"
+  type        = string
 }
 
 variable "subnet_id" {
