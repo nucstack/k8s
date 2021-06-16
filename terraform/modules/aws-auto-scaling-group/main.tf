@@ -75,11 +75,6 @@ resource "aws_autoscaling_group" "auto-scaling-group" {
   }
   tags = [
     {
-      "key" = "Name"
-      "value" = "${var.application_name}-${var.environment}-asg"
-      "propagate_at_launch" = true
-    },
-    {
       "key" = "application_name"
       "value" = var.application_name
       "propagate_at_launch" = true
