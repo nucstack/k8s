@@ -28,10 +28,10 @@ spec:
       resources:
         limits:
           cpu: 400m
-          memory: 64Mi
+          memory: 256Mi
         requests:
           cpu: 100m
-          memory: 32Mi
+          memory: 192Mi
       enabled: true
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
