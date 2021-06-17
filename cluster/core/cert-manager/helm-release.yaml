@@ -19,10 +19,10 @@ spec:
     resources:
       limits:
         cpu: 400m
-        memory: 128Mi
+        memory: 256Mi
       requests:
         cpu: 100m
-        memory: 64Mi
+        memory: 192Mi
     installCRDs: false
     webhook:
       resources:
