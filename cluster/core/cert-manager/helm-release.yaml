@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.jetstack.io/
       chart: cert-manager
-      version: v1.3.1
+      version: v1.4.0
       sourceRef:
         kind: HelmRepository
         name: jetstack-charts
@@ -19,19 +19,19 @@ spec:
     resources:
       limits:
         cpu: 400m
-        memory: 128Mi
+        memory: 512Mi
       requests:
         cpu: 100m
-        memory: 64Mi
+        memory: 256Mi
     installCRDs: false
     webhook:
       resources:
         limits:
           cpu: 400m
-          memory: 64Mi
+          memory: 256Mi
         requests:
           cpu: 100m
-          memory: 32Mi
+          memory: 192Mi
       enabled: true
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
@@ -50,3 +50,8 @@ spec:
       nameservers:
       - "1.1.1.1"
       - "8.8.8.8"
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
+        prometheusInstance: observability
