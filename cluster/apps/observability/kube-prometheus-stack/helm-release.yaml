@@ -295,7 +295,7 @@ spec:
         podMonitorSelector: {}
         podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 1h
+        retention: 1d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
