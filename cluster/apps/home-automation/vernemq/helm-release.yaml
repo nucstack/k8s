@@ -26,7 +26,7 @@ spec:
         memory: 128Mi
     replicaCount: 3
     serviceMonitor:
-      create: true
+      create: false
     service:
       # annotations:
       #   config.linkerd.io/opaque-ports: 1883,8883,8080,8443
