@@ -34,6 +34,13 @@ spec:
     env:
       TZ: "America/New_York"
     hostNetwork: false
+    prometheus:
+      serviceMonitor:
+        enabled: true
+        portName: http
+        bearerTokenSecret:
+          name: home-assistant-prometheus-token
+          key: prometheus-token
     persistence:
       config:
         enabled: true
