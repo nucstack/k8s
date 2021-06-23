@@ -1,0 +1,15 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vernemq
+  namespace: home-automation
+spec:
+  endpoints:
+    - interval: 180s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: vernemq
+      app.kubernetes.io/name: vernemq
