@@ -59,4 +59,4 @@ spec:
         path: /metrics
         interval: 180s
         scrapeTimeout: 30s
-        labels: {}        
+        labels: {}
