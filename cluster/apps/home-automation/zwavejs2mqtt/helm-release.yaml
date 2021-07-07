@@ -49,16 +49,6 @@ spec:
             mountPath: /config
           - name: config
             mountPath: /usr/src/app/store
-    additionalVolumeMounts:
-      - name: usb
-        mountPath: /dev/ttyACM0
-    additionalVolumes:
-      - name: zwave2mqtt-config
-        secret:
-          secretName: zwave2mqtt-config
-      - name: usb
-        hostPath:
-          path: /dev/ttyACM0
     ingress:
       main:
         enabled: true
@@ -82,3 +72,11 @@ spec:
       config:
         enabled: true
         existingClaim: zwavejs2mqtt
+      usb:
+        enabled: true
+        hostPath: /dev/ttyACM0
+        mountPath: /dev/ttyACM0
+      zwave2mqtt-config:
+        enabled: true
+        secret:
+          secretName: zwave2mqtt-config
