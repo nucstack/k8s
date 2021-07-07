@@ -41,15 +41,6 @@ spec:
                   operator: In
                   values:
                     - "true"
-    initContainers:
-      - name: copy
-        image: busybox:1.33.1
-        command: ["/bin/sh", "-c", "cp /config/configuration.yaml /config/devices.yaml /data"]
-        volumeMounts:
-          - name: config
-            mountPath: /data
-          - name: zigbee2mqtt-config
-            mountPath: /config
     persistence:
       config:
         enabled: true
@@ -58,10 +49,6 @@ spec:
         enabled: true
         hostPath: /dev/ttyUSB0
         mountPath: /dev/ttyUSB0
-      zigbee2mqtt-config:
-        enabled: true
-        secret:
-          secretName: zigbee2mqtt-config
     ingress:
       main:
         enabled: true

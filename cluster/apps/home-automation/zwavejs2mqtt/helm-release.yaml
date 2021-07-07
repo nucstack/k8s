@@ -40,15 +40,6 @@ spec:
                   operator: In
                   values:
                     - "true"
-    initContainers:
-      - name: copy
-        image: busybox:1.33.1
-        command: ["/bin/sh", "-c", "cp /config/settings.json /config/nodes.json /usr/src/app/store/"]
-        volumeMounts:
-          - name: zwave2mqtt-config
-            mountPath: /config
-          - name: config
-            mountPath: /usr/src/app/store
     ingress:
       main:
         enabled: true
@@ -76,7 +67,3 @@ spec:
         enabled: true
         hostPath: /dev/ttyACM0
         mountPath: /dev/ttyACM0
-      zwave2mqtt-config:
-        enabled: true
-        secret:
-          secretName: zwave2mqtt-config
