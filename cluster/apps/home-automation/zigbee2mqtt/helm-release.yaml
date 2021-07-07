@@ -61,7 +61,7 @@ spec:
       zigbee2mqtt-config:
         enabled: true
         secret:
-          secretName: zigbee2mqtt-config                     
+          secretName: zigbee2mqtt-config
     ingress:
       main:
         enabled: true
