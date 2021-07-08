@@ -92,7 +92,7 @@ spec:
           - --user-data-dir
           - '/shared/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'          
+          - '/shared/.vscode'
         volumeMounts:
           - name: config
             mountPath: /config
@@ -111,7 +111,7 @@ spec:
           - --user-data-dir
           - '/shared/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'          
+          - '/shared/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
