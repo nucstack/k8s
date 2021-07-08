@@ -77,8 +77,6 @@ spec:
     initContainers:
       - name: extensions
         image: codercom/code-server:3.10.2
-        securityContext:
-          runAsUser: 0
         args:
           - --install-extension
           - 'ms-python.python'
@@ -86,10 +84,6 @@ spec:
           - --install-extension
           - 'keesschollaart.vscode-home-assistant'
           - --force
-          - --user-data-dir
-          - '/config/.vscode'
-          - --extensions-dir
-          - '/config/.vscode'
         volumeMounts:
           - name: config
             mountPath: /config          
@@ -101,12 +95,8 @@ spec:
           tag: 3.10.2
         workingDir: '/config'
         args:
-          - --user-data-dir
-          - '/config/.vscode'
           - --auth
           - 'none'
-          - --extensions-dir
-          - '/config/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
