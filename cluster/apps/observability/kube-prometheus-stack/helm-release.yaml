@@ -187,7 +187,7 @@ spec:
           # MetalLB
           metal-lb:
             url: https://grafana.com/api/dashboards/14127/revisions/1/download
-            datasource: Prometheus          
+            datasource: Prometheus
           # Prometheus
           prometheus-exporter-summary:
             url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
