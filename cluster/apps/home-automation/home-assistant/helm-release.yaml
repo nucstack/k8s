@@ -84,10 +84,10 @@ spec:
         args:
           - --install-extension
           - 'ms-python.python'
-          - '--force'
+          - --force
           - --install-extension
           - 'keesschollaart.vscode-home-assistant'
-          - '--force'
+          - --force
           - --user-data-dir
           - '/config/.vscode'
           - --auth
