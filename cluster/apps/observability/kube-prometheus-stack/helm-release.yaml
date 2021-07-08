@@ -112,13 +112,6 @@ spec:
     nodeExporter:
       serviceMonitor:
         interval: 60s
-        relabelings:
-        - action: replace
-          regex: (.*)
-          replacement: $1
-          sourceLabels:
-          - __meta_kubernetes_pod_node_name
-          targetLabel: kubernetes_node
     grafana:
       ingress:
         enabled: true
@@ -268,11 +261,6 @@ spec:
       enabled: true
       serviceMonitor:
         interval: 60s
-        metricRelabelings:
-        - action: replace
-          sourceLabels:
-          - node
-          targetLabel: instance
     kubeApiServer:
       enabled: true
     kubeControllerManager:
