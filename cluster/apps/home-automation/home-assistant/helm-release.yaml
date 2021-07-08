@@ -49,10 +49,6 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
-      test:
-        enabled: true
-        existingClaim: nfs-shared
-        mountPath: /test
     influxdb:
       enabled: false
     postgresql:      
@@ -102,8 +98,6 @@ spec:
             mountPath: /config
           - name: shared
             mountPath: /shared
-          - name: test
-            mountPath: /test
     addons:
       codeserver:
         enabled: true
