@@ -87,7 +87,7 @@ spec:
           - --force
         volumeMounts:
           - name: config
-            mountPath: /config          
+            mountPath: /config
     addons:
       codeserver:
         enabled: true
