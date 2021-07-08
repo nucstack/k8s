@@ -82,6 +82,8 @@ spec:
           tag: 3.10.2
         workingDir: '/config'
         args:
+          - --install-extension
+          - 'ms-python.python'
           - --user-data-dir
           - '/config/.vscode'
           - --auth
