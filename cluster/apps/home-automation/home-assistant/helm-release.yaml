@@ -89,6 +89,9 @@ spec:
           - --install-extension
           - 'keesschollaart.vscode-home-assistant'
           - --force
+          - --install-extension
+          - 'alexcvzz.vscode-sqlite'
+          - --force
           - --user-data-dir
           - '/shared/.vscode'
           - --extensions-dir
