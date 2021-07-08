@@ -1,0 +1,32 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nfs-shared
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: ""
+  nfs:
+    path: "${SECRET_NFS_SHARED_PATH}"
+    server: "${SECRET_NFS_HOST}"
+    readOnly: true
+  claimRef:
+    name: nfs-shared
+    namespace: home-automation  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-shared
+  namespace: home-automation
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: ""
+  volumeName: nfs-shared
