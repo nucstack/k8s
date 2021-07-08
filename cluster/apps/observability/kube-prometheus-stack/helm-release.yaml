@@ -111,6 +111,7 @@ spec:
                   storage: 1Gi
     nodeExporter:
       serviceMonitor:
+        interval: 60s
         relabelings:
         - action: replace
           regex: (.*)
@@ -269,6 +270,7 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
+        interval: 60s
         metricRelabelings:
         - action: replace
           sourceLabels:
