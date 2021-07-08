@@ -75,7 +75,7 @@ spec:
               - "hass.${SECRET_DOMAIN}"
             secretName: home-assistant-tls
     initContainers:
-      - name: copy
+      - name: extensions
         image: codercom/code-server:3.10.2
         args:
           - --install-extension
