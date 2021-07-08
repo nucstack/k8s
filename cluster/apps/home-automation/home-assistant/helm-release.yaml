@@ -45,6 +45,10 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
+      shared:
+        enabled: true
+        type: emptyDir
+        mountPath: /shared
     influxdb:
       enabled: false
     postgresql:      
@@ -85,9 +89,15 @@ spec:
           - --install-extension
           - 'keesschollaart.vscode-home-assistant'
           - --force
+          - --user-data-dir
+          - '/shared/.vscode'
+          - --extensions-dir
+          - '/shared/.vscode'          
         volumeMounts:
           - name: config
             mountPath: /config
+          - name: shared
+            mountPath: /shared
     addons:
       codeserver:
         enabled: true
@@ -98,6 +108,10 @@ spec:
         args:
           - --auth
           - 'none'
+          - --user-data-dir
+          - '/shared/.vscode'
+          - --extensions-dir
+          - '/shared/.vscode'          
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
