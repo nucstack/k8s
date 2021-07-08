@@ -74,6 +74,23 @@ spec:
           - hosts:
               - "hass.${SECRET_DOMAIN}"
             secretName: home-assistant-tls
+    initContainers:
+      - name: copy
+        image: codercom/code-server:3.10.2
+        args:
+          - --install-extension
+          - 'ms-python.python'
+          - --force
+          - --install-extension
+          - 'keesschollaart.vscode-home-assistant'
+          - --force
+          - --user-data-dir
+          - '/config/.vscode'
+          - --extensions-dir
+          - '/config/.vscode'
+        volumeMounts:
+          - name: config
+            mountPath: /config          
     addons:
       codeserver:
         enabled: true
@@ -82,12 +99,6 @@ spec:
           tag: 3.10.2
         workingDir: '/config'
         args:
-          - --install-extension
-          - 'ms-python.python'
-          - --force
-          - --install-extension
-          - 'keesschollaart.vscode-home-assistant'
-          - --force
           - --user-data-dir
           - '/config/.vscode'
           - --auth
