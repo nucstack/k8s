@@ -77,6 +77,7 @@ spec:
     initContainers:
       - name: extensions
         image: codercom/code-server:3.10.2
+        command: ['code-server']
         args:
           - --install-extension
           - 'ms-python.python'
