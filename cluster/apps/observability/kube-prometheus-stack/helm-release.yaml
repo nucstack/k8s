@@ -177,10 +177,6 @@ spec:
           # Prometheus
           prometheus-exporter-summary:
             url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
-            datasource: Prometheus                    
-          # Thanos
-          thanos-dashboard:
-            url: https://grafana.com/api/dashboards/12937/revisions/1/download
             datasource: Prometheus
           # Gatekeeper
           monitor-opa-gatekeeper:
@@ -217,10 +213,6 @@ spec:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
             datasource: Prometheus
       additionalDataSources:
-        - name: loki
-          type: loki
-          access: proxy
-          url: http://loki.observability.svc.cluster.local:3100
         - name: rtlamr-collect
           type: influxdb
           access: proxy
