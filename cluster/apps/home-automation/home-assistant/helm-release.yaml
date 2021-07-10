@@ -49,6 +49,14 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
+      photos:
+        enabled: true
+        existingClaim: nfs-photos
+        mountPath: /photos
+      videos:
+        enabled: true
+        existingClaim: nfs-videos
+        mountPath: /videos 
     influxdb:
       enabled: false
     postgresql:      
