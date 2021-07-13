@@ -49,7 +49,5 @@ spec:
     initScripts:
       enabled: true
       scripts:
-        home_assistant.iql: |+
-          CREATE DATABASE home_assistant WITH DURATION INF REPLICATION 1;
         rtlamr_collect.iql: |+
-          CREATE DATABASE meters WITH DURATION INF REPLICATION 1;
+          CREATE DATABASE meters WITH DURATION 90d REPLICATION 1;
