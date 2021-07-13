@@ -223,16 +223,6 @@ spec:
             timeInterval: "15s"
           secureJsonData:
             password: "${SECRET_INFLUXDB_PASSWORD}"
-        - name: home-assistant
-          type: influxdb
-          access: proxy
-          database: home_assistant
-          user: "${SECRET_INFLUXDB_USER}"
-          url: http://influxdb.observability.svc.cluster.local:8086
-          jsonData:
-            timeInterval: "15s"
-          secureJsonData:
-            password: "${SECRET_INFLUXDB_PASSWORD}"
       grafana.ini:
         auth.ldap:
           enabled: true
