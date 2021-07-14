@@ -6,3 +6,4 @@ resources:
   - vernemq.configmap.yaml
   - vernemq.secrets.enc.yaml
   - helm-release.yaml
+  - service-monitor.yaml

@@ -36,6 +36,9 @@ spec:
   values:
     serviceMonitor:
       enabled: true
+      interval: 180s
+      path: /metrics
+      port: metrics
     config:
       settings:
         clustername: "${ENVIRONMENT}"

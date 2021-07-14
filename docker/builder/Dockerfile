@@ -2,7 +2,7 @@ FROM alpine:3.14
 
 ARG ANSIBLE_VERSION=2.10
 ARG CONFTEST_VERSION=0.24.0
-ARG FLUX_VERSION=0.15.2
+ARG FLUX_VERSION=0.16.0
 ARG HELM_VERSION=3.5.4
 ARG LINKERD_VERSION=2.10.2
 ARG KUBECTL_VERSION=1.21.0
@@ -58,7 +58,7 @@ RUN \
     # ansible
     pip3 install --upgrade pip cffi && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install mitogen ansible-lint jmespath netaddr && \
+    pip3 install mitogen ansible-lint jmespath netaddr checkov && \
     # ansible collections
     ansible-galaxy collection install "community.kubernetes:==${ANSIBLE_COLLECTION_K8S}" && \
     ansible-galaxy collection install "community.general:==${ANSIBLE_COLLECTION_GENERAL}" && \

@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 16.10.0
+      version: 16.13.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -111,21 +111,8 @@ spec:
                   storage: 1Gi
     nodeExporter:
       serviceMonitor:
-        relabelings:
-        - action: replace
-          regex: (.*)
-          replacement: $1
-          sourceLabels:
-          - __meta_kubernetes_pod_node_name
-          targetLabel: kubernetes_node
+        interval: 60s
     grafana:
-      # resources:
-      #   requests:
-      #     memory: 128Mi
-      #     cpu: 50m
-      #   limits:
-      #     memory: 256Mi
-      #     cpu: 100m
       ingress:
         enabled: true
         annotations:
@@ -183,13 +170,13 @@ spec:
           node-exporter-full:
             url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/node_exporter_full.json
             datasource: Prometheus
+          # MetalLB
+          metal-lb:
+            url: https://grafana.com/api/dashboards/14127/revisions/1/download
+            datasource: Prometheus
           # Prometheus
           prometheus-exporter-summary:
             url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
-            datasource: Prometheus                    
-          # Thanos
-          thanos-dashboard:
-            url: https://grafana.com/api/dashboards/12937/revisions/1/download
             datasource: Prometheus
           # Gatekeeper
           monitor-opa-gatekeeper:
@@ -202,6 +189,10 @@ spec:
           flux-control-plane:
             url: https://raw.githubusercontent.com/fluxcd/flux2/v0.7.6/manifests/monitoring/grafana/dashboards/control-plane.json
             datasource: Prometheus
+          # longhorn
+          longhorn:
+            url: https://grafana.com/api/dashboards/13032/revisions/6/download
+            datasource: Prometheus          
           # Unifi
           unifi-poller-client-dpi:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20DPI%20-%20Prometheus.json
@@ -222,24 +213,10 @@ spec:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
             datasource: Prometheus
       additionalDataSources:
-        - name: loki
-          type: loki
-          access: proxy
-          url: http://loki.observability.svc.cluster.local:3100
         - name: rtlamr-collect
           type: influxdb
           access: proxy
           database: meters
-          user: "${SECRET_INFLUXDB_USER}"
-          url: http://influxdb.observability.svc.cluster.local:8086
-          jsonData:
-            timeInterval: "15s"
-          secureJsonData:
-            password: "${SECRET_INFLUXDB_PASSWORD}"
-        - name: home-assistant
-          type: influxdb
-          access: proxy
-          database: home_assistant
           user: "${SECRET_INFLUXDB_USER}"
           url: http://influxdb.observability.svc.cluster.local:8086
           jsonData:
@@ -269,11 +246,7 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
-        metricRelabelings:
-        - action: replace
-          sourceLabels:
-          - node
-          targetLabel: instance
+        interval: 60s
     kubeApiServer:
       enabled: true
     kubeControllerManager:
@@ -286,6 +259,14 @@ spec:
       enabled: false
     prometheus:
       prometheusSpec:
+        resources:
+          requests:
+            memory: 3Gi
+            cpu: 100m
+          limits:
+            memory: 4Gi
+            cpu: 200m
+        scrapeInterval: 60s
         ruleSelector: {}
         ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
@@ -295,7 +276,7 @@ spec:
         podMonitorSelector: {}
         podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 7d
+        retention: 1d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -304,4 +285,4 @@ spec:
               storageClassName: "longhorn"
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 60Gi

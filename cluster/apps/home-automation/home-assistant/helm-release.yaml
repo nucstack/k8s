@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: home-assistant
-      version: 9.2.0
+      version: 9.3.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -30,14 +30,33 @@ spec:
         memory: 1Gi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2021.6.6
+      tag: 2021.7.2
     env:
       TZ: "America/New_York"
     hostNetwork: false
+    prometheus:
+      serviceMonitor:
+        enabled: true
+        portName: http
+        bearerTokenSecret:
+          name: home-assistant-prometheus-token
+          key: prometheus-token
     persistence:
       config:
         enabled: true
         existingClaim: home-assistant
+      shared:
+        enabled: true
+        type: emptyDir
+        mountPath: /shared
+      photos:
+        enabled: true
+        existingClaim: nfs-photos
+        mountPath: /photos
+      videos:
+        enabled: true
+        existingClaim: nfs-videos
+        mountPath: /videos 
     influxdb:
       enabled: false
     postgresql:      
@@ -67,6 +86,26 @@ spec:
           - hosts:
               - "hass.${SECRET_DOMAIN}"
             secretName: home-assistant-tls
+    initContainers:
+      - name: extensions
+        image: codercom/code-server:3.10.2
+        command: ['code-server']
+        args:
+          - --install-extension
+          - 'ms-python.python'
+          - --force
+          - --install-extension
+          - 'keesschollaart.vscode-home-assistant'
+          - --force
+          - --user-data-dir
+          - '/shared/.vscode'
+          - --extensions-dir
+          - '/shared/.vscode'
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: shared
+            mountPath: /shared
     addons:
       codeserver:
         enabled: true
@@ -75,12 +114,12 @@ spec:
           tag: 3.10.2
         workingDir: '/config'
         args:
-          - --user-data-dir
-          - '/config/.vscode'
           - --auth
           - 'none'
+          - --user-data-dir
+          - '/shared/.vscode'
           - --extensions-dir
-          - '/config/.vscode'
+          - '/shared/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
@@ -103,4 +142,5 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
-
+          - name: shared
+            mountPath: /shared
