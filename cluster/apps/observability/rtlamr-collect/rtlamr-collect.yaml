@@ -4,6 +4,11 @@ kind: Deployment
 metadata:
   name: rtlamr-collect
   namespace: observability
+  annotations:
+    checkov.io/skip1: CKV_K8S_20
+    checkov.io/skip2: CKV_K8S_35
+    checkov.io/skip3: CKV_K8S_8
+    checkov.io/skip4: CKV_K8S_9
   labels:
     app.kubernetes.io/name: rtlamr-collect
     app.kubernetes.io/instance: rtlamr-collect
@@ -17,16 +22,30 @@ spec:
     type: Recreate
   template:
     metadata:
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         app.kubernetes.io/instance: rtlamr-collect
         app.kubernetes.io/name: rtlamr-collect
     spec:
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+      automountServiceAccountToken: false
       containers:
         - name: rtlamr-collect
           securityContext:
-            privileged: true
-          image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.2
-          imagePullPolicy: IfNotPresent          
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect@sha256:1d75515a4c827a9bd633b08e1b4b0bac7e9459912aa4186dcccf15e3707dcdf1
+          imagePullPolicy: Always          
           env:
             - name: INTERVAL
               value: "30"

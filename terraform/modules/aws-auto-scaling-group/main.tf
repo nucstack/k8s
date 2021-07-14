@@ -45,10 +45,8 @@ resource "aws_launch_template" "instance-template" {
   }
   network_interfaces {
     associate_public_ip_address = false
-    subnet_id = var.subnet_id
-    security_groups = [
-      var.security_group_id
-    ]
+    subnet_id                   = var.subnet_id
+    security_groups             = [aws_autoscaling_group.auto-scaling-group.id]
   }
   key_name = aws_key_pair.ssh-key-pair.key_name
   user_data = base64encode(data.template_file.bootstrap-script.rendered)
@@ -85,4 +83,26 @@ resource "aws_autoscaling_group" "auto-scaling-group" {
       "propagate_at_launch" = true
     }        
   ]
+}
+
+resource "aws_security_group" "default" {
+  name        = "${var.environment}-default-security-group"
+  description = "Default security group to allow inbound/outbound from the VPC"
+
+  ingress {
+    from_port = "0"
+    to_port   = "0"
+    protocol  = "-1"
+    self      = true
+  }
+  egress {
+    from_port = "0"
+    to_port   = "0"
+    protocol  = "-1"
+    self      = "true"
+  }
+  tags                 = {
+    Name        = "${var.environment}-default-sg"
+    environment = var.environment
+  }
 }

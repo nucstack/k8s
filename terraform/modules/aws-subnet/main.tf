@@ -37,6 +37,12 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
+resource "aws_network_acl" "public_acl" {
+  count  = length(aws_subnet.public_subnet)
+  vpc_id = var.vpc_id
+  subnet_ids = [lookup(element(aws_subnet.public_subnet, count.index), id)]
+}
+
 resource "aws_subnet" "private_subnet" {
   vpc_id                  = var.vpc_id
   count                   = length(var.private_subnets_cidr)
@@ -48,6 +54,12 @@ resource "aws_subnet" "private_subnet" {
     Name        = "private-${var.environment}-${element(var.availability_zones, count.index)}"
     Environment = var.environment
   }
+}
+
+resource "aws_network_acl" "private_acl" {
+  count  = length(aws_subnet.private_subnet)
+  vpc_id = var.vpc_id
+  subnet_ids = [lookup(element(aws_subnet.private_subnet, count.index), id)]
 }
 
 resource "aws_route_table" "private" {
