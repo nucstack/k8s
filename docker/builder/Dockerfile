@@ -57,7 +57,7 @@ RUN \
     # ansible
     pip3 install --upgrade pip cffi && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install mitogen ansible-lint jmespath netaddr && \
+    pip3 install mitogen ansible-lint jmespath netaddr checkov && \
     # ansible collections
     ansible-galaxy collection install "community.kubernetes:==${ANSIBLE_COLLECTION_K8S}" && \
     ansible-galaxy collection install "community.general:==${ANSIBLE_COLLECTION_GENERAL}" && \
