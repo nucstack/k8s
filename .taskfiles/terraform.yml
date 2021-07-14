@@ -19,15 +19,7 @@ tasks:
       TF_CLI_ARGS: -input=false
     dir: "{{.TERRAFORM_DIR}}"
     cmds:
-      - terraform plan --var-file {{.ENVIRONMENT}}.auto.tfvars -out /tmp/tf.plan
-  show:
-    desc: show terraform
-    deps: [init]
-    env:
-      TF_CLI_ARGS: -input=false
-    dir: "{{.TERRAFORM_DIR}}"
-    cmds:
-      - terraform show --var-file {{.ENVIRONMENT}}.auto.tfvars -json tf.plan > /tmp/tf.json
+      - terraform plan --var-file {{.ENVIRONMENT}}.auto.tfvars
   apply:
     desc: apply terraform
     deps: [init]
@@ -44,9 +36,3 @@ tasks:
     dir: "{{.TERRAFORM_DIR}}"
     cmds:      
       - terraform destroy --var-file {{.ENVIRONMENT}}.auto.tfvars
-  check:
-    desc: Scan Iac Code
-    deps: [show]
-    dir: "{{.TERRAFORM_DIR}}"
-    cmds:      
-      - checkov -f /tmp/tf.json

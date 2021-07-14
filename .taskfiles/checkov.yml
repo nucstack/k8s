@@ -1,0 +1,19 @@
+---
+version: '3'
+
+tasks:
+  terraform:
+    desc: Scan terraform Iac Code
+    dir: "{{.PROJECT_DIR}}"
+    cmds:      
+      - checkov --compact --directory ./terraform
+  docker:
+    desc: Scan docker Iac Code
+    dir: "{{.PROJECT_DIR}}"
+    cmds:      
+      - checkov --compact --directory ./docker
+  kubernetes:
+    desc: Scan k8s Iac Code
+    dir: "{{.PROJECT_DIR}}"
+    cmds:      
+      - checkov --compact --directory ./cluster
