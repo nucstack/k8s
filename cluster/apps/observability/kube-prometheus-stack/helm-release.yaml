@@ -143,6 +143,7 @@ spec:
         - grafana-kubernetes-app
         - grafana-clock-panel
         - camptocamp-prometheus-alertmanager-datasource
+        - agenty-flowcharting-panel
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
