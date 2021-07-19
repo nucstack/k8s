@@ -1,59 +1,89 @@
 
-variable "vpcs" {  
-  default = {
-    staging = {
-      application_name     = "k3s-master"
-      image_name           = "k3s-*"
-      region               = ["us-east-2"]
-      availability_zones   = ["us-east-2a"]
-      cidr_block           = "10.0.0.0/16"
-      public_subnets_cidr  = ["10.0.1.0/24"]
-      private_subnets_cidr = ["10.0.10.0/24"]
-      desired_capacity     = 1
-      min_size             = 1
-      max_size             = 1
-    }
-  }
+locals {
+  bootstrap_script = <<-EOT
+    #!/bin/bash
+    # register instance with tailscale
+    sudo tailscale up --authkey "${var.tailscale_auth_key}"
+    sleep 10
+    TAILSCALE_IP=$(tailscale ip --4)
+    # k3s server
+    k3s server --advertise-ip $TAILSCALE_IP --flannel-iface tailscale0
+  EOT
 }
 
-// sets up vpc
 module "vpc" {
-  source = "../../modules/aws-vpc"
-  count                   = var.type == "aws" ? 1 : 0
-  cidr_block              = var.vpcs[var.environment].cidr_block
-  environment             = var.environment
-}
+  source                 = "terraform-aws-modules/vpc/aws"
+  version                = "~> 3.0"
+  count                  = var.type == "aws" ? 1 : 0
 
-// sets up subnet(s)/igw/natgw/routes
-module "subnet" {
-  source = "../../modules/aws-subnet"
-  count                   = var.type == "aws" ? 1 : 0
-  environment             = var.environment
-  availability_zones      = var.vpcs[var.environment].availability_zones
-  public_subnets_cidr     = var.vpcs[var.environment].public_subnets_cidr
-  private_subnets_cidr    = var.vpcs[var.environment].private_subnets_cidr
-  vpc_id                  = module.vpc.0.vpc_id
-}
+  name                   = "${var.environment}-vpc"
+  cidr                   = "10.0.0.0/16"
+  azs                    = ["us-east-2a"]
+  private_subnets        = ["10.0.10.0/24"]
+  public_subnets         = ["10.0.1.0/24"]
+  create_igw             = true
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
+  one_nat_gateway_per_az = false
+  enable_dns_hostnames   = true
+  enable_dns_support    = true
+  #default_security_group_egress  = []
+  #default_security_group_ingress = []
+  #default_security_group_tags    = []
 
-// auto scaling instances
-module "k3s-masters" {
-  source             = "../../modules/aws-auto-scaling-group"
-  count              = var.type == "aws" ? length(tolist(element(module.subnet.0.private_subnets_id, 0))) : 0
-  application_name   = var.vpcs[var.environment].application_name
-  environment        = var.environment
-  subnet_id          = element(tolist(element(module.subnet.0.private_subnets_id, 0)), count.index)
-  image_name         = var.vpcs[var.environment].image_name
-  availability_zones = var.vpcs[var.environment].availability_zones
-  security_group_id  = module.vpc.0.default_sg_id
-  tags               = var.tags
-  desired_capacity   = var.vpcs[var.environment].desired_capacity
-  max_size           = var.vpcs[var.environment].max_size
-  min_size           = var.vpcs[var.environment].min_size
-  bootstrap_vars     = {
-    TAILSCALE_AUTH_KEY = var.tailscale_auth_key
+  tags = {
+    Terraform   = "true"
+    Environment = var.environment
   }
-  depends_on = [
-    module.vpc,
-    module.subnet
-  ]
+}
+
+// packer AMI image
+data "aws_ami" "image" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["k3s-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+  owners = ["self"]
+}
+
+// ssh key pair
+resource "aws_key_pair" "ssh-key-pair" {
+  key_name   = "k3s-master-${var.environment}"
+  public_key = tls_private_key.ssh_key.public_key_openssh
+}
+
+// autoscaling group
+module "asg" {
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "~> 4.0"
+  count   = var.type == "aws" ? 1 : 0
+  name                      = "k3s-master"
+  min_size                  = 1
+  max_size                  = 1
+  desired_capacity          = 1
+
+  vpc_zone_identifier       = module.vpc.0.private_subnets
+
+  use_lt          = true
+  create_lt       = true
+
+  image_id          = data.aws_ami.image.id
+  instance_type     = "t2.micro"
+  ebs_optimized     = false
+  enable_monitoring = false
+  user_data_base64  = base64encode(local.bootstrap_script)
+  key_name          = aws_key_pair.ssh-key-pair.key_name
+
+  placement = {
+    availability_zone = module.vpc.0.azs.0
+  }
 }
