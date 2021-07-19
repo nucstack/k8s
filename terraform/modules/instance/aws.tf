@@ -2,12 +2,7 @@
 locals {
   bootstrap_script = <<-EOT
     #!/bin/bash
-    # register instance with tailscale
-    sudo tailscale up --authkey "${var.tailscale_auth_key}"
-    sleep 10
-    TAILSCALE_IP=$(tailscale ip --4)
-    # k3s server
-    k3s server --advertise-ip $TAILSCALE_IP --flannel-iface tailscale0
+    k3s server
   EOT
 }
 
