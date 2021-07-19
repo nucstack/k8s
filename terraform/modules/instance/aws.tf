@@ -126,11 +126,6 @@ module "k3s-masters" {
   ebs_optimized     = false
   enable_monitoring = false
   key_name          = aws_key_pair.ssh-key-pair.key_name
-  user_data_base64  = base64encode(<<-EOT
-    #!/bin/bash
-    sudo k3s server --token ${var.k3s_token}
-  EOT
-  )
   placement = {
     availability_zone = module.vpc.0.azs.0
   }
