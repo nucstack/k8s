@@ -1,4 +1,23 @@
 
+locals {
+  tailscale_relay = {
+    instance_type = "t2.micro"
+    count         = 1
+  }
+  k3s_masters = {
+    instance_type = "t2.micro"
+    min_size          = 3
+    max_size          = 3
+    desired_capacity  = 3
+  }
+  k3s_workers = {
+    instance_type = "t2.micro"
+    min_size          = 5
+    max_size          = 5
+    desired_capacity  = 5
+  }
+}
+
 // lookup latest tailscale-relay role AMI image
 // TODO: target specific version
 data "aws_ami" "tailscale-relay" {
@@ -6,14 +25,6 @@ data "aws_ami" "tailscale-relay" {
   filter {
     name   = "tag:role"
     values = ["tailscale-relay"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
   }
   owners = ["self"]
 }
@@ -25,14 +36,6 @@ data "aws_ami" "k3s" {
   filter {
     name   = "tag:role"
     values = ["k3s"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
   }
   owners = ["self"]
 }
@@ -76,10 +79,10 @@ module "tailscale-relay" {
   count                  = var.type == "aws" ? 1 : 0
 
   name                   = "tailscale-relay"
-  instance_count         = 1
+  instance_count         = local.tailscale_relay.count
 
   ami                    = data.aws_ami.tailscale-relay.id
-  instance_type          = "t2.micro"
+  instance_type          = local.k3s_masters.instance_type
   user_data_base64       = base64encode(<<-EOT
     #!/bin/bash
     # allows for IP forwarding
@@ -111,22 +114,59 @@ module "k3s-masters" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 4.0"
   count   = var.type == "aws" ? 1 : 0
-  name                      = var.name
-  min_size                  = 1
-  max_size                  = 1
-  desired_capacity          = 1
 
+  name                      = var.name
+  min_size                  = local.k3s_masters.min_size
+  max_size                  = local.k3s_masters.max_size
+  desired_capacity          = local.k3s_masters.desired_capacity
   vpc_zone_identifier       = module.vpc.0.private_subnets
 
   use_lt          = true
   create_lt       = true
 
   image_id          = data.aws_ami.k3s.id
-  instance_type     = "t2.micro"
+  instance_type     = local.k3s_masters.instance_type
   ebs_optimized     = false
   enable_monitoring = false
   key_name          = aws_key_pair.ssh-key-pair.key_name
   placement = {
     availability_zone = module.vpc.0.azs.0
+  }
+  tags_as_map = {
+    Name        = "k3s-masters"
+    Role        = "k3s"
+    Terraform   = "true"
+    Environment = var.environment
+  }
+}
+
+// k3s-workers autoscaling group
+module "k3s-workers" {
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "~> 4.0"
+  count   = var.type == "aws" ? 1 : 0
+
+  name                      = var.name
+  min_size                  = local.k3s_workers.min_size
+  max_size                  = local.k3s_workers.max_size
+  desired_capacity          = local.k3s_workers.desired_capacity
+  vpc_zone_identifier       = module.vpc.0.private_subnets
+
+  use_lt          = true
+  create_lt       = true
+
+  image_id          = data.aws_ami.k3s.id
+  instance_type     = local.k3s_workers.instance_type
+  ebs_optimized     = false
+  enable_monitoring = false
+  key_name          = aws_key_pair.ssh-key-pair.key_name
+  placement = {
+    availability_zone = module.vpc.0.azs.0
+  }
+  tags_as_map = {
+    Name        = "k3s-workers"
+    Role        = "k3s"
+    Terraform   = "true"
+    Environment = var.environment
   }
 }
