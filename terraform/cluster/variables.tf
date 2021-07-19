@@ -56,6 +56,10 @@ variable tailscale_auth_key {
   default = null
 }
 
+variable k3s_token {
+  default = null
+}
+
 variable db_name {
   default = null
 }

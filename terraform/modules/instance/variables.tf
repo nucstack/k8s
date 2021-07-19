@@ -146,3 +146,10 @@ variable "tailscale_auth_key" {
   default     = ""
   sensitive   = true
 }
+
+variable "k3s_token" {
+  description = "k3s token"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
