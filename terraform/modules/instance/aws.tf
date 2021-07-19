@@ -125,12 +125,6 @@ module "k3s-masters" {
   instance_type     = "t2.micro"
   ebs_optimized     = false
   enable_monitoring = false
-  user_data_base64  = base64encode(<<-EOT
-    #!/bin/bash
-    # stands up k3s server
-    sudo k3s server
-  EOT
-  )
   key_name          = aws_key_pair.ssh-key-pair.key_name
 
   placement = {
