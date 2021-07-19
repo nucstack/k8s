@@ -30,7 +30,7 @@ spec:
         memory: 1Gi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2021.7.2
+      tag: 2021.7.3
     env:
       TZ: "America/New_York"
     hostNetwork: false
@@ -67,7 +67,7 @@ spec:
         storageClass: longhorn
       sidecars:
         - name: pgadmin
-          image: dpage/pgadmin4:5.4
+          image: dpage/pgadmin4:5.5
           ports:
             - name: http
               containerPort: 80

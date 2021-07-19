@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 16.13.0
+      version: 16.14.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -143,6 +143,7 @@ spec:
         - grafana-kubernetes-app
         - grafana-clock-panel
         - camptocamp-prometheus-alertmanager-datasource
+        - agenty-flowcharting-panel
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
