@@ -1,5 +1,6 @@
 
-// lookup tailscale-relay AMI image
+// lookup latest tailscale-relay role AMI image
+// TODO: target specific version
 data "aws_ami" "tailscale-relay" {
   most_recent = true
   filter {
@@ -17,7 +18,8 @@ data "aws_ami" "tailscale-relay" {
   owners = ["self"]
 }
 
-// lookup k3s AMI image
+// lookup latest k3s role AMI image
+// TODO: target specific version
 data "aws_ami" "k3s" {
   most_recent = true
   filter {
@@ -35,13 +37,15 @@ data "aws_ami" "k3s" {
   owners = ["self"]
 }
 
-// Add ssh key 
+// Add authorized public ssh key to AWS from generated tls_private_key
 resource "aws_key_pair" "ssh-key-pair" {
   key_name   = "${var.name}-${var.environment}"
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
-// Add VPC
+// Add VPC with private/public subnets
+// Add a NAT GW for the private subnet(s)
+// Add an IGW for the public subnets(s)
 module "vpc" {
   source                 = "terraform-aws-modules/vpc/aws"
   version                = "~> 3.0"
@@ -65,7 +69,7 @@ module "vpc" {
   }
 }
 
-// tailscale relay instance
+// deploy our tailscale relay instance in private subnet
 module "tailscale-relay" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   version                = "~> 2.0"
@@ -78,6 +82,9 @@ module "tailscale-relay" {
   instance_type          = "t2.micro"
   user_data_base64       = base64encode(<<-EOT
     #!/bin/bash
+    # allows for IP forwarding
+    # installs tailscale and enables the interface with the provided auth key
+    # advertises all private subnets as routes available over this interface
 
     echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
     echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf
@@ -120,6 +127,7 @@ module "k3s-masters" {
   enable_monitoring = false
   user_data_base64  = base64encode(<<-EOT
     #!/bin/bash
+    # stands up k3s server
     sudo k3s server
   EOT
   )
