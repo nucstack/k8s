@@ -124,9 +124,6 @@ RUN \
 # Cleanup
 RUN rm -rf /var/cache/apk/*
 
-RUN addgroup -S builder && adduser -S builder -G builder
-USER builder
-
 HEALTHCHECK NONE
 
 CMD bash

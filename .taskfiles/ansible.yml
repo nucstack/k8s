@@ -15,7 +15,7 @@ vars:
 tasks:
   export-sshkey:
     cmds:
-      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+      - "[ -f /root/.ssh/id_rsa ] || mkdir /root/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > /root/.ssh/id_rsa && chmod 0600 /root/.ssh/id_rsa"
     silent: true
 
   export-kubeconfig:

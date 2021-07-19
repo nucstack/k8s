@@ -4,13 +4,13 @@
 variable role {
   type        = string
   description = "images primary role"
-  default     = "k3s"
+  default     = "tailscale-relay"
 }
 
 variable tags {
   type = map(string)
   default = {
-    role = "k3s"
+    role = "tailscale-relay"
   }
 }
 
@@ -54,7 +54,7 @@ build {
   sources = ["source.amazon-ebs.amazon-ebs"]
 
   provisioner "shell" {
-    script = "scripts/k3s-setup.sh"
+    script = "scripts/tailscale-relay-setup.sh"
   }
 
   provisioner "shell" {
