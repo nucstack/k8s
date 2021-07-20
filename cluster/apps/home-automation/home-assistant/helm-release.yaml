@@ -104,13 +104,10 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                service:
-                  name: home-assistant-esphome
-                  port: 6052
         tls:
-          - secretName: esphome-tls
-            hosts:
+          - hosts:
               - "esphome.${SECRET_DOMAIN}"
+            secretName: esphome-tls              
       main:
         annotations:
           nginx.org/websocket-services: home-assistant
