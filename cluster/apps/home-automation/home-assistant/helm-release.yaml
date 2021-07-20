@@ -85,7 +85,7 @@ spec:
             enabled: true
             primary: false
             port: 6052
-            protocol: http
+            protocol: HTTP
     ingress:
       esphome:
           enabled: true
@@ -105,7 +105,7 @@ spec:
                 - path: /
                   pathType: Prefix
                   service:
-                    name: home-assistant
+                    name: home-assistant-esphome
                     port: 6052
           tls:
             - secretName: esphome-tls
