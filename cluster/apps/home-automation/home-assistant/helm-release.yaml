@@ -84,7 +84,7 @@ spec:
           esphome:
             enabled: true
             primary: false
-            port:
+            port: 6052
             protocol: http
     ingress:
       esphome:
