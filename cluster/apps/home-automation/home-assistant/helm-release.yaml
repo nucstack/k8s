@@ -111,8 +111,8 @@ spec:
         image: esphome/esphome:latest
         imagePullPolicy: IfNotPresent
         volumeMounts:
-        - name: shared
-          mountPath: /shared
+          - name: shared
+            mountPath: /shared
     addons:
       codeserver:
         enabled: true
