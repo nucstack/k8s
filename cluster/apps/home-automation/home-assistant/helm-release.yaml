@@ -51,7 +51,7 @@ spec:
         mountPath: /shared
       esphome-config:
         enabled: true
-        type: emptyDir
+        existingClaim: esphome
         mountPath: /esphome
       photos:
         enabled: true
