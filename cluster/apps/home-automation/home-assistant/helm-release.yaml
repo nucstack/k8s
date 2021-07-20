@@ -106,6 +106,13 @@ spec:
             mountPath: /config
           - name: shared
             mountPath: /shared
+    additionalContainers:
+      - name: esphome
+        image: esphome/esphome:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: shared
+          mountPath: /shared
     addons:
       codeserver:
         enabled: true
