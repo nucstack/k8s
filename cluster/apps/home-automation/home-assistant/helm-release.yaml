@@ -49,6 +49,10 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
+      esphome-config:
+        enabled: true
+        type: emptyDir
+        mountPath: /esphome        
       photos:
         enabled: true
         existingClaim: nfs-photos
@@ -111,8 +115,8 @@ spec:
         image: esphome/esphome:latest
         imagePullPolicy: IfNotPresent
         volumeMounts:
-          - name: shared
-            mountPath: /shared
+          - name: esphome-config
+            mountPath: /config
     addons:
       codeserver:
         enabled: true
