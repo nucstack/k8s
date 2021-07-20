@@ -117,6 +117,9 @@ spec:
         volumeMounts:
           - name: esphome-config
             mountPath: /config
+        ports:
+          - name: esphome
+            containerPort: 6052            
     addons:
       codeserver:
         enabled: true
