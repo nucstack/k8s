@@ -52,7 +52,7 @@ spec:
       esphome-config:
         enabled: true
         type: emptyDir
-        mountPath: /esphome        
+        mountPath: /esphome
       photos:
         enabled: true
         existingClaim: nfs-photos
@@ -60,10 +60,10 @@ spec:
       videos:
         enabled: true
         existingClaim: nfs-videos
-        mountPath: /videos 
+        mountPath: /videos
     influxdb:
       enabled: false
-    postgresql:      
+    postgresql:
       enabled: false
       persistence:
         enabled: true
@@ -75,7 +75,42 @@ spec:
           ports:
             - name: http
               containerPort: 80
+    service:
+      esphome:
+        enabled: true
+        primary: false
+        type: ClusterIP
+        ports:
+          esphome:
+            enabled: true
+            primary: false
+            port:
+            protocol: http
     ingress:
+      esphome:
+          enabled: true
+          primary: false
+          annotations:
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/websocket-services: "true"
+            nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+            nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+            nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+            nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+            nginx.ingress.kubernetes.io/configuration-snippet: more_set_headers "X-Forwarded-For $http_x_forwarded_for";
+          ingressClassName: nginx
+          hosts:
+            - host: "esphome.${SECRET_DOMAIN}"
+              paths:
+                - path: /
+                  pathType: Prefix
+                  service:
+                    name: home-assistant
+                    port: 6052
+          tls:
+            - secretName: esphome-tls
+              hosts:
+                - "esphome.${SECRET_DOMAIN}"
       main:
         annotations:
           nginx.org/websocket-services: home-assistant
