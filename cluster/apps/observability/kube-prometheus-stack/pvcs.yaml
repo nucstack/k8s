@@ -16,4 +16,3 @@ spec:
   claimRef:
     name: prometheus-data
     namespace: observability
-
