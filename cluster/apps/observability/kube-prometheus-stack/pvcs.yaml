@@ -7,7 +7,7 @@ spec:
   capacity:
     storage: 1Mi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: ""
   nfs:
     path: "${SECRET_NFS_PROMETHEUS_PATH}"
@@ -24,7 +24,7 @@ metadata:
   namespace: observability
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Mi
