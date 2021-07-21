@@ -7,7 +7,7 @@ spec:
   capacity:
     storage: 1Mi
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   storageClassName: ""
   nfs:
     path: "${SECRET_NFS_PROMETHEUS_PATH}"
@@ -16,3 +16,17 @@ spec:
   claimRef:
     name: prometheus-data
     namespace: observability
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data
+  namespace: observability
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: ""
+  volumeName: prometheus-data
