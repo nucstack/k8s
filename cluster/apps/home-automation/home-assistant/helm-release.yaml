@@ -192,5 +192,5 @@ spec:
             mountPath: /config
           - name: shared
             mountPath: /shared
-          - esphome-config:
+          - name: esphome-config
             mountPath: /esphome
