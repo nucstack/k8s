@@ -1,0 +1,18 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: prometheus-data
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: ""
+  nfs:
+    path: "${SECRET_NFS_PROMETHEUS_PATH}"
+    server: "${SECRET_NFS_HOST}"
+    readOnly: true
+  claimRef:
+    name: prometheus-data
+    namespace: observability

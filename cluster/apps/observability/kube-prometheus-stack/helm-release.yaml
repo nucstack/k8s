@@ -282,8 +282,12 @@ spec:
         walCompression: true
         storageSpec:
           volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn"
+            spec:              
+              volumeName: prometheus-data
+              accessModes: ["ReadWriteOnce"]              
+              storageClassName: ""
               resources:
                 requests:
-                  storage: 60Gi
+                  storage: 1Mi
+
+
