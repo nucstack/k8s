@@ -16,17 +16,4 @@ spec:
   claimRef:
     name: prometheus-data
     namespace: observability
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus-data
-  namespace: observability
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Mi
-  storageClassName: ""
-  volumeName: prometheus-data
+
