@@ -26,7 +26,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 39,
       "links": [],
       "panels": [
         {
@@ -109,6 +108,14 @@ data:
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
+            },
+            {
+              "exemplar": true,
+              "expr": "hass_power_a{}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "{{friendly_name}}",
+              "refId": "B"
             }
           ],
           "title": "Amps",
@@ -195,6 +202,14 @@ data:
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
+            },
+            {
+              "exemplar": true,
+              "expr": "hass_sensor_unit_w{}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "{{friendly_name}}",
+              "refId": "B"
             }
           ],
           "title": "Watts",
@@ -296,14 +311,14 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-1h",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
       "title": "Power Monitoring",
       "uid": "0lbCmOW7z",
-      "version": 8
+      "version": 9
     }
   vernemq-nodes.json: |-
     {
