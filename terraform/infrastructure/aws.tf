@@ -34,6 +34,7 @@ module "vpc" {
 
 // Generate a new key pair for each service
 module "key_pair" {
+  count           = var.type == "aws" ? 1 : 0
   source          = "terraform-aws-modules/key-pair/aws"
   version         = "1.0.0"
   key_name        = var.environment
@@ -48,7 +49,7 @@ module "key_pair" {
 // lookup latest service role AMI image
 // from our packer AMIs
 data "aws_ami" "role_image" {
-  for_each    = {for service in var.services: service.name => service}
+  for_each    = {for service in var.services: service.name => service if var.type == "aws"}
   most_recent = true
   filter {    
     name   = "tag:role"
@@ -58,14 +59,14 @@ data "aws_ami" "role_image" {
 }
 
 data "aws_subnet" "private_subnet" {    
-  for_each = {for service in var.services: service.name => service}
+  for_each = {for service in var.services: service.name => service if var.type == "aws"}
   cidr_block = each.value.subnet
 }
 
 // deploy our services of type 'ec2-instances'
 module "ec2-instances" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  for_each               = {for service in var.services: service.name => service if service.type == "ec2-instance"}
+  for_each               = {for service in var.services: service.name => service if service.type == "ec2-instance" && var.type == "aws"}
   version                = "~> 2.0"  
 
   name                   = each.value.name
@@ -73,7 +74,7 @@ module "ec2-instances" {
   instance_type          = each.value.size
   ami                    = data.aws_ami.role_image[each.value.name].id
   subnet_id              = data.aws_subnet.private_subnet[each.value.name].id
-  key_name               = module.key_pair.key_pair_key_name  
+  key_name               = module.key_pair.0.key_pair_key_name  
   vpc_security_group_ids = [module.vpc.0.default_security_group_id]
   user_data_base64       = local.startup_scripts[each.value.name]
   monitoring             = false
@@ -87,7 +88,7 @@ module "ec2-instances" {
 // deploy our services of type 'autoscaling'
 module "autoscaling-instances" {
   source                 = "terraform-aws-modules/autoscaling/aws"
-  for_each               = {for service in var.services:  service.name => service if service.type == "autoscaling"}
+  for_each               = {for service in var.services:  service.name => service if service.type == "autoscaling" && var.type == "aws"}
   version                = "~> 4.0"
   name                   = each.value.name
   min_size               = each.value.count
@@ -100,7 +101,7 @@ module "autoscaling-instances" {
   create_lt              = true
   ebs_optimized          = false
   enable_monitoring      = false
-  key_name               = module.key_pair.key_pair_key_name
+  key_name               = module.key_pair.0.key_pair_key_name
   user_data_base64       = local.startup_scripts[each.value.name]
   placement              = {
     availability_zone = local.aws_azs.0
