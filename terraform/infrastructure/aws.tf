@@ -125,3 +125,13 @@ module "autoscaling-instances" {
     Terraform   = "true"
   }
 }
+
+data "aws_instances" "instances" {
+  for_each      = {for service in var.services:  service.name => service if service.type == "autoscaling" && var.type == "aws"}
+  instance_tags = {
+    Name        = each.value.name
+    Environment = var.environment
+    Terraform   = "true"
+  }
+  instance_state_names = ["running"]
+}
