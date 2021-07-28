@@ -10,8 +10,12 @@ variable "type" {
 
 variable "services" {
   description = "services to provision"
-  default     = null
-  type        = map(object({
-    name = string
+  default     = []
+  type        = list(object({
+    name    = string
+    subnet  = string
+    type    = string
+    size    = string
+    count   = number
   }))
 }
