@@ -5,6 +5,13 @@ locals {
   aws_azs             = ["us-east-2a"]
   aws_public_subnets  = ["10.0.1.0/24"]
   aws_private_subnets = [for s in var.services : s.subnet]
+
+  // Used to pass useful information to our startup script render
+  // TODO: don't always pass a list of all private subnets for the
+  // tailscale relay.
+  env_vars = merge(
+    var.env_vars, 
+    {"PRIVATE_SUBNETS" = join(",", local.aws_private_subnets)})
 }
 
 // spin up a VPC for our environment
@@ -58,9 +65,15 @@ data "aws_ami" "role_image" {
   owners = ["self"]
 }
 
-data "aws_subnet" "private_subnet" {    
+data "aws_subnet" "private_subnet" {
   for_each = {for service in var.services: service.name => service if var.type == "aws"}
   cidr_block = each.value.subnet
+}
+
+data "template_file" "user_data" {
+  for_each = {for service in var.services: service.name => service if var.type == "aws"}
+  template = file("./startup_scripts/${each.value.name}.sh.tmpl")
+  vars     = local.env_vars
 }
 
 // deploy our services of type 'ec2-instances'
@@ -76,7 +89,7 @@ module "ec2-instances" {
   subnet_id              = data.aws_subnet.private_subnet[each.value.name].id
   key_name               = module.key_pair.0.key_pair_key_name  
   vpc_security_group_ids = [module.vpc.0.default_security_group_id]
-  user_data_base64       = local.startup_scripts[each.value.name]
+  user_data_base64       = base64encode(data.template_file.user_data[each.value.name].rendered)
   monitoring             = false
   tags                   = {
     Name        = each.value.name
@@ -102,7 +115,7 @@ module "autoscaling-instances" {
   ebs_optimized          = false
   enable_monitoring      = false
   key_name               = module.key_pair.0.key_pair_key_name
-  user_data_base64       = local.startup_scripts[each.value.name]
+  user_data_base64       = base64encode(data.template_file.user_data[each.value.name].rendered)
   placement              = {
     availability_zone = local.aws_azs.0
   }  

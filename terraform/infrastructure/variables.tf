@@ -10,12 +10,19 @@ variable "type" {
 
 variable "services" {
   description = "services to provision"
-  default     = []
+  default     = []  
   type        = list(object({
-    name    = string
-    subnet  = string
-    type    = string
-    size    = string
-    count   = number
+    name      = string
+    subnet    = string
+    type      = string
+    size      = string
+    count     = number
   }))
+}
+
+variable "env_vars" {
+  description = "additional env vars to include"
+  default     = {}
+  sensitive   = true
+  type        = map(string)
 }
