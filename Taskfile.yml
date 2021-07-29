@@ -4,7 +4,7 @@ version: '3'
 vars:
   PROJECT_DIR:
     sh: "git rev-parse --show-toplevel"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"  
+  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/infrastructure"
   PACKER_DIR: "{{.PROJECT_DIR}}/packer"
@@ -20,7 +20,7 @@ vars:
     sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select((.type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.ipaddress' {{.STATE_DIR}}/terraform.tfstate"
 
 dotenv: [".env"]
-  
+
 includes:
   ansible: .taskfiles/ansible.yml
   checkov: .taskfiles/checkov.yml

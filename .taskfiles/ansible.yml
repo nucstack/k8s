@@ -2,16 +2,16 @@
 version: '3'
 
 env:
-  ANSIBLE_CONFIG: "{{.PROJECT_DIR}}/ansible/ansible.cfg"    
-  
-vars:  
+  ANSIBLE_CONFIG: "{{.PROJECT_DIR}}/ansible/ansible.cfg"
+
+vars:
   ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
   ANSIBLE_HOSTS:
     sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.mode == \"data\") and .type == \"aws_instances\") and .name == \"instances\") | .instances[] | select(.index_key == \"k3s\") | .attributes.private_ips[]' {{.STATE_DIR}}/terraform.tfstate"
-    
+
 tasks:
   export-sshkey:
     cmds:
@@ -59,7 +59,7 @@ tasks:
     deps: [export-sshkey]
     cmds:
       - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
-    silent: true    
+    silent: true
 
   k8s-install:
     desc: Install k8s
@@ -81,5 +81,5 @@ tasks:
     desc: Upgrade k8s
     deps: [ping]
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"      
+      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"
     silent: true

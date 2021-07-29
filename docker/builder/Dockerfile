@@ -76,7 +76,7 @@ RUN \
     tar -C /usr/bin -xvzf flux.tar.gz && \
     chmod +x /usr/bin/flux && \
     # helm
-    curl  -sL -o helm-linux-amd64.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \    
+    curl  -sL -o helm-linux-amd64.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xzvf helm-linux-amd64.tar.gz -C /usr/bin --strip-components=1 linux-amd64/helm && \
     chmod +x /usr/bin/helm && \
     # kubectl
@@ -108,7 +108,7 @@ RUN \
     curl -sL -o step.tar.gz https://github.com/smallstep/cli/releases/download/v${STEP_VERSION}/step_linux_${STEP_VERSION}_amd64.tar.gz && \
     tar -xzvf step.tar.gz -C /usr/bin --strip-components=2 step_${STEP_VERSION}/bin/step && \
     rm -rf step.tar.gz step_${STEP_VERSION} && \
-    chmod +x /usr/bin/step && \    
+    chmod +x /usr/bin/step && \
     # task
     curl -sL -o task_linux_amd64.tar.gz https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf task_linux_amd64.tar.gz && \

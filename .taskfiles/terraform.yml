@@ -10,7 +10,7 @@ tasks:
   init:
     desc: Initialize terraform
     dir: "{{.TERRAFORM_DIR}}"
-    cmds:      
+    cmds:
       - terraform init -upgrade
     silent: true
   plan:
@@ -25,12 +25,12 @@ tasks:
     deps: [init]
     env:
     dir: "{{.TERRAFORM_DIR}}"
-    cmds:      
+    cmds:
       - terraform apply
   destroy:
     desc: destroy terraform
     deps: [init]
     env:
     dir: "{{.TERRAFORM_DIR}}"
-    cmds:      
+    cmds:
       - terraform destroy
