@@ -19,6 +19,9 @@ kind: Deployment
 metadata:
   name: rsyslog
   namespace: observability
+  annotations:
+    checkov.io/skip3: CKV_K8S_8
+    checkov.io/skip4: CKV_K8S_9
   labels:
     app.kubernetes.io/name: rsyslog
     app.kubernetes.io/instance: rsyslog
@@ -30,13 +33,29 @@ spec:
   replicas: 1
   template:
     metadata:
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         app.kubernetes.io/name: rsyslog
         app.kubernetes.io/instance: rsyslog
     spec:
+      securityContext:
+        runAsUser: 10001
+        runAsGroup: 10001
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+      automountServiceAccountToken: false
       containers:
         - name: rsyslog
-          image: "${SECRET_PRIVATE_REGISTRY}/rsyslog:0.0.2"
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          image: "${SECRET_PRIVATE_REGISTRY}/rsyslog@sha256:11fd10ff27d9da658e74d174b4b39698a8075a7e5569f8036cc226c6cfff8780"
           imagePullPolicy: "Always"
           ports:
             - name: default

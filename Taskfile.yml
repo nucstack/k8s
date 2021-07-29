@@ -6,23 +6,26 @@ vars:
     sh: "git rev-parse --show-toplevel"
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
-  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/cluster"
+  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/infrastructure"
+  PACKER_DIR: "{{.PROJECT_DIR}}/packer"
   STATE_DIR: "{{.TERRAFORM_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
   # the terraform state used to build instances contains some useful things
-  SSH_USER:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.username' {{.STATE_DIR}}/terraform.tfstate"
+  SSH_USER: "ec2-user"
+    #sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select((.type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.username' {{.STATE_DIR}}/terraform.tfstate"
   SSH_PRIVATE_KEY:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.module == \"module.k8s\") and .type == \"tls_private_key\") | .instances[0].attributes.private_key_pem' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select(.type == \"tls_private_key\") | .instances[0].attributes.private_key_pem' {{.STATE_DIR}}/terraform.tfstate"
   SSH_PUBLIC_KEY:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.module == \"module.k8s\") and .type == \"tls_private_key\") | .instances[0].attributes.public_key_openssh' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select(.type == \"tls_private_key\") | .instances[0].attributes.public_key_openssh' {{.STATE_DIR}}/terraform.tfstate"
   K8S_MASTER_IP:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.ipaddress' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select((.type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.ipaddress' {{.STATE_DIR}}/terraform.tfstate"
 
 dotenv: [".env"]
 
 includes:
   ansible: .taskfiles/ansible.yml
+  checkov: .taskfiles/checkov.yml
   flux: .taskfiles/flux.yml
   kube: .taskfiles/kube.yml
   linkerd: .taskfiles/linkerd.yml
+  packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml

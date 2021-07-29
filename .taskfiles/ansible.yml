@@ -10,12 +10,12 @@ vars:
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[] | .attributes.triggers.name + \",\" + .attributes.triggers.ipaddress + \" \"' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.mode == \"data\") and .type == \"aws_instances\") and .name == \"instances\") | .instances[] | select(.index_key == \"k3s\") | .attributes.private_ips[]' {{.STATE_DIR}}/terraform.tfstate"
 
 tasks:
   export-sshkey:
     cmds:
-      - "[ -f ~/.ssh/id_rsa ] || mkdir ~/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa"
+      - "[ -f /root/.ssh/id_rsa ] || mkdir /root/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > /root/.ssh/id_rsa && chmod 0600 /root/.ssh/id_rsa"
     silent: true
 
   export-kubeconfig:

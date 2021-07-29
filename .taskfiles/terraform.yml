@@ -4,6 +4,7 @@ version: '3'
 env:
   TF_IN_AUTOMATION: true
   TF_WORKSPACE: "{{.ENVIRONMENT}}"
+  TF_INPUT: 0
 
 tasks:
   init:
@@ -14,22 +15,22 @@ tasks:
     silent: true
   plan:
     desc: plan terraform
+    deps: [init]
     env:
-      TF_CLI_ARGS: -input=false
     dir: "{{.TERRAFORM_DIR}}"
     cmds:
-      - terraform plan --var-file {{.ENVIRONMENT}}.auto.tfvars
+      - terraform plan
   apply:
     desc: apply terraform
+    deps: [init]
     env:
-      TF_CLI_ARGS: -input=false
     dir: "{{.TERRAFORM_DIR}}"
     cmds:
-      - terraform apply --var-file {{.ENVIRONMENT}}.auto.tfvars
+      - terraform apply
   destroy:
     desc: destroy terraform
+    deps: [init]
     env:
-      TF_CLI_ARGS: -input=false
     dir: "{{.TERRAFORM_DIR}}"
     cmds:
-      - terraform destroy --var-file {{.ENVIRONMENT}}.auto.tfvars
+      - terraform destroy
