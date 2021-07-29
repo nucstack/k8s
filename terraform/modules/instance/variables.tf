@@ -125,7 +125,7 @@ variable "password" {
 variable "nameserver" {
   description = "nameserver to add during cloudinit."
   type        = string
-  default     = ""  
+  default     = ""
 }
 
 variable "ssh_authorized_key" {

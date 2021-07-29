@@ -119,11 +119,11 @@ spec:
           kubernetes.io/ingress.class: nginx
           kubernetes.io/ingress.allow-http: "false"
         hosts:
-          - "grafana.${SECRET_DOMAIN}"
+        - "grafana.${SECRET_DOMAIN}"
         tls:
-          - secretName: grafana-tls
-            hosts:
-              - "grafana.${SECRET_DOMAIN}"
+        - secretName: grafana-tls
+          hosts:
+          - "grafana.${SECRET_DOMAIN}"
       fullnameOverride: grafana
       enabled: true
       sidecar:
@@ -134,28 +134,28 @@ spec:
           enabled: true
           defaultDatasourceEnabled: true
       plugins:
-        - natel-discrete-panel
-        - grafana-piechart-panel
-        - vonage-status-panel
-        - grafana-worldmap-panel
-        - btplc-status-dot-panel
-        - cloudflare-app
-        - grafana-kubernetes-app
-        - grafana-clock-panel
-        - camptocamp-prometheus-alertmanager-datasource
-        - agenty-flowcharting-panel
+      - natel-discrete-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - btplc-status-dot-panel
+      - cloudflare-app
+      - grafana-kubernetes-app
+      - grafana-clock-panel
+      - camptocamp-prometheus-alertmanager-datasource
+      - agenty-flowcharting-panel
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-            - name: 'default'
-              orgId: 1
-              folder: ''
-              type: file
-              disableDeletion: false
-              editable: true
-              options:
-                path: /var/lib/grafana/dashboards/default
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
       dashboards:
         default:
           # Core
@@ -193,7 +193,7 @@ spec:
           # longhorn
           longhorn:
             url: https://grafana.com/api/dashboards/13032/revisions/6/download
-            datasource: Prometheus          
+            datasource: Prometheus
           # Unifi
           unifi-poller-client-dpi:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20DPI%20-%20Prometheus.json
@@ -214,16 +214,16 @@ spec:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20USW%20Insights%20-%20Prometheus.json
             datasource: Prometheus
       additionalDataSources:
-        - name: rtlamr-collect
-          type: influxdb
-          access: proxy
-          database: meters
-          user: "${SECRET_INFLUXDB_USER}"
-          url: http://influxdb.observability.svc.cluster.local:8086
-          jsonData:
-            timeInterval: "15s"
-          secureJsonData:
-            password: "${SECRET_INFLUXDB_PASSWORD}"
+      - name: rtlamr-collect
+        type: influxdb
+        access: proxy
+        database: meters
+        user: "${SECRET_INFLUXDB_USER}"
+        url: http://influxdb.observability.svc.cluster.local:8086
+        jsonData:
+          timeInterval: "15s"
+        secureJsonData:
+          password: "${SECRET_INFLUXDB_PASSWORD}"
       grafana.ini:
         auth.ldap:
           enabled: true
@@ -282,9 +282,9 @@ spec:
         walCompression: true
         storageSpec:
           volumeClaimTemplate:
-            spec:              
+            spec:
               volumeName: prometheus-data
-              accessModes: ["ReadWriteOnce"]              
+              accessModes: ["ReadWriteOnce"]
               storageClassName: ""
               resources:
                 requests:

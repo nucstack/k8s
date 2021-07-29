@@ -26,7 +26,7 @@ spec:
           securityContext:
             privileged: true
           image: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect:0.0.2
-          imagePullPolicy: IfNotPresent          
+          imagePullPolicy: IfNotPresent
           env:
             - name: INTERVAL
               value: "30"

@@ -86,7 +86,7 @@ spec:
             primary: false
             port: 6052
             protocol: HTTP
-    ingress:              
+    ingress:
       main:
         annotations:
           nginx.org/websocket-services: home-assistant
@@ -117,13 +117,13 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                service:                  
+                service:
                   name: home-assistant-esphome
                   port: 6052
         tls:
           - hosts:
               - "esphome.${SECRET_DOMAIN}"
-            secretName: esphome-tls            
+            secretName: esphome-tls
     initContainers:
       - name: extensions
         image: codercom/code-server:3.10.2
@@ -153,7 +153,7 @@ spec:
             mountPath: /config
         ports:
           - name: esphome
-            containerPort: 6052            
+            containerPort: 6052
     addons:
       codeserver:
         enabled: true

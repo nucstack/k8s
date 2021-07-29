@@ -11,13 +11,13 @@ module "k8s" {
   username          = var.username
   password          = var.password
 
-  // resources    
-  cpu_sockets       = var.cpu_sockets 
-  cpu_cores         = var.cpu_cores 
+  // resources
+  cpu_sockets       = var.cpu_sockets
+  cpu_cores         = var.cpu_cores
   memory            = var.memory
   disk              = var.disk
 
-  // network  
+  // network
   network           = var.network
   nameserver        = var.nameserver
 }
