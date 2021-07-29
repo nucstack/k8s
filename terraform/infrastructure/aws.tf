@@ -68,6 +68,9 @@ data "aws_ami" "role_image" {
 data "aws_subnet" "private_subnet" {
   for_each = {for service in var.services: service.name => service if var.type == "aws"}
   cidr_block = each.value.subnet
+  depends_on = [
+    module.vpc
+  ]
 }
 
 data "template_file" "user_data" {
@@ -134,4 +137,7 @@ data "aws_instances" "instances" {
     Terraform   = "true"
   }
   instance_state_names = ["running"]
+  depends_on = [
+    module.autoscaling-instances
+  ]
 }
