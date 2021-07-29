@@ -2,6 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - pvcs.yaml
   - grafana-ldap.secret.enc.yaml
   - grafana-dashboards.yaml
   - helm-release.yaml

@@ -30,7 +30,7 @@ spec:
         memory: 1Gi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2021.7.3
+      tag: 2021.7.4
     env:
       TZ: "America/New_York"
     hostNetwork: false
@@ -49,6 +49,10 @@ spec:
         enabled: true
         type: emptyDir
         mountPath: /shared
+      esphome-config:
+        enabled: true
+        existingClaim: esphome
+        mountPath: /esphome
       photos:
         enabled: true
         existingClaim: nfs-photos
@@ -56,10 +60,10 @@ spec:
       videos:
         enabled: true
         existingClaim: nfs-videos
-        mountPath: /videos 
+        mountPath: /videos
     influxdb:
       enabled: false
-    postgresql:      
+    postgresql:
       enabled: false
       persistence:
         enabled: true
@@ -71,7 +75,18 @@ spec:
           ports:
             - name: http
               containerPort: 80
-    ingress:
+    service:
+      esphome:
+        enabled: true
+        primary: false
+        type: ClusterIP
+        ports:
+          esphome:
+            enabled: true
+            primary: false
+            port: 6052
+            protocol: HTTP
+    ingress:              
       main:
         annotations:
           nginx.org/websocket-services: home-assistant
@@ -86,6 +101,29 @@ spec:
           - hosts:
               - "hass.${SECRET_DOMAIN}"
             secretName: home-assistant-tls
+      esphome:
+        enabled: true
+        primary: false
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          nginx.ingress.kubernetes.io/websocket-services: "true"
+          nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
+          nginx.ingress.kubernetes.io/configuration-snippet: more_set_headers "X-Forwarded-For $http_x_forwarded_for";
+        hosts:
+          - host: "esphome.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:                  
+                  name: home-assistant-esphome
+                  port: 6052
+        tls:
+          - hosts:
+              - "esphome.${SECRET_DOMAIN}"
+            secretName: esphome-tls            
     initContainers:
       - name: extensions
         image: codercom/code-server:3.10.2
@@ -106,6 +144,16 @@ spec:
             mountPath: /config
           - name: shared
             mountPath: /shared
+    additionalContainers:
+      - name: esphome
+        image: esphome/esphome:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: esphome-config
+            mountPath: /config
+        ports:
+          - name: esphome
+            containerPort: 6052            
     addons:
       codeserver:
         enabled: true
@@ -144,3 +192,5 @@ spec:
             mountPath: /config
           - name: shared
             mountPath: /shared
+          - name: esphome-config
+            mountPath: /esphome

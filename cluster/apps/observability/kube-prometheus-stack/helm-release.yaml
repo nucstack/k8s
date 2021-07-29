@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
-      version: 16.14.1
+      version: 17.0.3
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -260,13 +260,13 @@ spec:
       enabled: false
     prometheus:
       prometheusSpec:
-        resources:
-          requests:
-            memory: 3Gi
-            cpu: 100m
-          limits:
-            memory: 4Gi
-            cpu: 200m
+        # resources:
+        #   requests:
+        #     memory: 3Gi
+        #     cpu: 100m
+        #   limits:
+        #     memory: 4Gi
+        #     cpu: 200m
         scrapeInterval: 60s
         ruleSelector: {}
         ruleNamespaceSelector: {}
@@ -277,13 +277,15 @@ spec:
         podMonitorSelector: {}
         podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 1d
+        retention: 2d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
           volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn"
+            spec:              
+              volumeName: prometheus-data
+              accessModes: ["ReadWriteOnce"]              
+              storageClassName: ""
               resources:
                 requests:
-                  storage: 60Gi
+                  storage: 1Mi
