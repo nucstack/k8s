@@ -3464,7 +3464,7 @@ spec:
         resources:
           limits:
             cpu: 1000m
-            memory: 1500Mi
+            memory: 1Gi
           requests:
             cpu: 50m
             memory: 64Mi
