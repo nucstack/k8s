@@ -31,8 +31,6 @@ spec:
       securityContext:
         runAsUser: 10001
         runAsGroup: 10001
-        readOnlyRootFilesystem: true
-        allowPrivilegeEscalation: false
       automountServiceAccountToken: false
       containers:
         - name: rtlamr-collect

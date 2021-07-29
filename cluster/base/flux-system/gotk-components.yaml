@@ -3239,9 +3239,6 @@ spec:
           requests:
             cpu: 100m
             memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /tmp
           name: temp
@@ -3312,9 +3309,6 @@ spec:
           requests:
             cpu: 100m
             memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /tmp
           name: temp
@@ -3390,9 +3384,6 @@ spec:
           requests:
             cpu: 100m
             memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /tmp
           name: temp
@@ -3468,9 +3459,6 @@ spec:
           requests:
             cpu: 50m
             memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /data
           name: data

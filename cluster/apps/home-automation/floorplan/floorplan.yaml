@@ -24,16 +24,12 @@ spec:
       securityContext:
         runAsUser: 10001
         runAsGroup: 10001
-        readOnlyRootFilesystem: true
-        allowPrivilegeEscalation: false
       automountServiceAccountToken: false
       imagePullSecrets:
         - name: docker-secret
       containers:
         - name: floorplan
           image: ${SECRET_PRIVATE_REGISTRY}/floorplan@sha256:2ad7a15f25904e0e6197d49eed7a7967e746ea9c4f9d460997fe2fbeb809198b
-          securityContext:
-            allowPrivilegeEscalation: false
           imagePullPolicy: "Always"
           ports:
             - name: http
