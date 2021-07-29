@@ -4,8 +4,9 @@ locals {
   aws_cidr            = "10.0.0.0/16"
   aws_azs             = ["us-east-2a"]
   aws_public_subnets  = ["10.0.1.0/24"]
-  aws_private_subnets = [for s in var.services : s.subnet]
 
+  // compiles a list of all private subnets across defined services
+  aws_private_subnets = [for s in var.services : s.subnet]
   // Used to pass useful information to our startup script render
   // TODO: don't always pass a list of all private subnets for the
   // tailscale relay.
@@ -127,17 +128,4 @@ module "autoscaling-instances" {
     Environment = var.environment
     Terraform   = "true"
   }
-}
-
-data "aws_instances" "instances" {
-  for_each      = {for service in var.services:  service.name => service if service.type == "autoscaling" && var.type == "aws"}
-  instance_tags = {
-    Name        = each.value.name
-    Environment = var.environment
-    Terraform   = "true"
-  }
-  instance_state_names = ["running"]
-  depends_on = [
-    module.autoscaling-instances
-  ]
 }

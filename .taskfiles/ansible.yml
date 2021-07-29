@@ -10,7 +10,7 @@ vars:
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.module == \"module.k8s\") and .type == \"null_resource\") and .name == \"node_info\") | .instances[] | .attributes.triggers.name + \",\" + .attributes.triggers.ipaddress + \" \"' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.mode == \"data\") and .type == \"aws_instances\") and .name == \"instances\") | .instances[] | select(.index_key == \"k3s\") | .attributes.private_ips[]' {{.STATE_DIR}}/terraform.tfstate"
     
 tasks:
   export-sshkey:
