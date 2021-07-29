@@ -7,7 +7,7 @@ K3S_VERSION="v1.21.1+k3s1"
 
 # install/update dep packages
 sudo apt update -y && \
-sudo apt install -y curl vim jq git make unzip wget docker.io awscli 
+sudo apt install -y curl vim jq git make unzip wget docker.io awscli
 sudo usermod -aG docker $USER
 
 # add k3s binary

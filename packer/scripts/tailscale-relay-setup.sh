@@ -9,6 +9,6 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/a
 
 # base packages
 sudo apt update -y && \
-sudo apt install -y tailscale awscli 
+sudo apt install -y tailscale awscli
 
 exit 0

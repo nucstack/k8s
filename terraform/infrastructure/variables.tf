@@ -10,7 +10,7 @@ variable "type" {
 
 variable "services" {
   description = "services to provision"
-  default     = []  
+  default     = []
   type        = list(object({
     name      = string
     subnet    = string

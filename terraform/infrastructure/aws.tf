@@ -1,5 +1,5 @@
 
-locals {  
+locals {
   // aws-specific local vars
   aws_cidr            = "10.0.0.0/16"
   aws_azs             = ["us-east-2a"]
@@ -11,7 +11,7 @@ locals {
   // TODO: don't always pass a list of all private subnets for the
   // tailscale relay.
   env_vars = merge(
-    var.env_vars, 
+    var.env_vars,
     {"PRIVATE_SUBNETS" = join(",", local.aws_private_subnets)})
 }
 
@@ -51,7 +51,7 @@ module "key_pair" {
   tags = {
     terraform   = "true"
     environment = var.environment
-  }  
+  }
 }
 
 // lookup latest service role AMI image
@@ -59,7 +59,7 @@ module "key_pair" {
 data "aws_ami" "role_image" {
   for_each    = {for service in var.services: service.name => service if var.type == "aws"}
   most_recent = true
-  filter {    
+  filter {
     name   = "tag:role"
     values = [each.value.name]
   }
@@ -84,14 +84,14 @@ data "template_file" "user_data" {
 module "ec2-instances" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   for_each               = {for service in var.services: service.name => service if service.type == "ec2-instance" && var.type == "aws"}
-  version                = "~> 2.0"  
+  version                = "~> 2.0"
 
   name                   = each.value.name
   instance_count         = each.value.count
   instance_type          = each.value.size
   ami                    = data.aws_ami.role_image[each.value.name].id
   subnet_id              = data.aws_subnet.private_subnet[each.value.name].id
-  key_name               = module.key_pair.0.key_pair_key_name  
+  key_name               = module.key_pair.0.key_pair_key_name
   vpc_security_group_ids = [module.vpc.0.default_security_group_id]
   user_data_base64       = base64encode(data.template_file.user_data[each.value.name].rendered)
   monitoring             = false
@@ -111,9 +111,9 @@ module "autoscaling-instances" {
   min_size               = each.value.count
   max_size               = each.value.count
   desired_capacity       = each.value.count
-  instance_type          = each.value.size  
+  instance_type          = each.value.size
   image_id               = data.aws_ami.role_image[each.value.name].id
-  vpc_zone_identifier    = [data.aws_subnet.private_subnet[each.value.name].id]  
+  vpc_zone_identifier    = [data.aws_subnet.private_subnet[each.value.name].id]
   use_lt                 = true
   create_lt              = true
   ebs_optimized          = false
@@ -122,7 +122,7 @@ module "autoscaling-instances" {
   user_data_base64       = base64encode(data.template_file.user_data[each.value.name].rendered)
   placement              = {
     availability_zone = local.aws_azs.0
-  }  
+  }
   tags_as_map            = {
     Name        = each.value.name
     Environment = var.environment
