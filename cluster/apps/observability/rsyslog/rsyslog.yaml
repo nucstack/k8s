@@ -33,8 +33,6 @@ spec:
   replicas: 1
   template:
     metadata:
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         app.kubernetes.io/name: rsyslog
         app.kubernetes.io/instance: rsyslog

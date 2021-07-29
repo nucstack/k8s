@@ -15,8 +15,6 @@ spec:
       app.kubernetes.io/name: floorplan
   replicas: 1
   template:
-    annotations:
-      seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
     metadata:
       labels:
         app.kubernetes.io/name: floorplan

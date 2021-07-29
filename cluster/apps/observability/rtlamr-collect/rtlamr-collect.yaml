@@ -22,8 +22,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: "runtime/default"
       labels:
         app.kubernetes.io/instance: rtlamr-collect
         app.kubernetes.io/name: rtlamr-collect
