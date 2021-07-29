@@ -18,7 +18,5 @@ spec:
       - {key: node-role.kubernetes.io/master, operator: In, values: ["true"]}
   serviceAccountName: system-upgrade
   cordon: true
-#  drain:
-#    force: true
   upgrade:
     image: rancher/k3s-upgrade

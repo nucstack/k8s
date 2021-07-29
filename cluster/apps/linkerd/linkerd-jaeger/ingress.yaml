@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/upstream-vhost: $service_name.$namespace.svc.cluster.local:16686
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header Origin "";          
+      proxy_set_header Origin "";
     meta.helm.sh/release-name: linkerd-viz
     meta.helm.sh/release-namespace: linkerd
     nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
@@ -31,4 +31,4 @@ spec:
               service:
                 name: jaeger
                 port:
-                  number: 16686              
+                  number: 16686

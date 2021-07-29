@@ -29,4 +29,4 @@ spec:
     - kind: HelmRelease
       name: '*'
     - kind: HelmChart
-      name: '*'      
+      name: '*'

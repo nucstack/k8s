@@ -35,7 +35,7 @@ spec:
   values:
     # prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local:9090"
     # grafanaUrl: "http://grafana.observability.svc.cluster.local:3000"
-    grafana:    
+    grafana:
       enabled: true
     prometheus:
       enabled: true

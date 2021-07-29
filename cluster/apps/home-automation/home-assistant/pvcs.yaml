@@ -15,7 +15,7 @@ spec:
     readOnly: true
   claimRef:
     name: nfs-photos
-    namespace: home-automation  
+    namespace: home-automation
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -47,7 +47,7 @@ spec:
     readOnly: true
   claimRef:
     name: nfs-videos
-    namespace: home-automation  
+    namespace: home-automation
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
