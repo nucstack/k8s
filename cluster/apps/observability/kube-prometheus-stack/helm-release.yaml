@@ -258,6 +258,8 @@ spec:
       enabled: false
     kubeEtcd:
       enabled: false
+    prometheusOperator:
+      configReloaderCpu: 0
     prometheus:
       prometheusSpec:
         # resources:
