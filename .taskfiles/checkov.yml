@@ -13,7 +13,7 @@ tasks:
     desc: Scan docker Iac Code
     dir: "{{.PROJECT_DIR}}"
     cmds:
-      - checkov --compact --directory ./docker
+      - checkov --compact --directory ./.devcontainer
   kubernetes:
     desc: Scan k8s Iac Code
     dir: "{{.PROJECT_DIR}}"
