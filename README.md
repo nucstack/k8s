@@ -4,17 +4,14 @@ Originally created from [this](https://github.com/k8s-at-home/template-cluster-k
 
 Main Deviations from this template:
  - Replaced k3s deployment with submoduled kubespray
- - Added basic terraform to provision environments. (I use proxmox on cheap local hardware for my staging environment.)
  - flipped .envrc to be untracked
- - Added a builder docker image with all deps ( I know, gross but it works for my needs)
+ - Added a devcontainer image with all deps
  - Added tasks to simplify deployment/bootstrap/initialize/secrets reroll
- - Added raspernetes `k8s-security-policies` and conftest
  - added `git-crypt` to allow for tracked encryption of secret things
 
 **Provisioning the cluster**
 ```bash
 cp .env.example .env # update accordingly
-docker-compose run --rm builder
 task ansible:k8s-install
 ```
 
