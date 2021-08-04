@@ -13,7 +13,7 @@ services:
     user: vscode
     volumes:
       - ".:/home/vscode/workspace:delegated"
-      - "~/.gnupg:/home/vscode/.gnupg:z"
+      - "~/.gnupg:/home/vscode/.gnupg"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "~/.ssh:/home/vscode/.ssh:z"
