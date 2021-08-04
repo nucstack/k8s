@@ -1,9 +1,9 @@
 FROM alpine:3.14
 
+# binaries
 ARG ANSIBLE_VERSION=2.10
 ARG FLUX_VERSION=0.16.0
 ARG HELM_VERSION=3.5.4
-ARG LINKERD_VERSION=2.10.2
 ARG KUBECTL_VERSION=1.21.0
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.3
@@ -13,19 +13,22 @@ ARG STEP_VERSION=0.15.16
 ARG TASK_VERSION=3.6.0
 ARG TERRAFORM_VERSION=0.15.5
 
+# ansible
 ARG ANSIBLE_ROLE_K3S=2.9.1
 ARG ANSIBLE_COLLECTION_GENERAL=3.1.0
 ARG ANSIBLE_COLLECTION_K8S=1.2.1
 ARG ANSIBLE_ROLE_KERNEL=1.2.4
 
-WORKDIR /
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=1000
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 # Install build deps
 RUN apk --update --no-cache add --virtual .build-dep \
-    bash \
+    zsh \
     build-base \
     gettext \
     libffi-dev \
@@ -57,7 +60,7 @@ RUN \
     # ansible
     pip3 install --upgrade pip cffi && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install mitogen ansible-lint jmespath netaddr checkov && \
+    pip3 install mitogen ansible-lint jmespath netaddr checkov pre-commit && \
     # ansible collections
     ansible-galaxy collection install "community.kubernetes:==${ANSIBLE_COLLECTION_K8S}" && \
     ansible-galaxy collection install "community.general:==${ANSIBLE_COLLECTION_GENERAL}" && \
@@ -69,10 +72,12 @@ RUN \
     # flux
     curl -sL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf flux.tar.gz && \
+    rm -rf flux.tar.gz && \
     chmod +x /usr/bin/flux && \
     # helm
     curl  -sL -o helm-linux-amd64.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xzvf helm-linux-amd64.tar.gz -C /usr/bin --strip-components=1 linux-amd64/helm && \
+    rm -rf helm-linux-amd64.tar.gz && \
     chmod +x /usr/bin/helm && \
     # kubectl
     curl -sL -o usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
@@ -87,9 +92,6 @@ RUN \
     tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
     rm -rf kustomize_linux_amd64.tar.gz && \
     chmod +x /usr/bin/kustomize && \
-    # linkerd
-    curl -sL -o linkerd https://github.com/linkerd/linkerd2/releases/download/stable-${LINKERD_VERSION}/linkerd2-cli-stable-${LINKERD_VERSION}-linux-amd64 && \
-    mv linkerd /usr/bin && chmod +x /usr/bin/linkerd && \
     # packer
     curl -sL -o packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip  && \
     unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
@@ -121,4 +123,25 @@ RUN rm -rf /var/cache/apk/*
 
 HEALTHCHECK NONE
 
-CMD bash
+# Setup user
+RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
+    mkdir -p /etc/sudoers.d && \
+    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Setup shells
+ENV EDITOR=nano \
+    LANG=en_US.UTF-8
+RUN apk add shadow && \
+    usermod --shell /bin/zsh root && \
+    usermod --shell /bin/zsh ${USERNAME} && \
+    apk del shadow
+
+COPY --chown=${USERNAME} .zshrc /home/${USERNAME}
+RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/${USERNAME}/.oh-my-zsh &> /dev/null && \
+    rm -rf /home/${USERNAME}/.oh-my-zsh/.git && \
+    chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.oh-my-zsh && \
+    chmod -R 700 /home/${USERNAME}/.oh-my-zsh
+
+WORKDIR /home/${USERNAME}
+USER ${USERNAME}

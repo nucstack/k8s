@@ -1,21 +1,20 @@
 ---
 version: "3.4"
 services:
-  builder:
+  devcontainer:
     environment:
       HISTFILE: /bash_history/.bash_history
     image: builder:latest
     network_mode: host
     build:
-      context: ./docker/builder
-    working_dir: /app
+      context: .devcontainer
+    working_dir: /home/vscode/workspace
+    command: "/bin/sh -c \"while sleep 1000; do :; done\""
+    user: vscode
     volumes:
-      - .:/app:rw
-      - bashhistory:/bash_history
-      - ~/.gnupg:/root/.gnupg
+      - ".:/home/vscode/workspace:delegated"
+      - "~/.gnupg:/home/vscode/.gnupg:z"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-
-volumes:
-  # useful to maintain history
-  bashhistory:
+      - "~/.ssh:/home/vscode/.ssh:z"
+      - "~/.gitconfig:/home/vscode/.gitconfig:z"
