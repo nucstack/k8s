@@ -26,10 +26,6 @@ spec:
         app.kubernetes.io/instance: rtlamr-collect
         app.kubernetes.io/name: rtlamr-collect
     spec:
-      securityContext:
-        runAsUser: 10001
-        runAsGroup: 10001
-      automountServiceAccountToken: false
       containers:
         - name: rtlamr-collect
           securityContext:
