@@ -1,7 +1,6 @@
 FROM alpine:3.14
 
 ARG ANSIBLE_VERSION=2.10
-ARG CONFTEST_VERSION=0.24.0
 ARG FLUX_VERSION=0.16.0
 ARG HELM_VERSION=3.5.4
 ARG LINKERD_VERSION=2.10.2
@@ -65,10 +64,6 @@ RUN \
     ansible-galaxy install "xanmanning.k3s,v${ANSIBLE_ROLE_K3S}" && \
     ansible-galaxy install "accelize.linux_kernel,${ANSIBLE_ROLE_KERNEL}"
 RUN \
-    # conftest
-    curl -sL -o conftest_Linux_x86_64.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz && \
-    tar -C /usr/bin -xvzf conftest_Linux_x86_64.tar.gz && \
-    chmod +x /usr/bin/conftest && \
     # envsubst
     cp /usr/bin/envsubst /usr/local/bin/envsubst && \
     # flux

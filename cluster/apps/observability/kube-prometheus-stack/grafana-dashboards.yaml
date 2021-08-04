@@ -104,14 +104,14 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "hass_current_a{}",
+              "expr": "hass_sensor_current_a{}",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
             },
             {
               "exemplar": true,
-              "expr": "hass_power_a{}",
+              "expr": "hass_sensor_power_a{}",
               "hide": false,
               "interval": "",
               "legendFormat": "{{friendly_name}}",
@@ -198,18 +198,10 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "hass_power_w{}",
+              "expr": "hass_sensor_power_w{}",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
-            },
-            {
-              "exemplar": true,
-              "expr": "hass_sensor_unit_w{}",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "{{friendly_name}}",
-              "refId": "B"
             }
           ],
           "title": "Watts",
@@ -292,7 +284,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "hass_power_kwh{}",
+              "expr": "hass_sensor_power_kwh{}",
               "interval": "",
               "legendFormat": "{{friendly_name}}",
               "refId": "A"
@@ -311,14 +303,14 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-1h",
-        "to": "now"
+        "from": "2021-08-04T13:10:19.923Z",
+        "to": "2021-08-04T19:10:19.923Z"
       },
       "timepicker": {},
       "timezone": "",
       "title": "Power Monitoring",
       "uid": "0lbCmOW7z",
-      "version": 9
+      "version": 1
     }
   vernemq-nodes.json: |-
     {
