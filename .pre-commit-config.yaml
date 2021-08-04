@@ -32,4 +32,3 @@ repos:
   hooks:
   - id: checkov
     verbose: true
-    args: ['--compact', '--directory', 'docker']
