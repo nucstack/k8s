@@ -31,4 +31,4 @@ repos:
   rev: '2.0.332'
   hooks:
   - id: checkov
-    args: ['--compact', '--directory', './docker']
+    args: ['--compact', '--directory', 'docker']
