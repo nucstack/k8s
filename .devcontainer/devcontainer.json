@@ -8,6 +8,7 @@
   "extensions": [
     "MarkLarah.pre-commit-vscode",
     "redhat.vscode-yaml",
-    "signageos.signageos-vscode-sops"
+    "signageos.signageos-vscode-sops",
+    "4ops.packer"
   ]
 }
