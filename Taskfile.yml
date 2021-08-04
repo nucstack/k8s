@@ -25,7 +25,5 @@ includes:
   ansible: .taskfiles/ansible.yml
   checkov: .taskfiles/checkov.yml
   flux: .taskfiles/flux.yml
-  kube: .taskfiles/kube.yml
-  linkerd: .taskfiles/linkerd.yml
   packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml
