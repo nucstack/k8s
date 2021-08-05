@@ -1,0 +1,11 @@
+---
+roles:
+  - name: xanmanning.k3s
+    version: 'v2.9.1'
+  - name: accelize.linux_kernel
+    version: '1.2.4'
+collections:
+  - name: community.general
+    version: '3.1.0'
+  - name: community.kubernetes
+    version: '1.2.1'

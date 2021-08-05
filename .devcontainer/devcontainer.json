@@ -6,6 +6,7 @@
   "shutdownAction": "stopCompose",
   "postStartCommand": ["pre-commit", "install"],
   "extensions": [
+    "ms-azuretools.vscode-docker",
     "MarkLarah.pre-commit-vscode",
     "redhat.vscode-yaml",
     "signageos.signageos-vscode-sops",
