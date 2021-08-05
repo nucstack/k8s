@@ -1,6 +1,6 @@
 ---
 
-name: Pre-commit auto-update
+name: Schedule - auto-update pre-commit
 
 on:
   schedule:
