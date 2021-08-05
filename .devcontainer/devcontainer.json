@@ -10,6 +10,7 @@
     "MarkLarah.pre-commit-vscode",
     "redhat.vscode-yaml",
     "signageos.signageos-vscode-sops",
-    "4ops.packer"
+    "4ops.packer",
+    "4ops.terraform"
   ]
 }
