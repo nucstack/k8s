@@ -15,7 +15,7 @@ vars:
 tasks:
   export-sshkey:
     cmds:
-      - "[ -f /root/.ssh/id_rsa ] || mkdir /root/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > /root/.ssh/id_rsa && chmod 0600 /root/.ssh/id_rsa"
+      - "[ -f {{.SSH_PRIVATE_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > {{.SSH_PRIVATE_KEY_PATH}} && chmod 0600 {{.SSH_PRIVATE_KEY_PATH}}"
     silent: true
 
   export-kubeconfig:
@@ -45,27 +45,27 @@ tasks:
     desc: Ping all k8s nodes
     deps: [export-sshkey]
     cmds:
-      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true
 
   usb:
     desc: Ping all k8s nodes
     deps: [export-sshkey]
     cmds:
-      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a lsusb"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a lsusb"
 
   reboot:
     desc: reboot all k8s nodes
     deps: [export-sshkey]
     cmds:
-      - "ansible all -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
     silent: true
 
   k8s-install:
     desc: Install k8s
     deps: [ping]
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
+      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
       - task ansible:export-kubeconfig
     silent: true
 
@@ -73,7 +73,7 @@ tasks:
     desc: Reset k8s
     deps: [ping]
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
+      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
       - rm {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
 
@@ -81,5 +81,5 @@ tasks:
     desc: Upgrade k8s
     deps: [ping]
     cmds:
-      - "ansible-playbook -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"
+      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/upgrade-cluster.yml -v -b"
     silent: true

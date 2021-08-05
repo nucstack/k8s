@@ -10,6 +10,7 @@ vars:
   PACKER_DIR: "{{.PROJECT_DIR}}/packer"
   STATE_DIR: "{{.TERRAFORM_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
   # the terraform state used to build instances contains some useful things
+  SSH_PRIVATE_KEY_PATH: "/home/${LOGNAME}/{{.ENVIRONMENT}}.id_rsa"
   SSH_USER: "nucstack"
     #sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -r '.resources[] | select((.type == \"null_resource\") and .name == \"node_info\") | .instances[0].attributes.triggers.username' {{.STATE_DIR}}/terraform.tfstate"
   SSH_PRIVATE_KEY:
