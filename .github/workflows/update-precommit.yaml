@@ -2,7 +2,8 @@
 
 name: Schedule - Update pre-commit hooks
 
-on:
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
   schedule:
   - cron: '0 */12 * * *'
 
