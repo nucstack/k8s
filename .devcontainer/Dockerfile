@@ -1,7 +1,6 @@
 FROM alpine:3.14
 
-# binaries
-ARG ANSIBLE_VERSION=2.10
+# default binary versions
 ARG FLUX_VERSION=0.16.0
 ARG HELM_VERSION=3.5.4
 ARG KUBECTL_VERSION=1.21.0
@@ -13,59 +12,46 @@ ARG STEP_VERSION=0.15.16
 ARG TASK_VERSION=3.6.0
 ARG TERRAFORM_VERSION=0.15.5
 
-# ansible
-ARG ANSIBLE_ROLE_K3S=2.9.1
-ARG ANSIBLE_COLLECTION_GENERAL=3.1.0
-ARG ANSIBLE_COLLECTION_K8S=1.2.1
-ARG ANSIBLE_ROLE_KERNEL=1.2.4
+ENV DEBIAN_FRONTEND=noninteractive \
+    CRYPTOGRAPHY_DONT_BUILD_RUST=1 \
+    EDITOR=nano \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
 
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=1000
-
-ENV DEBIAN_FRONTEND=noninteractive
-ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
-
-# Install build deps
-RUN apk --update --no-cache add --virtual .build-dep \
-    zsh \
-    build-base \
-    gettext \
-    libffi-dev \
-    libintl \
-    openssl-dev \
-    python3-dev \
-    unzip && \
-    # Install deps
-    apk --update --no-cache add \
+# install persisted devcontainer dependencies
+RUN apk --update --no-cache add \
     apache2-utils \
+    build-base \
     ca-certificates \
     curl \
+    gettext \
     git \
     git-crypt \
     gnupg \
     jq \
+    libffi-dev \
+    libintl \
     openssh-client \
     openssl \
+    openssl-dev \
     python3 \
+    python3-dev \
     py3-pip \
     rsync \
+    shadow \
     shellcheck \
     sshpass \
     sudo \
-    yq
+    unzip \
+    yq \
+    zsh
 
-# Install required binaries
-RUN \
-    # ansible
-    pip3 install --upgrade pip cffi && \
-    pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install mitogen ansible-lint jmespath netaddr checkov pre-commit && \
-    # ansible collections
-    ansible-galaxy collection install "community.kubernetes:==${ANSIBLE_COLLECTION_K8S}" && \
-    ansible-galaxy collection install "community.general:==${ANSIBLE_COLLECTION_GENERAL}" && \
-    ansible-galaxy install "xanmanning.k3s,v${ANSIBLE_ROLE_K3S}" && \
-    ansible-galaxy install "accelize.linux_kernel,${ANSIBLE_ROLE_KERNEL}"
+# install pip/ansible dependencies
+COPY pip-requirements.txt ansible-requirements.yml /tmp/
+RUN pip3 install --requirement /tmp/pip-requirements.txt && \
+    ansible-galaxy install -r /tmp/ansible-requirements.yml
+
+# install required binaries
 RUN \
     # envsubst
     cp /usr/bin/envsubst /usr/local/bin/envsubst && \
@@ -118,24 +104,20 @@ RUN \
     chmod +x /usr/bin/terraform && \
     rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-# Cleanup
-RUN rm -rf /var/cache/apk/*
-
 HEALTHCHECK NONE
 
-# Setup user
+# setup user
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=1000
+
 RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
     mkdir -p /etc/sudoers.d && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Setup shells
-ENV EDITOR=nano \
-    LANG=en_US.UTF-8
-RUN apk add shadow && \
-    usermod --shell /bin/zsh root && \
-    usermod --shell /bin/zsh ${USERNAME} && \
-    apk del shadow
+RUN usermod --shell /bin/zsh ${USERNAME}
 
 COPY --chown=${USERNAME} .zshrc /home/${USERNAME}
 RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/${USERNAME}/.oh-my-zsh &> /dev/null && \
@@ -143,5 +125,10 @@ RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zs
     chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.oh-my-zsh && \
     chmod -R 700 /home/${USERNAME}/.oh-my-zsh
 
+# cleanup
+RUN rm -rf /var/cache/apk/*
+
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
+
+CMD ["/bin/zsh"]

@@ -12,7 +12,7 @@ services:
     command: "/bin/sh -c \"while sleep 1000; do :; done\""
     user: vscode
     volumes:
-      - ".:/home/vscode/workspace:delegated"
+      - ".:/home/vscode/workspace"
       - "~/.gnupg:/home/vscode/.gnupg"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
