@@ -1,6 +1,6 @@
 ---
 
-name: Schedule - auto-update pre-commit
+name: Schedule - Update pre-commit hooks
 
 on:
   schedule:
