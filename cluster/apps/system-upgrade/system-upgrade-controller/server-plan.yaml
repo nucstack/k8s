@@ -17,5 +17,6 @@ spec:
       values:
       - "true"
   serviceAccountName: system-upgrade
+  drain:
   upgrade:
     image: rancher/k3s-upgrade
