@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: thanos
-  namespace: monitoring
+  namespace: observability
 spec:
   interval: 5m
   chart:
@@ -23,7 +23,7 @@ spec:
         - replica
       dnsDiscovery:
         sidecarsService: prometheus-thanos-discovery
-        sidecarsNamespace: monitoring
+        sidecarsNamespace: observability
       ingress:
         enabled: true
         hostname: "thanos.${SECRET_DOMAIN}"
@@ -37,7 +37,6 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
           nginx.ingress.kubernetes.io/configuration-snippet: proxy_set_header X-Forwarded-Method $request_method;
         tls: true
-    existingObjstoreSecret: thanos-objstore
     queryFrontend:
       enabled: false
     bucketweb:
