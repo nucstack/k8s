@@ -4,7 +4,7 @@ services:
   devcontainer:
     environment:
       HISTFILE: /bash_history/.bash_history
-    image: builder:latest
+    image: k8s-devcontainer:latest
     network_mode: host
     build:
       context: .devcontainer
