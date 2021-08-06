@@ -149,7 +149,8 @@ spec:
         image: esphome/esphome:latest
         imagePullPolicy: IfNotPresent
         env:
-          ESPHOME_DASHBOARD_USE_PING: "True"
+          - name: ESPHOME_DASHBOARD_USE_PING
+            value: "True"
         volumeMounts:
           - name: esphome-config
             mountPath: /config

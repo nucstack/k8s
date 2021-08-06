@@ -31,6 +31,7 @@ RUN apk --update --no-cache add \
     jq \
     libffi-dev \
     libintl \
+    nano \
     openssh-client \
     openssl \
     openssl-dev \
