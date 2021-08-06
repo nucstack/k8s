@@ -148,6 +148,8 @@ spec:
       - name: esphome
         image: esphome/esphome:latest
         imagePullPolicy: IfNotPresent
+        env:
+          ESPHOME_DASHBOARD_USE_PING: "True"
         volumeMounts:
           - name: esphome-config
             mountPath: /config
