@@ -2993,6 +2993,8 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
+  annotations:
+    checkov.io/skip1: CKV_K8S_49=Flux System is externally managed
   labels:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/part-of: flux
