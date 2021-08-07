@@ -11,7 +11,7 @@ Main Deviations from this template:
 
 **Provisioning the cluster**
 ```bash
-cp .env.example .env # update accordingly
+cp .env.example .env
 task ansible:k8s-install
 ```
 
