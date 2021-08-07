@@ -45,10 +45,10 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
-      shared:
+      vscode-config:
         enabled: true
-        mountPath: /shared
-        size: 1Gi
+        mountPath: '-'
+        size: 2Gi
         storageClass: longhorn
     influxdb:
       enabled: false
@@ -85,14 +85,14 @@ spec:
           - 'keesschollaart.vscode-home-assistant'
           - --force
           - --user-data-dir
-          - '/shared/.vscode'
+          - '/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'
+          - '/.vscode'
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: shared
-            mountPath: /shared
+          - name: vscode-config
+            mountPath: /.vscode
     addons:
       codeserver:
         enabled: true
@@ -104,9 +104,9 @@ spec:
           - --auth
           - 'none'
           - --user-data-dir
-          - '/shared/.vscode'
+          - '/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'
+          - '/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
@@ -129,5 +129,5 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: shared
-            mountPath: /shared
+          - name: vscode-config
+            mountPath: /.vscode
