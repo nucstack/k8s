@@ -48,6 +48,7 @@ spec:
       vscode-config:
         enabled: true
         mountPath: '-'
+        accessMode: "ReadWriteOnce"
         size: 2Gi
         storageClass: longhorn
     influxdb:
