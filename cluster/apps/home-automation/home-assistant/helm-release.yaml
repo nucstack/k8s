@@ -47,30 +47,17 @@ spec:
         existingClaim: home-assistant
       shared:
         enabled: true
-        type: emptyDir
         mountPath: /shared
-      photos:
-        enabled: true
-        existingClaim: nfs-photos
-        mountPath: /photos
-      videos:
-        enabled: true
-        existingClaim: nfs-videos
-        mountPath: /videos
+        size: 1Gi
+        storageClass: longhorn
     influxdb:
       enabled: false
     postgresql:
-      enabled: false
+      enabled: true
       persistence:
         enabled: true
         size: 10Gi
         storageClass: longhorn
-      sidecars:
-        - name: pgadmin
-          image: dpage/pgadmin4:5.5
-          ports:
-            - name: http
-              containerPort: 80
     ingress:
       main:
         annotations:

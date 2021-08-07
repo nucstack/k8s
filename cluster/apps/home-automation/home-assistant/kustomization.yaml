@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - home-assistant.secrets.enc.yaml
   - prometheus.secrets.enc.yaml
-  - pvcs.yaml
   - helm-release.yaml
