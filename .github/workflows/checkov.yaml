@@ -20,3 +20,4 @@ jobs:
           framework: all
           output_format: github_failed_only
           skip_check: flux-system
+          soft_fail: true
