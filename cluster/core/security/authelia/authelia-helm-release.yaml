@@ -54,8 +54,6 @@ spec:
       subdomain: auth
     configMap:
       enabled: true
-      access_control:
-        default_policy: one_factor
       storage:
         postgres:
           enabled: true
