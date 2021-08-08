@@ -4,6 +4,18 @@ kind: HelmRelease
 metadata:
   name: home-assistant
   namespace: home-automation
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=TODO
+    checkov.io/skip2: CKV_K8S_37=TODO
+    checkov.io/skip3: CKV_K8S_43=TODO
+    checkov.io/skip4: CKV_K8S_13=TODO
+    checkov.io/skip5: CKV_K8S_11=TODO
+    checkov.io/skip6: CKV_K8S_10=TODO
+    checkov.io/skip7: CKV_K8S_28=TODO
+    checkov.io/skip8: CKV_K8S_15=TODO
+    checkov.io/skip9: CKV_K8S_30=TODO
+    checkov.io/skip10: CKV_K8S_12=TODO
+    checkov.io/skip11: CKV_K8S_22=TODO
 spec:
   interval: 5m
   chart:
@@ -30,7 +42,7 @@ spec:
         memory: 1Gi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2021.8.3
+      tag: 2021.8.4
     env:
       TZ: "America/New_York"
     hostNetwork: false
@@ -45,32 +57,17 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
-      shared:
+      vscode-config:
         enabled: true
         type: emptyDir
-        mountPath: /shared
-      photos:
-        enabled: true
-        existingClaim: nfs-photos
-        mountPath: /photos
-      videos:
-        enabled: true
-        existingClaim: nfs-videos
-        mountPath: /videos
     influxdb:
       enabled: false
     postgresql:
-      enabled: false
+      enabled: true
       persistence:
         enabled: true
         size: 10Gi
         storageClass: longhorn
-      sidecars:
-        - name: pgadmin
-          image: dpage/pgadmin4:5.5
-          ports:
-            - name: http
-              containerPort: 80
     ingress:
       main:
         annotations:
@@ -98,14 +95,14 @@ spec:
           - 'keesschollaart.vscode-home-assistant'
           - --force
           - --user-data-dir
-          - '/shared/.vscode'
+          - '/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'
+          - '/.vscode'
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: shared
-            mountPath: /shared
+          - name: vscode-config
+            mountPath: /.vscode
     addons:
       codeserver:
         enabled: true
@@ -117,9 +114,9 @@ spec:
           - --auth
           - 'none'
           - --user-data-dir
-          - '/shared/.vscode'
+          - '/.vscode'
           - --extensions-dir
-          - '/shared/.vscode'
+          - '/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: nginx
@@ -142,5 +139,5 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
-          - name: shared
-            mountPath: /shared
+          - name: vscode-config
+            mountPath: /.vscode
