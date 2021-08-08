@@ -47,10 +47,11 @@ RUN apk --update --no-cache add \
     yq \
     zsh
 
+
 # install pip/ansible dependencies
 COPY pip-requirements.txt ansible-requirements.yml /tmp/
-RUN pip3 install --requirement /tmp/pip-requirements.txt && \
-    ansible-galaxy install -r /tmp/ansible-requirements.yml
+RUN pip3 install --requirement /tmp/pip-requirements.txt
+RUN ansible-galaxy install -r /tmp/ansible-requirements.yml
 
 # install required binaries
 RUN \
@@ -124,7 +125,8 @@ COPY --chown=${USERNAME} .zshrc /home/${USERNAME}
 RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/${USERNAME}/.oh-my-zsh &> /dev/null && \
     rm -rf /home/${USERNAME}/.oh-my-zsh/.git && \
     chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.oh-my-zsh && \
-    chmod -R 700 /home/${USERNAME}/.oh-my-zsh
+    chmod -R 700 /home/${USERNAME}/.oh-my-zsh && \
+    cp -R /root/.ansible /home/${USERNAME} && chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.ansible
 
 # cleanup
 RUN rm -rf /var/cache/apk/*
