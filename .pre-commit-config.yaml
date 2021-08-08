@@ -27,8 +27,3 @@ repos:
   rev: v2.0.3
   hooks:
   - id: forbid-secrets
-- repo: https://github.com/bridgecrewio/checkov.git
-  rev: '2.0.337'
-  hooks:
-  - id: checkov
-    verbose: true
