@@ -2,8 +2,6 @@
 version: "3.4"
 services:
   devcontainer:
-    environment:
-      HISTFILE: /bash_history/.bash_history
     image: k8s-devcontainer:latest
     network_mode: host
     build:
