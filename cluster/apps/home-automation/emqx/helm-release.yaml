@@ -50,3 +50,4 @@ spec:
       {emqx_rule_engine, true}.
       {emqx_bridge_mqtt, false}.
       {emqx_auth_mnesia, true}.
+      {emqx_prometheus, true}.
