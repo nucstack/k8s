@@ -2,37 +2,32 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: esphome
+  name: node-red
   namespace: home-automation
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: esphome
-      version: 7.3.0
+      chart: node-red
+      version: 8.1.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
-      interval: 10m
-  timeout: 10m
+      interval: 5m
   values:
-    resources:
-      limits:
-        cpu: 800m
-        memory: 1024Mi
-      requests:
-        cpu: 200m
-        memory: 500Mi
     image:
-      repository: esphome/esphome
-      tag: 1.20.4
+      repository: ghcr.io/k8s-at-home/node-red
+      tag: 2.0.5
     env:
-      ESPHOME_DASHBOARD_USE_PING: true
+      TZ: "America/New_York"
+      NODE_RED_ENABLE_PROJECTS: "true"
+      NODE_RED_ENABLE_SAFE_MODE: "false"
     ingress:
       main:
         enabled: true
+        ingressClassName: "nginx"
         annotations:
           kubernetes.io/ingress.class: nginx
           nginx.ingress.kubernetes.io/websocket-services: "true"
@@ -42,16 +37,22 @@ spec:
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Method $request_method;
           nginx.ingress.kubernetes.io/configuration-snippet: more_set_headers "X-Forwarded-For $http_x_forwarded_for";
         hosts:
-          - host: "esphome.${SECRET_DOMAIN}"
+          - host: "node-red.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "esphome.${SECRET_DOMAIN}"
-            secretName: esphome-tls
+              - "node-red.${SECRET_DOMAIN}"
+            secretName: node-red-tls
     persistence:
       config:
         enabled: true
-        existingClaim: esphome
-        mountPath: /config
+        existingClaim: node-red
+        mountPath: "/data"
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
