@@ -48,10 +48,20 @@ spec:
       config:
         enabled: true
         existingClaim: node-red
-        mountPath: "/config"
+        mountPath: "/data"
     resources:
       requests:
         memory: 100Mi
         cpu: 100m
       limits:
         memory: 500Mi
+    initContainers:
+      - name: chmod
+        image: alpine:latest
+        command:
+          - sh
+          - -c
+          - chown -R 1000:1000 /data
+        volumeMounts:
+          - name: data
+            mountPath: /data
