@@ -1,6 +1,8 @@
 ---
 creation_rules:
-- encrypted_regex: '^(data|stringData)$'
+- path_regex: cluster/.*\.ya?ml
+  encrypted_regex: "^(data|stringData)$"
+  # flux, macbook, termux
   pgp: >-
     B0B06397E7F6A16FA3D1F2608DCBF9386778920C,
     CEFEADCFEBDFFC218955E9E337650A574F1E0FE6
