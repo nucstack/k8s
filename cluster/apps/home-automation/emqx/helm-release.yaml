@@ -38,5 +38,3 @@ spec:
       {emqx_rule_engine, true}.
       {emqx_bridge_mqtt, false}.
       {emqx_auth_mnesia, true}.
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
