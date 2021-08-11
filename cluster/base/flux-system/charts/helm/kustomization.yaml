@@ -5,6 +5,7 @@ resources:
   - authelia.yaml
   - banzaicloud.yaml
   - bitnami.yaml
+  - emqx.yaml
   - gatekeeper.yaml
   - grafana-loki.yaml
   - influxdata.yaml
