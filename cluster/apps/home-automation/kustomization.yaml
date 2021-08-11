@@ -7,3 +7,4 @@ resources:
   - zigbee2mqtt
   - zwavejs2mqtt
   - esphome
+  - node-red
