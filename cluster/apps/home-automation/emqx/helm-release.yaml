@@ -24,10 +24,12 @@ spec:
       externalIPs:
         - "${SECRET_MQTT_LB_IP}"
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/websocket-services: "true"
+      dashboard:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          nginx.ingress.kubernetes.io/websocket-services: "true"
+      path: /
       hosts:
         - "emqx.${SECRET_DOMAIN}"
       tls:
