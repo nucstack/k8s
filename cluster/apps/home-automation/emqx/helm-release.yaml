@@ -21,8 +21,7 @@ spec:
     recreatePods: true
     service:
       type: LoadBalancer
-      externalIPs:
-        - "${SECRET_MQTT_LB_IP}"
+      loadBalancerIP: "${SECRET_MQTT_LB_IP}"
     ingress:
       dashboard:
         enabled: true
