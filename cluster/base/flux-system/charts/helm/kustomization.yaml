@@ -6,7 +6,6 @@ resources:
   - banzaicloud.yaml
   - bitnami.yaml
   - emqx.yaml
-  - gatekeeper.yaml
   - grafana-loki.yaml
   - influxdata.yaml
   - infracloudio.yaml
@@ -14,10 +13,6 @@ resources:
   - k8s-at-home.yaml
   - kubernetes-sigs.yaml
   - kubernetes-stable.yaml
-  - linkerd.yaml
   - longhorn.yaml
   - nginx-stable.yaml
-  - openfaas.yaml
-  - openldap.yaml
   - prometheus-community.yaml
-  - vernemq.yaml
