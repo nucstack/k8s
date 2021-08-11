@@ -31,11 +31,11 @@ spec:
           nginx.ingress.kubernetes.io/websocket-services: "true"
       path: /
       hosts:
-        - "emqx.${SECRET_DOMAIN}"
+        - "emqx-dashboard.${SECRET_DOMAIN}"
       tls:
         - hosts:
-            - "emqx.${SECRET_DOMAIN}"
-          secretName: emqx-tls
+            - "emqx-dashboard.${SECRET_DOMAIN}"
+          secretName: emqx-dashboard-tls
     emqxConfig:
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_ADMIN_PASSWORD: "${SECRET_MQTT_ADMIN_PASSWORD}"
