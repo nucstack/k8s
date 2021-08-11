@@ -24,7 +24,7 @@ spec:
       requests:
         cpu: 100m
         memory: 128Mi
-    replicaCount: 3
+    replicaCount: 0
     serviceMonitor:
       create: false
     service:
