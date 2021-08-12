@@ -12,7 +12,7 @@ data:
     #$DebugLevel 2
     $ModLoad imudp
     $UDPServerRun 514
-    *.* @@(o)loki-promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
+    *.* @@(o)promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
 ---
 apiVersion: apps/v1
 kind: Deployment
