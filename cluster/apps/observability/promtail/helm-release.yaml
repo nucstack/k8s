@@ -49,7 +49,7 @@ spec:
               - source_labels: ['__syslog_message_hostname']
                 target_label: 'hostname'
               - source_labels: ['__syslog_message_app_name']
-                target_label: 'application'
+                target_label: 'unit'
     defaultVolumes:
       - name: containers
         hostPath:
