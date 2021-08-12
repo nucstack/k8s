@@ -50,10 +50,6 @@ spec:
                 target_label: 'hostname'
               - source_labels: ['__syslog_message_app_name']
                 target_label: 'application'
-        syslogService:
-          enabled: true
-          type: ClusterIP
-          port: 1514
     defaultVolumes:
       - name: containers
         hostPath:
@@ -82,5 +78,12 @@ spec:
       - name: ix
         mountPath: /mnt/k8s/ix-applications/docker/containers
         readOnly: true
+    extraPorts:
+    syslog:
+      name: syslog
+      containerPort: 1514
+      service:
+        type: ClusterIP
+        port: 1514
     serviceMonitor:
       enabled: true
