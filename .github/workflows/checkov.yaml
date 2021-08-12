@@ -19,5 +19,5 @@ jobs:
           quiet: true
           framework: all
           output_format: github_failed_only
-          skip_check: flux-system
+          skip_check: flux-system,charts
           soft_fail: true
