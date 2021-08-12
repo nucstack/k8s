@@ -79,11 +79,11 @@ spec:
         mountPath: /mnt/k8s/ix-applications/docker/containers
         readOnly: true
     extraPorts:
-    syslog:
-      name: syslog
-      containerPort: 1514
-      service:
-        type: ClusterIP
-        port: 1514
+      syslog:
+        name: syslog
+        containerPort: 1514
+        service:
+          type: ClusterIP
+          port: 1514
     serviceMonitor:
       enabled: true
