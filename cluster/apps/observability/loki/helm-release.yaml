@@ -36,7 +36,7 @@ spec:
         shared_store: filesystem
     persistence:
       enabled: true
-      storageClass: longhorn
-      size: 20Gi
+      type: pvc
+      existingClaim: loki
     serviceMonitor:
       enabled: true
