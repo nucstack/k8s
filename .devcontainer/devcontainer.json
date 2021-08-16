@@ -1,10 +1,13 @@
 {
   "name": "devcontainer",
-  "dockerComposeFile": ["../docker-compose.yaml"],
-  "service": "devcontainer",
-  "workspaceFolder": "/home/vscode/workspace",
-  "shutdownAction": "stopCompose",
+  "dockerFile": "Dockerfile",
+  "remoteUser": "rootless",
+  "runArgs": [ "--privileged", "--network=host" ],
+  "workspaceMount": "src=${localWorkspaceFolder},dst=/home/rootless/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/home/rootless/workspace",
+  "overrideCommand": false,
   "postStartCommand": ["pre-commit", "install"],
+  //"postCreateCommand": "dockerd-entrypoint.sh --experimental &",
   "extensions": [
     "ms-azuretools.vscode-docker",
     "MarkLarah.pre-commit-vscode",
@@ -12,5 +15,11 @@
     "signageos.signageos-vscode-sops",
     "4ops.packer",
     "4ops.terraform"
+  ],
+  "mounts": [
+    "source=/etc/timezone,target=/etc/timezone,type=bind",
+    "source=/etc/localtime,target=/etc/localtime,type=bind",
+    "source=${localEnv:HOME}/.gnupg,target=/home/rootless/.gnupg,type=bind",
+    "source=${localEnv:HOME}/.ssh,target=/home/rootless/.ssh,type=bind"
   ]
 }

@@ -8,11 +8,11 @@ services:
       context: .devcontainer
     working_dir: /home/vscode/workspace
     command: "/bin/sh -c \"while sleep 1000; do :; done\""
-    user: vscode
+    user: rootless
     volumes:
-      - ".:/home/vscode/workspace"
-      - "~/.gnupg:/home/vscode/.gnupg"
+      - ".:/home/rootless/workspace"
+      - "~/.gnupg:/home/rootless/.gnupg"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-      - "~/.ssh:/home/vscode/.ssh:z"
-      - "~/.gitconfig:/home/vscode/.gitconfig:z"
+      - "~/.ssh:/home/rootless/.ssh:z"
+      - "~/.gitconfig:/home/rootless/.gitconfig:z"

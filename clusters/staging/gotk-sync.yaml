@@ -7,8 +7,8 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: ${BOOTSTRAP_GITHUB_BRANCH}
-  url: ${BOOTSTRAP_GITHUB_REPOSITORY}
+    branch: add_multi_cluster_support
+  url: https://github.com/nucstack/k8s
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
@@ -17,7 +17,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./clusters/${ENVIRONMENT}
+  path: ./clusters/staging
   prune: true
   sourceRef:
     kind: GitRepository

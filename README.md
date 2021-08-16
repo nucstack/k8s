@@ -19,13 +19,16 @@ Main Deviations from this template:
 **Provisioning the cluster**
 ```bash
 cp .env.example .env # update accordingly
-task ansible:k8s-install
+task ansible:k8s-install # to provision cluster if not set up
 ```
 
 **Rerolling secrets**
 ```bash
 task flux:app-secrets # FILTER=home-assistant
-task flux:shared-secrets
+task flux:global-secrets
+task flux:global-settings
+task flux:cluster-secrets
+task flux:cluster-settings
 ```
 
 **Flux**
