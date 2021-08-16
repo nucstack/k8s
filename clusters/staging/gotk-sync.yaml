@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: add_multi_cluster_support
   url: https://github.com/nucstack/k8s
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
@@ -17,13 +17,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./cluster/base
+  path: ./clusters/production
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
   validation: client
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-gpg

@@ -1,6 +1,6 @@
 ---
 creation_rules:
-- path_regex: cluster/.*\.ya?ml
+- path_regex: .*\.ya?ml
   encrypted_regex: "^(data|stringData)$"
   # flux, macbook, termux
   pgp: >-

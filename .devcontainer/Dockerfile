@@ -1,8 +1,9 @@
-FROM alpine:3.14
+FROM docker:20.10.8-dind-rootless
 
 # default binary versions
 ARG FLUX_VERSION=0.16.0
 ARG HELM_VERSION=3.5.4
+ARG KIND_VERSION=0.11.1
 ARG KUBECTL_VERSION=1.21.3
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.3
@@ -18,12 +19,15 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
+USER root
+
 # install persisted devcontainer dependencies
 RUN apk --update --no-cache add \
     apache2-utils \
     build-base \
     ca-certificates \
     curl \
+    docker \
     gettext \
     git \
     git-crypt \
@@ -67,6 +71,9 @@ RUN \
     tar -xzvf helm-linux-amd64.tar.gz -C /usr/bin --strip-components=1 linux-amd64/helm && \
     rm -rf helm-linux-amd64.tar.gz && \
     chmod +x /usr/bin/helm && \
+    # kind
+    curl -sL -o usr/bin/kind https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-linux-amd64 && \
+    chmod +x usr/bin/kind && \
     # kubectl
     curl -sL -o usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x /usr/bin/kubectl && \
@@ -108,30 +115,23 @@ RUN \
 
 HEALTHCHECK NONE
 
-# setup user
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=1000
-
-RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
-    mkdir -p /etc/sudoers.d && \
-    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
-    chmod 0440 /etc/sudoers.d/$USERNAME
+RUN mkdir -p /etc/sudoers.d && \
+    echo rootless ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/rootless && \
+    chmod 0440 /etc/sudoers.d/rootless
 
 # Setup shells
-RUN usermod --shell /bin/zsh ${USERNAME}
+RUN usermod --shell /bin/zsh rootless
 
-COPY --chown=${USERNAME} .zshrc /home/${USERNAME}
-RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/${USERNAME}/.oh-my-zsh &> /dev/null && \
-    rm -rf /home/${USERNAME}/.oh-my-zsh/.git && \
-    chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.oh-my-zsh && \
-    chmod -R 700 /home/${USERNAME}/.oh-my-zsh && \
-    cp -R /root/.ansible /home/${USERNAME} && chown -R ${USERNAME}:${USER_GID} /home/${USERNAME}/.ansible
+COPY --chown=rootless .zshrc /home/rootless
+RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/rootless/.oh-my-zsh &> /dev/null && \
+    rm -rf /home/rootless/.oh-my-zsh/.git && \
+    chown -R rootless:1000 /home/rootless/.oh-my-zsh && \
+    chmod -R 700 /home/rootless/.oh-my-zsh && \
+    cp -R /root/.ansible /home/rootless && chown -R rootless:1000 /home/rootless
 
 # cleanup
 RUN rm -rf /var/cache/apk/*
 
-WORKDIR /home/${USERNAME}
-USER ${USERNAME}
-
-CMD ["/bin/zsh"]
+WORKDIR /home/rootless
+USER rootless
+ENV DOCKER_HOST=unix:///var/run/user/1000/docker.sock

@@ -16,4 +16,4 @@ jobs:
       with:
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review
-        yamllint_flags: '-c .github/yamllint.config.yaml ./cluster/'
+        yamllint_flags: '-c .github/yamllint.config.yaml .'
