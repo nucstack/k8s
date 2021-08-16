@@ -21,7 +21,7 @@ tasks:
     deps: [check]
     desc: Flux bootstrap
     cmds:
-      - kubectl apply --kustomize={{.PROJECT_DIR}}/base/flux-system
+      - kubectl apply --kustomize={{.PROJECT_DIR}}/clusters/{{.ENVIRONMENT}}
 
   check:
     desc: Flux Preflight check
