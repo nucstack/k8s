@@ -25,7 +25,10 @@ task ansible:k8s-install # to provision cluster if not set up
 **Rerolling secrets**
 ```bash
 task flux:app-secrets # FILTER=home-assistant
-task flux:shared-secrets
+task flux:global-secrets
+task flux:global-settings
+task flux:cluster-secrets
+task flux:cluster-settings
 ```
 
 **Flux**
