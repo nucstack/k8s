@@ -22,6 +22,7 @@ spec:
         storageClass: standard
     postgresql:
       persistence:
+        size: 1Gi
         storageClass: standard
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
