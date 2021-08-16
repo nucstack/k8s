@@ -52,7 +52,7 @@ metadata:
 spec:
   values:
     persistence:
-      storageClass: standard
+      enabled: false
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
