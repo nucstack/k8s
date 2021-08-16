@@ -52,3 +52,14 @@ spec:
   values:
     persistence:
       enabled: false
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: esphome
+  namespace: home-automation
+spec:
+  values:
+    persistence:
+      config:
+        enabled: false
