@@ -7,3 +7,14 @@ metadata:
 spec:
   values:
     replicaCount: 1
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-automation
+spec:
+  values:
+    postgresql:
+      persistence:
+        storageClass: longhorn
