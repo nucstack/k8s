@@ -62,4 +62,5 @@ metadata:
 spec:
   values:
     persistence:
-      enabled: false
+      config:
+        enabled: false
