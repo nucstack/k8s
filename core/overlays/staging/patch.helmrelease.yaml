@@ -7,4 +7,4 @@ metadata:
 spec:
   values:
     persistence:
-      storageClass: longhorn
+      enabled: false
