@@ -72,7 +72,6 @@ spec:
       main:
         ingressClassName: "traefik"
         annotations:
-          nginx.org/websocket-services: home-assistant
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         enabled: true
         hosts:
@@ -123,6 +122,7 @@ spec:
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.middlewares: "authelia@kubernetescrd"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           enabled: true
           hosts:
             - host: "vscode-hass.${SECRET_DOMAIN}"
