@@ -6,5 +6,4 @@ metadata:
   namespace: flux-system
 data:
   METALLB_LB_RANGE: 192.168.8.200-192.168.8.220
-  INGRESS_NGINX_LB: 192.168.8.201
   ENVIRONMENT: staging

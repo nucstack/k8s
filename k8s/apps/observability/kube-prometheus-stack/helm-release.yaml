@@ -159,12 +159,6 @@ spec:
           cert-manager:
             url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
             datasource: Prometheus
-          nginx-controller:
-            url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-            datasource: Prometheus
-          nginx-request-handling:
-            url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-            datasource: Prometheus
           node-exporter-full:
             url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/node_exporter_full.json
             datasource: Prometheus
