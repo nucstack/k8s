@@ -35,6 +35,14 @@ spec:
             primary: true
             port: 514
             protocol: UDP
+    persistence:
+      config:
+        enabled: true
+        type: custom
+        mountPath: /etc/rsyslog.conf
+        volumeSpec:
+          configMap:
+            name: rsyslog-config
     resources:
       limits:
         cpu: 500m
