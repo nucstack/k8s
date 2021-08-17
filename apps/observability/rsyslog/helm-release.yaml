@@ -31,8 +31,6 @@ spec:
         sessionAffinity: None
         ports:
           http:
-            enabled: false
-          syslog:
             enabled: true
             primary: true
             port: 514
