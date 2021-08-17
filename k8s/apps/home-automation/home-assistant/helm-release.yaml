@@ -123,7 +123,7 @@ spec:
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            #traefik.ingress.kubernetes.io/router.middlewares: "authelia@kubernetescrd"
+            traefik.ingress.kubernetes.io/router.middlewares: "authelia@kubernetescrd"
           enabled: true
           hosts:
             - host: "vscode-hass.${SECRET_DOMAIN}"
