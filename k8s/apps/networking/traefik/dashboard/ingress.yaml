@@ -5,6 +5,7 @@ metadata:
   name: traefik-dashboard
   namespace: networking
   annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/ingress.class: "traefik"
 spec:
