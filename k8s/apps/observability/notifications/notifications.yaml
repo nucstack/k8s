@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   type: slack
-  channel: alerts
+  channel: flux-alerts
   secretRef:
     name: slack-url
 ---
