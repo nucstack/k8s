@@ -43,6 +43,9 @@ spec:
         volumeSpec:
           configMap:
             name: rsyslog-config
+            items:
+              - key: rsyslog.conf
+                path: rsyslog.conf
     resources:
       limits:
         cpu: 500m
