@@ -3,7 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - authelia.yaml
-  - banzaicloud.yaml
   - bitnami.yaml
   - emqx.yaml
   - grafana-loki.yaml
@@ -11,7 +10,6 @@ resources:
   - infracloudio.yaml
   - jetstack.yaml
   - k8s-at-home.yaml
-  - kubernetes-sigs.yaml
   - kubernetes-stable.yaml
   - longhorn.yaml
   - nginx-stable.yaml
