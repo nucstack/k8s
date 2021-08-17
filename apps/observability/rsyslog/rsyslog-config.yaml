@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: rsyslog
     app.kubernetes.io/instance: rsyslog
-stringData: |
+stringData:
   #$DebugLevel 2
   $ModLoad imudp
   $UDPServerRun 514
