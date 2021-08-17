@@ -19,7 +19,7 @@ spec:
       name: rtlamr-collect-helm-values
   values:
     image:
-      repository: ${SECRET_PRIVATE_REGISTRY}/rtlamr-collect
+      repository: ${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect
       tag: 0.0.2
     controller:
       replicas: 1

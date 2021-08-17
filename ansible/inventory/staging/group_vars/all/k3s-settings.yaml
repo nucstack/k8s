@@ -1,9 +1,0 @@
----
-k3s_install_hard_links: true
-k3s_become_for_all: true
-k3s_use_experimental: false
-k3s_debug: false
-k3s_registration_interface: "{{ lookup('env', 'K8S_HA_INTERFACE') }}"
-k3s_registration_address: "{{ lookup('env', 'K8S_HA_VIP') }}"
-k3s_server_manifests_templates:
-  - ../../roles/k3s/templates/kube-vip.yaml.j2

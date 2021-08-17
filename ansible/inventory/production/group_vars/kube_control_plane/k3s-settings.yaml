@@ -2,11 +2,11 @@
 k3s_control_node: true
 # k3s settings for all control-plane nodes
 k3s_server:
-  datastore-endpoint: "{{ lookup('env', 'K8S_DATASTORE_ENDPOINT') }}"
+  datastore-endpoint: "{{ lookup('env', 'K3S_DATASTORE_ENDPOINT') }}"
   node-ip: "{{ ansible_host }}"
   tls-san:
-  - "{{ lookup('env', 'K8S_HA_SAN') }}"
-  - "{{ lookup('env', 'K8S_HA_VIP') }}"
+  - "{{ lookup('env', 'K3S_HA_SAN') }}"
+  - "{{ lookup('env', 'K3S_HA_VIP') }}"
   docker: false
   disable:
   - traefik
@@ -17,6 +17,6 @@ k3s_server:
   disable-cloud-controller: true
   write-kubeconfig-mode: "644"
   # CIDR for pod IPs
-  cluster-cidr: "{{ lookup('env', 'K8S_CLUSTER_CIDR') }}"
+  cluster-cidr: "{{ lookup('env', 'K3S_CLUSTER_CIDR') }}"
   # CIDR for service IPs
-  service-cidr: "{{ lookup('env', 'K8S_SERVICE_CIDR') }}"
+  service-cidr: "{{ lookup('env', 'K3S_SERVICE_CIDR') }}"
