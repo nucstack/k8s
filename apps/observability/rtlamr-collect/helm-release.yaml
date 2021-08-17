@@ -49,7 +49,7 @@ spec:
     persistence:
       usb:
         enabled: true
-        hostPath: /dev/swradio0
+        type: hostPath
         mountPath: /dev/swradio0
     resources:
       limits:
