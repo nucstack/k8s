@@ -48,6 +48,7 @@ spec:
       - "--providers.kubernetesingress.ingressclass=traefik"
       - "--metrics.prometheus=true"
       - "--metrics.prometheus.entryPoint=metrics"
+      - "--global.sendanonymoususage=false"
     additionalArguments:
       - "--providers.kubernetesingress.ingressendpoint.ip=${SECRET_TRAEFIK_LB_IP}"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
