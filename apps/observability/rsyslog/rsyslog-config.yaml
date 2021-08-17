@@ -7,8 +7,9 @@ metadata:
   labels:
     app.kubernetes.io/name: rsyslog
     app.kubernetes.io/instance: rsyslog
-stringData:
-  #$DebugLevel 2
-  $ModLoad imudp
-  $UDPServerRun 514
-  *.* @@(o)promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
+data:
+  rsyslog.conf: |
+    #$DebugLevel 2
+    $ModLoad imudp
+    $UDPServerRun 514
+    *.* @@(o)promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
