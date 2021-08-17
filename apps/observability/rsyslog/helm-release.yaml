@@ -26,9 +26,7 @@ spec:
         enabled: true
         primary: true
         type: LoadBalancer
-        externalTrafficPolicy: Cluster
         loadBalancerIP: "${SECRET_RSYSLOG_LB_IP}"
-        sessionAffinity: None
         ports:
           http:
             enabled: true
