@@ -88,7 +88,7 @@ spec:
       ingress:
         enabled: true
         pathType: Prefix
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
@@ -113,8 +113,8 @@ spec:
       ingress:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: nginx
-          kubernetes.io/ingress.allow-http: "false"
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
         - "grafana.${SECRET_DOMAIN}"
         tls:
