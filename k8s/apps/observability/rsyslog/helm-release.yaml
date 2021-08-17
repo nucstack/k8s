@@ -16,7 +16,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ${SECRET_PRIVATE_REGISTRY}/rsyslog
+      repository: ${SECRET_DOCKER_PRIVATE_REGISTRY}/rsyslog
       tag: 0.0.2
     controller:
       replicas: 1

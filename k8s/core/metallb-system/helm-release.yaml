@@ -35,4 +35,4 @@ spec:
       - name: default
         protocol: layer2
         addresses:
-        - "${METALLB_LB_RANGE}"
+        - "${SECRET_METALLB_LB_RANGE}"
