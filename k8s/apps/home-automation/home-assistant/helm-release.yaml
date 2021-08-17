@@ -123,7 +123,7 @@ spec:
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: "authelia"
+            traefik.ingress.kubernetes.io/router.middlewares: "authelia@networking"
             #nginx.ingress.kubernetes.io/websocket-services: "true"
             # nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
             # nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
