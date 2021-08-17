@@ -24,6 +24,9 @@ spec:
     controller:
       replicas: 1
     nameOverride: rtlamr-collect
+    service:
+      main:
+        enabled: false
     env:
       INTERVAL: 30
       COLLECT_LOGLEVEL: "DEBUG"
