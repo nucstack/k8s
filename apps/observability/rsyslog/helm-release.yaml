@@ -35,9 +35,6 @@ spec:
             primary: true
             port: 514
             protocol: UDP
-        labels:
-          app.kubernetes.io/name: rsyslog
-          app.kubernetes.io/instance: rsyslog
     resources:
       limits:
         cpu: 500m
