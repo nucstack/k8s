@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ${SECRET_PRIVATE_REGISTRY}/rsyslog
-      tag: "@sha256:11fd10ff27d9da658e74d174b4b39698a8075a7e5569f8036cc226c6cfff8780"
+      tag: 0.0.2
     controller:
       replicas: 1
     nameOverride: rsyslog
