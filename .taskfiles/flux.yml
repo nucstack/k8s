@@ -71,7 +71,7 @@ tasks:
       FILTER: "*"
     desc: Reroll all template secrets by filter
     cmds:
-      - "find {{.CLUSTER_DIR}} -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
+      - "find {{.PROJECT_DIR}}/apps -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
 
   app-secret:
     var:
