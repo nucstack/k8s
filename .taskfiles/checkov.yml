@@ -18,7 +18,7 @@ tasks:
     desc: Scan k8s Iac Code
     dir: "{{.PROJECT_DIR}}"
     cmds:
-      - checkov --compact --directory ./cluster --skip-check flux-system
+      - checkov --compact --directory ./k8s --skip-check flux-system
   terraform:
     desc: Scan terraform Iac Code
     dir: "{{.PROJECT_DIR}}"

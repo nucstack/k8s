@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./settings/production
+  path: ./k8s/settings/staging
   prune: true
   validation: client
   decryption:

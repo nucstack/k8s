@@ -6,28 +6,18 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "helm-values": {
-    "fileMatch": [".+/helm-release.yaml$"]
+    "fileMatch": ["k8s\/.+/helm-release.yaml$"]
   },
   "kubernetes": {
-    "fileMatch": ["\\.yaml$"],
+    "fileMatch": ["k8s\/.+\.yaml$"],
     "ignorePaths": [
-      ".taskfiles",
-      ".github",
-      ".git-crypt",
-      ".devcontainer",
-      "clusters",
-      "ansible",
-      "packer",
-      "terraform",
-      "tmpl",
-      "docker-compose.yaml",
-      ".pre-commit-config.yaml"
+      "clusters"
     ],
   },
   "regexManagers": [
     // regexManager to read and process HelmReleases and CRDs
     {
-      "fileMatch": ["./.+\\.yaml$"],
+      "fileMatch": ["k8s\/.+\.yaml$"],
       "matchStrings": [
         // helm releases
         "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
