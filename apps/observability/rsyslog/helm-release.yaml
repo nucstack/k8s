@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rsyslog
+  namespace: observability
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ${SECRET_PRIVATE_REGISTRY}/rsyslog
+      tag: "@sha256:11fd10ff27d9da658e74d174b4b39698a8075a7e5569f8036cc226c6cfff8780"
+    controller:
+      replicas: 1
+    nameOverride: rsyslog
+    service:
+      main:
+        enabled: true
+        primary: true
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        loadBalancerIP: "${SECRET_RSYSLOG_LB_IP}"
+        sessionAffinity: None
+        ports:
+          http:
+            enabled: true
+            primary: true
+            port: 514
+            protocol: UDP
+        labels:
+          app.kubernetes.io/name: rsyslog
+          app.kubernetes.io/instance: rsyslog
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
