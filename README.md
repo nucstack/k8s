@@ -19,7 +19,7 @@ Main Deviations from this template:
 **Provisioning the cluster**
 ```bash
 cp .env.example .env # update env vars accordingly
-kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconfig" # if you don't have a cluster yet
+kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconfig"
 ```
 
 **Flux**
