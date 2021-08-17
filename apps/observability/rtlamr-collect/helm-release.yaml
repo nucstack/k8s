@@ -50,6 +50,7 @@ spec:
       usb:
         enabled: true
         type: hostPath
+        hostPath: /dev/swradio0
         mountPath: /dev/swradio0
     resources:
       limits:
