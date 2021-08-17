@@ -121,7 +121,7 @@ spec:
         ingress:
           annotations:
             kubernetes.io/ingress.class: traefik
-            #traefik.ingress.kubernetes.io/router.middlewares: "authelia@kubernetescrd"
+            traefik.ingress.kubernetes.io/router.middlewares: "authelia@kubernetescrd"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           enabled: true
           hosts:
