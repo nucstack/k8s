@@ -25,6 +25,8 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
       spec:
         loadBalancerIP: "${SECRET_TRAEFIK_LB_IP}"
         externalTrafficPolicy: Local
