@@ -185,6 +185,10 @@ spec:
           longhorn:
             url: https://grafana.com/api/dashboards/13032/revisions/6/download
             datasource: Prometheus
+          # Traefik
+          traefik:
+            url: https://grafana.com/api/dashboards/11462/revisions/1/download
+            datasource: Prometheus
           # Unifi
           unifi-poller-client-dpi:
             url: https://raw.githubusercontent.com/unifi-poller/dashboards/master/v2.0.0/UniFi-Poller_%20Client%20DPI%20-%20Prometheus.json
