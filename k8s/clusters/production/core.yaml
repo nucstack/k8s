@@ -8,7 +8,7 @@ spec:
   interval: 10m0s
   dependsOn:
   - name: crds
-  path: ./core/overlays/staging
+  path: ./k8s/core/overlays/production
   prune: true
   validation: client
   sourceRef:

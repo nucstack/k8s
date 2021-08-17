@@ -8,7 +8,7 @@ spec:
   interval: 10m0s
   dependsOn:
   - name: core
-  path: ./apps/overlays/production
+  path: ./k8s/apps/overlays/staging
   prune: true
   validation: client
   sourceRef:

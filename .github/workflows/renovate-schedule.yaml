@@ -20,7 +20,7 @@ jobs:
     - name: Renovate Helm Releases
       uses: k8s-at-home/renovate-helm-releases@v1
       with:
-        cluster-path: "./cluster"
+        cluster-path: "./k8s"
 
     - name: Create pull request for renovatebot helm-release annotations
       uses: peter-evans/create-pull-request@v3

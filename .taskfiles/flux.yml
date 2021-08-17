@@ -12,17 +12,17 @@ tasks:
     cmds:
       - kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
       - envsubst < {{.PROJECT_DIR}}/tmpl/.sops.yaml > {{.PROJECT_DIR}}/.sops.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/clusters/{{.ENVIRONMENT}}/gotk-sync.yaml
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/settings/{{.ENVIRONMENT}}/secrets/cloudflare.secret.enc.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/settings/{{.ENVIRONMENT}}/secrets/cloudflare.secret.enc.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/gotk-sync.yaml > {{.PROJECT_DIR}}/k8s/clusters/{{.ENVIRONMENT}}/gotk-sync.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cloudflare.secret.enc.yaml > {{.PROJECT_DIR}}/k8s/settings/{{.ENVIRONMENT}}/secrets/cloudflare.secret.enc.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/k8s/settings/{{.ENVIRONMENT}}/secrets/cloudflare.secret.enc.yaml
       - gpg --export-secret-keys --armor {{.FLUX_KEY_FP}} | kubectl create secret generic sops-gpg --namespace=flux-system --from-file=sops.asc=/dev/stdin
 
   install:
     deps: [check]
     desc: Flux bootstrap
     cmds:
-      - kubectl apply --kustomize={{.PROJECT_DIR}}/clusters/{{.ENVIRONMENT}} || true
-      - kubectl apply --kustomize={{.PROJECT_DIR}}/clusters/{{.ENVIRONMENT}}
+      - kubectl apply --kustomize={{.PROJECT_DIR}}/k8s/clusters/{{.ENVIRONMENT}} || true
+      - kubectl apply --kustomize={{.PROJECT_DIR}}/k8s/clusters/{{.ENVIRONMENT}}
 
   check:
     desc: Flux Preflight check
@@ -47,31 +47,31 @@ tasks:
   global-secrets:
     desc: Reroll global secrets
     cmds:
-      - envsubst < {{.PROJECT_DIR}}/tmpl/global-secrets.yaml > {{.PROJECT_DIR}}/settings/secrets.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/settings/secrets.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/global-secrets.yaml > {{.PROJECT_DIR}}/k8s/settings/secrets.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/k8s/settings/secrets.yaml
 
   global-settings:
     desc: Reroll global settings
     cmds:
-      - envsubst < {{.PROJECT_DIR}}/tmpl/global-settings.yaml > {{.PROJECT_DIR}}/settings/settings.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/global-settings.yaml > {{.PROJECT_DIR}}/k8s/settings/settings.yaml
 
   cluster-secrets:
     desc: Reroll cluster secrets
     cmds:
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/settings/{{.ENVIRONMENT}}/secrets.yaml
-      - sops --encrypt --in-place {{.PROJECT_DIR}}/settings/{{.ENVIRONMENT}}/secrets.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-secrets.yaml > {{.PROJECT_DIR}}/k8s/settings/{{.ENVIRONMENT}}/secrets.yaml
+      - sops --encrypt --in-place {{.PROJECT_DIR}}/k8s/settings/{{.ENVIRONMENT}}/secrets.yaml
 
   cluster-settings:
     desc: Reroll cluster settings
     cmds:
-      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/settings/{{.ENVIRONMENT}}/settings.yaml
+      - envsubst < {{.PROJECT_DIR}}/tmpl/cluster-settings.yaml > {{.PROJECT_DIR}}/k8s/settings/{{.ENVIRONMENT}}/settings.yaml
 
   app-secrets:
     var:
       FILTER: "*"
     desc: Reroll all template secrets by filter
     cmds:
-      - "find {{.PROJECT_DIR}}/apps -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
+      - "find {{.PROJECT_DIR}}/k8s/apps -type f \\( -name '*enc.template' -a -name '*{{.FILTER}}*' \\) -exec task flux:app-secret TEMPLATE={} \\;"
 
   app-secret:
     var:
