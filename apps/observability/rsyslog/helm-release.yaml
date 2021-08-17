@@ -42,9 +42,9 @@ spec:
         volumeSpec:
           configMap:
             name: rsyslog-config
-          subPath:
-            - path: rsyslog.conf
-              mountPath: /etc/rsyslog.conf
+        subPath:
+          - path: rsyslog.conf
+            mountPath: /etc/rsyslog.conf
     resources:
       limits:
         cpu: 500m
