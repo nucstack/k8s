@@ -5,3 +5,4 @@ resources:
   - home-assistant.secrets.enc.yaml
   - prometheus.secrets.enc.yaml
   - helm-release.yaml
+  - ingress-route.yaml
