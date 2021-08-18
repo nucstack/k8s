@@ -68,7 +68,13 @@ spec:
         image: plndr/kube-vip:0.3.4
         imagePullPolicy: Always
         name: kube-vip
-        resources: {}
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
         securityContext:
           capabilities:
             add:
