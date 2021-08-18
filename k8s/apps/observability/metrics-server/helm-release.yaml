@@ -33,6 +33,13 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
+    resources:
+      requests:
+        memory: 128Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 200m
     image:
       repository: gcr.io/google_containers/metrics-server
       tag: v0.3.6
