@@ -13,6 +13,7 @@ resources:
   - k8s-at-home.yaml
   - kubernetes-stable.yaml
   - longhorn.yaml
+  - lwolf.yaml
   - node-feature-discovery.yaml
   - prometheus-community.yaml
   - stakater.yaml
