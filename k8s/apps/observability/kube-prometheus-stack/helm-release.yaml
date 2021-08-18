@@ -99,13 +99,6 @@ spec:
         - hosts:
           - "alertmanager.${SECRET_DOMAIN}"
       alertmanagerSpec:
-        resources:
-          requests:
-            memory: 256Mi
-            cpu: 100m
-          limits:
-            memory: 128Mi
-            cpu: 50m
         storage:
           volumeClaimTemplate:
             spec:
@@ -117,13 +110,6 @@ spec:
       serviceMonitor:
         interval: 60s
     grafana:
-      resources:
-        requests:
-          memory: 1Gi
-          cpu: 500m
-        limits:
-          memory: 500Mi
-          cpu: 200m
       ingress:
         enabled: true
         annotations:
@@ -268,23 +254,9 @@ spec:
     kubeEtcd:
       enabled: false
     prometheusOperator:
-      resources:
-        requests:
-          memory: 512Mi
-          cpu: 400m
-        limits:
-          memory: 1Gi
-          cpu: 1000m
       configReloaderCpu: 0
     prometheus:
       prometheusSpec:
-        # resources:
-        #   requests:
-        #     memory: 6Gi
-        #     cpu: 2500m
-        #   limits:
-        #     memory: 7Gi
-        #     cpu: 4000m
         scrapeInterval: 60s
         ruleSelector: {}
         ruleNamespaceSelector: {}
