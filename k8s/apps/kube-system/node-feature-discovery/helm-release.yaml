@@ -55,7 +55,7 @@ spec:
           - name: "sdr"
             matchOn:
             - usbId:
-                class: ["02"]
+                class: ["ff"]
                 vendor: ["0bda"]
                 device: ["2838"]
           - name: "zwave"
