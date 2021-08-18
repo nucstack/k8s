@@ -24,6 +24,11 @@ spec:
     args:
       - -shared-dev-num
       - "2"
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        memory: 64Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
