@@ -34,6 +34,13 @@ spec:
     - kind: Secret
       name: botkube-helm-values
   values:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 600Mi
     serviceMonitor:
       enabled: true
       interval: 180s
