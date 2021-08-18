@@ -36,7 +36,7 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: "device/0658_0200"
+                - key: feature.node.kubernetes.io/custom-zwave
                   operator: In
                   values:
                     - "true"

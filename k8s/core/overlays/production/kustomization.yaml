@@ -7,4 +7,3 @@ resources:
 - ../../longhorn-system
 - ../../security
 - ../../system-upgrade
-- ../../nudl
