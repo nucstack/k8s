@@ -278,13 +278,13 @@ spec:
       configReloaderCpu: 0
     prometheus:
       prometheusSpec:
-        resources:
-          requests:
-            memory: 6500Mi
-            cpu: 2500m
-          limits:
-            memory: 7000Mi
-            cpu: 4000m
+        # resources:
+        #   requests:
+        #     memory: 6Gi
+        #     cpu: 2500m
+        #   limits:
+        #     memory: 7Gi
+        #     cpu: 4000m
         scrapeInterval: 60s
         ruleSelector: {}
         ruleNamespaceSelector: {}
