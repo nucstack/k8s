@@ -110,6 +110,13 @@ spec:
       serviceMonitor:
         interval: 60s
     grafana:
+      # resources:
+      #   requests:
+      #     memory: 1Gi
+      #     cpu: 500m
+      #   limits:
+      #     memory: 500Mi
+      #     cpu: 200m
       ingress:
         enabled: true
         annotations:
@@ -254,9 +261,11 @@ spec:
     kubeEtcd:
       enabled: false
     prometheusOperator:
+      resources: {}
       configReloaderCpu: 0
     prometheus:
       prometheusSpec:
+        resources: {}
         scrapeInterval: 60s
         ruleSelector: {}
         ruleNamespaceSelector: {}
