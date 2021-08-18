@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linkerd-web-ingress
+  namespace: linkerd-viz
+  annotations:
+    meta.helm.sh/release-name: linkerd-viz
+    meta.helm.sh/release-namespace: linkerd
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+spec:
+  tls:
+    - hosts:
+        - "linkerd.${SECRET_DOMAIN}"
+      secretName: linkerd-viz-tls
+  rules:
+    - host: "linkerd.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8084

@@ -1,0 +1,66 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: zwavejs2mqtt
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: zwavejs2mqtt
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: zwavejs/zwavejs2mqtt
+      tag: 5.4.6
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    env:
+      TZ: "America/New_York"
+    securityContext:
+      privileged: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "device/0658_0200"
+                  operator: In
+                  values:
+                    - "true"
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hosts:
+          - host: "zwavejs2mqtt.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "zwavejs2mqtt.${SECRET_DOMAIN}"
+            secretName: zwave2mqtt-tls
+    persistence:
+      config:
+        enabled: true
+        existingClaim: zwavejs2mqtt
+      usb:
+        enabled: true
+        hostPath: /dev/ttyACM0
+        mountPath: /dev/ttyACM0

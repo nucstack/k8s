@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rtlamr-collect
+  namespace: observability
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /k8s/charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: rtlamr-collect-helm-values
+  values:
+    image:
+      repository: ${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect
+      tag: 0.0.2
+    controller:
+      replicas: 1
+    nameOverride: rtlamr-collect
+    service:
+      main:
+        enabled: false
+    env:
+      INTERVAL: 30
+      COLLECT_LOGLEVEL: "DEBUG"
+      COLLECT_INFLUXDB_ORG: "home"
+      COLLECT_INFLUXDB_BUCKET: "meters/autogen"
+      COLLECT_INFLUXDB_MEASUREMENT: "utilities"
+      COLLECT_INFLUXDB_HOSTNAME: "http://influxdb.observability.svc.cluster.local:8086"
+      RTLAMR_FORMAT: "json"
+    securityContext:
+      privileged: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "device/0bda_2838"
+                  operator: In
+                  values:
+                    - "true"
+    persistence:
+      usb:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/swradio0
+        mountPath: /dev/swradio0
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 500m
+        memory: 128Mi

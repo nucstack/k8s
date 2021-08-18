@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: emqx
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://repos.emqx.io/charts
+      chart: emqx
+      version: 4.3.7
+      sourceRef:
+        kind: HelmRepository
+        name: emqx-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    resources:
+      limits:
+        cpu: 400m
+        memory: 800Mi
+      requests:
+        cpu: 200m
+        memory: 500Mi
+    replicaCount: 3
+    recreatePods: true
+    service:
+      type: LoadBalancer
+      loadBalancerIP: "${SECRET_MQTT_LB_IP}"
+    ingress:
+      dashboard:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        path: /
+        hosts:
+          - "emqx-dashboard.${SECRET_DOMAIN}"
+        tls:
+          - hosts:
+              - "emqx-dashboard.${SECRET_DOMAIN}"
+            secretName: emqx-dashboard-tls
+    emqxConfig:
+      EMQX_ALLOW_ANONYMOUS: "false"
+      EMQX_ADMIN_PASSWORD: "${SECRET_MQTT_ADMIN_PASSWORD}"
+      EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
+      EMQX_AUTH__USER__1__USERNAME: "${SECRET_MQTT_USER1_USERNAME}"
+      EMQX_AUTH__USER__1__PASSWORD: "${SECRET_MQTT_USER1_PASSWORD}"
+    emqxLoadedPlugins: >
+      {emqx_management, true}.
+      {emqx_recon, true}.
+      {emqx_retainer, true}.
+      {emqx_dashboard, true}.
+      {emqx_telemetry, false}.
+      {emqx_rule_engine, true}.
+      {emqx_bridge_mqtt, false}.
+      {emqx_auth_mnesia, true}.
+      {emqx_prometheus, true}.

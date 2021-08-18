@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  install:
+    timeout: 10m
+    remediation: # perform remediation when helm install fails
+      retries: 3
+  upgrade:
+    remediation: # perform remediation when helm upgrade fails
+      retries: 3
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  releaseName: longhorn
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.longhorn.io
+      chart: longhorn
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    persistence:
+      defaultClass: true
+      recurringJobs:
+        enable: true
+        jobList: '[{"name":"backup", "task":"backup", "cron":"30 2 * * 0", "retain":1}]'
+    defaultSettings:
+      backupTarget: "nfs://${SECRET_NFS_HOST}:${SECRET_NFS_BACKUP_PATH}"
+    ingress:
+      enabled: true
+      host: longhorn.${SECRET_DOMAIN}
+      tlsSecret: longhorn-cert
+      tls: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

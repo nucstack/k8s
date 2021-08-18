@@ -1,0 +1,139 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-automation
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=TODO
+    checkov.io/skip2: CKV_K8S_37=TODO
+    checkov.io/skip3: CKV_K8S_43=TODO
+    checkov.io/skip4: CKV_K8S_13=TODO
+    checkov.io/skip5: CKV_K8S_11=TODO
+    checkov.io/skip6: CKV_K8S_10=TODO
+    checkov.io/skip7: CKV_K8S_28=TODO
+    checkov.io/skip8: CKV_K8S_15=TODO
+    checkov.io/skip9: CKV_K8S_30=TODO
+    checkov.io/skip10: CKV_K8S_12=TODO
+    checkov.io/skip11: CKV_K8S_22=TODO
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 10.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 10m
+  timeout: 10m
+  valuesFrom:
+    - kind: Secret
+      name: home-assistant-helm-values
+  values:
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2021.8.7
+    env:
+      TZ: "America/New_York"
+    hostNetwork: false
+    prometheus:
+      serviceMonitor:
+        enabled: true
+        portName: http
+        bearerTokenSecret:
+          name: home-assistant-prometheus-token
+          key: prometheus-token
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant
+      vscode-config:
+        enabled: true
+        type: emptyDir
+    influxdb:
+      enabled: false
+    postgresql:
+      enabled: true
+      persistence:
+        enabled: true
+        size: 10Gi
+        storageClass: longhorn
+    ingress:
+      main:
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        enabled: true
+        hosts:
+          - host: "hass.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "hass.${SECRET_DOMAIN}"
+            secretName: home-assistant-tls
+    initContainers:
+      extensions:
+        name: extensions
+        image: codercom/code-server:3.11.1
+        command: ['code-server']
+        args:
+          - --install-extension
+          - 'ms-python.python'
+          - --force
+          - --install-extension
+          - 'keesschollaart.vscode-home-assistant'
+          - --force
+          - --user-data-dir
+          - '/.vscode'
+          - --extensions-dir
+          - '/.vscode'
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: vscode-config
+            mountPath: /.vscode
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 3.11.1
+        workingDir: '/config'
+        args:
+          - --auth
+          - 'none'
+          - --user-data-dir
+          - '/.vscode'
+          - --extensions-dir
+          - '/.vscode'
+        ingress:
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          enabled: true
+          hosts:
+            - host: "vscode-hass.${SECRET_DOMAIN}"
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - "vscode-hass.${SECRET_DOMAIN}"
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: vscode-config
+            mountPath: /.vscode

@@ -18,8 +18,8 @@ Main Deviations from this template:
 
 **Provisioning the cluster**
 ```bash
-cp .env.example .env # update accordingly
-task ansible:k8s-install # to provision cluster if not set up
+cp .env.example .env # update env vars accordingly
+kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconfig"
 ```
 
 **Flux**
