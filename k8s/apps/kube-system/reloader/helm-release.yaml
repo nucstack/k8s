@@ -25,11 +25,11 @@ spec:
           name: ghcr.io/k8s-at-home/reloader
         resources:
           limits:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 500m
+            memory: 400Mi
           requests:
-            cpu: 50m
-            memory: 100Mi
+            cpu: 300m
+            memory: 256Mi
       podMonitor:
         enabled: true
         namespace: kube-system
