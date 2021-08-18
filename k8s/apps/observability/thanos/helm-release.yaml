@@ -19,6 +19,13 @@ spec:
   values:
     query:
       enabled: true
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       replicaLabels:
         - replica
       dnsDiscovery:
@@ -46,10 +53,24 @@ spec:
           memory: 128Mi
     compactor:
       enabled: true
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       persistence:
         enabled: false
     storegateway:
       enabled: true
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       persistence:
         enabled: true
         size: 5Gi
