@@ -31,12 +31,13 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
-    requests:
-      memory: 256Mi
-      cpu: 100m
-    limits:
-      memory: 1Gi
-      cpu: 200m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 200m
+      limits:
+        memory: 512Mi
+        cpu: 100m
     persistence:
       enabled: true
       existingClaim: influxdb
