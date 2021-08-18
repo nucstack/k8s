@@ -12,5 +12,6 @@ resources:
   - k8s-at-home.yaml
   - kubernetes-stable.yaml
   - longhorn.yaml
+  - node-feature-discovery.yaml
   - prometheus-community.yaml
   - traefik.yaml
