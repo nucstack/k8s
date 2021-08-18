@@ -19,10 +19,10 @@ spec:
     resources:
       limits:
         cpu: 400m
-        memory: 512Mi
+        memory: 1Gi
       requests:
         cpu: 100m
-        memory: 256Mi
+        memory: 512Mi
     installCRDs: false
     webhook:
       resources:
@@ -40,10 +40,10 @@ spec:
       resources:
         limits:
           cpu: 400m
-          memory: 256Mi
+          memory: 1Gi
         requests:
           cpu: 100m
-          memory: 128Mi
+          memory: 512Mi
       replicaCount: 1
     podDnsPolicy: "None"
     podDnsConfig:
