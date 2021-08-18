@@ -42,7 +42,7 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: "device/0bda_2838"
+                - key: feature.node.kubernetes.io/custom-sdr
                   operator: In
                   values:
                     - "true"
