@@ -32,4 +32,4 @@ spec:
             memory: 100Mi
       podMonitor:
         enabled: true
-        namespace: flux-system
+        namespace: kube-system
