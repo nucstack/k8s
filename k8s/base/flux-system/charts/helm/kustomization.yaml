@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - authelia.yaml
   - bitnami.yaml
+  - descheduler.yaml
   - emqx.yaml
   - grafana-loki.yaml
   - influxdata.yaml
