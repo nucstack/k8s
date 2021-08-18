@@ -95,6 +95,13 @@ spec:
         - configMapRef:
             name: default-controller-env
         image: rancher/system-upgrade-controller:v0.7.3
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
         imagePullPolicy: IfNotPresent
         name: system-upgrade-controller
         volumeMounts:
