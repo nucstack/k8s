@@ -22,7 +22,7 @@ spec:
       replicas: 3
     nameOverride: error-pages
     env:
-      TEMPLATE_NAME: hacker-terminal
+      TEMPLATE_NAME: ghost
     service:
       main:
         ports:
