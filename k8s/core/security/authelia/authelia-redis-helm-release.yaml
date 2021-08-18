@@ -31,7 +31,22 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
+    master:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 64Mi
     replica:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 64Mi
       replicaCount: 1
     persistence:
       enabled: false
