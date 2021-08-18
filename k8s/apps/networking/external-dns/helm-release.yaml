@@ -30,7 +30,7 @@ spec:
       - ingress
     provider: cloudflare
     cloudflare:
-      secretName: cloudflare-api-key
+      secretName: external-dns-helm-values
       proxied: true
     policy: sync
     txtPrefix: "k8s."
