@@ -21,10 +21,10 @@ spec:
     resources:
       limits:
         cpu: 800m
-        memory: 1024Mi
+        memory: 1500Mi
       requests:
         cpu: 200m
-        memory: 500Mi
+        memory: 1Gi
     image:
       repository: esphome/esphome
       tag: 2021.8.0
