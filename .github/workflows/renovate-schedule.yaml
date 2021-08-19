@@ -21,6 +21,7 @@ jobs:
       uses: k8s-at-home/renovate-helm-releases@v1
       with:
         cluster-path: "./k8s"
+        exclude-folders: "./k8s/charts"
 
     - name: Create pull request for renovatebot helm-release annotations
       uses: peter-evans/create-pull-request@v3
