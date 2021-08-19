@@ -10,12 +10,13 @@ vars:
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq -jr '.resources[] | select(((.mode == \"data\") and .type == \"aws_instances\") and .name == \"instances\") | .instances[] | select(.index_key == \"k3s\") | .attributes.private_ips[]' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.type == \"null_resource\") and .name == \"instances\") | .instances[].attributes.triggers.ipaddresses|split(\",\")' {{.STATE_DIR}}/terraform.tfstate"
 
 tasks:
-  export-sshkey:
+  export-keys:
     cmds:
       - "[ -f {{.SSH_PRIVATE_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > {{.SSH_PRIVATE_KEY_PATH}} && chmod 0600 {{.SSH_PRIVATE_KEY_PATH}}"
+      - "[ -f {{.SSH_PUBLIC_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PUBLIC_KEY}} > {{.SSH_PUBLIC_KEY_PATH}} && chmod 0600 {{.SSH_PUBLIC_KEY_PATH}}"
     silent: true
 
   export-kubeconfig:
@@ -23,7 +24,7 @@ tasks:
       KUBECONFIG_PATH:
         sh: if [[ "${ANSIBLE_PLAYBOOK}" = "kubespray" ]]; then echo '/etc/kubernetes/admin.conf'; else echo '/etc/rancher/k3s/k3s.yaml'; fi
 
-    deps: [export-sshkey]
+    deps: [export-keys]
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
       - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
@@ -37,26 +38,25 @@ tasks:
       CONFIG_FILE: "{{.ANSIBLE_HOSTS_FILE}}"
     cmds:
       - mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
-      - cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample/group_vars {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/
-      - python3 {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/contrib/inventory_builder/inventory.py {{.ANSIBLE_HOSTS}} {{.ANSIBLE_ADDITIONAL_HOSTS}}
+      - cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample/group_vars {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
     silent: true
 
   ping:
     desc: Ping all k8s nodes
-    deps: [export-sshkey]
+    deps: [export-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true
 
   usb:
     desc: Ping all k8s nodes
-    deps: [export-sshkey]
+    deps: [export-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a lsusb"
 
   reboot:
     desc: reboot all k8s nodes
-    deps: [export-sshkey]
+    deps: [export-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
     silent: true

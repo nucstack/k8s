@@ -17,6 +17,7 @@ variable "services" {
     type      = string
     size      = string
     count     = number
+    start_ip  = number
   }))
 }
 
@@ -25,4 +26,17 @@ variable "env_vars" {
   default     = {}
   sensitive   = true
   type        = map(string)
+}
+
+variable "ssh_username" {
+  description = "ssh username"
+  type        = string
+  sensitive   = true
+}
+
+variable "ssh_password" {
+  description = "ssh password"
+  type        = string
+  default     = ""
+  sensitive   = true
 }

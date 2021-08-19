@@ -54,17 +54,16 @@ module "key_pair" {
   }
 }
 
-// lookup latest service role AMI image
-// from our packer AMIs
-data "aws_ami" "role_image" {
-  for_each    = {for service in var.services: service.name => service if var.type == "aws"}
+// lookup latest AMI image
+data "aws_ami" "image" {
   most_recent = true
   filter {
-    name   = "tag:role"
-    values = [each.value.name]
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
-  owners = ["self"]
+  owners = ["099720109477"]
 }
+
 
 data "aws_subnet" "private_subnet" {
   for_each = {for service in var.services: service.name => service if var.type == "aws"}
@@ -89,7 +88,7 @@ module "ec2-instances" {
   name                   = each.value.name
   instance_count         = each.value.count
   instance_type          = each.value.size
-  ami                    = data.aws_ami.role_image[each.value.name].id
+  ami                    = data.aws_ami.image.id
   subnet_id              = data.aws_subnet.private_subnet[each.value.name].id
   key_name               = module.key_pair.0.key_pair_key_name
   vpc_security_group_ids = [module.vpc.0.default_security_group_id]
@@ -112,7 +111,7 @@ module "autoscaling-instances" {
   max_size               = each.value.count
   desired_capacity       = each.value.count
   instance_type          = each.value.size
-  image_id               = data.aws_ami.role_image[each.value.name].id
+  image_id               = data.aws_ami.image.id
   vpc_zone_identifier    = [data.aws_subnet.private_subnet[each.value.name].id]
   use_lt                 = true
   create_lt              = true
