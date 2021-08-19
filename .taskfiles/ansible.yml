@@ -21,7 +21,7 @@ tasks:
 
   export-inventory:
     cmds:
-      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}}"
+      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || cp -R {{.ANSIBLE_INVENTORY_DIR}}/sample {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}}"
     silent: true
 
   export-kubeconfig:
