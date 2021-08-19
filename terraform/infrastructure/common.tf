@@ -31,3 +31,13 @@ resource "null_resource" "instances" {
     ipaddresses = var.type == "aws" ? join(",", module.ec2-instances[each.key].private_ip)  : join(",", [ for i, instance in range(each.value.start_ip, each.value.start_ip + each.value.count): cidrhost(each.value.subnet, instance)])
   }
 }
+
+// generate an ansible inventory file from the hosts
+data "template_file" "ansible_inventory" {
+  for_each = {for s in var.services: s.name => s}
+  template = file("./templates/k3s-inventory.ini.tmpl")
+  vars     = {
+    hostnames   = var.type == "aws" ? join(",", module.ec2-instances[each.key].private_dns) : join(",", [ for i, instance in range(each.value.start_ip, each.value.start_ip + each.value.count): format("%s-%d", each.value.name, i+1)])
+    ipaddresses = var.type == "aws" ? join(",", module.ec2-instances[each.key].private_ip)  : join(",", [ for i, instance in range(each.value.start_ip, each.value.start_ip + each.value.count): cidrhost(each.value.subnet, instance)])
+  }
+}

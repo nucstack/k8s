@@ -8,15 +8,20 @@ vars:
   ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
   ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
   ANSIBLE_PLAYBOOK: "k3s"
-  ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.yml"
+  ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.ini"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.type == \"null_resource\") and .name == \"instances\") | .instances[].attributes.triggers.ipaddresses|split(\",\")' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.name == \"ansible_inventory\") and .type == \"template_file\") | .instances[0].attributes.rendered' {{.STATE_DIR}}/terraform.tfstate"
 
 tasks:
   export-keys:
     cmds:
       - "[ -f {{.SSH_PRIVATE_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > {{.SSH_PRIVATE_KEY_PATH}} && chmod 0600 {{.SSH_PRIVATE_KEY_PATH}}"
       - "[ -f {{.SSH_PUBLIC_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PUBLIC_KEY}} > {{.SSH_PUBLIC_KEY_PATH}} && chmod 0600 {{.SSH_PUBLIC_KEY_PATH}}"
+    silent: true
+
+  export-inventory:
+    cmds:
+      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}}"
     silent: true
 
   export-kubeconfig:

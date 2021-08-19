@@ -1,0 +1,13 @@
+%{ for i,h in split(",", hostnames) ~}
+${h} ansible_host=${split(",", ipaddresses)[i]} ip=${split(",", ipaddresses)[i]} access_ip=${split(",", ipaddresses)[i]}
+%{ endfor ~}
+
+[kube_control_plane]
+%{ for i,h in split(",", hostnames) ~}
+%{ if i <= 2 ~}${h}\n%{ endif ~}
+%{ endfor ~}
+
+[kube_control_node]
+%{ for i,h in split(",", hostnames) ~}
+%{ if i > 2 ~}${h}\n%{ endif ~}
+%{ endfor ~}
