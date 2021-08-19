@@ -11,7 +11,8 @@
   "kubernetes": {
     "fileMatch": ["k8s\/.+\.yaml$"],
     "ignorePaths": [
-      "clusters"
+      "clusters",
+      "charts"
     ],
   },
   "regexManagers": [
