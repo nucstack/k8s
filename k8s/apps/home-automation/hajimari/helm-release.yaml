@@ -26,13 +26,9 @@ spec:
       annotations:
         configmap.reloader.stakater.com/reload: "hajimari-settings"
     hajimari:
-      defaultEnable: true
+      defaultEnable: false
       namespaceSelector:
-        matchNames:
-          - home-automation
-          - observability
-          - networking
-          - longhorn-system
+        any: true
       customApps:
         - name: AdGuard
           url: "https://adguard.${SECRET_LOCAL_DOMAIN}"
