@@ -7,6 +7,7 @@ resources:
   - descheduler.yaml
   - emqx.yaml
   - grafana-loki.yaml
+  - hajimari.yaml
   - influxdata.yaml
   - infracloudio.yaml
   - jetstack.yaml
