@@ -32,6 +32,30 @@ tasks:
     cmds:
       - flux reconcile source git flux-system
 
+  list-helm-releases:
+    desc: List all Helm Releases
+    cmds:
+      - flux get hr -A
+    silent: true
+
+  list-helm-sources:
+    desc: List all Helm sources
+    cmds:
+      - flux get sources helm -A
+    silent: true
+
+  list-helm-charts:
+    desc: List all Helm charts
+    cmds:
+      - flux get sources chart -A
+    silent: true
+
+  list-kustomizations:
+    desc: List all Kustomizations
+    cmds:
+      - flux get kustomizations -A
+    silent: true
+
   uninstall:
     desc: Uninstall flux-system deployment
     cmds:

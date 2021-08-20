@@ -49,6 +49,20 @@ tasks:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
     silent: true
 
+  uptime:
+    desc: Uptime of all k8s nodes
+    deps: [export-keys, init]
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
+    silent: true
+
+  clean-images:
+    desc: Clean up stale container images
+    dir: ansible
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'k3s crictl rmi --prune' --become"
+    silent: true
+
   reboot:
     desc: reboot all k8s nodes
     deps: [export-keys, init]
