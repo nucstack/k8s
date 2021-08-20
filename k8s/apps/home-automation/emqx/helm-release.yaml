@@ -17,9 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    controller:
-      annotations:
-        configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
       limits:
         cpu: 400m
