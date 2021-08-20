@@ -62,6 +62,7 @@ spec:
           cpu: 250m
           memory: 64Mi
     configMap:
+      default_redirection_url: "https://home.${SECRET_DOMAIN}"
       enabled: true
       storage:
         postgres:
