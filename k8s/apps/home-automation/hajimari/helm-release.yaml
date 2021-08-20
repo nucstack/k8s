@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://toboshii.github.io/hajimari
-      chart: hajimari
+      chart: hajimari-charts
       version: 1.0.0
       sourceRef:
         kind: HelmRepository
