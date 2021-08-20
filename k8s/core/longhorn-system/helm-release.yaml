@@ -47,6 +47,6 @@ spec:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hajimari.io/enable: "true"
+        hajimari.io/enable: "false"
         hajimari.io/icon: nas
         hajimari.io/appName: Longhorn
