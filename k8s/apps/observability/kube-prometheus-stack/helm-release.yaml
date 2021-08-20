@@ -93,7 +93,7 @@ spec:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          hajimari.io/enable: true
+          hajimari.io/enable: false
           hajimari.io/icon: alert
           hajimari.io/appName: AlertManager
         hosts:
@@ -125,7 +125,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          hajimari.io/enable: true
+          hajimari.io/enable: false
           hajimari.io/icon: chart-multiple
           hajimari.io/appName: Grafana
         hosts:
