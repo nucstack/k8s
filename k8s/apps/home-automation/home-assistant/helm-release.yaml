@@ -134,7 +134,6 @@ spec:
             traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             hajimari.io/enable: "true"
-            hajimari.io/icon: vscode
             hajimari.io/appName: VSCode
           enabled: true
           hosts:
