@@ -26,6 +26,7 @@ spec:
       annotations:
         configmap.reloader.stakater.com/reload: "hajimari-settings"
     hajimari:
+      defaultEnable: true
       namespaceSelector:
         matchNames:
           - home-automation
