@@ -8,6 +8,9 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/ingress.class: "traefik"
+    hajimari.io/enable: true
+    hajimari.io/icon: lan
+    hajimari.io/appName: Traefik
 spec:
   tls:
     - secretName: "${SECRET_DOMAIN/./-}-tls"

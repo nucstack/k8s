@@ -39,6 +39,9 @@ spec:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: true
+          hajimari.io/icon: database-arrow-left
+          hajimari.io/appName: Thanos
         tls: true
     queryFrontend:
       enabled: false

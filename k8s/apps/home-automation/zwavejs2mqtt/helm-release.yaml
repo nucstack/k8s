@@ -47,6 +47,9 @@ spec:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: true
+          hajimari.io/icon: zwave
+          hajimari.io/appName: ZWaveJS2MQTT
         hosts:
           - host: "zwavejs2mqtt.${SECRET_DOMAIN}"
             paths:
