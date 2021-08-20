@@ -33,6 +33,12 @@ spec:
         - name: AdGuard
           url: "https://adguard.${SECRET_LOCAL_DOMAIN}"
           icon: shield
+        - name: Nas
+          url: "https://nas.${SECRET_LOCAL_DOMAIN}"
+          icon: nas
+        - name: Unifi
+          url: "https://unifi.${SECRET_LOCAL_DOMAIN}"
+          icon: network
       groups:
         - name: Communicate
           links:
@@ -44,8 +50,16 @@ spec:
           links:
             - name: Google Drive
               url: 'https://drive.google.com'
+            - name: Google Cloud
+              url: 'https://console.cloud.google.com'
+            - name: AWS
+              url: 'https://aws.amazon.com'
+            - name: Cloudflare
+              url: 'https://dash.clkoudflare.com'
         - name: Dev
           links:
+            - name: GitHub
+              url: 'https://github.com/'
             - name: Codepen
               url: 'https://codepen.io/'
             - name: Devdocs
