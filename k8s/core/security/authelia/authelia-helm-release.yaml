@@ -54,8 +54,6 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       subdomain: auth
     pod:
-      annotations:
-        secret.reloader.stakater.com/reload: "authelia-helm-values"
       resources:
         limits:
           cpu: 1000m
