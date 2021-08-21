@@ -45,7 +45,7 @@ spec:
       tls: true
       annotations:
         kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd,networking-longhorn@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd,networking-svc-longhorn-headers@kubernetescrd"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hajimari.io/enable: "true"
         hajimari.io/icon: nas
