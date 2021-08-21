@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: home-assistant-configmap
   namespace: home-automation
-data: |
+stringData: |
   ldap.sh:
     #!/bin/sh
 
