@@ -75,7 +75,7 @@ spec:
         type: custom
         volumeSpec:
           secret:
-            name: home-assistant-helm-values
+            secretName: home-assistant-helm-values
         subPath:
           - path: home-assistant.cfg
             mountPath: /home-assistant.cfg
