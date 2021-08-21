@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: home-assistant-scripts
   namespace: home-automation
-stringData: |
-  ldap.sh:
+data:
+  ldap.sh: |
     #!/bin/sh
 
     # Log messages to stderr.
