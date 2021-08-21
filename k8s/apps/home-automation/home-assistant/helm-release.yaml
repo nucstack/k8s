@@ -60,6 +60,25 @@ spec:
       vscode-config:
         enabled: true
         type: emptyDir
+      auth-scripts:
+        enabled: true
+        type: custom
+        volumeSpec:
+          configMap:
+            name: home-assistant-scripts
+            defaultMode: 0777
+        subPath:
+          - path: ldap.sh
+            mountPath: /ldap.sh
+      auth-config:
+        enabled: true
+        type: custom
+        volumeSpec:
+          secret:
+            name: home-assistant-helm-values
+        subPath:
+          - path: home-assistant.cfg
+            mountPath: /home-assistant.cfg
     influxdb:
       enabled: false
     postgresql:

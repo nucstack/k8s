@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: home-assistant-configmap
+  name: home-assistant-scripts
   namespace: home-automation
 stringData: |
   ldap.sh:
