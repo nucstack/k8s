@@ -33,6 +33,11 @@ spec:
     - kind: Secret
       name: home-assistant-helm-values
   values:
+    controller:
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/sbin/apk", "add", "openldap-clients"]
     resources:
       limits:
         cpu: 1500m
