@@ -3,6 +3,7 @@ version: '3'
 
 env:
   KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+  DOLLAR: '$'
 
 tasks:
 
