@@ -61,7 +61,7 @@ spec:
       config:
         enabled: true
         existingClaim: jupyterlab
-        mountPath: "/home/jovyan/work"
+        mountPath: "/home/jovyan"
     resources:
       limits:
         cpu: 1500m
