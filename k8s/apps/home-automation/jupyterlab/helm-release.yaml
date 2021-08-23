@@ -69,3 +69,14 @@ spec:
       requests:
         cpu: 500m
         memory: 256Mi
+    initContainers:
+      chmod:
+        name: chmod
+        image: alpine:latest
+        command:
+          - sh
+          - -c
+          - chown -R 1000:100 /home/jovyan/work
+        volumeMounts:
+          - name: config
+            mountPath: /home/jovyan/work
