@@ -18,6 +18,12 @@ spec:
     image:
       repository: jupyter/scipy-notebook
       tag: notebook-6.4.3
+    command:
+      - start.sh
+    args:
+      - jupyter
+      - notebook
+      - --NotebookApp.token=''
     controller:
       replicas: 1
     nameOverride: jupyterlab
