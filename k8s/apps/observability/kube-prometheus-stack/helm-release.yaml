@@ -312,5 +312,6 @@ spec:
           image: quay.io/thanos/thanos:v0.22.0
           version: v0.22.0
           objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
+            type: FILESYSTEM
+            config:
+              directory: "/data"
