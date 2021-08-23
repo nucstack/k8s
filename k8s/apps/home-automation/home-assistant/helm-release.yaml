@@ -82,7 +82,7 @@ spec:
     influxdb:
       enabled: false
     postgresql:
-      enabled: false
+      enabled: true
       resources:
         limits:
           cpu: 500m
