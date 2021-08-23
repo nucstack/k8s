@@ -5,6 +5,7 @@ resources:
   - emqx
   - hajimari
   - home-assistant
+  - jupyterlab
   - zigbee2mqtt
   - zwavejs2mqtt
   - esphome

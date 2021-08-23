@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jupyterlab
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /k8s/charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: jupyter/scipy-notebook
+      tag: notebook-6.4.3
+    controller:
+      replicas: 1
+    nameOverride: jupyterlab
+    service:
+      main:
+        enabled: true
+        primary: true
+        ports:
+          http:
+            enabled: true
+            primary: true
+            port: 8888
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: "true"
+          hajimari.io/appName: JupyterLab
+        hosts:
+          - host: "jupyterlab.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "jupyterlab.${SECRET_DOMAIN}"
+            secretName: jupyterlab-tls
+    env:
+      JUPYTER_ENABLE_LAB: "yes"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: jupyterlab
+        mountPath: "/home/jovyan/work"
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 1024Mi
+      requests:
+        cpu: 500m
+        memory: 256Mi
