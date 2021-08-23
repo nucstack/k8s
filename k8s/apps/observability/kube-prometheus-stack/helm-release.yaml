@@ -270,18 +270,32 @@ spec:
       resources: {}
       configReloaderCpu: 0
     prometheus:
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "traefik"
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: chart-multiple
+          hajimari.io/appName: Prometheus
+        hosts:
+        - "prometheus.${SECRET_DOMAIN}"
+        tls:
+        - hosts:
+          - "prometheus.${SECRET_DOMAIN}"
+      thanosService:
+        enabled: true
       prometheusSpec:
+        replicas: 1
+        replicaExternalLabelName: "replica"
         resources: {}
         scrapeInterval: 60s
-        ruleSelector: {}
-        ruleNamespaceSelector: {}
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-        serviceMonitorNamespaceSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-        podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
         retention: 2d
         enableAdminAPI: true
         walCompression: true
@@ -294,3 +308,9 @@ spec:
               resources:
                 requests:
                   storage: 1Mi
+        thanos:
+          image: quay.io/thanos/thanos:v0.22.0
+          version: v0.22.0
+          objectStorageConfig:
+            name: thanos-objstore
+            key: objstore.yml
