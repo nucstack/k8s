@@ -50,6 +50,7 @@ spec:
             secretName: jupyterlab-tls
     env:
       JUPYTER_ENABLE_LAB: "yes"
+      JUPYTERHUB_API_TOKEN: ""
     persistence:
       config:
         enabled: true
