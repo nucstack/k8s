@@ -46,6 +46,7 @@ spec:
           hajimari.io/icon: database-arrow-left
           hajimari.io/appName: Thanos
         tls: true
+    existingObjstoreSecret: thanos-objstore
     queryFrontend:
       enabled: false
     bucketweb:
@@ -86,7 +87,3 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    objstoreConfig:
-      type: FILESYSTEM
-      config:
-        directory: "/data"

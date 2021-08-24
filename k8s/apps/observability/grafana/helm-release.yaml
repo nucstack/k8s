@@ -1,0 +1,187 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: observability
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://grafana.github.io/helm-charts
+      chart: grafana
+      version: 6.16.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-loki-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/grafana
+    replicas: 1
+    env:
+      GF_EXPLORE_ENABLED: true
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_LOG_FILTERS: rendering:debug
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
+      GF_DATE_FORMATS_INTERVAL_SECOND: "hh:mm:ss a"
+      GF_DATE_FORMATS_INTERVAL_MINUTE: "hh:mm a"
+      GF_DATE_FORMATS_INTERVAL_HOUR: "DD/MM hh:mm a"
+      GF_DATE_FORMATS_INTERVAL_DAY: "DD/MM"
+      GF_DATE_FORMATS_INTERVAL_MONTH: "MM-YYYY"
+      GF_DATE_FORMATS_INTERVAL_YEAR: "YYYY"
+      VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
+    adminPassword: "${SECRET_GRAFANA_PASSWORD}"
+    ldap:
+      enabled: true
+      existingSecret: grafana-ldap-config
+    grafana.ini:
+      server:
+        root_url: "https://grafana.${SECRET_DOMAIN}"
+      paths:
+        data: /var/lib/grafana/data
+        logs: /var/log/grafana
+        plugins: /var/lib/grafana/plugins
+        provisioning: /etc/grafana/provisioning
+      analytics:
+        check_for_updates: false
+      log:
+        mode: console
+      grafana_net:
+        url: https://grafana.net
+      security:
+        disable_initial_admin_creation: true
+      users:
+        viewers_can_edit: false
+      auth:
+        disable_login_form: false
+        disable_signout_menu: false
+      auth.anonymous:
+        enabled: false
+        org_role: default
+      auth.ldap:
+        enabled: true
+        allow_sign_up: true
+        config_file: /etc/grafana/ldap.toml
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://thanos-query:9090/
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki:3100
+          - name: rtlamr-collect
+            type: influxdb
+            access: proxy
+            database: meters
+            user: "${SECRET_INFLUXDB_USER}"
+            url: http://influxdb.observability.svc.cluster.local:8086
+            jsonData:
+              timeInterval: "15s"
+            secureJsonData:
+              password: "${SECRET_INFLUXDB_PASSWORD}"
+    dashboards:
+      default:
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/13032
+        longhorn:
+          gnetId: 13032
+          revision: 6
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/14127
+        metallb:
+          gnetId: 14127
+          revision: 1
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11462
+        traefik:
+          gnetId: 11462
+          revision: 1
+          datasource: prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11315
+        unifi-client-insights:
+          gnetId: 11315
+          revision: 8
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11311
+        unifi-network-sites:
+          gnetId: 11311
+          revision: 4
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11314
+        unifi-uap-insights:
+          gnetId: 11314
+          revision: 9
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/11312
+        unifi-usw-insights:
+          gnetId: 11312
+          revision: 8
+          datasource: Prometheus
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    plugins:
+      - natel-discrete-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - btplc-status-dot-panel
+      - cloudflare-app
+      - grafana-kubernetes-app
+      - grafana-clock-panel
+      - camptocamp-prometheus-alertmanager-datasource
+      - agenty-flowcharting-panel
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: chart-multiple
+        hajimari.io/appName: Grafana
+      hosts:
+        - "grafana.${SECRET_DOMAIN}"
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - "grafana.${SECRET_DOMAIN}"
+    serviceAccount:
+      create: true
+      autoMount: true
+    persistence:
+      enabled: false
