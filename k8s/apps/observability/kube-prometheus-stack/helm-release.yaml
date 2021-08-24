@@ -96,7 +96,6 @@ spec:
     kubeEtcd:
       enabled: false
     prometheusOperator:
-      resources: {}
       configReloaderCpu: 0
     prometheus:
       ingress:
