@@ -308,10 +308,3 @@ spec:
               resources:
                 requests:
                   storage: 1Mi
-        thanos:
-          image: quay.io/thanos/thanos:v0.22.0
-          version: v0.22.0
-          objectStorageConfig:
-            type: FILESYSTEM
-            config:
-              directory: "/data"
