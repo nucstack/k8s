@@ -33,6 +33,7 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
+    fullnameOverride: prometheus
     alertmanager:
       ingress:
         enabled: true
