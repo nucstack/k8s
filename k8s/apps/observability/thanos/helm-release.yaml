@@ -39,7 +39,6 @@ spec:
         hostname: "thanos.${SECRET_DOMAIN}"
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
