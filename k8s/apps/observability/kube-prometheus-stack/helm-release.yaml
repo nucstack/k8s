@@ -115,8 +115,6 @@ spec:
       thanosService:
         enabled: true
       prometheusSpec:
-        replicas: 1
-        replicaExternalLabelName: "replica"
         resources: {}
         scrapeInterval: 60s
         ruleSelectorNilUsesHelmValues: false
