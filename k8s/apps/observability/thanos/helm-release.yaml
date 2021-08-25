@@ -29,6 +29,8 @@ spec:
         requests:
           cpu: 100m
           memory: 128Mi
+      replicaLabels:
+        - replica
       dnsDiscovery:
         sidecarsService: prometheus-thanos-discovery
         sidecarsNamespace: observability
