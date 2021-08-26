@@ -125,7 +125,7 @@ spec:
         traefik:
           gnetId: 11462
           revision: 1
-          datasource: prometheus
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/11315
         unifi-client-insights:
           gnetId: 11315
