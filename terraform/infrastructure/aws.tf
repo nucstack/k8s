@@ -83,7 +83,7 @@ data "template_file" "user_data" {
 module "ec2-instances" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   for_each               = {for service in var.services: service.name => service if service.type == "ec2-instance" && var.type == "aws"}
-  version                = "~> 2.0"
+  version                = "~> 3.0"
 
   name                   = each.value.name
   instance_count         = each.value.count
