@@ -13,7 +13,7 @@ patchesStrategicMerge:
     kind: Deployment
     metadata:
       name: metrics-server
-      namespace: kube-system
+      namespace: observability
     spec:
       template:
         spec:
