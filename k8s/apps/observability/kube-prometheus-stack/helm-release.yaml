@@ -132,19 +132,27 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - "${SECRET_K3S_HA_VIP}"
+        - 192.168.9.25
+        - 192.168.9.26
+        - 192.168.9.27
     kubeScheduler:
       enabled: true
       endpoints:
-        - "${SECRET_K3S_HA_VIP}"
+        - 192.168.9.25
+        - 192.168.9.26
+        - 192.168.9.27
     kubeProxy:
       enabled: true
       endpoints:
-        - "${SECRET_K3S_HA_VIP}"
+        - 192.168.9.25
+        - 192.168.9.26
+        - 192.168.9.27
     kubeEtcd:
       enabled: false
       endpoints:
-        - "${SECRET_K3S_HA_VIP}"
+        - 192.168.9.25
+        - 192.168.9.26
+        - 192.168.9.27
     prometheusOperator:
       configReloaderCpu: 0
     prometheus:
