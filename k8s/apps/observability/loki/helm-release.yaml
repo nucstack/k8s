@@ -41,6 +41,46 @@ spec:
       compactor:
         working_directory: /data/loki/compactor
         shared_store: filesystem
+      ruler:
+        storage:
+          type: local
+          local:
+            directory: /rules
+        rule_path: /tmp/scratch
+        alertmanager_url: http://prometheus-alertmanager:9093
+        ring:
+          kvstore:
+            store: inmemory
+        enable_api: true
+    alerting_groups:
+      #
+      # zigbee2mqtt
+      #
+      - name: zigbee2mqtt
+        rules:
+          - alert: ZigbeeUnableToReachMQTT
+            expr: |
+              sum(count_over_time({app="zigbee2mqtt"} |= "Not connected to MQTT server"[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "Zigbee2mqtt is unable to reach MQTT"
+      #
+      # zwavejs2mqtt
+      #
+      - name: zwavejs2mqtt
+        rules:
+          - alert: ZwaveUnableToReachMQTT
+            expr: |
+              sum(count_over_time({app="zwavejs2mqtt"} |= "Error while connecting MQTT"[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "Zwavejs2mqtt is unable to reach MQTT"
     persistence:
       enabled: true
       type: pvc
