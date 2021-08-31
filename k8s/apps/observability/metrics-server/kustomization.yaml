@@ -22,7 +22,7 @@ patchesStrategicMerge:
             args:
             - --cert-dir=/tmp
             - --secure-port=443
-            - --kubelet-use-node-status-port
+            - --kubelet-use-node-status-port=true
             - --metric-resolution=15s
-            - --kubelet-insecure-tls
+            - --kubelet-insecure-tls=true
             - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
