@@ -131,12 +131,20 @@ spec:
       enabled: true
     kubeControllerManager:
       enabled: true
+      endpoints:
+        - "${SECRET_K3S_HA_VIP}"
     kubeScheduler:
       enabled: true
+      endpoints:
+        - "${SECRET_K3S_HA_VIP}"
     kubeProxy:
       enabled: true
+      endpoints:
+        - "${SECRET_K3S_HA_VIP}"
     kubeEtcd:
       enabled: false
+      endpoints:
+        - "${SECRET_K3S_HA_VIP}"
     prometheusOperator:
       configReloaderCpu: 0
     prometheus:
