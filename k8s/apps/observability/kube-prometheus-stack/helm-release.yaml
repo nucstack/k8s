@@ -37,7 +37,7 @@ spec:
     alertmanager:
       config:
         global:
-          slack_api_url: "${SECRET_FLUX_SLACK_WEBHOOK}"
+          slack_api_url: "${SECRET_ALERTMANAGER_SLACK_WEBHOOK}"
           resolve_timeout: 5m
         receivers:
           - name: "null"
