@@ -7,7 +7,6 @@ resources:
   - influxdb
   - kube-prometheus-stack
   - loki
-  - metrics-server
   - promtail
   - notifications
   - rsyslog
