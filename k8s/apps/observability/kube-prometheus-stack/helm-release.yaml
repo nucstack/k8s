@@ -191,6 +191,7 @@ spec:
             name: thanos-objstore
             key: objstore.yml
         additionalScrapeConfigs:
+          # Linkerd
           #  Required for: https://grafana.com/grafana/dashboards/315
           - job_name: 'kubernetes-nodes-cadvisor'
             scheme: https
