@@ -5,10 +5,9 @@ metadata:
   name: linkerd-web-ingress
   namespace: linkerd-viz
   annotations:
-    kubernetes.io/ingress.class: traefik
-    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd-viz.svc.cluster.local:8084
     traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    kubernetes.io/ingress.class: "traefik"
     hajimari.io/enable: "true"
     hajimari.io/icon: chip
     hajimari.io/appName: Linkerd
