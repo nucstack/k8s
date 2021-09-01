@@ -33,8 +33,9 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local:9090"
-    grafanaUrl: "http://grafana.observability.svc.cluster.local:3000"
+    prometheusUrl: "https://thanos.${SECRET_DOMAIN}"
+    grafanaUrl: "https://grafana.${SECRET_DOMAIN}"
+    jaegerUrl: "https://jaeger.${SECRET_DOMAIN}"
     grafana:
       enabled: false
     prometheus:
