@@ -10,7 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hajimari.io/enable: "true"
     hajimari.io/icon: chip
-    hajimari.io/appName: Linkerd-Jaeger
+    hajimari.io/appName: Jaeger
 spec:
   tls:
     - hosts:
