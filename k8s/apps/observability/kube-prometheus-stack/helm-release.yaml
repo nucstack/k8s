@@ -28,14 +28,14 @@ spec:
       create: true
       rules:
         alertmanager: true
-        etcd: true
+        etcd: false
         general: true
         k8s: true
         kubeApiserver: true
         kubeApiserverAvailability: true
         kubeApiserverError: true
         kubeApiserverSlos: true
-        kubelet: true
+        kubelet: false
         kubePrometheusGeneral: true
         kubePrometheusNodeAlerting: true
         kubePrometheusNodeRecording: true
