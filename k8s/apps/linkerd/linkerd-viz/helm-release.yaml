@@ -42,3 +42,4 @@ spec:
       enabled: false
     dashboard:
       enforcedHostRegexp: "^linkerd.+$"
+    installNamespace: false
