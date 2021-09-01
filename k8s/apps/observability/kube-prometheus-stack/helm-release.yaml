@@ -24,6 +24,33 @@ spec:
       retries: 3
   timeout: 20m
   values:
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubeApiserverAvailability: true
+        kubeApiserverError: true
+        kubeApiserverSlos: true
+        kubelet: false
+        kubePrometheusGeneral: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubernetesAbsent: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        kubeStateMetrics: true
+        network: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+        time: true
     fullnameOverride: prometheus
     alertmanager:
       config:
