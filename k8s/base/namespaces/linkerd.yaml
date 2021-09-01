@@ -5,3 +5,10 @@ metadata:
   name: linkerd
   labels:
     linkerd.io/admission-webhooks: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: linkerd-viz
+  annotations:
+    linkerd.io/inject: enabled
