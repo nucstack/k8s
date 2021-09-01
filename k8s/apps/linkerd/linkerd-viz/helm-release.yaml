@@ -41,5 +41,5 @@ spec:
     prometheus:
       enabled: false
     dashboard:
-      enforcedHostRegexp: "^linkerd.+$"
+      enforcedHostRegexp: "^(localhost|linkerd.+|web.+)$"
     installNamespace: false
