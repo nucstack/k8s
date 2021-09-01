@@ -35,7 +35,7 @@ spec:
         kubeApiserverAvailability: true
         kubeApiserverError: true
         kubeApiserverSlos: true
-        kubelet: false
+        kubelet: true
         kubePrometheusGeneral: true
         kubePrometheusNodeAlerting: true
         kubePrometheusNodeRecording: true
