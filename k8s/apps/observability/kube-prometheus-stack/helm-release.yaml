@@ -177,10 +177,10 @@ spec:
         walCompression: true
         nodeSelector:
           - matchExpressions:
-              - key: prometheus-stack
+              - key: kubernetes.io/hostname
                 operator: In
                 values:
-                  - "true"
+                  - "nucstack-2-9"
         storageSpec:
           volumeClaimTemplate:
             spec:
