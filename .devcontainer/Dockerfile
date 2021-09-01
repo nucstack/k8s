@@ -7,6 +7,7 @@ ARG KIND_VERSION=0.11.1
 ARG KUBECTL_VERSION=1.21.3
 ARG KUBEVAL_VERSION=0.15.0
 ARG KUSTOMIZE_VERSION=4.1.3
+ARG LINKERD_VERSION=2.10.2
 ARG PACKER_VERSION=1.7.2
 ARG SOPS_VERSION=3.7.1
 ARG STEP_VERSION=0.15.16
@@ -87,6 +88,9 @@ RUN \
     tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
     rm -rf kustomize_linux_amd64.tar.gz && \
     chmod +x /usr/bin/kustomize && \
+   # linkerd
+    curl -sL -o linkerd https://github.com/linkerd/linkerd2/releases/download/stable-${LINKERD_VERSION}/linkerd2-cli-stable-${LINKERD_VERSION}-linux-amd64 && \
+    mv linkerd /usr/bin && chmod +x /usr/bin/linkerd && \
     # packer
     curl -sL -o packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip  && \
     unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
