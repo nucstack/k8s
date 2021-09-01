@@ -39,3 +39,5 @@ spec:
       enabled: false
     prometheus:
       enabled: false
+    dashboard:
+      enforcedHostRegexp: ""
