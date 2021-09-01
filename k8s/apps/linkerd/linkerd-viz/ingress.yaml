@@ -8,6 +8,7 @@ metadata:
     meta.helm.sh/release-name: linkerd-viz
     meta.helm.sh/release-namespace: linkerd
     kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd-viz.svc.cluster.local:8084
     traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hajimari.io/enable: "true"
