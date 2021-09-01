@@ -175,12 +175,6 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-        nodeSelector:
-          - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                  - "nucstack-2-9"
         storageSpec:
           volumeClaimTemplate:
             spec:
