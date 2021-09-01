@@ -12,6 +12,7 @@ metadata:
     hajimari.io/icon: chip
     hajimari.io/appName: Linkerd
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - "linkerd.${SECRET_DOMAIN}"
