@@ -111,6 +111,11 @@ spec:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/315
+        kubernetes-cluster-monitoring:
+          gnetId: 315
+          revision: 3
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/14261
         linkerd-authority:
           gnetId: 14261
