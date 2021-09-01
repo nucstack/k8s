@@ -16,6 +16,8 @@ spec:
         name: bitnami-charts
         namespace: flux-system
   values:
+    prometheusRule:
+      enabled: true
     controller:
       resources:
         limits:
@@ -31,6 +33,8 @@ spec:
         serviceMonitor:
           enabled: true
     speaker:
+      podAnnotations:
+        linkerd.io/inject: enabled
       resources:
         limits:
           cpu: 100m
