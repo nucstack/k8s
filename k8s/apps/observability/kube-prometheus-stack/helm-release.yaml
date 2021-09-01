@@ -22,15 +22,6 @@ spec:
     timeout: 10m
     remediation:
       retries: 3
-  upgrade:
-    remediation:
-      retries: 3
-      remediateLastFailure: true
-    cleanupOnFail: true
-  rollback:
-    timeout: 10m
-    recreate: true
-    cleanupOnFail: true
   timeout: 20m
   values:
     fullnameOverride: prometheus
