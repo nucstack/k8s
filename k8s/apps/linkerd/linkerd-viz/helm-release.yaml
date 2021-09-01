@@ -40,4 +40,4 @@ spec:
     prometheus:
       enabled: false
     dashboard:
-      enforcedHostRegexp: ""
+      enforcedHostRegexp: "^linkerd.+$"
