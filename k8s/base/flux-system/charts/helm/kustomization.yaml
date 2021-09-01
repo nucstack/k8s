@@ -13,6 +13,7 @@ resources:
   - jetstack.yaml
   - k8s-at-home.yaml
   - kubernetes-stable.yaml
+  - linkerd.yaml
   - longhorn.yaml
   - lwolf.yaml
   - node-feature-discovery.yaml
