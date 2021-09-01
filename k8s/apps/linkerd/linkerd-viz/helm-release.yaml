@@ -33,9 +33,9 @@ spec:
     cleanupOnFail: true
   timeout: 20m
   values:
-    prometheusUrl: "prometheus-operated.observability.svc.cluster.local"
-    grafanaUrl: "grafana.observability.svc.cluster.local"
-    jaegerUrl: "jaeger.linkerd-jaeger.svc.cluster.local"
+    prometheusUrl: "http://prometheus-operated.observability.svc.cluster.local"
+    grafanaUrl: "http://grafana.observability.svc.cluster.local"
+    jaegerUrl: "https://jaeger.linkerd-jaeger.svc.cluster.local"
     grafana:
       enabled: false
     prometheus:
