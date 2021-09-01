@@ -177,7 +177,7 @@ spec:
         walCompression: true
         nodeSelector:
           - matchExpressions:
-              - key: feature.node.kubernetes.io/custom-zigbee
+              - key: prometheus-stack
                 operator: In
                 values:
                   - "true"
