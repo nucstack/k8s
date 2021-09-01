@@ -47,7 +47,7 @@ spec:
         kubeScheduler: true
         kubeStateMetrics: true
         network: true
-        node: true
+        node: false
         prometheus: true
         prometheusOperator: true
         time: true
