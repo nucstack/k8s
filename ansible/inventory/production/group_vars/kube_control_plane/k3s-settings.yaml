@@ -5,14 +5,14 @@ k3s_server:
   datastore-endpoint: "{{ lookup('env', 'K3S_DATASTORE_ENDPOINT') }}"
   node-ip: "{{ ansible_host }}"
   tls-san:
-  - "{{ lookup('env', 'K3S_HA_SAN') }}"
-  - "{{ lookup('env', 'K3S_HA_VIP') }}"
+    - "{{ lookup('env', 'K3S_HA_SAN') }}"
+    - "{{ lookup('env', 'K3S_HA_VIP') }}"
   docker: false
   disable:
-  - traefik
-  - servicelb
-  - metrics-server
-  - local-storage
+    - traefik
+    - servicelb
+    - metrics-server
+    - local-storage
   disable-network-policy: true
   disable-cloud-controller: true
   write-kubeconfig-mode: "644"
@@ -21,11 +21,11 @@ k3s_server:
   # CIDR for service IPs
   service-cidr: "{{ lookup('env', 'K3S_SERVICE_CIDR') }}"
   kube-controller-manager-arg:
-  - "address=0.0.0.0"
-  - "bind-address=0.0.0.0"
+    - "address=0.0.0.0"
+    - "bind-address=0.0.0.0"
   kube-proxy-arg:
-  - "metrics-bind-address=0.0.0.0"
+    - "metrics-bind-address=0.0.0.0"
   kube-scheduler-arg:
-  - "address=0.0.0.0"
-  - "bind-address=0.0.0.0"
+    - "address=0.0.0.0"
+    - "bind-address=0.0.0.0"
   etcd-expose-metrics: true

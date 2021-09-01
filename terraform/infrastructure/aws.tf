@@ -86,7 +86,7 @@ module "ec2-instances" {
   version                = "~> 3.0"
 
   name                   = each.value.name
-  instance_count         = each.value.count
+  //instance_count         = each.value.count
   instance_type          = each.value.size
   ami                    = data.aws_ami.image.id
   subnet_id              = data.aws_subnet.private_subnet[each.value.name].id

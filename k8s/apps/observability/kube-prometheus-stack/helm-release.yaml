@@ -24,33 +24,6 @@ spec:
       retries: 3
   timeout: 20m
   values:
-    defaultRules:
-      create: true
-      rules:
-        alertmanager: false
-        etcd: false
-        general: true
-        k8s: false
-        kubeApiserver: false
-        kubeApiserverAvailability: false
-        kubeApiserverError: false
-        kubeApiserverSlos: false
-        kubelet: false
-        kubePrometheusGeneral: false
-        kubePrometheusNodeAlerting: false
-        kubePrometheusNodeRecording: false
-        kubernetesAbsent: false
-        kubernetesApps: false
-        kubernetesResources: false
-        kubernetesStorage: false
-        kubernetesSystem: false
-        kubeScheduler: false
-        kubeStateMetrics: false
-        network: false
-        node: false
-        prometheus: false
-        prometheusOperator: false
-        time: false
     fullnameOverride: prometheus
     alertmanager:
       config:
@@ -202,6 +175,12 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
+        nodeSelector:
+          - matchExpressions:
+              - key: feature.node.kubernetes.io/custom-zigbee
+                operator: In
+                values:
+                  - "true"
         storageSpec:
           volumeClaimTemplate:
             spec:
