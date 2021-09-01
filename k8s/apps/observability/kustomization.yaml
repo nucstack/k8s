@@ -5,6 +5,7 @@ resources:
   - botkube
   - grafana
   - influxdb
+  - kube-prometheus-stack
   - loki
   - promtail
   - notifications
