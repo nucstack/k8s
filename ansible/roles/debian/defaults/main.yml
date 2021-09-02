@@ -15,13 +15,11 @@ apt_install_packages:
   - nfs-common
   - nano
   - ntpdate
-  - nvme-cli
   - open-iscsi
   - psmisc
   - smartmontools
   - socat
   - software-properties-common
-  - unattended-upgrades
   - unzip
 
 apt_remove_packages:
