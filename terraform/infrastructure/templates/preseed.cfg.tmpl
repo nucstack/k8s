@@ -55,6 +55,6 @@ d-i finish-install/reboot_in_progress note
 
 d-i preseed/late_command string \
   apt-install sudo nfs-common open-iscsi; \
-  in-target sh -c "mkdir -p /home/nucstack/.ssh ; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgnpRzstH+P3/4cK0l1rD5JHzEamG3/fGmqlpwl72fFhva6F+cOWhOaUCMW+qMzF5s5uPwiZwUeQXrDJ9sECeAe/4lvYyPRIqzayM5rqEDHoL5PUTtYqbYXdcBqCLa474k8q9EBbks8PYNNYrHiZOA2fJAfGvjzWdA9wjnqRR39OYYGLOLTR35cYaFyWORTniUMKwaOe7WZ2s3zuVcwS6H5/WDHvyh4gk9DNW+T0CZN2xt3nwgPEaE7MX+Y9I7uD1v0u5Z07717TVKnIAN0McQ8/5nEcFsfFL0zn83aFlLxjAcyPjZZKt9STq2I2nqIACOcX+Zj0Y5op988IYr5VYWgdNL3Kpid5+dgYdNAQJbdjXkygyst75dkzD1KMOtMAXd5ISHAJpOmHR72/9jyAQ55+aDxpWEFC3wQG8csf698k8v/H6d2SS9NeCkUOZ+mMqPEtpypPRAnEr8LE8k5si7nak6PNo6CW95ApSz6hWMkH2Y68KNmFKDCHi8/L64rvPJLEB0UDXjQVMUtWnwqnBnGLpwNXQQasO1I/RAvr0gPWnqWcMjejNYFFI1BYOU3Qiaa8UhrwV8I+u4LjEf9fCOuN24TZNkvO+mBUDABzrrcsYRSv1Z1pWE4gnkGouH9I1Yv7FbRylzMAqM5gufE9mpGnFjt77VOAlYGqbPeI6qCw==' > /home/nucstack/.ssh/authorized_keys ; chown -R nucstack:nucstack /home/nucstack/.ssh"; \
-  in-target sh -c "mkdir -v -p -m 0440 /etc/sudoers.d ; echo '%nucstack ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/nucstack ; chmod 440 /etc/sudoers.d/nucstack"; \
+  in-target sh -c "mkdir -p /home/${username}/.ssh ; echo '${ssh_public_key}' > /home/${username}/.ssh/authorized_keys ; chown -R ${username}:${username} /home/${username}/.ssh"; \
+  in-target sh -c "mkdir -v -p -m 0440 /etc/sudoers.d ; echo '%${username} ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/${username} ; chmod 440 /etc/sudoers.d/${username}"; \
   in-target sh -c "sed -i '/^search/d' /etc/resolv.conf"
