@@ -1,0 +1,13 @@
+---
+version: '3'
+
+env:
+  TF_IN_AUTOMATION: "./tftp"
+
+tasks:
+  init:
+    desc: initialize tftp dir
+    env:
+    dir: "{{.TFTP_DIR}}"
+    cmds:
+      - echo "foop"
