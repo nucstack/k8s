@@ -44,14 +44,14 @@ tasks:
 
   ping:
     desc: Ping all k8s nodes
-    deps: [export-keys, init]
+    deps: [export-keys]
     cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping -v"
     silent: true
 
   uptime:
     desc: Uptime of all k8s nodes
-    deps: [export-keys, init]
+    deps: [export-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
     silent: true
@@ -80,7 +80,7 @@ tasks:
 
   reboot:
     desc: reboot all k8s nodes
-    deps: [export-keys, init]
+    deps: [export-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
     silent: true
@@ -89,13 +89,13 @@ tasks:
     desc: Install k8s
     #deps: [ping]
     cmds:
-      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml --limit '!nucstack-2-4' -v -b"
+      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
       - task ansible:export-kubeconfig
     silent: true
 
   reset:
     desc: Reset k8s
-    deps: [ping]
+    #deps: [ping]
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
       - rm {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig

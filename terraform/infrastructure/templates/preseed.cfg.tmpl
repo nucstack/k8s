@@ -1,0 +1,57 @@
+#_preseed_V1
+
+d-i debian-installer/locale string en_US
+d-i debian-installer/language string en
+d-i debian-installer/country string US
+d-i debian-installer/locale string en_US.UTF-8
+d-i keyboard-configuration/xkb-keymap select us
+
+d-i netcfg/choose_interface select auto
+d-i netcfg/disable_autoconfig boolean true
+d-i netcfg/get_ipaddress string ${ip_address}
+d-i netcfg/get_netmask string ${subnet}
+d-i netcfg/get_gateway string ${gateway}
+d-i netcfg/get_nameservers string ${dns_server}
+d-i netcfg/confirm_static boolean true
+d-i netcfg/get_hostname string unassigned-hostname
+d-i netcfg/get_domain string unassigned-domain
+d-i netcfg/hostname string ${hostname}
+d-i netcfg/wireless_wep string
+
+d-i mirror/country string manual
+d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+d-i passwd/root-login boolean false
+d-i passwd/user-fullname string Debian ${username}
+d-i passwd/username string ${username}
+d-i passwd/user-password-crypted password ${password}
+
+d-i clock-setup/utc boolean true
+d-i time/zone string US/Eastern
+d-i clock-setup/ntp boolean true
+
+d-i partman-auto/method string regular
+d-i partman-auto/choose_recipe select atomic
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman-efi/non_efi_system boolean true
+
+tasksel tasksel/first multiselect standard
+d-i pkgsel/include string openssh-server build-essential
+
+popularity-contest popularity-contest/participate boolean false
+
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean true
+d-i grub-installer/bootdev string default
+
+d-i finish-install/reboot_in_progress note
+
+d-i preseed/late_command string \
+  apt-install sudo nfs-common open-iscsi; \
+  in-target sh -c "mkdir -p /home/${username}/.ssh ; echo 'ssh-rsa ${ssh_public_key}' > /home/${username}/.ssh/authorized_keys ; chown -R ${username}:${username} /home/${username}/.ssh"; \
+  in-target sh -c "mkdir -v -p -m 0440 /etc/sudoers.d ; echo '%${username} ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/${username} ; chmod 440 /etc/sudoers.d/${username}"
