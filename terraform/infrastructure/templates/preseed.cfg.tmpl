@@ -1,4 +1,5 @@
 #_preseed_V1
+d-i preseed/early_command string kill-all-dhcp; netcfg
 
 d-i debian-installer/locale string en_US
 d-i debian-installer/language string en
@@ -16,6 +17,7 @@ d-i netcfg/confirm_static boolean true
 d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
 d-i netcfg/hostname string ${hostname}
+d-i netcfg/domain string
 d-i netcfg/wireless_wep string
 
 d-i mirror/country string manual
