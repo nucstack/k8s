@@ -51,13 +51,14 @@ tasks:
 
   uptime:
     desc: Uptime of all k8s nodes
-    deps: [export-keys]
+    deps: [ping]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
     silent: true
 
   rebuild-all:
     desc: Reinstall OS on all hosts via PXE
+    deps: [ping]
     dir: ansible
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo rm -rf /boot/*||true && sudo reboot' --become"
@@ -65,6 +66,7 @@ tasks:
 
   clean-images:
     desc: Clean up stale container images
+    deps: [ping]
     dir: ansible
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'k3s crictl rmi --prune' --become"
@@ -72,6 +74,7 @@ tasks:
 
   clean-longhorn:
     desc: Clean up longhorn
+    deps: [ping]
     dir: ansible
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/longhorn/*' --become"
@@ -79,6 +82,7 @@ tasks:
 
   clean-k3s:
     desc: Clean up k3s
+    deps: [ping]
     dir: ansible
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/rancher' --become"
@@ -87,7 +91,7 @@ tasks:
 
   reboot:
     desc: reboot all k8s nodes
-    deps: [export-keys]
+    deps: [ping]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
     silent: true
