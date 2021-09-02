@@ -57,4 +57,5 @@ d-i preseed/late_command string \
   apt-install sudo nfs-common open-iscsi; \
   in-target sh -c "mkdir -p /home/${username}/.ssh ; echo '${ssh_public_key}' > /home/${username}/.ssh/authorized_keys ; chown -R ${username}:${username} /home/${username}/.ssh"; \
   in-target sh -c "mkdir -v -p -m 0440 /etc/sudoers.d ; echo '%${username} ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/${username} ; chmod 440 /etc/sudoers.d/${username}"; \
-  in-target sh -c "sed -i '/^search/d' /etc/resolv.conf"
+  in-target sh -c "sed -i '/^search/d' /etc/resolv.conf"; \
+  in-target sh -c "echo '*.*     @@${LOG_SERVER}' > /etc/rsyslog.d/rsyslog.cfg"
