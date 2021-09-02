@@ -56,12 +56,19 @@ tasks:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
     silent: true
 
+  release:
+    desc: lsb_release of all k8s nodes
+    deps: [ping]
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'lsb_release -a'"
+    silent: true
+
   rebuild-all:
     desc: Reinstall OS on all hosts via PXE
     deps: [ping]
     dir: ansible
     cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo rm -rf /boot/*||true && sudo reboot' --become"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo rm -rf /boot' --become"
     silent: true
 
   clean-images:
