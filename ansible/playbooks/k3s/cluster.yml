@@ -10,5 +10,6 @@
       pause:
         seconds: 5
   roles:
-    - xanmanning.k3s
     - accelize.linux_kernel
+    - debian
+    - xanmanning.k3s
