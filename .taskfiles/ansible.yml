@@ -27,7 +27,7 @@ tasks:
     deps: [export-keys]
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
-      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@{{.K8S_MASTER_IP}}:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@192.168.9.25:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
       - sed -i 's/127.0.0.1/{{.K3S_HA_SAN}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
       - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
@@ -87,9 +87,9 @@ tasks:
 
   install:
     desc: Install k8s
-    deps: [ping]
+    #deps: [ping]
     cmds:
-      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
+      - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml --limit '!nucstack-2-4' -v -b"
       - task ansible:export-kubeconfig
     silent: true
 
