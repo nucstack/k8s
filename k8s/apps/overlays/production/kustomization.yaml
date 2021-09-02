@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ../../kube-system
   - ../../flux-system
-  - ../../linkerd
   - ../../networking
   - ../../observability
   - ../../home-automation
