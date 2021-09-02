@@ -14,6 +14,7 @@ vars:
 
 tasks:
   export-keys:
+    deps: [init]
     cmds:
       - "[ -f {{.SSH_PRIVATE_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > {{.SSH_PRIVATE_KEY_PATH}} && chmod 0600 {{.SSH_PRIVATE_KEY_PATH}}"
       - "[ -f {{.SSH_PUBLIC_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PUBLIC_KEY}} > {{.SSH_PUBLIC_KEY_PATH}} && chmod 0600 {{.SSH_PUBLIC_KEY_PATH}}"
