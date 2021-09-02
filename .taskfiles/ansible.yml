@@ -56,6 +56,13 @@ tasks:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
     silent: true
 
+  rebuild-all:
+    desc: Reinstall OS on all hosts via PXE
+    dir: ansible
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo rm -rf /boot/*||true && sudo reboot' --become"
+    silent: true
+
   clean-images:
     desc: Clean up stale container images
     dir: ansible
