@@ -63,6 +63,21 @@ tasks:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'k3s crictl rmi --prune' --become"
     silent: true
 
+  clean-longhorn:
+    desc: Clean up longhorn
+    dir: ansible
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/longhorn/*' --become"
+    silent: true
+
+  clean-k3s:
+    desc: Clean up k3s
+    dir: ansible
+    cmds:
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/rancher' --become"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /etc/rancher' --become"
+    silent: true
+
   reboot:
     desc: reboot all k8s nodes
     deps: [export-keys, init]
