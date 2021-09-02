@@ -87,7 +87,7 @@ tasks:
 
   install:
     desc: Install k8s
-    #deps: [ping]
+    deps: [ping]
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
       - task ansible:export-kubeconfig
@@ -95,7 +95,7 @@ tasks:
 
   reset:
     desc: Reset k8s
-    #deps: [ping]
+    deps: [ping]
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
       - rm {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
