@@ -39,7 +39,7 @@ tasks:
     cmds:
       - mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
       - cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample/group_vars {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
-      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}}"
+      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}} | sed -i '$ d' {{.ANSIBLE_HOSTS_FILE}}"
     silent: true
 
   ping:
