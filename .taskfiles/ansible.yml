@@ -24,11 +24,10 @@ tasks:
     vars:
       KUBECONFIG_PATH:
         sh: if [[ "${ANSIBLE_PLAYBOOK}" = "kubespray" ]]; then echo '/etc/kubernetes/admin.conf'; else echo '/etc/rancher/k3s/k3s.yaml'; fi
-
     deps: [export-keys]
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
-      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@192.168.9.25:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
+      - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync -e \"ssh -i {{.SSH_PRIVATE_KEY_PATH}}\" --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@192.168.9.25:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
       - sed -i 's/127.0.0.1/{{.K3S_HA_SAN}}/g' {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
       - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
