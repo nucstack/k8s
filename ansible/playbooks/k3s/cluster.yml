@@ -12,4 +12,4 @@
   roles:
     - accelize.linux_kernel
     - debian
-    #- xanmanning.k3s
+    - xanmanning.k3s
