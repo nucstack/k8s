@@ -39,14 +39,12 @@ tasks:
     vars:
       HOMEDNS_NAME:
         sh: "kubectl -n kube-system get serviceaccount home-dns -o json | jq -r '.secrets[].name'"
-      KUBECONFIG_CA:
+      HOMEDNS_CA:
         sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.\"ca.crt\"'"
-      KUBECONFIG_TOKEN:
+      HOMEDNS_TOKEN:
         sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.token'| base64 -d"
     cmds:
-      - "echo '{{.HOMEDNS_TOKEN}}'"
-      - envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/home-dns-{{.ENVIRONMENT}}.kubeconfig
-
+      - "KUBECONFIG_CA={{.HOMEDNS_CA}} KUBECONFIG_TOKEN={{.HOMEDNS_TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/home-dns-{{.ENVIRONMENT}}.kubeconfig"
     silent: true
 
   init:
