@@ -20,6 +20,7 @@ apt_install_packages:
   - smartmontools
   - socat
   - software-properties-common
+  - sudo
   - unzip
 
 apt_remove_packages:
