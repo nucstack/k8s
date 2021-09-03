@@ -45,3 +45,5 @@ apt_remove_packages:
   - sosreport
   - tmux
   - ufw
+
+log_server: log.nucstack.com

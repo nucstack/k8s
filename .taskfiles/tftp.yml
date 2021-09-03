@@ -12,7 +12,7 @@ tasks:
     env:
     dir: "{{.TFTP_OUTPUT_PATH}}"
     cmds:
-      - "mkdir -p {{.TFTP_OUTPUT_PATH}}"
+      - "mkdir -p {{.TFTP_OUTPUT_PATH}}/preseed"
       - "[ -f /tmp/{{.TFTP_DIST}}-netboot.tar.gz ] || wget http://ftp.debian.org/debian/dists/{{.TFTP_DIST}}/main/installer-amd64/current/images/netboot/netboot.tar.gz -O /tmp/{{.TFTP_DIST}}-netboot.tar.gz"
       - "tar xvf /tmp/{{.TFTP_DIST}}-netboot.tar.gz ."
       - "rm /tmp/{{.TFTP_DIST}}-netboot.tar.gz"

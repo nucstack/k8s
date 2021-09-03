@@ -19,3 +19,7 @@
 - include: security.yml
   tags:
     - security
+
+- include: logging.yml
+  tags:
+    - logging

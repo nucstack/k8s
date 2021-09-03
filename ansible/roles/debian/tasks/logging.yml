@@ -1,0 +1,7 @@
+---
+
+- name: Add rsyslog config
+  copy:
+    dest: "/etc/rsyslog.d/rsyslog.cfg"
+    content: |
+      *.*     @@{{ log_server }}
