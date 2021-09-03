@@ -11,3 +11,4 @@ Thumbs.db
 .terraform
 .terraform.lock.hcl
 *.env
+tftp/

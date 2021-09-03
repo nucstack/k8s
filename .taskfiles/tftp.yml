@@ -1,13 +1,21 @@
 ---
 version: '3'
 
-env:
-  TF_IN_AUTOMATION: "./tftp"
+vars:
+  TFTP_DIST: 'buster'
+  TFTP_NETBOOT_URL: http://ftp.debian.org/debian/dists/{{.TFTP_DIST}}/main/installer-amd64/current/images/netboot/netboot.tar.gz
+  TFTP_OUTPUT_PATH: "{{.PROJECT_DIR}}/tftp"
 
 tasks:
   init:
     desc: initialize tftp dir
     env:
-    dir: "{{.TFTP_DIR}}"
+    dir: "{{.TFTP_OUTPUT_PATH}}"
     cmds:
-      - echo "foop"
+      - "mkdir -p {{.TFTP_OUTPUT_PATH}}"
+      - "[ -f /tmp/{{.TFTP_DIST}}-netboot.tar.gz ] || wget http://ftp.debian.org/debian/dists/{{.TFTP_DIST}}/main/installer-amd64/current/images/netboot/netboot.tar.gz -O /tmp/{{.TFTP_DIST}}-netboot.tar.gz"
+      - "tar xvf /tmp/{{.TFTP_DIST}}-netboot.tar.gz ."
+      - "rm /tmp/{{.TFTP_DIST}}-netboot.tar.gz"
+      - "cp {{.TFTP_OUTPUT_PATH}}/debian-installer/amd64/grubx64.efi ."
+      - "cp -R {{.TFTP_OUTPUT_PATH}}/debian-installer/amd64/grub ."
+      - "envsubst < {{.PROJECT_DIR}}/tmpl/grub.cfg > {{.TFTP_OUTPUT_PATH}}/grub/grub.cfg"

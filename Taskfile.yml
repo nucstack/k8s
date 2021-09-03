@@ -8,7 +8,6 @@ vars:
   CLUSTER_DIR: "{{.PROJECT_DIR}}/k8s/clusters"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/infrastructure"
   PACKER_DIR: "{{.PROJECT_DIR}}/packer"
-  TFTP_DIR: "{{.PROJECT_DIR}}/tftp"
   STATE_DIR: "{{.TERRAFORM_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
   SSH_PRIVATE_KEY_PATH: "/home/${LOGNAME}/.ssh/{{.ENVIRONMENT}}.id_rsa"
   SSH_PUBLIC_KEY_PATH: "{{.SSH_PRIVATE_KEY_PATH}}.pub"
