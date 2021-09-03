@@ -32,6 +32,22 @@ tasks:
       - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
 
+  export-home-dns-kubeconfig:
+    desc: fetch kubeconfig from bootstrap k8s master
+    env:
+      KUBECONFIG: "{{.ENVIRONMENT}}.kubeconfig"
+    vars:
+      HOMEDNS_NAME:
+        sh: "kubectl -n kube-system get serviceaccount home-dns -o json | jq -r '.secrets[].name'"
+      HOMEDNS_CA:
+        sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.\"ca.crt\"'"
+      HOMEDNS_TOKEN:
+        sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.token'| base64 -d"
+    cmds:
+      - "echo '{{.HOMEDNS_TOKEN}}'"
+
+    silent: true
+
   init:
     desc: Generate host inventory
     env:
