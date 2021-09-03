@@ -32,7 +32,6 @@ spec:
       GF_DATE_FORMATS_INTERVAL_DAY: "DD/MM"
       GF_DATE_FORMATS_INTERVAL_MONTH: "MM-YYYY"
       GF_DATE_FORMATS_INTERVAL_YEAR: "YYYY"
-      VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     ldap:
       enabled: true
@@ -115,56 +114,6 @@ spec:
         kubernetes-cluster-monitoring:
           gnetId: 315
           revision: 3
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14261
-        linkerd-authority:
-          gnetId: 14261
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14263
-        linkerd-daemonset:
-          gnetId: 14263
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14260
-        linkerd-metrics:
-          gnetId: 14260
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14265
-        linkerd-health:
-          gnetId: 14265
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14269
-        linkerd-pod:
-          gnetId: 14269
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14270
-        linkerd-replicaset:
-          gnetId: 14270
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14272
-        linkerd-route:
-          gnetId: 14272
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14274
-        linkerd-service:
-          gnetId: 14274
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14275
-        linkerd-statefulset:
-          gnetId: 14275
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14276
-        linkerd-top-line:
-          gnetId: 14276
-          revision: 1
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/13032
         longhorn:
