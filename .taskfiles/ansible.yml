@@ -3,6 +3,7 @@ version: '3'
 
 env:
   ANSIBLE_CONFIG: "{{.PROJECT_DIR}}/ansible/ansible.cfg"
+  KUBECONFIG: "{{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
 
 vars:
   ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
@@ -34,8 +35,6 @@ tasks:
 
   export-home-dns-kubeconfig:
     desc: fetch kubeconfig from bootstrap k8s master
-    env:
-      KUBECONFIG: "{{.ENVIRONMENT}}.kubeconfig"
     vars:
       HOMEDNS_NAME:
         sh: "kubectl -n kube-system get serviceaccount home-dns -o json | jq -r '.secrets[].name'"
