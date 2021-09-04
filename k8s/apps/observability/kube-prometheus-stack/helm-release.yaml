@@ -195,4 +195,4 @@ spec:
             honor_timestamps: true
             static_configs:
               - targets:
-                  - 192.168.1.1:9153
+                  - 192.168.6.3:9153
