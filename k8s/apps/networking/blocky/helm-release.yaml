@@ -34,8 +34,6 @@ spec:
             port: 4000
       dns:
         enabled: true
-        annotations:
-          metallb.universe.tf/allow-shared-ip: blocky
         type: LoadBalancer
         externalIPs:
           - "${SECRET_BLOCKY_LB_IP}"
