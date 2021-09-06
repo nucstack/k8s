@@ -83,6 +83,8 @@ spec:
       enabled: false
     postgresql:
       enabled: true
+      volumePermissions:
+        enabled: true
       resources:
         limits:
           cpu: 500m
