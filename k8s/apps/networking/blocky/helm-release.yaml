@@ -80,20 +80,6 @@ spec:
         enabled: true
     podAnnotations:
       configmap.reloader.stakater.com/reload: "blocky-config"
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - blocky
-              topologyKey: kubernetes.io/hostname
     resources:
       requests:
         memory: 100Mi
