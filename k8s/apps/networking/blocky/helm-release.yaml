@@ -35,6 +35,7 @@ spec:
       dns:
         enabled: true
         type: LoadBalancer
+        loadBalancerIP: "${SECRET_BLOCKY_LB_IP}"
         externalIPs:
           - "${SECRET_BLOCKY_LB_IP}"
         ports:
