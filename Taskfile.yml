@@ -23,6 +23,7 @@ dotenv: [".env"]
 
 includes:
   ansible: .taskfiles/ansible.yml
+  blocky: .taskfiles/blocky.yml
   checkov: .taskfiles/checkov.yml
   flux: .taskfiles/flux.yml
   packer: .taskfiles/packer.yml
