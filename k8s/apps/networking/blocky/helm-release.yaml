@@ -32,19 +32,7 @@ spec:
         ports:
           http:
             port: 4000
-      dns-tcp:
-        enabled: true
-        type: LoadBalancer
-        externalIPs:
-          - "${SECRET_BLOCKY_LB_IP}"
-        ports:
-          tcp:
-            enabled: true
-            port: 53
-            protocol: TCP
-            targetPort: 53
-        externalTrafficPolicy: Local
-      dns-udp:
+      dns:
         enabled: true
         type: LoadBalancer
         externalIPs:
