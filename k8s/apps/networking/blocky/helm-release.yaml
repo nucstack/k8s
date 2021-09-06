@@ -58,6 +58,7 @@ spec:
       conditional:
         mapping:
           ${SECRET_DOMAIN}: udp:${SECRET_DNS_SERVER}
+          ${SECRET_LOCAL_DOMAIN}: udp:${SECRET_DNS_SERVER}
       blocking:
         blackLists:
           ads:
