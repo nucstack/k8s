@@ -22,6 +22,7 @@ cp .env.example .env # update env vars accordingly
 kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconfig"
 ```
 
+
 **Flux**
 ```bash
 task flux:bootstrap
