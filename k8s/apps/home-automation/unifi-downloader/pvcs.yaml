@@ -2,7 +2,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: cctv
+  name: cctv-path
 spec:
   capacity:
     storage: 1Mi
@@ -12,3 +12,12 @@ spec:
   nfs:
     path: "${SECRET_NFS_CCTV_PATH}"
     server: "${SECRET_NFS_HOST}"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cctv-path
+  namespace: home-automation
+spec:
+  storageClassName: ""
+  volumeName: cctv-path

@@ -1,0 +1,71 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: home-automation
+  name: unifi-downloader
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: feature.node.kubernetes.io/custom-backup-drive
+                        operator: In
+                        values:
+                          - "true"
+          restartPolicy: OnFailure
+          containers:
+            - name: unifi-downloader
+              image: "${DOCKER_PRIVATE_REGISTRY}/unifi-downloader"
+              tag: 0.0.1
+              envFrom:
+                - secretRef:
+                  name: unifi-downloader
+              volumeMounts:
+                - name: download-path
+                  mountPath: /download
+          volumes:
+            - name: download-path
+              hostPath:
+                path: /mnt/data
+                type: Directory
+# ---
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   namespace: home-automation
+#   name: unifi-cleanup
+# spec:
+#   schedule: "0 0 1 * *"
+#   concurrencyPolicy: "Forbid"
+#   successfulJobsHistoryLimit: 3
+#   failedJobsHistoryLimit: 5
+#   jobTemplate:
+#     spec:
+#       backoffLimit: 3
+#       ttlSecondsAfterFinished: 300
+#       template:
+#         spec:
+#           restartPolicy: OnFailure
+#           containers:
+#             - name: hello
+#               image: bash
+#               command: ["echo", "Hello world"]
+#               volumeMounts:
+#                 - name: cctv-path
+#                   mountPath: /cctv
+#           volumes:
+#           - name: cctv-path
+#             persistentVolumeClaim:
+#               claimName: cctv-path
