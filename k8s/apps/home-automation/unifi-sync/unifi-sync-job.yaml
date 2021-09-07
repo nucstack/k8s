@@ -2,8 +2,8 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  namespace: media
-  name: tag-tracker-errors
+  namespace: home-automation
+  name: unifi-sync
 spec:
   schedule: "*/5 * * * *"
   concurrencyPolicy: "Forbid"
