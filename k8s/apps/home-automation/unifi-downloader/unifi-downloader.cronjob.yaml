@@ -30,7 +30,7 @@ spec:
               image: "${DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.1"
               envFrom:
                 - secretRef:
-                  name: unifi-downloader
+                    name: unifi-downloader
               volumeMounts:
                 - name: download-path
                   mountPath: /download
