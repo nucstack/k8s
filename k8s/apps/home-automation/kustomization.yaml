@@ -10,3 +10,4 @@ resources:
   - zwavejs2mqtt
   - esphome
   - node-red
+  - unifi-sync
