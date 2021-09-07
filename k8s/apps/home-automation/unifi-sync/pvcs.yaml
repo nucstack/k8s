@@ -1,0 +1,14 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: cctv
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  nfs:
+    path: "${SECRET_NFS_CCTV_PATH}"
+    server: "${SECRET_NFS_HOST}"
