@@ -34,13 +34,8 @@ spec:
               volumeMounts:
                 - name: download-path
                   mountPath: /download
-                - name: cctv-path
-                  mountPath: /cctv
           volumes:
             - name: download-path
               hostPath:
                 path: /mnt/data
                 type: Directory
-            - name: cctv-path
-              persistentVolumeClaim:
-                claimName: cctv-path
