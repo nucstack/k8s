@@ -27,8 +27,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: unifi-downloader
-              image: "${DOCKER_PRIVATE_REGISTRY}/unifi-downloader"
-              tag: 0.0.1
+              image: "${DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.1"
               envFrom:
                 - secretRef:
                   name: unifi-downloader
