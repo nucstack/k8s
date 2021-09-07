@@ -27,44 +27,20 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: unifi-downloader
-              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.3"
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.4"
               envFrom:
                 - secretRef:
                     name: unifi-downloader
               volumeMounts:
                 - name: download-path
                   mountPath: /download
+                - name: cctv-path
+                  mountPath: /cctv
           volumes:
             - name: download-path
               hostPath:
                 path: /mnt/data
                 type: Directory
-# ---
-# apiVersion: batch/v1
-# kind: CronJob
-# metadata:
-#   namespace: home-automation
-#   name: unifi-cleanup
-# spec:
-#   schedule: "0 0 1 * *"
-#   concurrencyPolicy: "Forbid"
-#   successfulJobsHistoryLimit: 3
-#   failedJobsHistoryLimit: 5
-#   jobTemplate:
-#     spec:
-#       backoffLimit: 3
-#       ttlSecondsAfterFinished: 300
-#       template:
-#         spec:
-#           restartPolicy: OnFailure
-#           containers:
-#             - name: hello
-#               image: bash
-#               command: ["echo", "Hello world"]
-#               volumeMounts:
-#                 - name: cctv-path
-#                   mountPath: /cctv
-#           volumes:
-#           - name: cctv-path
-#             persistentVolumeClaim:
-#               claimName: cctv-path
+            - name: cctv-path
+              persistentVolumeClaim:
+                claimName: cctv-path
