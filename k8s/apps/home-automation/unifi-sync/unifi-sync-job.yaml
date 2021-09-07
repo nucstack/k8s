@@ -1,0 +1,31 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: media
+  name: tag-tracker-errors
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: feature.node.kubernetes.io/custom-backup-drive
+                        operator: In
+                        values:
+                          - "true"
+          restartPolicy: OnFailure
+          containers:
+            - name: hello
+              image: bash
+              command: ["echo", "Hello world"]
