@@ -180,9 +180,6 @@ spec:
             ignore:
               - kube-system
           events:
-            - create
-            - update
-            - delete
             - error
           updateSetting:
             includeDiff: true
