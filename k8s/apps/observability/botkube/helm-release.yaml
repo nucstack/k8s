@@ -50,7 +50,7 @@ spec:
       settings:
         clustername: "${ENVIRONMENT}"
         kubectl:
-          enabled: "true"
+          enabled: "false"
           commands:
             # method which are allowed
             verbs: ["api-resources", "api-versions", "cluster-info", "describe", "diff", "explain", "get", "logs", "top", "auth"]
