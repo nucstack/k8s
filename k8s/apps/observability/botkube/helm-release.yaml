@@ -46,6 +46,15 @@ spec:
       interval: 180s
       path: /metrics
       port: metrics
+
+    rbac:
+      create: true
+      rules:
+        - apiGroups: ["*"]
+          resources: ["deployments", "pods", "namespaces", "daemonsets", "statefulsets", "storageclasses", "nodes"]
+          verbs: ["get", "watch", "list"]
+    serviceAccount:
+      create: true
     config:
       settings:
         clustername: "${ENVIRONMENT}"
