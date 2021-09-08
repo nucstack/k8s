@@ -30,9 +30,6 @@ spec:
       namespaceSelector:
         any: "true"
       customApps:
-        - name: AdGuard
-          url: "https://adguard.${SECRET_LOCAL_DOMAIN}"
-          icon: shield
         - name: NAS
           url: "https://nas.${SECRET_LOCAL_DOMAIN}"
           icon: nas
