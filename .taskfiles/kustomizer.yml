@@ -1,0 +1,12 @@
+---
+version: '3'
+
+tasks:
+  build:
+    desc: Run build
+    cmds:
+      - kustomizer build -k k8s/clusters/{{.ENVIRONMENT}}
+  diff:
+    desc: Run diff
+    cmds:
+      - kustomizer diff -k k8s/clusters/{{.ENVIRONMENT}}

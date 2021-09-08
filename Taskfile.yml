@@ -26,6 +26,7 @@ includes:
   blocky: .taskfiles/blocky.yml
   checkov: .taskfiles/checkov.yml
   flux: .taskfiles/flux.yml
+  kustomizer: .taskfiles/kustomizer.yml
   packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml
   tftp: .taskfiles/tftp.yml
