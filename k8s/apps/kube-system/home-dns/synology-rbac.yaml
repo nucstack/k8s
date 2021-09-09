@@ -15,7 +15,7 @@ rules:
     resources:
       - certificates
     resourceNames:
-      - "${LOCAL_DOMAIN/./-}"
+      - "${SECRET_LOCAL_DOMAIN/./-}"
     verbs:
       - list
       - get
