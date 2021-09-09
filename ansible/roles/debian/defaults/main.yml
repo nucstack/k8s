@@ -22,7 +22,7 @@ apt_install_packages:
   - socat
   - software-properties-common
   - sudo
-  - txdata
+  - tzdata
   - unzip
   - ntp
 
