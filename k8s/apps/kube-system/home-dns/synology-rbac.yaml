@@ -11,7 +11,7 @@ metadata:
   namespace: networking
 rules:
   - apiGroups:
-      - ""
+      - "cert-manager.io"
     resources:
       - certificates
     resourceNames:
