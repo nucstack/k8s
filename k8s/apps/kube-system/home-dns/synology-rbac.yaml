@@ -19,6 +19,16 @@ rules:
     verbs:
       - list
       - get
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      - "${SECRET_LOCAL_DOMAIN/./-}-tls"
+    verbs:
+      - list
+      - get
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
