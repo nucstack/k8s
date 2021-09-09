@@ -44,3 +44,10 @@
     - grub_result.stat.exists
     - apparmor_status.stdout == "0"
     - mitigations_status.stdout == "0"
+
+- name: Reboot
+  ansible.builtin.reboot:
+  when:
+    - grub_result.stat.exists
+    - apparmor_status.stdout == "0"
+    - mitigations_status.stdout == "0"
