@@ -22,6 +22,7 @@ apt_install_packages:
   - software-properties-common
   - sudo
   - unzip
+  - ntp
 
 apt_remove_packages:
   - apparmor
