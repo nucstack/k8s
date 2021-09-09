@@ -1,4 +1,5 @@
 ---
+timezone: "America/New_York"
 apt_install_packages:
   - apt-transport-https
   - arptables
@@ -21,6 +22,7 @@ apt_install_packages:
   - socat
   - software-properties-common
   - sudo
+  - txdata
   - unzip
   - ntp
 

@@ -1,5 +1,9 @@
 ---
 
+- include: time.yml
+  tags:
+    - time
+
 - include: packages.yml
   tags:
     - packages
