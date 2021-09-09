@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: synology-dns
+  namespace: networking
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: synology-dns
+  namespace: networking
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - certificates
+    resourceNames:
+      - "${LOCAL_DOMAIN/./-}"
+    verbs:
+      - list
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: synology-dns
+  namespace: networking
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: synology-dns
+subjects:
+  - kind: ServiceAccount
+    name: synology-dns
+    namespace: networking
