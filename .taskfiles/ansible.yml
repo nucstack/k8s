@@ -34,7 +34,8 @@ tasks:
     silent: true
 
   export-home-dns-kubeconfig:
-    desc: fetch kubeconfig from bootstrap k8s master
+    desc: fetch kubeconfig for coredns k8s_gateway
+    deps: [export-keys]
     vars:
       HOMEDNS_NAME:
         sh: "kubectl -n kube-system get serviceaccount home-dns -o json | jq -r '.secrets[].name'"
@@ -44,6 +45,20 @@ tasks:
         sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.token'| base64 -d"
     cmds:
       - "KUBECONFIG_CA={{.HOMEDNS_CA}} KUBECONFIG_TOKEN={{.HOMEDNS_TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/home-dns-{{.ENVIRONMENT}}.kubeconfig"
+    silent: true
+
+  export-synology-dns-kubeconfig:
+    desc: fetch kubeconfig for synology dns
+    deps: [export-keys]
+    vars:
+      SYNODNS_NAME:
+        sh: "kubectl -n kube-system get serviceaccount synology-dns -n networking -o json | jq -r '.secrets[].name'"
+      SYNODNS_CA:
+        sh: "kubectl -n kube-system get secret {{.SYNODNS_NAME}} -n networking -o json | jq -r '.data.\"ca.crt\"'"
+      SYNODNS_TOKEN:
+        sh: "kubectl -n kube-system get secret {{.SYNODNS_NAME}} -n networking -o json | jq -r '.data.token'| base64 -d"
+    cmds:
+      - "KUBECONFIG_CA={{.SYNODNS_CA}} KUBECONFIG_TOKEN={{.SYNODNS_TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/synology-dns-{{.ENVIRONMENT}}.kubeconfig"
     silent: true
 
   init:
