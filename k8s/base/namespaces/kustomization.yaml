@@ -10,3 +10,4 @@ resources:
   - networking.yaml
   - observability.yaml
   - security.yaml
+  - velero.yaml
