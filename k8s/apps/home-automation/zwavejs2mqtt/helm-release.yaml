@@ -59,6 +59,18 @@ spec:
           - hosts:
               - "zwavejs2mqtt.${SECRET_DOMAIN}"
             secretName: zwave2mqtt-tls
+    service:
+      ws:
+        enabled: true
+        primary: false
+        type: ClusterIP
+        ports:
+          ws:
+            enabled: true
+            primary: false
+            port: 3000
+            protocol: TCP
+            targetPort: 3000
     persistence:
       config:
         enabled: true
