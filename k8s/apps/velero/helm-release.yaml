@@ -33,6 +33,8 @@ spec:
         volumeMounts:
           - mountPath: /target
             name: plugins
+    credentials:
+      existingSecret: velero-creds
     schedules:
       daily-backup:
         schedule: "0 6 * * *"
