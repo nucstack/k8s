@@ -13,6 +13,7 @@ ARG SOPS_VERSION=3.7.1
 ARG STEP_VERSION=0.15.16
 ARG TASK_VERSION=3.6.0
 ARG TERRAFORM_VERSION=0.15.5
+ARG VELERO_VERSION=1.6.3
 
 ENV DEBIAN_FRONTEND=noninteractive \
     CRYPTOGRAPHY_DONT_BUILD_RUST=1 \
@@ -117,7 +118,13 @@ RUN \
     unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     mv terraform /usr/bin/terraform && \
     chmod +x /usr/bin/terraform && \
-    rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+    rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    # velero
+    curl -sL -o velero_linux_amd64.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-amd64.tar.gz && \
+    tar -C /tmp -xvzf velero_linux_amd64.tar.gz && \
+    mv /tmp/velero-v${VELERO_VERSION}-linux-amd64/velero /usr/bin && \
+    rm -rf velero_linux_amd64.tar.gz && rm -rf /tmp/velero-v${VELERO_VERSION}-linux-amd64 && \
+    chmod +x /usr/bin/velero
 
 HEALTHCHECK NONE
 
