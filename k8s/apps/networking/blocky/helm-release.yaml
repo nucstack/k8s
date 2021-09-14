@@ -50,11 +50,13 @@ spec:
             protocol: UDP
             targetPort: 53
         externalTrafficPolicy: Local
-    persistence:
-      logs:
-        enabled: true
     metrics:
       enabled: true
+      serviceMonitor:
+        interval: 30s
+        scrapeTimeout: 10s
+      prometheusRule:
+        enabled: true
     config: |
       upstream:
         externalResolvers:
