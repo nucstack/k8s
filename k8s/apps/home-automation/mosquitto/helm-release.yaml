@@ -44,7 +44,8 @@ spec:
           secret:
             secretName: mosquitto-config
     initContainers:
-      - name: copy
+      copy:
+        name: copy
         image: busybox
         command: ["/bin/sh", "-c", "cp -f /mosquitto_pwd /data/mosquitto_pwd"]
         volumeMounts:
@@ -54,7 +55,8 @@ spec:
             readOnly: true
           - mountPath: "/data"
             name: data
-      - name: hash
+      hash:
+        name: hash
         image: ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.12
         command: ["/usr/bin/mosquitto_passwd"]
         args:
