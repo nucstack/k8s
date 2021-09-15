@@ -49,7 +49,7 @@ spec:
         image: ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.12
         envFrom:
           - secretRef:
-            name: mosquitto-creds
+              name: mosquitto-creds
         command:
           - sh
           - -c
