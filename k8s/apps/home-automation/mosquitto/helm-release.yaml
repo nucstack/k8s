@@ -50,10 +50,14 @@ spec:
         envFrom:
           - secretRef:
               name: mosquitto-creds
-        command:
-          - sh
-          - -c
-          - 'mosquitto_passwd -b -c /data/mosquitto_pwd $MQTT_USERNAME $MQTT_PASSWORD'
+        command: ["/usr/bin/mosquitto_passwd"]
+        args: [
+          "-b",
+          "-c",
+          "/data/mosquitto_pwd",
+          "$(MQTT_USERNAME)",
+          "$(MQTT_PASSWORD)"
+        ]
         volumeMounts:
           - mountPath: "/data"
             name: data
