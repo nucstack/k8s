@@ -65,4 +65,3 @@ spec:
         volumeMounts:
           - mountPath: "/data"
             name: data
-            readonly: false
