@@ -34,6 +34,10 @@ spec:
     podAnnotations:
       secret.reloader.stakater.com/reload: mosquitto-config
     persistence:
+      secret:
+        enabled: true
+        type: emptyDir
+        mountPath: /secret
       data:
         enabled: true
         existingClaim: mosquitto
@@ -54,10 +58,10 @@ spec:
         args: [
           "-b",
           "-c",
-          "/data/mosquitto_pwd",
+          "/secret/mosquitto_pwd",
           "$(MQTT_USERNAME)",
           "$(MQTT_PASSWORD)"
         ]
         volumeMounts:
-          - mountPath: "/data"
-            name: data
+          - mountPath: "/secret"
+            name: secret
