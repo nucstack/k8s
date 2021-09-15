@@ -53,7 +53,7 @@ spec:
         command:
           - sh
           - -c
-          - 'mosquitto_passwd -b -c /data/mosquitto_pwd ${MQTT_USER} ${MQTT_PASSWORD}'
+          - 'mosquitto_passwd -b -c /data/mosquitto_pwd $(MQTT_USER) $(MQTT_PASSWORD)'
         volumeMounts:
           - mountPath: "/data"
             name: data
