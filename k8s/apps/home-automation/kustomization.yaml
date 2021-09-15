@@ -2,9 +2,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - emqx
   - hajimari
   - home-assistant
+  - mosquitto
   - zigbee2mqtt
   - zwavejs2mqtt
   - esphome
