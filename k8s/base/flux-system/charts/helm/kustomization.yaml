@@ -6,7 +6,6 @@ resources:
   - bitnami.yaml
   - deliveryhero.yaml
   - descheduler.yaml
-  - emqx.yaml
   - grafana-loki.yaml
   - hajimari.yaml
   - influxdata.yaml
