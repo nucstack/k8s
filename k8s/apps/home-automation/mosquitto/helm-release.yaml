@@ -47,17 +47,9 @@ spec:
       encrypt:
         name: encrypt
         image: ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.12
-        env:
-          - name: MQTT_USER
-            valueFrom:
-              secretKeyRef:
-                name: mosquitto-config
-                key: mqtt-user
-          - name: MQTT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mosquitto-config
-                key: mqtt-password
+        envFrom:
+          - secretRef:
+            name: mosquitto-creds
         command:
           - sh
           - -c
