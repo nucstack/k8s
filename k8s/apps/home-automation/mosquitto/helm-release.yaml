@@ -43,12 +43,3 @@ spec:
         volumeSpec:
           secret:
             secretName: mosquitto-config
-    initContainers:
-      - name: copy
-        image: busybox
-        command: ["/bin/sh", "-c", "cp /mosquitto/configinc/mosquitto_pwd /mosquitto/configinc/mosquitto_passwd"]
-        volumeMounts:
-          - mountPath: "/mosquitto/configinc/mosquitto_passwd"
-            subPath: mosquitto_pwd
-            name: configinc
-            readOnly: true
