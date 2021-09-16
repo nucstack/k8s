@@ -82,7 +82,7 @@ spec:
                 - name: backup-path
                   mountPath: /backup
           volumes:
-            - name: download-path
+            - name: cctv-path
               hostPath:
                 path: /mnt/data
                 type: Directory
