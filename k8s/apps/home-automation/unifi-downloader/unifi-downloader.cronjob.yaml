@@ -44,7 +44,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   namespace: home-automation
-  name: unifi-rsync
+  name: unifi-rclone
 spec:
   schedule: "0 * * * *"
   concurrencyPolicy: "Forbid"
