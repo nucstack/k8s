@@ -71,6 +71,8 @@ spec:
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
               args:
                 - "copy"
+                - "--max-age"
+                - "90m"
                 - "/cctv"
                 - "/backup"
                 - "-v"
