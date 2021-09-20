@@ -88,8 +88,8 @@ RUN \
     # kubelogin
     curl -sL -o kubelogin_linux_amd64.zip https://github.com/int128/kubelogin/releases/download/v${KUBELOGIN_VERSION}/kubelogin_linux_amd64.zip && \
     unzip kubelogin_linux_amd64.zip && \
-    mv kubelogin /usr/bin/kubelogin && \
-    chmod +x /usr/bin/kubelogin && \
+    mv kubelogin /usr/bin/kubectl-oidc_login && \
+    chmod +x /usr/bin/kubectl-oidc_login && \
     rm -rf kubelogin_linux_amd64.zip && \
     # kustomize
     curl -sL -o kustomize_linux_amd64.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
