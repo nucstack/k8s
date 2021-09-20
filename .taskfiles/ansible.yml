@@ -145,7 +145,7 @@ tasks:
     deps: [ping]
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
-      - task ansible:export-kubeconfig
+      #- task ansible:export-kubeconfig
     silent: true
 
   reset:
