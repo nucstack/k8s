@@ -28,7 +28,7 @@ k3s_server:
   kube-scheduler-arg:
     - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
-  kube-api-server-arg:
+  kube-apiserver-arg:
     - "oidc-client-id=kubernetes"
     - "oidc-groups-claim=groups"
     - "oidc-issuer-url=https://auth.{{ lookup('env', 'DOMAIN') }}"
