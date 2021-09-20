@@ -6,6 +6,7 @@ ARG HELM_VERSION=3.5.4
 ARG KIND_VERSION=0.11.1
 ARG KUBECTL_VERSION=1.21.3
 ARG KUBEVAL_VERSION=0.15.0
+ARG KUBELOGIN_VERSION=1.25.0
 ARG KUSTOMIZE_VERSION=4.1.3
 ARG KUSTOMIZER_VERSION=1.0.0
 ARG PACKER_VERSION=1.7.2
@@ -84,6 +85,12 @@ RUN \
     tar -C /usr/bin -xvzf kubeval-linux-amd64.tar.gz && \
     rm -rf kubeval-linux-amd64.tar.gz && \
     chmod +x /usr/bin/kubeval && \
+    # kubelogin
+    curl -sL -o kubelogin_linux_amd64.zip https://github.com/int128/kubelogin/releases/download/v${KUBELOGIN_VERSION}/kubelogin_linux_amd64.zip && \
+    unzip kubelogin_linux_amd64.zip && \
+    mv kubelogin /usr/bin/kubelogin && \
+    chmod +x /usr/bin/kubelogin && \
+    rm -rf kubelogin_linux_amd64.zip && \
     # kustomize
     curl -sL -o kustomize_linux_amd64.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
