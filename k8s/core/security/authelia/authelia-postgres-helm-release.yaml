@@ -38,12 +38,18 @@ spec:
       requests:
         cpu: 250m
         memory: 256Mi
+    volumePermissions:
+      enabled: true
     persistence:
       enabled: true
       storageClass: longhorn
       size: 1Gi
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
   valuesFrom:
     - kind: Secret
       name: authelia-postgres-helm-values
