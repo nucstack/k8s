@@ -32,7 +32,7 @@ k3s_server:
     - "oidc-client-id=kubernetes"
     - "oidc-groups-claim=groups"
     - "oidc-issuer-url=https://auth.{{ lookup('env', 'DOMAIN') }}"
-    - "oidc-ca-file=/var/lib/rancher/k3s/server/tls/server-ca.crt"
+    - "oidc-ca-file=/var/lib/rancher/k3s/server/tls/client-ca.crt"
     - "oidc-username-claim=email"
   etcd-expose-metrics: true
   kubelet-arg:
