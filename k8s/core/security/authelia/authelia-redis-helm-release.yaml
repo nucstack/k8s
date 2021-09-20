@@ -39,6 +39,10 @@ spec:
         requests:
           cpu: 100m
           memory: 64Mi
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        size: 1Gi
     replica:
       resources:
         limits:
@@ -48,8 +52,8 @@ spec:
           cpu: 100m
           memory: 64Mi
       replicaCount: 1
-    persistence:
-      enabled: false
+    metrics:
+      enabled: true
   valuesFrom:
     - kind: Secret
       name: authelia-redis-helm-values
