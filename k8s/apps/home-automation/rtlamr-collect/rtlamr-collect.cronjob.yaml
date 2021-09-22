@@ -5,7 +5,7 @@ metadata:
   namespace: home-automation
   name: rtlamr-collect
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 0 * * *"
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
