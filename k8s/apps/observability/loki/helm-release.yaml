@@ -53,6 +53,21 @@ spec:
             store: inmemory
         enable_api: true
     alerting_groups:
+
+      #
+      # rtlamr-collect errors
+      #
+      - name: rtlamr-collect-errors
+        rules:
+          - alert: RTLAMRCollectErrors
+            expr: |
+              sum by (job) (count_over_time({job=~"home-automation/rtlamr-collect",stream="stderr"}[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "RTLAMR Collect Job Errors for job {{$job}}"
       #
       # Orphaned Pods
       #
