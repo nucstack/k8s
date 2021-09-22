@@ -25,8 +25,17 @@ spec:
                         values:
                           - "true"
           restartPolicy: OnFailure
+          volumes:
+            - name: swradio0
+              hostPath:
+                path: /dev/swradio0
           containers:
             - name: rtlamr-collect
+              securityContext:
+                privileged: true
+              volumeMounts:
+                - mountPath: /dev/swradio0
+                  name: swradio0
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.2"
               envFrom:
                 - secretRef:
