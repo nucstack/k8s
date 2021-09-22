@@ -54,6 +54,34 @@ spec:
         enable_api: true
     alerting_groups:
       #
+      # Orphaned Pods
+      #
+      - name: orphaned-pods
+        rules:
+          - alert: OrphanedPods
+            expr: |
+              sum by (hostname) (count_over_time({unit="k3s.service"}|= "orphaned pod"[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "Orphaned Pods detected on {{$hostname}}"
+      #
+      # SMART Failures
+      #
+      - name: smart-failure
+        rules:
+          - alert: SmartFailures
+            expr: |
+              sum by (hostname) (count_over_time({hostname=~".+"} |~ "(?i).*smartd.*(error|fail).*"[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "SMART has reported failures a drive on {{$hostname}}"
+      #
       # zigbee2mqtt
       #
       - name: zigbee2mqtt
@@ -68,19 +96,33 @@ spec:
             annotations:
               summary: "Zigbee2mqtt is unable to reach MQTT"
       #
-      # zwavejs2mqtt
+      # *arr applications
       #
-      - name: zwavejs2mqtt
+      - name: arr
         rules:
-          - alert: ZwaveUnableToReachMQTT
+          - alert: ArrDatabaseIsLocked
             expr: |
-              sum(count_over_time({app="zwavejs2mqtt"} |= "Error while connecting MQTT"[2m])) > 0
+              sum by (app) (count_over_time({app=~".*arr"} |= "database is locked"[2m])) > 0
             for: 10s
             labels:
               severity: critical
               category: logs
             annotations:
-              summary: "Zwavejs2mqtt is unable to reach MQTT"
+              summary: "{{$app}} is experiencing locked database issues"
+      #
+      # home-assistant
+      #
+      - name: home-assistant
+        rules:
+          - alert: HomeAssistantUnableToReachPostgresql
+            expr: |
+              sum by (app) (count_over_time({app=~"home-assistant"} |= "Error in database connectivity during commit"[2m])) > 0
+            for: 10s
+            labels:
+              severity: critical
+              category: logs
+            annotations:
+              summary: "Home Assistant is unable to connect to postgresql"
     persistence:
       enabled: true
       type: pvc
