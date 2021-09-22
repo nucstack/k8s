@@ -9,4 +9,5 @@ resources:
   - zwavejs2mqtt
   - esphome
   - node-red
+  - rtlamr-collect
   - unifi-downloader

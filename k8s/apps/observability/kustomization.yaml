@@ -10,6 +10,5 @@ resources:
   - promtail
   - notifications
   - rsyslog
-  - rtlamr-collect
   - thanos
   - unifi-poller
