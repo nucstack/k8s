@@ -19,7 +19,7 @@ spec:
       repository: ghcr.io/linuxserver/webtop
       tag: ubuntu-xfce
     controller:
-      replicas: 1
+      replicas: 0
     nameOverride: rtlamr-webtop
     service:
       main:
