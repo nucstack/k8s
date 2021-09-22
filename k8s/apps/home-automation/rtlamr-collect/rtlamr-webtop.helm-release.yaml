@@ -48,6 +48,7 @@ spec:
       main:
         ingressClassName: "traefik"
         annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         enabled: true
         hosts:
