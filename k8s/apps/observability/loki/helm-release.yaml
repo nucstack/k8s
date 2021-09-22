@@ -40,7 +40,7 @@ spec:
     config:
       storage_config:
         aws:
-          s3: "s3://${SECRET_LOKI_MINIO_ACCESS_KEY}:${SECRET_LOKI_MINIO_SECRET_KEY}@minio.${SECRET_DOMAIN}/loki-${ENVIRONMENT}"
+          s3: "s3://${SECRET_LOKI_MINIO_ACCESS_KEY}:${SECRET_LOKI_MINIO_SECRET_KEY}@minio.${SECRET_LOCAL_DOMAIN}/loki-${ENVIRONMENT}"
           s3forcepathstyle: true
         boltdb_shipper:
           active_index_directory: /data/loki/index
