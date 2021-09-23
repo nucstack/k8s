@@ -44,7 +44,7 @@ spec:
     config:
       storage_config:
         aws:
-          s3: "https://${LOKI_MINIO_ACCESS_KEY}:${LOKI_MINIO_SECRET_KEY}@minio.${SECRET_LOCAL_DOMAIN}./loki-${ENVIRONMENT}"
+          s3: "https://${LOKI_MINIO_ACCESS_KEY}:${LOKI_MINIO_SECRET_KEY}@minio.${SECRET_LOCAL_DOMAIN}.:443/loki-${ENVIRONMENT}"
           region: "${LOKI_MINIO_REGION_NAME}"
           s3forcepathstyle: true
         boltdb_shipper:
