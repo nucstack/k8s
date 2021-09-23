@@ -17,6 +17,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: ghcr.io/k8s-at-home/loki
     ingress:
       enabled: true
       annotations:
@@ -30,6 +32,8 @@ spec:
       tls:
         - hosts:
             - "loki.${SECRET_DOMAIN}"
+    serviceMonitor:
+      enabled: true
     resources:
       requests:
         memory: 512Mi
@@ -39,14 +43,15 @@ spec:
         cpu: 200m
     config:
       storage_config:
-        boltdb_shipper:
-          active_index_directory: /data/loki/index
-          cache_location: /data/loki/cache
-          shared_store: s3
         aws:
           s3: "https://${LOKI_MINIO_ACCESS_KEY}:${LOKI_MINIO_SECRET_KEY}@minio.${SECRET_LOCAL_DOMAIN}./loki-${ENVIRONMENT}"
           region: "${LOKI_MINIO_REGION_NAME}"
           s3forcepathstyle: true
+        boltdb_shipper:
+          active_index_directory: /data/loki/index
+          cache_location: /data/loki/cache
+          resync_interval: 5s
+          shared_store: s3
       ruler:
         storage:
           type: local
@@ -59,9 +64,6 @@ spec:
             store: inmemory
         enable_api: true
     alerting_groups:
-      #
-      # Orphaned Pods
-      #
       - name: orphaned-pods
         rules:
           - alert: OrphanedPods
@@ -73,9 +75,6 @@ spec:
               category: logs
             annotations:
               summary: "Orphaned Pods detected on {{$hostname}}"
-      #
-      # SMART Failures
-      #
       - name: smart-failure
         rules:
           - alert: SmartFailures
@@ -87,9 +86,6 @@ spec:
               category: logs
             annotations:
               summary: "SMART has reported failures a drive on {{$hostname}}"
-      #
-      # zigbee2mqtt
-      #
       - name: zigbee2mqtt
         rules:
           - alert: ZigbeeUnableToReachMQTT
@@ -101,9 +97,6 @@ spec:
               category: logs
             annotations:
               summary: "Zigbee2mqtt is unable to reach MQTT"
-      #
-      # home-assistant
-      #
       - name: home-assistant
         rules:
           - alert: HomeAssistantUnableToReachPostgresql
@@ -115,9 +108,3 @@ spec:
               category: logs
             annotations:
               summary: "Home Assistant is unable to connect to postgresql"
-    persistence:
-      enabled: true
-      type: pvc
-      existingClaim: loki
-    serviceMonitor:
-      enabled: true
