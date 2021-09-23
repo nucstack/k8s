@@ -18,7 +18,7 @@ spec:
     image:
       repository: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect"
       tag: 0.0.4
-    command: ["rtl_tcp"]
+    command: ["/usr/bin/rtl_tcp"]
     args: [
       "-a",
       "0.0.0.0",

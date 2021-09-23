@@ -20,7 +20,7 @@ spec:
             - name: rtlamr-collect
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.4"
               command:
-                - rtlamr | rtlamr-collect
+                - /go/bin/rtlamr | /go/bin/rtlamr-collect
               envFrom:
                 - secretRef:
                     name: rtlamr-collect
