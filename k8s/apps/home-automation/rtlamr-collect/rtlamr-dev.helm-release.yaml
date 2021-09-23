@@ -19,7 +19,7 @@ spec:
       repository: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect"
       tag: 0.0.4
     command:
-      - /bin/sh
+      - rtl_tcp
     controller:
       replicas: 1
     nameOverride: rtlamr-dev
