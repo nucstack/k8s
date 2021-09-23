@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: rtlamr-webtop
+  name: rtlamr-dev
   namespace: home-automation
 spec:
   interval: 5m
@@ -16,21 +16,16 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/linuxserver/webtop
-      tag: ubuntu-xfce
+      repository: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect"
+      tag: 0.0.4
+    command:
+      - /bin/bash
     controller:
       replicas: 1
-    nameOverride: rtlamr-webtop
+    nameOverride: rtlamr-dev
     service:
       main:
-        enabled: true
-        primary: true
-        ports:
-          http:
-            enabled: true
-            primary: true
-            port: 3000
-            protocol: TCP
+        enabled: false
     securityContext:
       privileged: true
     affinity:
@@ -42,22 +37,6 @@ spec:
                   operator: In
                   values:
                     - "true"
-    ingress:
-      main:
-        ingressClassName: "traefik"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        enabled: true
-        hosts:
-          - host: "rtlamr-webtop.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "rtlamr-webtop.${SECRET_DOMAIN}"
-            secretName: rtlamr-webtop-tls
     resources:
       limits:
         cpu: 1500m
