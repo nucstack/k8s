@@ -18,9 +18,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: rtlamr-collect
-              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.5"
-              command:
-                - /go/bin/rtlamr | /go/bin/rtlamr-collect
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.6"
               envFrom:
                 - secretRef:
                     name: rtlamr-collect
