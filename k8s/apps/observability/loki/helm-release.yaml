@@ -18,7 +18,7 @@ spec:
       interval: 5m
   valuesFrom:
     - kind: Secret
-      name: loki-helm-values      
+      name: loki-helm-values
   values:
     image:
       repository: ghcr.io/k8s-at-home/loki
@@ -63,17 +63,6 @@ spec:
             store: inmemory
         enable_api: true
     alerting_groups:
-      - name: orphaned-pods
-        rules:
-          - alert: OrphanedPods
-            expr: |
-              sum by (hostname) (count_over_time({unit="k3s.service"}|= "orphaned pod"[2m])) > 0
-            for: 10s
-            labels:
-              severity: critical
-              category: logs
-            annotations:
-              summary: "Orphaned Pods detected"
       - name: smart-failure
         rules:
           - alert: SmartFailures
