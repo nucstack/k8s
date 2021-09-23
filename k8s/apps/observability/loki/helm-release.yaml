@@ -85,7 +85,7 @@ spec:
               severity: critical
               category: logs
             annotations:
-              summary: "SMART has reported failures a drive on {{$hostname}}"
+              summary: "SMART has reported failures a drive"
       - name: zigbee2mqtt
         rules:
           - alert: ZigbeeUnableToReachMQTT
