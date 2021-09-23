@@ -30,6 +30,8 @@ spec:
       main:
         enabled: true
         primary: true
+        type: LoadBalancer
+        loadBalancerIP: "${SECRET_RTLTCP_LB_IP}"
         ports:
           http:
             enabled: true
