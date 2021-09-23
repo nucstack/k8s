@@ -20,6 +20,8 @@ spec:
       tag: 0.0.4
     command: ["rtl_tcp"]
     args: [
+      "-a",
+      "0.0.0.0",
       "-p",
       "5000"
     ]
