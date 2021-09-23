@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rtlamr-webtop
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /k8s/charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/linuxserver/webtop
+      tag: ubuntu-xfce
+    controller:
+      replicas: 1
+    nameOverride: rtlamr-webtop
+    service:
+      main:
+        enabled: true
+        primary: true
+        ports:
+          http:
+            enabled: true
+            primary: true
+            port: 3000
+            protocol: TCP
+    securityContext:
+      privileged: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: feature.node.kubernetes.io/custom-sdr
+                  operator: In
+                  values:
+                    - "true"
+    ingress:
+      main:
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        enabled: true
+        hosts:
+          - host: "rtlamr-webtop.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "rtlamr-webtop.${SECRET_DOMAIN}"
+            secretName: rtlamr-webtop-tls
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 2Gi
+      requests:
+        cpu: 1000m
+        memory: 1Gi

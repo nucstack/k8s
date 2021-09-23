@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - rtlamr-collect.cronjob.yaml
   - rtlamr-collect.secrets.enc.yaml
+  - rtlamr-webtop-helm-release.yaml
