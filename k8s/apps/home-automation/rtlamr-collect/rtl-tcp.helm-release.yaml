@@ -51,3 +51,10 @@ spec:
       requests:
         cpu: 500m
         memory: 256Mi
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
