@@ -23,8 +23,8 @@ spec:
     nameOverride: rsyslog
     service:
       main:
-        enabled: true
-        primary: true
+        enabled: false
+      rsyslog:
         annotations:
           coredns.io/hostname: "log.${SECRET_DOMAIN}"
         type: LoadBalancer
@@ -32,8 +32,6 @@ spec:
         externalIPs:
           - "${SECRET_RSYSLOG_LB_IP}"
         ports:
-          http:
-            enabled: false
           tcp:
             enabled: true
             port: 514
