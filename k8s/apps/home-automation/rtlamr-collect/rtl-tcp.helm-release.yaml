@@ -33,6 +33,8 @@ spec:
       main:
         enabled: true
         primary: true
+        annotations:
+          coredns.io/hostname: "rtltcp.${SECRET_DOMAIN}"
         type: LoadBalancer
         loadBalancerIP: "${SECRET_RTLTCP_LB_IP}"
         ports:
