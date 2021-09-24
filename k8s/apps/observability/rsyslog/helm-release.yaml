@@ -33,17 +33,6 @@ spec:
             primary: true
             port: 514
             protocol: UDP
-    ingress:
-      main:
-        enabled: true
-        hosts:
-          - host: "log.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "log.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true
