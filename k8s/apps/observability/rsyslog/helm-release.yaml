@@ -33,6 +33,20 @@ spec:
             primary: true
             port: 514
             protocol: UDP
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hosts:
+          - host: "log.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "log.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true
