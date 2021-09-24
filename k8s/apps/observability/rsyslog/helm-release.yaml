@@ -24,15 +24,22 @@ spec:
     service:
       main:
         enabled: true
-        primary: true
         type: LoadBalancer
         loadBalancerIP: "${SECRET_RSYSLOG_LB_IP}"
+        externalIPs:
+          - "${SECRET_RSYSLOG_LB_IP}"
         ports:
-          http:
+          tcp:
             enabled: true
-            primary: true
+            port: 514
+            protocol: TCP
+            targetPort: 514
+          udp:
+            enabled: true
             port: 514
             protocol: UDP
+            targetPort: 514
+        externalTrafficPolicy: Local
     persistence:
       config:
         enabled: true

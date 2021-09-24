@@ -12,4 +12,6 @@ data:
     #$DebugLevel 2
     $ModLoad imudp
     $UDPServerRun 514
+    $ModLoad imtcp
+    $InputTCPServerRun 514
     *.* @@(o)promtail-syslog.observability.svc.cluster.local:1514;RSYSLOG_SyslogProtocol23Format
