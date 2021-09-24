@@ -25,6 +25,7 @@ spec:
       main:
         enabled: false
       rsyslog:
+        enabled: true
         annotations:
           coredns.io/hostname: "log.${SECRET_DOMAIN}"
         type: LoadBalancer
