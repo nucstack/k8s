@@ -22,7 +22,7 @@ spec:
       replicas: 1
     nameOverride: rsyslog
     service:
-      main:
+      rsyslog:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: "${SECRET_RSYSLOG_LB_IP}"
