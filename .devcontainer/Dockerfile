@@ -1,4 +1,4 @@
-FROM docker:20.10.8-dind-rootless
+FROM docker:20.10.9-dind-rootless
 
 # default binary versions
 ARG FLUX_VERSION=0.17.0
