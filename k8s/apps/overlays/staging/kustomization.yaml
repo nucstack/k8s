@@ -16,6 +16,7 @@ resources:
   - ../../observability/promtail
   - ../../observability/thanos
   - ../../observability/unifi-poller
+  - ../../security
 patchesStrategicMerge:
   - patch.certificate.yaml
   - patch.helmrelease.yaml

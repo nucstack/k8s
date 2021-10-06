@@ -7,4 +7,5 @@ resources:
   - ../../networking
   - ../../observability
   - ../../home-automation
+  - ../../security
   - ../../velero
