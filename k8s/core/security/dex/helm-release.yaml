@@ -54,7 +54,6 @@ spec:
 
       frontend:
         theme: dark
-        issuerUrl: "https://dex.${SECRET_DOMAIN}"
 
       expiry:
         signingKeys: "6h"
