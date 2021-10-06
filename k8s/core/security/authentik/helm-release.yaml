@@ -23,7 +23,6 @@ spec:
     image:
       repository: ghcr.io/goauthentik/server
       tag: 2021.9.6
-
     ingress:
       enabled: true
       ingressClassName: "traefik"
@@ -38,10 +37,5 @@ spec:
         - secretName: tls.authentik
           hosts:
             - id.${SECRET_DOMAIN}
-
     geoip:
       enabled: false
-    authentik:
-      outposts:
-        docker_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
-      log_level: debug
