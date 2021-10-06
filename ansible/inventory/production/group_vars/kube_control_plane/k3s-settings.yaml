@@ -29,9 +29,9 @@ k3s_server:
     - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   kube-apiserver-arg:
-    - "oidc-client-id=kubernetes"
+    - "oidc-client-id=dex-k8s-authenticator"
     - "oidc-groups-claim=groups"
-    - "oidc-issuer-url=https://auth.{{ lookup('env', 'DOMAIN') }}"
+    - "oidc-issuer-url=https://dex.{{ lookup('env', 'DOMAIN') }}"
     - "oidc-username-claim=email"
   etcd-expose-metrics: true
   kubelet-arg:
