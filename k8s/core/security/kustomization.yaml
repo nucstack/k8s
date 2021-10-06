@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - authelia
   #- authentik
-  #- dex
+  - dex
