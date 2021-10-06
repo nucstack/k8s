@@ -5,7 +5,7 @@ metadata:
   name: traefik-dashboard
   namespace: networking
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/ingress.class: "traefik"
     hajimari.io/enable: "true"
@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-      - "traefik.${SECRET_DOMAIN}"
+        - "traefik.${SECRET_DOMAIN}"
     - secretName: "${SECRET_DOMAIN/./-}-tls"
   rules:
     - host: traefik.${SECRET_DOMAIN}

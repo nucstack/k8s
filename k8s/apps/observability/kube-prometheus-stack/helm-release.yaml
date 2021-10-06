@@ -73,7 +73,7 @@ spec:
         pathType: Prefix
         ingressClassName: "traefik"
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
           hajimari.io/icon: alert

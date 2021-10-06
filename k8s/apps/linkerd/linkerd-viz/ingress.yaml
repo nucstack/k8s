@@ -5,7 +5,7 @@ metadata:
   name: linkerd-web-ingress
   namespace: linkerd-viz
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd-viz.svc.cluster.local:8084
     kubernetes.io/ingress.class: "traefik"
