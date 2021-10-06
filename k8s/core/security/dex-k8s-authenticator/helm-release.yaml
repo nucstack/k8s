@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dex-k8s-authenticator
+  namespace: security
+spec:
+  releaseName: dex-k8s-authenticator
+  interval: 5m
+  chart:
+    spec:
+      chart: ./charts/dex-k8s-authenticator
+      version: 1.4.0
+      sourceRef:
+        kind: GitRepository
+        name: mintel-dex-charts-git
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: dex-k8s-authenticator-helm-values
+  values:
+    global:
+      deployEnv: prod
+    image:
+      repository: mintel/dex-k8s-authenticator
+      tag: 1.4.0
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "traefik"
+      hosts:
+        - "login.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - "login.${SECRET_DOMAIN}"
+          secretName: dex-k8s-authenticator-cert
+    # resources:
+    #   requests:
+    #     memory: 350Mi
+    #     cpu: 25m
+    #   limits:
+    #     memory: 500Mi
