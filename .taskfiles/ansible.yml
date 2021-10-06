@@ -121,7 +121,7 @@ tasks:
     deps: [ping]
     dir: ansible
     cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -r /var/lib/kubelet/pods/$(journalctl -u k3s.service -n 20 2>&1 | grep 'orphaned pod' | tail -1 | awk '{print $23}'| sed 's/\\\"//g')' --become"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a \"rm -r /var/lib/kubelet/pods/$(journalctl -u k3s.service -n 20 2>&1 | grep 'orphaned pod' | tail -1 | awk '{print $23}'| sed 's/\\\"//g')\" --become"
     silent: true
 
   k3s-config-check:
