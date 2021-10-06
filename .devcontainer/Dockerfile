@@ -29,6 +29,7 @@ RUN apk --update --no-cache add \
     apache2-utils \
     build-base \
     ca-certificates \
+    cargo \
     curl \
     docker \
     gettext \
@@ -46,6 +47,7 @@ RUN apk --update --no-cache add \
     python3-dev \
     py3-pip \
     rsync \
+    rust \
     shadow \
     shellcheck \
     sshpass \
