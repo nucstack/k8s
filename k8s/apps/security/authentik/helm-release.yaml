@@ -32,7 +32,6 @@ spec:
         - host: id.${SECRET_DOMAIN}
           paths:
             - path: /
-
       tls:
         - secretName: tls.authentik
           hosts:
