@@ -17,5 +17,5 @@ metadata:
   name: cluster-pod-reader
 rules:
 - apiGroups: [""]
-  resources: ["pod"]
+  resources: ["pods"]
   verbs: ["get", "watch", "list"]
