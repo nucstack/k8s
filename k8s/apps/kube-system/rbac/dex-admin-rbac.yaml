@@ -8,5 +8,5 @@ roleRef:
   name: cluster-admin
 subjects:
 - kind: Group
-  name: k8s:administrators
+  name: k8s-admins
   apiGroup: rbac.authorization.k8s.io
