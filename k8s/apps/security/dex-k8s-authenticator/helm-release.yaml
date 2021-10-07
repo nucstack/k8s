@@ -20,8 +20,6 @@ spec:
     - kind: Secret
       name: dex-k8s-authenticator-helm-values
   values:
-    global:
-      deployEnv: prod
     image:
       repository: mintel/dex-k8s-authenticator
       tag: 1.4.0
@@ -35,9 +33,9 @@ spec:
         - hosts:
             - "login.${SECRET_DOMAIN}"
           secretName: dex-k8s-authenticator-cert
-    # resources:
-    #   requests:
-    #     memory: 350Mi
-    #     cpu: 25m
-    #   limits:
-    #     memory: 500Mi
+    resources:
+      requests:
+        memory: 350Mi
+        cpu: 25m
+      limits:
+        memory: 500Mi
