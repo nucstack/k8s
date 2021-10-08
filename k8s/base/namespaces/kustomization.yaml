@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - cert-manager.yaml
   - home-automation.yaml
-  - linkerd.yaml
   - longhorn-system.yaml
   - metallb-system.yaml
   - networking.yaml
