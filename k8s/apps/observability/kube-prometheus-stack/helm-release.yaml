@@ -100,7 +100,7 @@ spec:
             sourceLabels:
               - __meta_kubernetes_pod_node_name
             targetLabel: kubernetes_node
-        interval: 60s
+        #interval: 60s
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -117,7 +117,7 @@ spec:
             sourceLabels:
               - node
             targetLabel: instance
-        interval: 60s
+        #interval: 60s
     kubeApiServer:
       enabled: true
     kubeControllerManager:
@@ -167,7 +167,7 @@ spec:
         replicas: 1
         replicaExternalLabelName: "replica"
         resources: {}
-        scrapeInterval: 60s
+        #scrapeInterval: 60s
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
