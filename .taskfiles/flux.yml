@@ -65,7 +65,7 @@ tasks:
   update:
     desc: Perform manual update of flux-system deployment
     cmds:
-      - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/base/flux-system/gotk-components.yaml"
+      - "flux install --version=latest --components=source-controller,kustomize-controller,helm-controller,notification-controller --namespace=flux-system --network-policy=false --log-level=info --export > {{.PROJECT_DIR}}/k8s/base/flux-system/gotk-components.yaml"
 
   global-settings:
     desc: Reroll global settings
