@@ -42,7 +42,7 @@ spec:
         memory: 1500Mi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2021.10.1
+      tag: 2021.10.2
     env:
       TZ: "America/New_York"
     hostNetwork: false
