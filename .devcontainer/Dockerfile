@@ -87,7 +87,7 @@ RUN \
     tar -C /usr/bin -xvzf silver-surfer_linux_amd64.tar.gz && \
     rm -rf silver-surfer_linux_amd64.tar.gz && \
     chmod +x /usr/bin/kubedd && \
-    # kubeval    
+    # kubeval
     curl -sL -o kubeval-linux-amd64.tar.gz https://github.com/instrumenta/kubeval/releases/download/v${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz && \
     tar -C /usr/bin -xvzf kubeval-linux-amd64.tar.gz && \
     rm -rf kubeval-linux-amd64.tar.gz && \
