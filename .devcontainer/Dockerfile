@@ -1,20 +1,20 @@
 FROM docker:20.10.9-dind-rootless
 
 # default binary versions
-ARG FLUX_VERSION=0.18.0
-ARG HELM_VERSION=3.5.4
+ARG FLUX_VERSION=0.18.2
+ARG HELM_VERSION=3.7.0
 ARG KIND_VERSION=0.11.1
-ARG KUBECTL_VERSION=1.21.3
-ARG KUBEVAL_VERSION=0.15.0
-ARG KUBELOGIN_VERSION=1.25.0
-ARG KUSTOMIZE_VERSION=4.1.3
-ARG KUSTOMIZER_VERSION=1.0.0
-ARG PACKER_VERSION=1.7.2
+ARG KUBECTL_VERSION=1.21.4
+ARG KUBEDD_VERSION=0.1.1
+ARG KUBEVAL_VERSION=0.16.1
+ARG KUSTOMIZE_VERSION=4.4.0
+ARG KUSTOMIZER_VERSION=1.1.1
+ARG PACKER_VERSION=1.7.6
 ARG SOPS_VERSION=3.7.1
 ARG STEP_VERSION=0.15.16
-ARG TASK_VERSION=3.6.0
+ARG TASK_VERSION=3.9.0
 ARG TERRAFORM_VERSION=0.15.5
-ARG VELERO_VERSION=1.6.3
+ARG VELERO_VERSION=1.7.0
 
 ENV DEBIAN_FRONTEND=noninteractive \
     CRYPTOGRAPHY_DONT_BUILD_RUST=1 \
@@ -82,17 +82,16 @@ RUN \
     # kubectl
     curl -sL -o usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     chmod +x /usr/bin/kubectl && \
-    # kubeval
-    curl -sL -o kubeval-linux-amd64.tar.gz https://github.com/instrumenta/kubeval/releases/download/${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz && \
+    # kubedd
+    curl -sL -o silver-surfer_linux_amd64.tar.gz https://github.com/devtron-labs/silver-surfer/releases/download/v${KUBEDD_VERSION}/silver-surfer_${KUBEDD_VERSION}_linux_amd64.tar.gz && \
+    tar -C /usr/bin -xvzf silver-surfer_linux_amd64.tar.gz && \
+    rm -rf silver-surfer_linux_amd64.tar.gz && \
+    chmod +x /usr/bin/kubedd && \
+    # kubeval    
+    curl -sL -o kubeval-linux-amd64.tar.gz https://github.com/instrumenta/kubeval/releases/download/v${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz && \
     tar -C /usr/bin -xvzf kubeval-linux-amd64.tar.gz && \
     rm -rf kubeval-linux-amd64.tar.gz && \
     chmod +x /usr/bin/kubeval && \
-    # kubelogin
-    curl -sL -o kubelogin_linux_amd64.zip https://github.com/int128/kubelogin/releases/download/v${KUBELOGIN_VERSION}/kubelogin_linux_amd64.zip && \
-    unzip kubelogin_linux_amd64.zip && \
-    mv kubelogin /usr/bin/kubectl-oidc_login && \
-    chmod +x /usr/bin/kubectl-oidc_login && \
-    rm -rf kubelogin_linux_amd64.zip && \
     # kustomize
     curl -sL -o kustomize_linux_amd64.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
     tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
