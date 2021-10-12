@@ -55,8 +55,8 @@ RUN apk --update --no-cache add \
 
 # install pip/ansible dependencies
 COPY pip-requirements.txt ansible-requirements.yml /tmp/
-RUN pip3 install --no-cache-dir --requirement /tmp/pip-requirements.txt
-RUN ansible-galaxy install -r /tmp/ansible-requirements.yml
+RUN pip3 install --no-cache-dir --requirement /tmp/pip-requirements.txt && \
+    ansible-galaxy install -r /tmp/ansible-requirements.yml
 
 # install binary releases
 COPY binary-releases.sh /tmp/binary-releases.sh
@@ -79,19 +79,16 @@ COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
 # Setup user/profile
 RUN mkdir -p /etc/sudoers.d && \
     echo rootless ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/rootless && \
-    chmod 0440 /etc/sudoers.d/rootless
-
-RUN usermod --shell /bin/zsh rootless
+    chmod 0440 /etc/sudoers.d/rootless && \
+    usermod --shell /bin/zsh rootless
 
 COPY --chown=rootless .zshrc /home/rootless
-RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/rootless/.oh-my-zsh &> /dev/null && \
+RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zsh.git /home/rootless/.oh-my-zsh > /dev/null && \
     rm -rf /home/rootless/.oh-my-zsh/.git && \
     chown -R rootless:1000 /home/rootless/.oh-my-zsh && \
     chmod -R 700 /home/rootless/.oh-my-zsh && \
-    cp -R /root/.ansible /home/rootless && chown -R rootless:1000 /home/rootless
-
-# cleanup apk cache
-RUN rm -rf /var/cache/apk/*
+    cp -R /root/.ansible /home/rootless && chown -R rootless:1000 /home/rootless && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /home/rootless
 USER rootless
