@@ -17,6 +17,7 @@ resources:
   - linkerd.yaml
   - longhorn.yaml
   - lwolf.yaml
+  - metrics-server.yaml
   - node-feature-discovery.yaml
   - prometheus-community.yaml
   - stakater.yaml
