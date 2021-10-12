@@ -11,7 +11,7 @@ FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.30.3 as prom
 FROM docker.io/hashicorp/terraform:0.15.5 as terraform
 FROM docker.io/aquasec/trivy:0.20.0 as trivy
-FROM docker.io/mikefarah/yq:4.13.3 as yq
+FROM docker.io/mikefarah/yq:4.13.4 as yq
 
 # base image
 FROM docker:20.10.9-dind-rootless
