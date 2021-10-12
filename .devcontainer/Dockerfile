@@ -1,23 +1,22 @@
+# dependencies
+FROM docker.io/fluxcd/flux-cli:v0.18.2 as flux
+FROM docker.io/hadolint/hadolint:v2.7.0 as hadolint
+FROM docker.io/alpine/helm:3.7.0 as helm
+FROM docker.io/bitnami/kubectl:1.21.4 as kubectl
+FROM docker.io/cytopia/kubeval:0.16 as kubeval
+FROM docker.io/zegl/kube-score:v1.12.0 as kube-score
+FROM k8s.gcr.io/kustomize/kustomize:v4.4.0 as kustomize
+FROM docker.io/hashicorp/packer:1.7.6 as packer
+FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
+FROM docker.io/prom/prometheus:v2.30.3 as prom
+FROM docker.io/hashicorp/terraform:0.15.5 as terraform
+FROM docker.io/aquasec/trivy:0.20.0 as trivy
+FROM docker.io/mikefarah/yq:4.13.3 as yq
+
+# base image
 FROM docker:20.10.9-dind-rootless
 
-# default binary versions
-ARG FLUX_VERSION=0.18.2
-ARG HELM_VERSION=3.7.0
-ARG KIND_VERSION=0.11.1
-ARG KUBECTL_VERSION=1.21.4
-ARG KUBEDD_VERSION=0.1.1
-ARG KUBEVAL_VERSION=0.16.1
-ARG KUSTOMIZE_VERSION=4.4.0
-ARG KUSTOMIZER_VERSION=1.1.1
-ARG PACKER_VERSION=1.7.6
-ARG SOPS_VERSION=3.7.1
-ARG STEP_VERSION=0.15.16
-ARG TASK_VERSION=3.9.0
-ARG TERRAFORM_VERSION=0.15.5
-ARG VELERO_VERSION=1.7.0
-
 ENV DEBIAN_FRONTEND=noninteractive \
-    CRYPTOGRAPHY_DONT_BUILD_RUST=1 \
     EDITOR=nano \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
@@ -29,7 +28,6 @@ RUN apk --update --no-cache add \
     apache2-utils \
     build-base \
     ca-certificates \
-    cargo \
     curl \
     docker \
     gettext \
@@ -43,104 +41,46 @@ RUN apk --update --no-cache add \
     openssh-client \
     openssl \
     openssl-dev \
+    py-cryptography \
     python3 \
     python3-dev \
     py3-pip \
     rsync \
-    rust \
     shadow \
     shellcheck \
     sshpass \
     sudo \
     unzip \
-    yq \
     zsh
-
 
 # install pip/ansible dependencies
 COPY pip-requirements.txt ansible-requirements.yml /tmp/
-RUN pip3 install --requirement /tmp/pip-requirements.txt
+RUN pip3 install --no-cache-dir --requirement /tmp/pip-requirements.txt
 RUN ansible-galaxy install -r /tmp/ansible-requirements.yml
 
-# install required binaries
-RUN \
-    # envsubst
-    cp /usr/bin/envsubst /usr/local/bin/envsubst && \
-    # flux
-    curl -sL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
-    tar -C /usr/bin -xvzf flux.tar.gz && \
-    rm -rf flux.tar.gz && \
-    chmod +x /usr/bin/flux && \
-    # helm
-    curl  -sL -o helm-linux-amd64.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-    tar -xzvf helm-linux-amd64.tar.gz -C /usr/bin --strip-components=1 linux-amd64/helm && \
-    rm -rf helm-linux-amd64.tar.gz && \
-    chmod +x /usr/bin/helm && \
-    # kind
-    curl -sL -o usr/bin/kind https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-linux-amd64 && \
-    chmod +x usr/bin/kind && \
-    # kubectl
-    curl -sL -o usr/bin/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
-    chmod +x /usr/bin/kubectl && \
-    # kubedd
-    curl -sL -o silver-surfer_linux_amd64.tar.gz https://github.com/devtron-labs/silver-surfer/releases/download/v${KUBEDD_VERSION}/silver-surfer_${KUBEDD_VERSION}_linux_amd64.tar.gz && \
-    tar -C /usr/bin -xvzf silver-surfer_linux_amd64.tar.gz && \
-    rm -rf silver-surfer_linux_amd64.tar.gz && \
-    chmod +x /usr/bin/kubedd && \
-    # kubeval
-    curl -sL -o kubeval-linux-amd64.tar.gz https://github.com/instrumenta/kubeval/releases/download/v${KUBEVAL_VERSION}/kubeval-linux-amd64.tar.gz && \
-    tar -C /usr/bin -xvzf kubeval-linux-amd64.tar.gz && \
-    rm -rf kubeval-linux-amd64.tar.gz && \
-    chmod +x /usr/bin/kubeval && \
-    # kustomize
-    curl -sL -o kustomize_linux_amd64.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz && \
-    tar -C /usr/bin -xvzf kustomize_linux_amd64.tar.gz && \
-    rm -rf kustomize_linux_amd64.tar.gz && \
-    chmod +x /usr/bin/kustomize && \
-    # kustomizer
-    curl -sL -o kustomizer_linux_amd64.tar.gz https://github.com/stefanprodan/kustomizer/releases/download/v${KUSTOMIZER_VERSION}/kustomizer_${KUSTOMIZER_VERSION}_linux_amd64.tar.gz && \
-    tar -C /usr/bin -xvzf kustomizer_linux_amd64.tar.gz && \
-    rm -rf kustomizer_linux_amd64.tar.gz && \
-    chmod +x /usr/bin/kustomizer && \
-    # packer
-    curl -sL -o packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip  && \
-    unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
-    mv packer /usr/bin/packer && \
-    chmod +x /usr/bin/packer && \
-    rm -rf packer_${PACKER_VERSION}_linux_amd64.zip && \
-    # sops
-    curl -sL -o sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux && \
-    mv sops /usr/bin && chmod +x /usr/bin/sops && \
-    # step
-    curl -sL -o step.tar.gz https://github.com/smallstep/cli/releases/download/v${STEP_VERSION}/step_linux_${STEP_VERSION}_amd64.tar.gz && \
-    tar -xzvf step.tar.gz -C /usr/bin --strip-components=2 step_${STEP_VERSION}/bin/step && \
-    rm -rf step.tar.gz step_${STEP_VERSION} && \
-    chmod +x /usr/bin/step && \
-    # task
-    curl -sL -o task_linux_amd64.tar.gz https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz && \
-    tar -C /usr/bin -xvzf task_linux_amd64.tar.gz && \
-    rm -rf task_linux_amd64.tar.gz && \
-    chmod +x /usr/bin/task && \
-    # terraform
-    curl -sL -o terraform_${TERRAFORM_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip  && \
-    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    mv terraform /usr/bin/terraform && \
-    chmod +x /usr/bin/terraform && \
-    rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    # velero
-    curl -sL -o velero_linux_amd64.tar.gz https://github.com/vmware-tanzu/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-amd64.tar.gz && \
-    tar -C /tmp -xvzf velero_linux_amd64.tar.gz && \
-    mv /tmp/velero-v${VELERO_VERSION}-linux-amd64/velero /usr/bin && \
-    rm -rf velero_linux_amd64.tar.gz && rm -rf /tmp/velero-v${VELERO_VERSION}-linux-amd64 && \
-    chmod +x /usr/bin/velero
+# install binary releases
+COPY binary-releases.sh /tmp/binary-releases.sh
+RUN /tmp/binary-releases.sh
 
-HEALTHCHECK NONE
+COPY --from=flux       /usr/local/bin/flux              /usr/local/bin/flux
+COPY --from=hadolint   /bin/hadolint                    /usr/local/bin/hadolint
+COPY --from=helm       /usr/bin/helm                    /usr/local/bin/helm
+COPY --from=kubectl    /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
+COPY --from=kubeval    /usr/bin/kubeval                 /usr/local/bin/kubeval
+COPY --from=kube-score /kube-score                      /usr/local/bin/kube-score
+COPY --from=kustomize  /app/kustomize                   /usr/local/bin/kustomize
+COPY --from=terraform  /bin/terraform                   /usr/local/bin/terraform
+COPY --from=packer     /bin/packer                      /usr/local/bin/packer
+COPY --from=prom       /bin/promtool                    /usr/local/bin/promtool
+COPY --from=prom-am    /bin/amtool                      /usr/local/bin/amtool
+COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
+COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
 
+# Setup user/profile
 RUN mkdir -p /etc/sudoers.d && \
     echo rootless ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/rootless && \
     chmod 0440 /etc/sudoers.d/rootless
 
-# Setup shells
 RUN usermod --shell /bin/zsh rootless
 
 COPY --chown=rootless .zshrc /home/rootless
@@ -150,9 +90,11 @@ RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zs
     chmod -R 700 /home/rootless/.oh-my-zsh && \
     cp -R /root/.ansible /home/rootless && chown -R rootless:1000 /home/rootless
 
-# cleanup
+# cleanup apk cache
 RUN rm -rf /var/cache/apk/*
 
 WORKDIR /home/rootless
 USER rootless
 ENV DOCKER_HOST=unix:///var/run/user/1000/docker.sock
+
+HEALTHCHECK NONE
