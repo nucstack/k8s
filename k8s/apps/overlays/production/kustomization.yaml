@@ -8,4 +8,5 @@ resources:
   - ../../observability
   - ../../home-automation
   - ../../security
+  - ../../system-upgrade
   - ../../velero
