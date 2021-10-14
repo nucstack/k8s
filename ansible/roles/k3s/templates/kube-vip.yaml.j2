@@ -36,14 +36,19 @@ kind: DaemonSet
 metadata:
   name: kube-vip-ds
   namespace: kube-system
+  labels:
+    app.kubernetes.io/instance: kube-vip
+    app.kubernetes.io/name: kube-vip
 spec:
   selector:
     matchLabels:
-      name: kube-vip-ds
+        app.kubernetes.io/instance: kube-vip
+        app.kubernetes.io/name: kube-vip
   template:
     metadata:
       labels:
-        name: kube-vip-ds
+        app.kubernetes.io/instance: kube-vip
+        app.kubernetes.io/name: kube-vip
     spec:
       containers:
       - args:
@@ -61,12 +66,14 @@ spec:
           value: "true"
         - name: cp_namespace
           value: kube-system
-        - name: svc_enable
+        - name: vip_startleader
           value: "false"
+        - name: vip_loglevel
+          value: "5"
         - name: vip_address
           value: {{ k3s_registration_address }}
-        image: plndr/kube-vip:0.3.4
-        imagePullPolicy: Always
+        image: ghcr.io/kube-vip/kube-vip:v0.3.7
+        imagePullPolicy: IfNotPresent
         name: kube-vip
         resources:
           limits:
@@ -86,6 +93,7 @@ spec:
         node-role.kubernetes.io/master: "true"
       serviceAccountName: kube-vip
       tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
   updateStrategy: {}
