@@ -1,7 +1,7 @@
 ---
 roles:
   - name: xanmanning.k3s
-    version: 'v2.10.6'
+    version: 'v2.11.1'
   - name: accelize.linux_kernel
     version: '1.2.8'
 collections:
