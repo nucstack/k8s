@@ -20,6 +20,23 @@ spec:
     - kind: Secret
       name: unifi-poller-helm-values
   values:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        interval: 1m
+        scrapeTimeout: 30s
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: UnifiPollerAbsent
+          annotations:
+            description: Unifi Poller has disappeared from Prometheus service discovery.
+            summary: Unifi Poller is down.
+          expr: |
+            absent(up{job=~".*unifi-poller.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
     resources:
       limits:
         cpu: 200m
@@ -31,7 +48,3 @@ spec:
       TZ: "America/New_York"
       UP_PROMETHEUS_DISABLE: false
       UP_INFLUXDB_DISABLE: true
-    prometheus:
-      serviceMonitor:
-        enabled: true
-        interval: 5m
