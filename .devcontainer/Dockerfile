@@ -6,7 +6,7 @@ FROM docker.io/bitnami/kubectl:1.21.5 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.12.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.4.0 as kustomize
-FROM docker.io/hashicorp/packer:1.7.6 as packer
+FROM docker.io/hashicorp/packer:1.7.7 as packer
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.30.3 as prom
 FROM docker.io/hashicorp/terraform:1.0.9 as terraform
