@@ -12,7 +12,7 @@ FROM docker.io/prom/prometheus:v2.30.3 as prom
 FROM docker.io/hashicorp/terraform:1.0.9 as terraform
 FROM docker.io/aquasec/trivy:0.20.1 as trivy
 FROM docker.io/velero/velero:v1.7.0 as velero
-FROM docker.io/mikefarah/yq:4.13.4 as yq
+FROM docker.io/mikefarah/yq:4.13.5 as yq
 
 # base image
 FROM docker:20.10.9-dind-rootless
