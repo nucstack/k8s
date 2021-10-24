@@ -11,6 +11,7 @@ FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.30.3 as prom
 FROM docker.io/hashicorp/terraform:1.0.9 as terraform
 FROM docker.io/aquasec/trivy:0.20.1 as trivy
+FROM docker.io/hashicorp/vault:1.8.4 as vault
 FROM docker.io/velero/velero:v1.7.0 as velero
 FROM docker.io/mikefarah/yq:4.13.5 as yq
 
@@ -75,6 +76,7 @@ COPY --from=packer     /bin/packer                      /usr/local/bin/packer
 COPY --from=prom       /bin/promtool                    /usr/local/bin/promtool
 COPY --from=prom-am    /bin/amtool                      /usr/local/bin/amtool
 COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
+COPY --from=vault      /bin/vault                       /usr/local/bin/vault
 COPY --from=velero     /velero                          /usr/local/bin/velero
 COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
 
