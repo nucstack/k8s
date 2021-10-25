@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-charts.banzaicloud.com/
+      # renovate: registryUrl=https://kubernetes-charts.banzaicloud.com
       chart: vault-secrets-webhook
       version: 1.15.1
       sourceRef:
