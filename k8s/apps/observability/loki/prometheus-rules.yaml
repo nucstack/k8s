@@ -33,7 +33,7 @@ spec:
       expr: |
         namespace_job_route:loki_request_duration_seconds:99quantile{route!~"(?i).*tail.*"}
           > 1
-      for: 20m
+      for: 30m
       labels:
         severity: critical
     - expr: |
