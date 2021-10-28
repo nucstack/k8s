@@ -1,7 +1,7 @@
 ansible==4.7.0
 ansible-lint==5.2.1
 cffi==1.15.0
-checkov==2.0.524
+checkov==2.0.527
 pre-commit==2.15.0
 PyYAML==6.0
 yamllint==1.26.3
