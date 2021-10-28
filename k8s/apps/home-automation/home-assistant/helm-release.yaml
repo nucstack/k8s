@@ -46,13 +46,26 @@ spec:
     env:
       TZ: "America/New_York"
     hostNetwork: false
-    prometheus:
+    metrics:
+      enabled: true
       serviceMonitor:
-        enabled: true
-        portName: http
+        interval: 1m
+        scrapeTimeout: 30s
         bearerTokenSecret:
           name: home-assistant-prometheus-token
           key: prometheus-token
+      prometheusRule:
+        enabled: true
+        rules:
+          - alert: HomeAssistantAbsent
+            annotations:
+              description: Home Assistant has disappeared from Prometheus service discovery.
+              summary: Home Assistant is down.
+            expr: |
+              absent(up{job=~".*home-assistant.*"} == 1)
+            for: 5m
+            labels:
+              severity: critical
     persistence:
       config:
         enabled: true
