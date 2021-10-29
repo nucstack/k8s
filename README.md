@@ -28,3 +28,4 @@ kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconf
 task flux:bootstrap
 task flux:install
 ```
+
