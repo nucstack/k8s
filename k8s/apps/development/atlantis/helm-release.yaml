@@ -26,7 +26,6 @@ spec:
     #imagePullSecrets:
     #- myRegistryKeySecretName
     logLevel: debug
-    gitconfigSecretName: atlantis-gitconfig
     disableApply: true
     disableApplyAll: true
     dataStorage: 5Gi
