@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - atlantis.secrets.enc.yaml
   - atlantis-gitconfig.secrets.enc.yaml
-  - atlantis-vcs.secrets.enc.yaml
   - helm-release.yaml
