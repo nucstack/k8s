@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: atlantis
+  namespace: development
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://runatlantis.github.io/helm-charts/
+      chart: atlantis
+      version: 3.14.3
+      sourceRef:
+        kind: HelmRepository
+        name: atlantis-charts
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: atlantis-helm-values
+  values:
+    image:
+      repository: runatlantis/atlantis
+      tag: v0.17.0
+    #imagePullSecrets:
+    #- myRegistryKeySecretName
+    logLevel: debug
+    vcsSecretName: atlantis-vcs
+    gitconfigSecretName: atlantis-gitconfig
+    disableApply: true
+    disableApplyAll: true
+    dataStorage: 5Gi
+    ingress:
+      enabled: true
+      ingressClassName:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: island
+        hajimari.io/appName: Atlantis
+      path:
+      pathType: Prefix
+      host:
+      hosts:
+        - host: "atlantis.${SECRET_DOMAIN}"
+          paths: ["/"]
+      tls:
+        - secretName: atlantis-tls
+          hosts:
+            - "atlantis.${SECRET_DOMAIN}"
+    # loadEnvFromSecrets:
+    #   - secret_one
+    # googleServiceAccountSecrets:
+    #   - name: some-secret-name
+    #     secretName: the_k8s_secret_name
