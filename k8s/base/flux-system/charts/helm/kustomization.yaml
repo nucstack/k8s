@@ -9,6 +9,7 @@ resources:
   - deliveryhero.yaml
   - descheduler.yaml
   - dex.yaml
+  - external-dns.yaml
   - grafana-loki.yaml
   - hajimari.yaml
   - influxdata.yaml
