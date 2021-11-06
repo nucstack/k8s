@@ -75,10 +75,21 @@ spec:
     experimental:
       plugins:
         enabled: true
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - traefik
+              topologyKey: kubernetes.io/hostname
     resources:
       requests:
         memory: 128Mi
         cpu: 500m
       limits:
         memory: 500Mi
-        cpu: 1000m
