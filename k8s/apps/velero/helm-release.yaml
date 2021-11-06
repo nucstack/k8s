@@ -39,11 +39,12 @@ spec:
       daily-backup:
         schedule: "0 6 * * *"
         template:
-          ttl: "120h"
+          ttl: "168h"
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+    backupsEnabled: true
     snapshotsEnabled: false
     upgradeCRDs: false
     cleanUpCRDs: false
@@ -51,4 +52,22 @@ spec:
       image:
         repository: ghcr.io/k8s-at-home/kubectl
         tag: v1.22.3
-    deployRestic: false
+    deployRestic: true
+    restic:
+      podVolumePath: /var/lib/kubelet/pods
+      privileged: false
+      tolerations:
+        - key: "node-role.kubernetes.io/master"
+          operator: "Exists"
+      resources:
+        requests:
+          memory: 200Mi
+          cpu: 15m
+        limits:
+          memory: 2000Mi
+    resources:
+      requests:
+        memory: 300Mi
+        cpu: 25m
+      limits:
+        memory: 1500Mi
