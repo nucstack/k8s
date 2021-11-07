@@ -22,8 +22,12 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/loki
+    service:
+      type: LoadBalancer
+      externalIPs:
+        - "${SECRET_LOKI_LB_IP}"
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/ingress.class: "traefik"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
