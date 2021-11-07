@@ -44,8 +44,6 @@ spec:
         memory: 768Mi
         cpu: 200m
     config:
-      loki:
-        serviceScheme: https
       storage_config:
         boltdb_shipper:
           active_index_directory: /data/loki/index
