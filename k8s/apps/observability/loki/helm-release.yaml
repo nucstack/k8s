@@ -24,6 +24,7 @@ spec:
       repository: ghcr.io/k8s-at-home/loki
     service:
       type: LoadBalancer
+      loadBalancerIP: "${SECRET_LOKI_LB_IP}"
       externalIPs:
         - "${SECRET_LOKI_LB_IP}"
     ingress:
