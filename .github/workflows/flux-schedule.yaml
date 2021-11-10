@@ -24,6 +24,7 @@ jobs:
         CLI_VERSION="$(flux -v)"
         VERSION="v${CLI_VERSION#*flux version }"
         flux install --version="${VERSION}" \
+          --components-extra=image-reflector-controller,image-automation-controller \
           --network-policy=false \
           --export > ./k8s/base/flux-system/gotk-components.yaml
         echo "::set-output name=flux_version::$VERSION"
