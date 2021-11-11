@@ -23,8 +23,8 @@ spec:
           - image-reflector-controller
   podMetricsEndpoints:
     - port: http-prom
-      relabelings:
-        - sourceLabels: ['namespace', 'job']
-          regex: ".+/(.*)"
-          targetLabel: "job"
-          replacement: "$1"
+      # relabelings:
+      #   - sourceLabels: ['namespace', 'job']
+      #     regex: ".+/(.*)"
+      #     targetLabel: "job"
+      #     replacement: "$1"
