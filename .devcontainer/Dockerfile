@@ -1,5 +1,5 @@
 # dependencies
-FROM docker.io/fluxcd/flux-cli:v0.22.1 as flux
+FROM docker.io/fluxcd/flux-cli:v0.23.0 as flux
 FROM docker.io/hadolint/hadolint:v2.8.0 as hadolint
 FROM docker.io/alpine/helm:3.7.1 as helm
 FROM docker.io/bitnami/kubectl:1.22.3 as kubectl
