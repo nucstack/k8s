@@ -67,10 +67,10 @@ spec:
         rules:
           - alert: UnifiProtectLogin
             expr: |
-              sum by (user) (count_over_time({app="unifi-protect",unit="clientnotify",user!=""}[30m])) > 0
+              sum by (user) (count_over_time({app="unifi-protect",unit="clientnotify",user!=""}[15m])) > 0
             for: 10s
             labels:
-              severity: critical
+              severity: info
               category: logs
             annotations:
               summary: "Unifi Protect User has logged in"
