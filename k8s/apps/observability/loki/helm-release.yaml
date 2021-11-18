@@ -63,6 +63,17 @@ spec:
             store: inmemory
         enable_api: true
     alerting_groups:
+      - name: ssh-user-login
+        rules:
+          - alert: SSHUserLogin
+            expr: |
+              sum by (hostname) (count_over_time({hostname!=""}|~".+sshd:session.+"[15m])) > 0
+            for: 10s
+            labels:
+              severity: info
+              category: logs
+            annotations:
+              summary: "SSH User has logged in"
       - name: wireguard-login
         rules:
           - alert: WireguardLogin
