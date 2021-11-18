@@ -63,6 +63,17 @@ spec:
             store: inmemory
         enable_api: true
     alerting_groups:
+      - name: wireguard-login
+        rules:
+          - alert: WireguardLogin
+            expr: |
+              sum by (SRC) (count_over_time({unit=~"udm-pro.+"}| logfmt | IN = "eth8",DPT = "65535"[15m])) > 0
+            for: 10s
+            labels:
+              severity: info
+              category: logs
+            annotations:
+              summary: "Wireguard User has logged in"
       - name: unifi-protect-login
         rules:
           - alert: UnifiProtectLogin
