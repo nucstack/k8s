@@ -25,6 +25,7 @@ spec:
                         values:
                           - "true"
           restartPolicy: OnFailure
+          automountServiceAccountToken: false
           containers:
             - name: unifi-downloader
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.5"
@@ -66,6 +67,7 @@ spec:
                         values:
                           - "true"
           restartPolicy: OnFailure
+          automountServiceAccountToken: false
           containers:
             - name: unifi-downloader
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
