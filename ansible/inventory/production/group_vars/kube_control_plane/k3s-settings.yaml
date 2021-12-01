@@ -21,12 +21,10 @@ k3s_server:
   # CIDR for service IPs
   service-cidr: "{{ lookup('env', 'K3S_SERVICE_CIDR') }}"
   kube-controller-manager-arg:
-    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   kube-proxy-arg:
     - "metrics-bind-address=0.0.0.0"
   kube-scheduler-arg:
-    - "address=0.0.0.0"
     - "bind-address=0.0.0.0"
   kube-apiserver-arg:
     - "oidc-client-id=dex-k8s-authenticator"
