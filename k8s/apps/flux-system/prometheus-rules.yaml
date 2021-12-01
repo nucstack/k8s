@@ -8,6 +8,15 @@ spec:
   groups:
     - name: flux
       rules:
+        - alert: NodeReadonlyFilesystem
+          annotations:
+            description: Node root filesystem is read only.
+            summary: Node root filesystem is read only.
+          expr: |
+            sum(kube_node_status_condition{condition="ReadonlyFilesystem",status="true"}) by (node) > 0
+          for: 2m
+          labels:
+            severity: critical
         - alert: FluxComponentAbsent
           annotations:
             description: Flux component has disappeared from Prometheus target discovery.
