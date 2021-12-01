@@ -169,5 +169,5 @@ tasks:
     deps: [ping]
     dir: ansible
     cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo mount -o remount,rw UUID= $(sudo blkid /dev/sda2 -s UUID -o value) /' --become"
+      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo mount -o remount,rw UUID=$(sudo blkid /dev/sda2 -s UUID -o value) /' --become"
     silent: true
