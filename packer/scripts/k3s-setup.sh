@@ -3,7 +3,7 @@ set -x
 
 sleep 15
 
-K3S_VERSION="v1.21.1+k3s1"
+K3S_VERSION="v1.22.4+k3s1"
 
 # install/update dep packages
 sudo apt update -y && \
