@@ -28,6 +28,7 @@ USER root
 # install persisted devcontainer dependencies
 RUN apk --update --no-cache add \
     apache2-utils \
+    bash \
     build-base \
     ca-certificates \
     curl \
