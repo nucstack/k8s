@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - descheduler
   - home-dns
-  - intel-gpu-plugin
   - kube-cleanup-operator
   - node-feature-discovery
   - node-problem-detector
