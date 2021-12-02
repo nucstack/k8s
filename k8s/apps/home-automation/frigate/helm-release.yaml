@@ -51,9 +51,9 @@ spec:
         enabled: true
         type: custom
         volumeSpec:
-          nfs:
-            server: "${SECRET_NFS_HOST}"
-            path: /cctv/frigate
+          hostpath:
+            path: /mnt/data/frigate
+            type: Directory
         mountPath: /media
       pci:
         enabled: true
