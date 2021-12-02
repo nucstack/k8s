@@ -47,14 +47,14 @@ spec:
         enabled: true
         existingClaim: frigate
         mountPath: /data
-      # media:
-      #   enabled: true
-      #   type: custom
-      #   volumeSpec:
-      #     nfs:
-      #       server: "${SECRET_NFS_HOST}"
-      #       path: /cctv
-      #   mountPath: /media
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_NFS_HOST}"
+            path: /cctv
+        mountPath: /media/frigate
       pci:
         enabled: true
         type: hostPath
