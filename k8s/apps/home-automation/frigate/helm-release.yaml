@@ -1,0 +1,341 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: frigate
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: frigate
+      version: 6.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  dependsOn:
+    - name: emqx
+      namespace: home-automation
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/frigate
+      tag: v0.9.4-amd64
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "cctv"
+        hosts:
+          - host: "cctv.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "cctv.${SECRET_DOMAIN}"
+    securityContext:
+      privileged: true
+    persistence:
+      data:
+        enabled: true
+        existingClaim: frigate
+        mountPath: /data
+      # media:
+      #   enabled: true
+      #   type: custom
+      #   volumeSpec:
+      #     nfs:
+      #       server: "${SECRET_NFS_HOST}"
+      #       path: /cctv
+      #   mountPath: /media
+      pci:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/apex_0
+      cache:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 2Gi
+        mountPath: /dev/shm
+    config: |
+      mqtt:
+        host: emqx
+        topic_prefix: frigate
+        user: ${SECRET_MQTT_USERNAME}
+        password: ${SECRET_MQTT_PASSWORD}
+
+      database:
+        path: /data/frigate.db
+
+      detectors:
+        coral:
+          type: edgetpu
+          device: pci
+
+      # Global objects configuration
+      objects:
+        track:
+          - person
+        filters:
+          person:
+            min_area: 2500
+            max_area: 100000
+            threshold: 0.7
+
+      # Global ffmpeg configuration
+      ffmpeg:
+        hwaccel_args:
+          - -hwaccel
+          - vaapi
+          - -hwaccel_device
+          - /dev/dri/renderD128
+          - -hwaccel_output_format
+          - yuv420p
+
+      # Specify camera's
+      # cameras:
+        # --
+        # frigate_driveway:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/Bbu0H4JuPjzK6zy9
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/vixHJ1htwDadpDgE
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 1280
+        #     height: 720
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - person
+        # # --
+        # frigate_porch:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/818ALvS1HQ744KND
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/OLL9WgMx3FNx7Yfy
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 960
+        #     height: 720
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - person
+        # # --
+        # frigate_garage:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/3mzDU0htPbIcPPFH
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/Cpb9YqiSgX16LjsX
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 1024
+        #     height: 576
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - car
+        #       - person
+        # # --
+        # frigate_study:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/25BixzVyRA74DHfP
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/BwmH0xgM3fZotFIa
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 1024
+        #     height: 576
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - person
+        # # --
+        # frigate_living_room:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/PgTHLlRmqRH6Z6wV
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/dGFODTTigTod247N
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 1024
+        #     height: 576
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - person
+        # # --
+        # frigate_basement_1:
+        #   ffmpeg:
+        #     inputs:
+        #       - path: rtsp://192.168.1.2:7447/5pXj1v9ZyXf8ssmc
+        #         roles:
+        #           - detect
+        #       - path: rtsp://192.168.1.2:7447/Zwnrr51JKWjioKc4
+        #         roles:
+        #           - rtmp
+        #           - record
+        #   rtmp:
+        #     enabled: True
+        #   detect:
+        #     width: 1024
+        #     height: 576
+        #     fps: 10
+        #   record:
+        #     enabled: True
+        #     retain_days: 7
+        #     events:
+        #       retain:
+        #         default: 7
+        #   snapshots:
+        #     enabled: True
+        #     timestamp: False
+        #     retain:
+        #       default: 7
+        #   objects:
+        #     track:
+        #       - person
+        # # --
+        # frigate_basement_2:
+          # ffmpeg:
+          #   inputs:
+          #     - path: rtsp://192.168.1.2:7447/pp1jGiFpb1AuVHRl
+          #       roles:
+          #         - detect
+          #     - path: rtsp://192.168.1.2:7447/z6XEPgL62FAvtpPR
+          #       roles:
+          #         - rtmp
+          #         - record
+          # rtmp:
+          #   enabled: True
+          # detect:
+          #   width: 1024
+          #   height: 576
+          #   fps: 15
+          # record:
+          #   enabled: True
+          #   retain_days: 7
+          #   events:
+          #     retain:
+          #       default: 7
+          # snapshots:
+          #   enabled: True
+          #   timestamp: False
+          #   retain:
+          #     default: 7
+          # objects:
+          #   track:
+          #     - person
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "frigate-config"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: feature.node.kubernetes.io/custom-coral-tpu
+                  operator: In
+                  values:
+                    - "true"
+    resources:
+      requests:
+        #gpu.intel.com/i915: 1
+        memory: 100Mi
+        cpu: 500m
+      limits:
+        #gpu.intel.com/i915: 1
+        memory: 3000Mi
