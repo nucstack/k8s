@@ -10,4 +10,3 @@ resources:
   - esphome
   - node-red
   - rtlamr-collect
-  - unifi-downloader
