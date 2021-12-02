@@ -102,7 +102,7 @@ spec:
 
       # Specify camera's
       cameras:
-        --
+        # --
         doorbell_front:
           ffmpeg:
             inputs:
@@ -113,26 +113,26 @@ spec:
                 roles:
                   - rtmp
                   - record
-        #   rtmp:
-        #     enabled: True
-        #   detect:
-        #     width: 1280
-        #     height: 720
-        #     fps: 10
-        #   record:
-        #     enabled: True
-        #     retain_days: 7
-        #     events:
-        #       retain:
-        #         default: 7
-        #   snapshots:
-        #     enabled: True
-        #     timestamp: False
-        #     retain:
-        #       default: 7
-        #   objects:
-        #     track:
-        #       - person
+          rtmp:
+            enabled: True
+          detect:
+            width: 960
+            height: 720
+            fps: 10
+          record:
+            enabled: True
+            retain_days: 7
+            events:
+              retain:
+                default: 7
+          snapshots:
+            enabled: True
+            timestamp: False
+            retain:
+              default: 7
+          objects:
+            track:
+              - person
         # # --
         # frigate_porch:
         #   ffmpeg:
