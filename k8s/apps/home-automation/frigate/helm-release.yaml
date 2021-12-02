@@ -53,8 +53,8 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_NFS_HOST}"
-            path: /cctv
-        mountPath: /media/frigate
+            path: /cctv/frigate
+        mountPath: /media
       pci:
         enabled: true
         type: hostPath
