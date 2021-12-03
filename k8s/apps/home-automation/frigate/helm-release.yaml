@@ -50,7 +50,7 @@ spec:
       media:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/frigate
+        hostPath: /mnt/data/cctv
         mountPath: /media
       pci:
         enabled: true
