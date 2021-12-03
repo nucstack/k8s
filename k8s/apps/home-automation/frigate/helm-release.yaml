@@ -88,14 +88,14 @@ spec:
             threshold: 0.7
 
       # Global ffmpeg configuration
-      # ffmpeg:
-      #   hwaccel_args:
-      #     - -hwaccel
-      #     - vaapi
-      #     - -hwaccel_device
-      #     - /dev/dri/renderD128
-      #     - -hwaccel_output_format
-      #     - yuv420p
+      ffmpeg:
+        hwaccel_args:
+          - -hwaccel
+          - vaapi
+          - -hwaccel_device
+          - /dev/dri/renderD128
+          - -hwaccel_output_format
+          - yuv420p
 
       # Specify camera's
       cameras:
@@ -113,23 +113,150 @@ spec:
           rtmp:
             enabled: True
           detect:
-            width: 960
-            height: 720
+            width: 640
+            height: 360
             fps: 10
           record:
             enabled: True
-            retain_days: 7
+            retain_days: 14
             events:
               retain:
-                default: 7
+                default: 14
           snapshots:
             enabled: True
             timestamp: False
             retain:
-              default: 7
+              default: 14
           objects:
             track:
               - person
+        # --
+        doorbell_patio:
+          ffmpeg:
+            inputs:
+              - path: rtsps://192.168.1.1:7441/ZKSpaw2sDyFTDt1C?enableSrtp
+                roles:
+                  - detect
+              - path: rtsps://192.168.1.1:7441/9APUp7Vcmih376QB?enableSrtp
+                roles:
+                  - rtmp
+                  - record
+          rtmp:
+            enabled: True
+          detect:
+            width: 640
+            height: 360
+            fps: 10
+          record:
+            enabled: True
+            retain_days: 14
+            events:
+              retain:
+                default: 14
+          snapshots:
+            enabled: True
+            timestamp: False
+            retain:
+              default: 14
+          objects:
+            track:
+              - person
+              - dog
+        # --
+        basement_door:
+          ffmpeg:
+            inputs:
+              - path: rtsps://192.168.1.1:7441/oPBk5keWKz9vl0YR?enableSrtp
+                roles:
+                  - detect
+              - path: rtsps://192.168.1.1:7441/f1Z6fFBeN5Ct0tLr?enableSrtp
+                roles:
+                  - rtmp
+                  - record
+          rtmp:
+            enabled: True
+          detect:
+            width: 640
+            height: 360
+            fps: 10
+          record:
+            enabled: True
+            retain_days: 14
+            events:
+              retain:
+                default: 14
+          snapshots:
+            enabled: True
+            timestamp: False
+            retain:
+              default: 14
+          objects:
+            track:
+              - person
+        # --
+        rear:
+          ffmpeg:
+            inputs:
+              - path: rtsps://192.168.1.1:7441/1wQbGz91zIauMqgV?enableSrtp
+                roles:
+                  - detect
+              - path: rtsps://192.168.1.1:7441/pxdJ7w8YJy6yXgI5?enableSrtp
+                roles:
+                  - rtmp
+                  - record
+          rtmp:
+            enabled: True
+          detect:
+            width: 640
+            height: 360
+            fps: 10
+          record:
+            enabled: True
+            retain_days: 14
+            events:
+              retain:
+                default: 14
+          snapshots:
+            enabled: True
+            timestamp: False
+            retain:
+              default: 14
+          objects:
+            track:
+              - person
+              - dog
+        # --
+        kitchen:
+          ffmpeg:
+            inputs:
+              - path: rtsps://192.168.1.1:7441/1wQbGz91zIauMqgV?enableSrtp
+                roles:
+                  - detect
+              - path: rtsps://192.168.1.1:7441/pxdJ7w8YJy6yXgI5?enableSrtp
+                roles:
+                  - rtmp
+                  - record
+          rtmp:
+            enabled: True
+          detect:
+            width: 640
+            height: 360
+            fps: 10
+          record:
+            enabled: True
+            retain_days: 14
+            events:
+              retain:
+                default: 14
+          snapshots:
+            enabled: True
+            timestamp: False
+            retain:
+              default: 14
+          objects:
+            track:
+              - person
+              - dog
     podAnnotations:
       configmap.reloader.stakater.com/reload: "frigate-config"
     affinity:
@@ -148,9 +275,9 @@ spec:
         effect: "NoSchedule"
     resources:
       requests:
-        #gpu.intel.com/i915: 1
+        gpu.intel.com/i915: 1
         memory: 100Mi
         cpu: 500m
       limits:
-        #gpu.intel.com/i915: 1
+        gpu.intel.com/i915: 1
         memory: 3000Mi
