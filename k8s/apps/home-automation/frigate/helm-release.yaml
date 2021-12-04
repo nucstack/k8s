@@ -96,7 +96,6 @@ spec:
       #     - /dev/dri/renderD128
       #     - -hwaccel_output_format
       #     - yuv420p
-
       # Specify camera's
       cameras:
         # --
