@@ -88,14 +88,14 @@ spec:
             threshold: 0.7
 
       # Global ffmpeg configuration
-      ffmpeg:
-        hwaccel_args:
-          - -hwaccel
-          - vaapi
-          - -hwaccel_device
-          - /dev/dri/renderD128
-          - -hwaccel_output_format
-          - yuv420p
+      # ffmpeg:
+      #   hwaccel_args:
+      #     - -hwaccel
+      #     - vaapi
+      #     - -hwaccel_device
+      #     - /dev/dri/renderD128
+      #     - -hwaccel_output_format
+      #     - yuv420p
 
       # Specify camera's
       cameras:
@@ -275,9 +275,9 @@ spec:
         effect: "NoSchedule"
     resources:
       requests:
-        gpu.intel.com/i915: 1
+        #gpu.intel.com/i915: 1
         memory: 100Mi
         cpu: 500m
       limits:
-        gpu.intel.com/i915: 1
+        #gpu.intel.com/i915: 1
         memory: 3000Mi
