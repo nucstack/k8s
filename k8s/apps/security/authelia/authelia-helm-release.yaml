@@ -39,7 +39,7 @@ spec:
     image:
       registry: ghcr.io
       repository: authelia/authelia
-      tag: 4.31.0
+      tag: 4.33.1
     resources:
       limits:
         cpu: 400m
