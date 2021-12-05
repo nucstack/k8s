@@ -1,0 +1,52 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: home-automation
+  name: frigate-rclone
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 300
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: feature.node.kubernetes.io/custom-coral-tpu
+                        operator: In
+                        values:
+                          - "true"
+          restartPolicy: OnFailure
+          automountServiceAccountToken: false
+          containers:
+            - name: frigate-rclone
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
+              args:
+                - "copy"
+                - "--max-age"
+                - "90m"
+                - "/cctv"
+                - "/backup"
+                - "-v"
+              volumeMounts:
+                - name: cctv-path
+                  mountPath: /cctv
+                - name: backup-path
+                  mountPath: /backup
+          volumes:
+            - name: cctv-path
+              hostPath:
+                path: /mnt/data
+                type: Directory
+            - name: backup-path
+              nfs:
+                path: "${SECRET_NFS_CCTV_PATH}"
+                server: "${SECRET_NFS_HOST}"
