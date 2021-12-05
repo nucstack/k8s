@@ -26,6 +26,11 @@ spec:
                           - "true"
           restartPolicy: OnFailure
           automountServiceAccountToken: false
+          tolerations:
+            - key: "coral-tpu"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
           containers:
             - name: frigate-rclone
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
