@@ -49,7 +49,7 @@ spec:
           volumes:
             - name: cctv-path
               hostPath:
-                path: /mnt/data
+                path: /mnt/data/cctv
                 type: Directory
             - name: backup-path
               nfs:
