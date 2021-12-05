@@ -45,6 +45,15 @@ spec:
               - "cctv.${SECRET_DOMAIN}"
     securityContext:
       privileged: true
+    service:
+      rtmp:
+        enabled: true
+        primary: false
+        ports:
+          rtmp:
+            enabled: true
+            port: 1935
+            protocol: UDP
     persistence:
       data:
         enabled: true
