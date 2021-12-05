@@ -54,6 +54,7 @@ spec:
             enabled: true
             port: 1935
             protocol: UDP
+            targetPort: rtmp
     persistence:
       data:
         enabled: true
