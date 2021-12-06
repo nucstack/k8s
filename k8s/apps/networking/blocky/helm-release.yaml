@@ -92,7 +92,7 @@ spec:
           default:
           - ads
       clientLookup:
-        upstream: udp:${SECRET_DNS_SERVER}
+        upstream: tcp+udp:${SECRET_DNS_SERVER}
       prometheus:
         enable: true
         path: /metrics
