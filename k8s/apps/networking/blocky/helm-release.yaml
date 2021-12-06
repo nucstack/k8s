@@ -64,8 +64,8 @@ spec:
         - tcp-tls:${SECRET_NEXTDNS_ID}.dns2.nextdns.io:853
       conditional:
         mapping:
-          ${SECRET_DOMAIN}: udp:${SECRET_DNS_SERVER}
-          ${SECRET_LOCAL_DOMAIN}: udp:${SECRET_DNS_SERVER}
+          ${SECRET_DOMAIN}: tcp+udp:${SECRET_DNS_SERVER}
+          ${SECRET_LOCAL_DOMAIN}: tcp+udp:${SECRET_DNS_SERVER}
       blocking:
         blackLists:
           ads:
