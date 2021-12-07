@@ -16,13 +16,6 @@ Main Deviations from this template:
  - Added ansible/terraform to maintain provisioned infrastructure.
  - Changed env vars usage slightly.
 
-**Provisioning the cluster**
-```bash
-cp .env.example .env # update env vars accordingly
-kind create cluster --config ./kind.yaml --kubeconfig "./${ENVIRONMENT}.kubeconfig"
-```
-
-
 **Flux**
 ```bash
 task flux:bootstrap
