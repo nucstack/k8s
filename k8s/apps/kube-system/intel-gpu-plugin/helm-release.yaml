@@ -40,8 +40,3 @@ spec:
                   operator: In
                   values:
                     - "true"
-    tolerations:
-      - key: "coral-tpu"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
