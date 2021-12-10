@@ -38,7 +38,7 @@ spec:
           volumes:
             - name: download-path
               hostPath:
-                path: /mnt/data/cctv
+                path: /mnt/data/cctv/unifi
                 type: Directory
 ---
 apiVersion: batch/v1
