@@ -38,7 +38,7 @@ spec:
           volumes:
             - name: download-path
               hostPath:
-                path: /mnt/data/unifi
+                path: /mnt/data/cctv
                 type: Directory
 ---
 apiVersion: batch/v1
@@ -86,7 +86,7 @@ spec:
           volumes:
             - name: cctv-path
               hostPath:
-                path: /mnt/data
+                path: /mnt/data/cctv
                 type: Directory
             - name: backup-path
               nfs:
