@@ -1,8 +1,8 @@
 # dependencies
-FROM docker.io/fluxcd/flux-cli:v0.24.0 as flux
+FROM docker.io/fluxcd/flux-cli:v0.24.1 as flux
 FROM docker.io/hadolint/hadolint:v2.8.0 as hadolint
-FROM docker.io/alpine/helm:3.7.1 as helm
-FROM docker.io/bitnami/kubectl:1.22.4 as kubectl
+FROM docker.io/alpine/helm:3.7.2 as helm
+FROM docker.io/bitnami/kubectl:1.23.0 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.13.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.4.1 as kustomize
@@ -11,7 +11,7 @@ FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.31.1 as prom
 FROM docker.io/hashicorp/terraform:1.1.0 as terraform
 FROM docker.io/aquasec/trivy:0.21.2 as trivy
-FROM docker.io/hashicorp/vault:1.9.0 as vault
+FROM docker.io/hashicorp/vault:1.9.1 as vault
 FROM docker.io/velero/velero:v1.7.1 as velero
 FROM docker.io/mikefarah/yq:4.16.1 as yq
 
