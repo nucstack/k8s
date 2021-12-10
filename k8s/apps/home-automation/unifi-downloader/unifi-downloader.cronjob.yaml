@@ -20,7 +20,7 @@ spec:
               requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                   - matchExpressions:
-                      - key: feature.node.kubernetes.io/custom-backup-drive
+                      - key: feature.node.kubernetes.io/custom-coral-tpu
                         operator: In
                         values:
                           - "true"
@@ -38,7 +38,7 @@ spec:
           volumes:
             - name: download-path
               hostPath:
-                path: /mnt/data
+                path: /mnt/data/unifi
                 type: Directory
 ---
 apiVersion: batch/v1
@@ -62,7 +62,7 @@ spec:
               requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                   - matchExpressions:
-                      - key: feature.node.kubernetes.io/custom-backup-drive
+                      - key: feature.node.kubernetes.io/custom-coral-tpu
                         operator: In
                         values:
                           - "true"
