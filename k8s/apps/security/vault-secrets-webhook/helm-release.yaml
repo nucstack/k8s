@@ -21,7 +21,7 @@ spec:
     debug: false
     image:
       repository: ghcr.io/banzaicloud/vault-secrets-webhook
-      tag: "1.14.3"
+      tag: "1.14.4"
       pullPolicy: IfNotPresent
     service:
       name: vault-secrets-webhook
@@ -34,7 +34,7 @@ spec:
       repository: ghcr.io/banzaicloud/vault-env
       tag: "1.14.3"
     env:
-      VAULT_IMAGE: vault:1.9.0
+      VAULT_IMAGE: vault:1.9.1
       VAULT_CLIENT_TIMEOUT: 10s
       VAULT_ROLE: vault-secrets-webhook
       # VAULT_ENV_CPU_REQUEST:
