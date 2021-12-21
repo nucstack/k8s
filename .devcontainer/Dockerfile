@@ -21,7 +21,8 @@ FROM docker:20.10.12-dind-rootless
 ENV DEBIAN_FRONTEND=noninteractive \
     EDITOR=nano \
     LANG=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8
+    LC_ALL=en_US.UTF-8 \
+    KUBENT_VERSION=0.5.1
 
 USER root
 
@@ -80,6 +81,9 @@ COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
 COPY --from=vault      /bin/vault                       /usr/local/bin/vault
 COPY --from=velero     /velero                          /usr/local/bin/velero
 COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
+
+RUN wget https://github.com/doitintl/kube-no-trouble/releases/download/${KUBENT_VERSION}/kubent-${KUBENT_VERSION}-linux-amd64.tar.gz && \
+    tar -xzf kubent-${KUBENT_VERSION}-linux-amd64.tar.gz -C /usr/local/bin && rm kubent-${KUBENT_VERSION}-linux-amd64.tar.gz
 
 # Setup user/profile
 RUN mkdir -p /etc/sudoers.d && \
