@@ -1,0 +1,16 @@
+---
+version: '3'
+
+tasks:
+
+  status:
+    desc: vault status
+    cmds:
+      - vault status
+
+  kv-get:
+    var:
+      PATH: "secrets"
+    desc: get kv from provided path
+    cmds:
+      - vault kv get {{.PATH}}

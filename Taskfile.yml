@@ -30,3 +30,4 @@ includes:
   packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml
   tftp: .taskfiles/tftp.yml
+  vault: .taskfiles/vault.yml
