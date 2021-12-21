@@ -23,8 +23,7 @@ spec:
       "-a",
       "0.0.0.0",
       "-p",
-      "5000",
-      "&"
+      "5000"
     ]
     controller:
       replicas: 1
@@ -63,8 +62,24 @@ spec:
         memory: 256Mi
     probes:
       liveness:
-        enabled: false
+        enabled: true
+        initialDelaySeconds: 1
+        periodSeconds: 5
+        timeoutSeconds: 1
+        successThreshold: 1
+        failureThreshold: 1
+        tcpSocket:
+          host:
+          port: 5000
       readiness:
-        enabled: false
+        enabled: true
+        initialDelaySeconds: 1
+        periodSeconds: 5
+        timeoutSeconds: 1
+        successThreshold: 1
+        failureThreshold: 1
+        tcpSocket:
+          host:
+          port: 5000
       startup:
         enabled: false
