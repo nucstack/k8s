@@ -85,6 +85,8 @@ COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
 RUN wget https://github.com/doitintl/kube-no-trouble/releases/download/${KUBENT_VERSION}/kubent-${KUBENT_VERSION}-linux-amd64.tar.gz && \
     tar -xzf kubent-${KUBENT_VERSION}-linux-amd64.tar.gz -C /usr/local/bin && rm kubent-${KUBENT_VERSION}-linux-amd64.tar.gz
 
+RUN helm plugin install https://github.com/databus23/helm-diff
+
 # Setup user/profile
 RUN mkdir -p /etc/sudoers.d && \
     echo rootless ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/rootless && \
