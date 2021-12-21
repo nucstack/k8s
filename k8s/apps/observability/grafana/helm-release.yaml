@@ -36,7 +36,7 @@ spec:
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     ldap:
       enabled: true
-      existingSecret: grafana-ldap-config
+      existingSecret: grafana-ldap-config # checkov:skip=CKV_SECRET_6 secret ref
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DOMAIN}"
@@ -190,7 +190,7 @@ spec:
       hosts:
         - "grafana.${SECRET_DOMAIN}"
       tls:
-        - secretName: grafana-tls
+        - secretName: grafana-tls # checkov:skip=CKV_SECRET_6 secret ref
           hosts:
             - "grafana.${SECRET_DOMAIN}"
     serviceAccount:

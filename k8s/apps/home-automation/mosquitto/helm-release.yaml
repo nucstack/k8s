@@ -46,14 +46,14 @@ spec:
         type: custom
         volumeSpec:
           secret:
-            secretName: mosquitto-config
+            secretName: mosquitto-config # checkov:skip=CKV_SECRET_6 secret ref
     initContainers:
       encrypt:
         name: encrypt
         image: ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.14
         envFrom:
           - secretRef:
-              name: mosquitto-creds
+              name: mosquitto-creds # checkov:skip=CKV_SECRET_6 secret ref
         command: ["/usr/bin/mosquitto_passwd"]
         args: [
           "-b",

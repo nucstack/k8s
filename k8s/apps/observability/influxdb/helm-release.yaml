@@ -44,7 +44,7 @@ spec:
     setDefaultUser:
       enabled: true
       user:
-        existingSecret: influxdb-auth
+        existingSecret: influxdb-auth # checkov:skip=CKV_SECRET_6 secret ref
     config:
       reporting_disabled: true
     initScripts:

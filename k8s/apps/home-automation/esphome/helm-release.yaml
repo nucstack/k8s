@@ -48,7 +48,7 @@ spec:
         tls:
           - hosts:
               - "esphome.${SECRET_DOMAIN}"
-            secretName: esphome-tls
+            secretName: esphome-tls # checkov:skip=CKV_SECRET_6 secret ref
     persistence:
       config:
         enabled: true

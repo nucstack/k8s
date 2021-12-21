@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - "jaeger.${SECRET_DOMAIN}"
-      secretName: linkerd-jaeger-tls
+      secretName: linkerd-jaeger-tls # checkov:skip=CKV_SECRET_6 secret ref
   rules:
     - host: "jaeger.${SECRET_DOMAIN}"
       http:

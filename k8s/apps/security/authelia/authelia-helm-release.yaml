@@ -52,7 +52,7 @@ spec:
       enabled: true
       tls:
         enabled: true
-        secret: authelia-cert
+        secret: authelia-cert # checkov:skip=CKV_SECRET_6 secret ref
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

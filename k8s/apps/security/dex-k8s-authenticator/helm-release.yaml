@@ -32,7 +32,7 @@ spec:
       tls:
         - hosts:
             - "login.${SECRET_DOMAIN}"
-          secretName: dex-k8s-authenticator-cert
+          secretName: dex-k8s-authenticator-cert # checkov:skip=CKV_SECRET_6 secret ref
     resources:
       requests:
         memory: 350Mi

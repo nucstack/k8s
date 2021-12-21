@@ -34,7 +34,7 @@ spec:
           - mountPath: /target
             name: plugins
     credentials:
-      existingSecret: velero-creds
+      existingSecret: velero-creds # checkov:skip=CKV_SECRET_6 secret ref
     schedules:
       daily-backup:
         schedule: "0 6 * * *"

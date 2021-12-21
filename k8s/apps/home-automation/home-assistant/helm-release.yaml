@@ -51,7 +51,7 @@ spec:
       serviceMonitor:
         interval: 1m
         scrapeTimeout: 30s
-        bearerTokenSecret:
+        bearerTokenSecret: # checkov:skip=CKV_SECRET_6 secret ref
           name: home-assistant-prometheus-token
           key: prometheus-token
       prometheusRule:
@@ -88,7 +88,7 @@ spec:
         type: custom
         volumeSpec:
           secret:
-            secretName: home-assistant-helm-values
+            secretName: home-assistant-helm-values # checkov:skip=CKV_SECRET_6 secret ref
         subPath:
           - path: home-assistant.cfg
             mountPath: /home-assistant.cfg
@@ -126,7 +126,7 @@ spec:
         tls:
           - hosts:
               - "hass.${SECRET_DOMAIN}"
-            secretName: home-assistant-tls
+            secretName: home-assistant-tls # checkov:skip=CKV_SECRET_6 secret ref
     initContainers:
       extensions:
         name: extensions

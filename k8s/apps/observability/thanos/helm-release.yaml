@@ -38,7 +38,7 @@ spec:
           hajimari.io/icon: database-arrow-left
           hajimari.io/appName: Thanos
         tls: true
-    existingObjstoreSecret: thanos-objstore
+    existingObjstoreSecret: thanos-objstore # checkov:skip=CKV_SECRET_6 secret ref
     queryFrontend:
       enabled: false
     bucketweb:

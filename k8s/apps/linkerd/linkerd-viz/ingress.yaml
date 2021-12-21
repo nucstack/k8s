@@ -17,7 +17,7 @@ spec:
   tls:
     - hosts:
         - "linkerd.${SECRET_DOMAIN}"
-      secretName: linkerd-viz-tls
+      secretName: linkerd-viz-tls # checkov:skip=CKV_SECRET_6 secret ref
   rules:
     - host: "linkerd.${SECRET_DOMAIN}"
       http:

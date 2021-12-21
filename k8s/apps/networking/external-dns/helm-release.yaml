@@ -23,12 +23,12 @@ spec:
     env:
       - name: CF_API_EMAIL
         valueFrom:
-          secretKeyRef:
+          secretKeyRef: # checkov:skip=CKV_SECRET_6 secret ref
             name: cloudflare-creds
             key: email
       - name: CF_API_KEY
         valueFrom:
-          secretKeyRef:
+          secretKeyRef: # checkov:skip=CKV_SECRET_6 secret ref
             name: cloudflare-creds
             key: api-key
     extraArgs:

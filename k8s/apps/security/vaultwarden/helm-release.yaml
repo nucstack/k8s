@@ -34,7 +34,7 @@ spec:
       WEBSOCKET_PORT: 3012
     envFrom:
       - secretRef:
-          name: vaultwarden
+          name: vaultwarden # checkov:skip=CKV_SECRET_6 secret ref
     ingress:
       main:
         enabled: true

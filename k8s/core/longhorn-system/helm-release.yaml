@@ -41,7 +41,7 @@ spec:
     ingress:
       enabled: true
       host: longhorn.${SECRET_DOMAIN}
-      tlsSecret: longhorn-cert
+      tlsSecret: longhorn-cert # checkov:skip=CKV_SECRET_6 secret ref
       tls: true
       annotations:
         kubernetes.io/ingress.class: traefik

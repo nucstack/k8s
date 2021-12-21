@@ -6,4 +6,4 @@ metadata:
   namespace: networking
 spec:
   basicAuth:
-    secret: traefik-basic-auth
+    secret: traefik-basic-auth # checkov:skip=CKV_SECRET_6 secret ref

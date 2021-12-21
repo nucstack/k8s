@@ -39,7 +39,7 @@ spec:
       tls:
         - hosts:
             - "dex.${SECRET_DOMAIN}"
-          secretName: dex-cert
+          secretName: dex-cert # checkov:skip=CKV_SECRET_6 secret ref
 
     config:
       issuer: https://dex.${SECRET_DOMAIN}

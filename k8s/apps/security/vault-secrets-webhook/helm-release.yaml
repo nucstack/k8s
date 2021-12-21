@@ -60,7 +60,7 @@ spec:
     configMapMutation: false
     configMapFailurePolicy: Ignore
     podsFailurePolicy: Ignore
-    secretsFailurePolicy: Ignore
+    secretsFailurePolicy: Ignore # checkov:skip=CKV_SECRET_6 secret ref
     apiSideEffectValue: NoneOnDryRun
     objectSelector:
       matchExpressions:

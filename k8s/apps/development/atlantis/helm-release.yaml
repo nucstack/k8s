@@ -23,8 +23,6 @@ spec:
     image:
       repository: runatlantis/atlantis
       tag: v0.17.6
-    #imagePullSecrets:
-    #- myRegistryKeySecretName
     logLevel: debug
     disableApply: true
     disableApplyAll: true
@@ -46,11 +44,6 @@ spec:
         - host: "atlantis.${SECRET_DOMAIN}"
           paths: ["/"]
       tls:
-        - secretName: atlantis-tls
+        - secretName: atlantis-tls # checkov:skip=CKV_SECRET_6 secret ref
           hosts:
             - "atlantis.${SECRET_DOMAIN}"
-    # loadEnvFromSecrets:
-    #   - secret_one
-    # googleServiceAccountSecrets:
-    #   - name: some-secret-name
-    #     secretName: the_k8s_secret_name

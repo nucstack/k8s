@@ -41,7 +41,7 @@ spec:
         tls:
           - hosts:
               - "node-red.${SECRET_DOMAIN}"
-            secretName: node-red-tls
+            secretName: node-red-tls # checkov:skip=CKV_SECRET_6 secret ref
     persistence:
       config:
         enabled: true

@@ -68,4 +68,4 @@ spec:
         tls:
           - hosts:
               - "zigbee2mqtt.${SECRET_DOMAIN}"
-            secretName: zigbee2mqtt-tls
+            secretName: zigbee2mqtt-tls # checkov:skip=CKV_SECRET_6 secret ref
