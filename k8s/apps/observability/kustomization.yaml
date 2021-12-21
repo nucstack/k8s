@@ -5,6 +5,7 @@ resources:
   - grafana
   - influxdb
   - kube-prometheus-stack
+  - loki
   - metrics-server
   - promtail
   - notifications

@@ -37,6 +37,8 @@ spec:
             - "loki.${SECRET_DOMAIN}"
     serviceMonitor:
       enabled: true
+    rbac:
+      pspEnabled: false
     resources:
       requests:
         memory: 512Mi
