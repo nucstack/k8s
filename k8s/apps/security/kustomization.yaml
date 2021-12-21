@@ -6,4 +6,3 @@ resources:
   - dex
   - dex-k8s-authenticator
   - rbac
-  - vault-secrets-webhook
