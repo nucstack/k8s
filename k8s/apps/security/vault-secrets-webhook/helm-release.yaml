@@ -62,11 +62,3 @@ spec:
     podsFailurePolicy: Ignore
     secretsFailurePolicy: Ignore # checkov:skip=CKV_SECRET_6 secret ref
     apiSideEffectValue: NoneOnDryRun
-    objectSelector:
-      matchExpressions:
-      - key: security.banzaicloud.io/mutate
-        operator: NotIn
-        values:
-        - skip
-      matchLabels:
-        vault-injection: enabled
