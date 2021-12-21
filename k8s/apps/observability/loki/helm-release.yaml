@@ -16,8 +16,6 @@ spec:
         name: grafana-loki-charts
         namespace: flux-system
       interval: 5m
-  test:
-    enable: false
   valuesFrom:
     - kind: Secret
       name: loki-helm-values
