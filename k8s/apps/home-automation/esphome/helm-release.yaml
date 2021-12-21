@@ -27,7 +27,7 @@ spec:
         memory: 1Gi
     image:
       repository: esphome/esphome
-      tag: 2021.12.2
+      tag: 2021.12.1
     env:
       ESPHOME_DASHBOARD_USE_PING: true
     ingress:
