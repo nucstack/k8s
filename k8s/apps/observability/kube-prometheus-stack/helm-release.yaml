@@ -166,6 +166,10 @@ spec:
         targetPort: 2381
     prometheusOperator:
       configReloaderCpu: 0
+      admissionWebhooks:
+        enabled: false
+        patch:
+          enabled: false
     prometheus:
       ingress:
         enabled: true
