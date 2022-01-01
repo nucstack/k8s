@@ -22,10 +22,10 @@ spec:
       tag: 1.22.2
     resources:
       limits:
-        cpu: 250m
+        cpu: 500m
         memory: 512Mi
       requests:
-        cpu: 100m
+        cpu: 250m
         memory: 256Mi
     env:
       TZ: America/New_York
