@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: runatlantis/atlantis
-      tag: v0.17.6
+      tag: v0.18.0
     logLevel: debug
     disableApply: true
     disableApplyAll: true
