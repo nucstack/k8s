@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    probes:
+      startup:
+        enabled: false
     image:
       repository: koenkk/zigbee2mqtt
       tag: 1.22.2
