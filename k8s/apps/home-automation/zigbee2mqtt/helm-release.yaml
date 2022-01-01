@@ -20,6 +20,10 @@ spec:
     probes:
       startup:
         enabled: false
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
     image:
       repository: koenkk/zigbee2mqtt
       tag: 1.22.2
