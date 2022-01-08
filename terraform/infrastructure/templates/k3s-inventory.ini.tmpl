@@ -5,10 +5,10 @@ ${h} ansible_host=${split(",", ipaddresses)[i]} ip=${split(",", ipaddresses)[i]}
 
 [kube_control_plane]
 %{ for i,h in split(",", hostnames) ~}
-%{ if i <= 2 ~}${h}\n%{ endif ~}
+%{ if i <= masters - 1 ~}${h}\n%{ endif ~}
 %{ endfor ~}
 
 [kube_control_node]
 %{ for i,h in split(",", hostnames) ~}
-%{ if i > 2 ~}${h}\n%{ endif ~}
+%{ if i > masters - 1 ~}${h}\n%{ endif ~}
 %{ endfor ~}

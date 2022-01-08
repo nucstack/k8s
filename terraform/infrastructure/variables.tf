@@ -8,6 +8,12 @@ variable "type" {
   type        = string
 }
 
+variable "masters" {
+  description = "masters count"
+  type        = string
+  default     = 3
+}
+
 variable "services" {
   description = "services to provision"
   default     = []
