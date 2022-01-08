@@ -5,6 +5,7 @@ resources:
   - cert-manager.yaml
   - development.yaml
   - home-automation.yaml
+  - istio-system.yaml
   - longhorn-system.yaml
   - metallb-system.yaml
   - networking.yaml
