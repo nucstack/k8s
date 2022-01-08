@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - ../../flux-system
   - ../../observability/metrics-server
-  - ../../observability/kube-prometheus-stack
   - ../../networking/traefik
