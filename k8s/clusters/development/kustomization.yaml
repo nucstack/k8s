@@ -6,3 +6,4 @@ resources:
 - gotk-sync.yaml
 - settings.yaml
 - core.yaml
+- apps.yaml
