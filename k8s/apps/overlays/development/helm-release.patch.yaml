@@ -212,7 +212,5 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.24.0
           version: v0.22.0
-          objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
+          objectStorageConfig: {}
         additionalScrapeConfigs: []
