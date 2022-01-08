@@ -5,3 +5,5 @@ resources:
   - ../../flux-system
   - ../../observability/metrics-server
   - ../../networking/traefik
+  - ../../networking/wildcard-certificate
+  - ../../kube-system/home-dns
