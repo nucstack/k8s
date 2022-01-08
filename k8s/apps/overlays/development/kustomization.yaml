@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - ../../flux-system
   - ../../observability/metrics-server
+  - ../../observability/kube-prometheus-stack
   - ../../networking/traefik
   - ../../networking/wildcard-certificate
   - ../../kube-system/home-dns
+patchesStrategicMerge:
+  - helm-release.patch.yaml
