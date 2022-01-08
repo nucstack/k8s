@@ -187,7 +187,7 @@ spec:
           - hosts:
               - "prometheus.${SECRET_DOMAIN}"
       thanosService:
-        enabled: true
+        enabled: false
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: "replica"
