@@ -44,7 +44,7 @@ module "vpc" {
 module "key_pair" {
   count           = var.type == "aws" ? 1 : 0
   source          = "terraform-aws-modules/key-pair/aws"
-  version         = "1.0.0"
+  version         = "1.0.1"
   key_name        = var.environment
   public_key      = tls_private_key.ssh_key.public_key_openssh
   create_key_pair = true
