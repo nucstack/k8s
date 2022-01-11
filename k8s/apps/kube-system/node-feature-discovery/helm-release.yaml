@@ -74,7 +74,6 @@ spec:
                 matchExpressions:
                   class: {op: In, value: ["ff"]}
                   vendor: {op: In, value: ["0bda"]}
-                  device: {op: In, value: ["2838"]}
           - name: "zwave"
             labels:
               custom-zwave: "true"
@@ -83,7 +82,6 @@ spec:
                 matchExpressions:
                   class: {op: In, value: ["02"]}
                   vendor: {op: In, value: ["0658"]}
-                  device: {op: In, value: ["0200"]}
           - name: "intel-gpu"
             labels:
               custom-intel-gpu: "true"
@@ -100,7 +98,6 @@ spec:
                 matchExpressions:
                   class: {op: In, value: ["ff"]}
                   vendor: {op: In, value: ["1a86"]}
-                  device: {op: In, value: ["7523"]}
           - name: "coral-tpu"
             labels:
               custom-coral-tpu: "true"
