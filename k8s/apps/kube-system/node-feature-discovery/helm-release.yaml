@@ -67,33 +67,48 @@ spec:
             - "device"
           custom:
           - name: "sdr"
-            matchOn:
-            - usbId:
-                class: ["ff"]
-                vendor: ["0bda"]
-                device: ["2838"]
+            labels:
+              custom-sdr: "true"
+            matchFeatures:
+              - feature: usb.device
+                matchExpressions:
+                  class: {op: In, value: ["ff"]}
+                  vendor: {op: In, value: ["0bda"]}
+                  device: {op: In, value: ["2838"]}
           - name: "zwave"
-            matchOn:
-            - usbId:
-                class: ["02"]
-                vendor: ["0658"]
-                device: ["0200"]
+            labels:
+              custom-zwave: "true"
+            matchFeatures:
+              - feature: usb.device
+                matchExpressions:
+                  class: {op: In, value: ["02"]}
+                  vendor: {op: In, value: ["0658"]}
+                  device: {op: In, value: ["0200"]}
           - name: "intel-gpu"
-            matchOn:
-            - pciId:
-                class: ["0300"]
-                vendor: ["8086"]
+            labels:
+              custom-intel-gpu: "true"
+            matchFeatures:
+              - feature: pci.device
+                matchExpressions:
+                  class: {op: In, value: ["0300"]}
+                  vendor: {op: In, value: ["8086"]}
           - name: "zigbee"
-            matchOn:
-            - usbId:
-                class: ["ff"]
-                vendor: ["1a86"]
-                device: ["7523"]
+            labels:
+              custom-zigbee: "true"
+            matchFeatures:
+              - feature: usb.device
+                matchExpressions:
+                  class: {op: In, value: ["ff"]}
+                  vendor: {op: In, value: ["1a86"]}
+                  device: {op: In, value: ["7523"]}
           - name: "coral-tpu"
-            matchOn:
-            - pciId:
-                class: ["0880"]
-                vendor: ["1ac1"]
+            labels:
+              custom-coral-tpu: "true"
+            matchFeatures:
+              - feature: pci.device
+                matchExpressions:
+                  class: {op: In, value: ["0880"]}
+                  vendor: {op: In, value: ["1ac1"]}
       annotations:
         configmap.reloader.stakater.com/reload: "nfd-worker-conf"
       tolerations:
