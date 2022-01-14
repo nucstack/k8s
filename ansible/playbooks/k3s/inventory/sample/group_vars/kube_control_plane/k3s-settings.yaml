@@ -20,18 +20,31 @@ k3s_server:
   cluster-cidr: "{{ lookup('env', 'K3S_CLUSTER_CIDR') }}"
   # CIDR for service IPs
   service-cidr: "{{ lookup('env', 'K3S_SERVICE_CIDR') }}"
+  etcd-expose-metrics: true
   kube-controller-manager-arg:
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
     - "bind-address=0.0.0.0"
   kube-proxy-arg:
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
     - "metrics-bind-address=0.0.0.0"
   kube-scheduler-arg:
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
     - "bind-address=0.0.0.0"
   kube-apiserver-arg:
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=ReadWriteOncePod=true"
     - "oidc-client-id=dex-k8s-authenticator"
     - "oidc-groups-claim=groups"
     - "oidc-issuer-url=https://dex.{{ lookup('env', 'DOMAIN') }}"
     - "oidc-username-claim=email"
-  etcd-expose-metrics: true
   kubelet-arg:
-    - "feature-gates=GracefulNodeShutdown=true"
     - "feature-gates=MixedProtocolLBService=true"
+    - "feature-gates=EphemeralContainers=true"
+    - "feature-gates=ReadWriteOncePod=true"
