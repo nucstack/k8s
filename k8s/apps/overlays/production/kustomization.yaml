@@ -9,4 +9,4 @@ resources:
   - ../../home-automation
   - ../../security
   - ../../velero
-  # - ../../system-upgrade
+  - ../../system-upgrade
