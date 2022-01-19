@@ -9,7 +9,7 @@ FROM k8s.gcr.io/kustomize/kustomize:v4.4.1 as kustomize
 FROM docker.io/hashicorp/packer:1.7.9 as packer
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.32.1 as prom
-FROM docker.io/hashicorp/terraform:1.1.3 as terraform
+FROM docker.io/hashicorp/terraform:1.1.4 as terraform
 FROM docker.io/aquasec/trivy:0.22.0 as trivy
 FROM docker.io/hashicorp/vault:1.9.2 as vault
 FROM docker.io/velero/velero:v1.7.1 as velero
