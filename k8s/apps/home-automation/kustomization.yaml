@@ -5,6 +5,7 @@ resources:
   - frigate
   - home-assistant
   - mosquitto
+  - ubiquiti-watcher
   - unifi-downloader
   - zigbee2mqtt
   - zwavejs2mqtt
