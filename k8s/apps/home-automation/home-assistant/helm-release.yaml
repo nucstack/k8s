@@ -114,9 +114,6 @@ spec:
         ingressClassName: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: home-assistant
-          hajimari.io/appName: Home-Assistant
         enabled: true
         hosts:
           - host: "hass.${SECRET_DOMAIN}"
@@ -171,8 +168,6 @@ spec:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            hajimari.io/enable: "true"
-            hajimari.io/appName: VSCode
           enabled: true
           hosts:
             - host: "vscode-hass.${SECRET_DOMAIN}"

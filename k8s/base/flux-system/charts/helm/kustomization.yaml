@@ -11,7 +11,6 @@ resources:
   - dex.yaml
   - external-dns.yaml
   - grafana-loki.yaml
-  - hajimari.yaml
   - influxdata.yaml
   - infracloudio.yaml
   - jetstack.yaml

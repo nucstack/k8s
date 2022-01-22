@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: zigbee2mqtt
+  namespace: home-system
+spec:
+  hosts:
+    - "esphome.${SECRET_DOMAIN}"
+  gateways:
+    - istio-ingress/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 6052
+            host: esphome.home-automation.svc.cluster.local
+          weight: 100

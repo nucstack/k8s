@@ -33,8 +33,6 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "cctv"
         hosts:
           - host: "cctv.${SECRET_DOMAIN}"
             paths:

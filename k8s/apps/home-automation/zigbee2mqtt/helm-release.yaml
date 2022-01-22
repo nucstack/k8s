@@ -64,9 +64,6 @@ spec:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: zigbee
-          hajimari.io/appName: Zigbee2MQTT
         hosts:
           - host: "zigbee2mqtt.${SECRET_DOMAIN}"
             paths:

@@ -40,9 +40,6 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "shield-key"
-          hajimari.io/appName: VaultWarden
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - host: vaultwarden.${SECRET_DOMAIN}

@@ -34,9 +34,6 @@ spec:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: island
-        hajimari.io/appName: Atlantis
       path:
       pathType: Prefix
       host:

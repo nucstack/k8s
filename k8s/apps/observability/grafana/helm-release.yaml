@@ -184,9 +184,6 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: chart-multiple
-        hajimari.io/appName: Grafana
       hosts:
         - "grafana.${SECRET_DOMAIN}"
       tls:
