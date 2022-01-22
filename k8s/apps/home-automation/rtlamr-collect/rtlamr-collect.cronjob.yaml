@@ -16,12 +16,21 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          volumes:
+            - name: swradio0
+              hostPath:
+                path: /dev/swradio0
           containers:
             - name: rtlamr-collect
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.10"
               envFrom:
                 - secretRef:
                     name: rtlamr-collect
+              securityContext:
+                privileged: true
+              volumeMounts:
+                - mountPath: /dev/swradio0
+                  name: swradio0
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
