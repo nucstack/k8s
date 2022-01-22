@@ -21,7 +21,7 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    hub: gcr.io/istio
+    hub: docker.io/istio
     tag: 1.12.2
     revision: stable
     watchedNamespaces: istio-system
