@@ -21,10 +21,10 @@ spec:
   components:
     egressGateways:
       - name: istio-egressgateway
-        enabled: true
+        enabled: false
     ingressGateways:
       - name: istio-ingressgateway
-        enabled: true
+        enabled: false
         k8s:
           service:
             type: LoadBalancer
