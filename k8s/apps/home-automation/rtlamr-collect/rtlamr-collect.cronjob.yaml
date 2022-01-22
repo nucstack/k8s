@@ -19,6 +19,8 @@ spec:
           containers:
             - name: rtl-tcp
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.9"
+              securityContext:
+                privileged: true
               command: ["/usr/bin/rtl_tcp"]
               args: [
                 "-a",
@@ -31,8 +33,6 @@ spec:
               envFrom:
                 - secretRef:
                     name: rtlamr-collect
-          securityContext:
-            privileged: true
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
