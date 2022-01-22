@@ -2,7 +2,7 @@
 FROM docker.io/fluxcd/flux-cli:v0.25.3 as flux
 FROM docker.io/hadolint/hadolint:v2.8.0 as hadolint
 FROM docker.io/alpine/helm:3.7.2 as helm
-FROM docker.io/bitnami/kubectl:1.23.1 as kubectl
+FROM docker.io/bitnami/kubectl:1.23.2 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.13.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.4.1 as kustomize
@@ -13,7 +13,7 @@ FROM docker.io/hashicorp/terraform:1.1.4 as terraform
 FROM docker.io/aquasec/trivy:0.22.0 as trivy
 FROM docker.io/hashicorp/vault:1.9.2 as vault
 FROM docker.io/velero/velero:v1.7.1 as velero
-FROM docker.io/mikefarah/yq:4.16.2 as yq
+FROM docker.io/mikefarah/yq:4.17.2 as yq
 
 # base image
 FROM docker:20.10.12-dind-rootless
