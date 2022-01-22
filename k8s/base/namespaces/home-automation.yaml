@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: home-automation
   annotations:
-    linkerd.io/inject: enabled
+    istio.io/rev: stable
