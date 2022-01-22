@@ -1,0 +1,27 @@
+---
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istiocontrolplane-stable
+spec:
+  profile: default
+  revision: stable
+  values:
+    global:
+    cni:
+      excludeNamespaces:
+        - istio-system
+        - kube-system
+    sidecarInjectorWebhook:
+      rewriteAppHTTPProbe: true
+  meshConfig:
+    enablePrometheusMerge: false
+    accessLogFile: /dev/stdout
+  components:
+    egressGateways:
+      - name: istio-egressgateway
+        enabled: true
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
