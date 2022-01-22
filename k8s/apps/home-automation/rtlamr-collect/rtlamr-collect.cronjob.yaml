@@ -31,6 +31,11 @@ spec:
                   port: 5000
                 initialDelaySeconds: 15
                 periodSeconds: 20
+              startupProbe:
+                tcpSocket:
+                  port: 5000
+                initialDelaySeconds: 15
+                periodSeconds: 20
               command: ["/usr/bin/rtl_tcp"]
               args: [
                 "-a",
