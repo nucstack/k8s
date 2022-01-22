@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: istio-operator
+  namespace: istio-operator
+spec:
+  releaseName: istio-operator
+  interval: 5m
+  chart:
+    spec:
+      chart: ./manifests/charts/istio-operator
+      version: 1.0.0
+      sourceRef:
+        kind: GitRepository
+        name: istio-charts
+        namespace: flux-system
+      interval: 5m
+  # valuesFrom:
+  #   - kind: Secret
+  #     name: dex-k8s-authenticator-helm-values
+  # values:
+  #   image:
+  #     repository: mintel/dex-k8s-authenticator
+  #     tag: 1.4.0
+  #   ingress:
+  #     enabled: true
+  #     annotations:
+  #       kubernetes.io/ingress.class: "traefik"
+  #     hosts:
+  #       - "login.${SECRET_DOMAIN}"
+  #     tls:
+  #       - hosts:
+  #           - "login.${SECRET_DOMAIN}"
+  #         secretName: dex-k8s-authenticator-cert # checkov:skip=CKV_SECRET_6 secret ref
+  #   resources:
+  #     requests:
+  #       memory: 350Mi
+  #       cpu: 25m
+  #     limits:
+  #       memory: 500Mi
