@@ -8,13 +8,16 @@ spec:
   serviceAccountName: system-upgrade
   concurrency: 1
   channel: https://update.k3s.io/v1-release/channels/v1.23
-  cordon: true
+  version: v1.23.1+k3s2
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/master
         operator: In
         values:
           - "true"
+  drain:
+    deleteLocalData: true
+    ignoreDaemonSets: true
   tolerations:
     - key: "node-role.kubernetes.io/master"
       operator: "Exists"
