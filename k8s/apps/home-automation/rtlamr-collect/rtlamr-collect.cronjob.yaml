@@ -17,8 +17,28 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
+            - name: rtl-tcp
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.9"
+              command: ["/usr/bin/rtl_tcp"]
+              args: [
+                "-a",
+                "0.0.0.0",
+                "-p",
+                "5000"
+              ]
             - name: rtlamr-collect
-              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.8"
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rtlamr-collect:0.0.9"
               envFrom:
                 - secretRef:
                     name: rtlamr-collect
+          securityContext:
+            privileged: true
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: feature.node.kubernetes.io/custom-sdr
+                        operator: In
+                        values:
+                          - "true"

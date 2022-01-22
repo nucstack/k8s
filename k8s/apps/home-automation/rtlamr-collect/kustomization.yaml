@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - rtlamr-collect.cronjob.yaml
   - rtlamr-collect.secrets.enc.yaml
-  - rtl-tcp.helm-release.yaml
