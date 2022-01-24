@@ -49,9 +49,8 @@ spec:
         existingClaim: frigate
         mountPath: /data
       media:
-        enabled: true
-        type: hostPath
-        hostPath: /mnt/data/cctv
+        enabled: false
+        existingClaim: media
         mountPath: /media
       pci:
         enabled: true
