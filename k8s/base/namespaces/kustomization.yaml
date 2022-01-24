@@ -10,5 +10,6 @@ resources:
   - metallb-system.yaml
   - networking.yaml
   - observability.yaml
+  - rook-ceph.yaml
   - security.yaml
   - velero.yaml
