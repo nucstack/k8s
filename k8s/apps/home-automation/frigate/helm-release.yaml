@@ -49,8 +49,8 @@ spec:
         existingClaim: frigate
         mountPath: /data
       media:
-        enabled: false
-        existingClaim: media
+        enabled: true
+        existingClaim: frigate-media
         mountPath: /media
       pci:
         enabled: true
