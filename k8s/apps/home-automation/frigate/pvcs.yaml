@@ -1,6 +1,6 @@
 ---
-kind: PersistentVolume
 apiVersion: v1
+kind: PersistentVolume
 metadata:
   name: frigate-media
 spec:
