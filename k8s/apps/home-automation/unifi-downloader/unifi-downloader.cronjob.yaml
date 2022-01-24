@@ -28,7 +28,7 @@ spec:
           automountServiceAccountToken: false
           containers:
             - name: unifi-downloader
-              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.5"
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.6"
               envFrom:
                 - secretRef:
                     name: unifi-downloader
@@ -37,9 +37,8 @@ spec:
                   mountPath: /download
           volumes:
             - name: download-path
-              hostPath:
-                path: /mnt/data/cctv/unifi
-                type: Directory
+              persistentVolumeClaim:
+                claimName: unifi-downloader
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -85,9 +84,8 @@ spec:
                   mountPath: /backup
           volumes:
             - name: cctv-path
-              hostPath:
-                path: /mnt/data/cctv
-                type: Directory
+              persistentVolumeClaim:
+                claimName: unifi-downloader
             - name: backup-path
               nfs:
                 path: "${SECRET_NFS_CCTV_PATH}"
