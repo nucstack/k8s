@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: actions-runner-controller
+  namespace: development
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://actions-runner-controller.github.io/actions-runner-controller/
+      chart: actions-runner-controller
+      version: 0.15.1
+      sourceRef:
+        kind: HelmRepository
+        name: github-actions-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    syncPeriod: 10m
+
+    enableLeaderElection: true
+    authSecret:
+      enabled: true
+      create: false
+      name: "github-actions-runner-controller-manager"
+    image:
+      repository: "summerwind/actions-runner-controller"
+      actionsRunnerRepositoryAndTag: "summerwind/actions-runner:latest"
+      dindSidecarRepositoryAndTag: "docker:dind"
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    scope:
+      singleNamespace: true
+    certManagerEnabled: true

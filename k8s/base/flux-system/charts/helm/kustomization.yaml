@@ -10,6 +10,7 @@ resources:
   - descheduler.yaml
   - dex.yaml
   - external-dns.yaml
+  - github-actions.yaml
   - grafana-loki.yaml
   - influxdata.yaml
   - infracloudio.yaml
