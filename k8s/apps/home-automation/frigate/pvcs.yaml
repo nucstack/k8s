@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce
   storageClassName: ""
   nfs:
-    path: "${SECRET_NFS_CCTV_PATH}/frigate"
+    path: "${SECRET_NFS_CCTV_PATH}"
     server: "${SECRET_NFS_HOST}"
 ---
 apiVersion: v1
