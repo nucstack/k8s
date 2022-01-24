@@ -75,7 +75,7 @@ spec:
                 - "--max-age"
                 - "90m"
                 - "/cctv"
-                - "/backup"
+                - "/backup/unifi"
                 - "-v"
               volumeMounts:
                 - name: cctv-path
