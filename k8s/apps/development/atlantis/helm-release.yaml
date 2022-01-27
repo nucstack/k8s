@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://runatlantis.github.io/helm-charts
       chart: atlantis
-      version: 3.15.1
+      version: 3.15.2
       sourceRef:
         kind: HelmRepository
         name: atlantis-charts
@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: runatlantis/atlantis
-      tag: v0.18.1
+      tag: v0.18.2
     logLevel: debug
     disableApply: true
     disableApplyAll: true
