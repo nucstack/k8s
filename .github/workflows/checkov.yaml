@@ -7,7 +7,7 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   checkov-job:
-    runs-on: test-runner
+    runs-on: self-hosted
     name: checkov-action
     steps:
       - uses: actions/checkout@v2
