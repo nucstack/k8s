@@ -1,8 +1,15 @@
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
-kind: Runner
+kind: RunnerDeployment
 metadata:
   name: nucstack-runner
   namespace: development
 spec:
-  organization: nucstack
+  replicas: 1
+  template:
+    spec:
+      organization: nucstack
+      repository: actions-runner-controller/actions-runner-controller
+      image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/github-runner:0.0.1"
+      labels:
+        - test-runner
