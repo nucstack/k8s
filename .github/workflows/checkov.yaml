@@ -7,16 +7,16 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   checkov-job:
-    runs-on: ubuntu-20.04
+    runs-on: custom-runner
     name: checkov-action
     steps:
       - uses: actions/checkout@v2
-      - name: Run Checkov action
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          quiet: true
-          framework: all
-          output_format: github_failed_only
-          skip_check: flux-system
-          soft_fail: true
+      # - name: Run Checkov action
+      #   id: checkov
+      #   uses: bridgecrewio/checkov-action@master
+      #   with:
+      #     quiet: true
+      #     framework: all
+      #     output_format: github_failed_only
+      #     skip_check: flux-system
+      #     soft_fail: true
