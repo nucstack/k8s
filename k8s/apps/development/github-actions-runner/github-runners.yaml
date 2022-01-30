@@ -9,7 +9,6 @@ spec:
   template:
     spec:
       organization: nucstack
-      repository: actions-runner-controller/actions-runner-controller
       image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/github-runner:0.0.1"
       labels:
         - test-runner
