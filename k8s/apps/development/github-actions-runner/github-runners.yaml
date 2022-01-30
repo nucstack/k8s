@@ -10,5 +10,6 @@ spec:
     spec:
       organization: nucstack
       image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/github-runner:0.0.1"
+      dockerdWithinRunnerContainer: false
       labels:
         - test-runner
