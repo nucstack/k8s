@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - github-actions-runner.secrets.enc.yaml
   - helm-release.yaml
-  - github-runners.yaml
+# - github-runners.yaml
