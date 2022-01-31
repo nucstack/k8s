@@ -21,7 +21,7 @@ spec:
     debug: false
     image:
       repository: ghcr.io/banzaicloud/vault-secrets-webhook
-      tag: "1.14.4"
+      tag: "1.15.0"
       pullPolicy: IfNotPresent
     service:
       name: vault-secrets-webhook
