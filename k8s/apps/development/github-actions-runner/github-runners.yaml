@@ -9,7 +9,7 @@ spec:
   template:
     spec:
       repository: nucstack/terraform
-      image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/github-runner:0.0.2"
+      image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/github-runner:0.0.1"
       resources:
         limits:
           cpu: "1.0"
