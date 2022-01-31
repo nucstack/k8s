@@ -5,7 +5,7 @@ metadata:
   name: terraform-runners
   namespace: development
 spec:
-  replicas: 1
+  replicas: 0
   template:
     spec:
       repository: nucstack/terraform
@@ -20,3 +20,15 @@ spec:
       dockerEnabled: false
       labels:
         - terraform
+---
+kind: HorizontalRunnerAutoscaler
+spec:
+  scaleTargetRef:
+    name: terraform-runners
+  scaleUpTriggers:
+    - githubEvent:
+        pullRequest:
+          types: ["synchronize"]
+          branches: ["main"]
+      amount: 1
+      duration: "5m"
