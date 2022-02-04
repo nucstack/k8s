@@ -31,21 +31,18 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
-    resources:
-      limits:
-        cpu: 500m
-        memory: 512Mi
-      requests:
-        cpu: 250m
-        memory: 256Mi
-    volumePermissions:
-      enabled: true
+    primary:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
     persistence:
       enabled: true
       storageClass: longhorn
       size: 1Gi
-    postgresqlUsername: authelia
-    postgresqlDatabase: authelia
     metrics:
       enabled: false
       serviceMonitor:
