@@ -47,7 +47,7 @@ spec:
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
         enabled: true
   valuesFrom:
