@@ -8,5 +8,5 @@ resources:
   - authelia-postgres.secret.enc.yaml
   - authelia-postgres-helm-release.yaml
 
-  # - authelia.secret.enc.yaml
-  # - authelia-helm-release.yaml
+  - authelia.secret.enc.yaml
+  - authelia-helm-release.yaml
