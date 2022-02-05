@@ -23,4 +23,4 @@ tasks:
     desc: Scan terraform Iac Code
     dir: "{{.PROJECT_DIR}}"
     cmds:
-      - checkov --compact --directory ./terraform
+      - checkov --download-external-modules=true --compact --directory ./terraform
