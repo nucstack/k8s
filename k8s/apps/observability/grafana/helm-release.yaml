@@ -154,11 +154,6 @@ spec:
           gnetId: 11312
           revision: 8
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11055
-        velero:
-          gnetId: 11055
-          revision: 2
-          datasource: Prometheus
     sidecar:
       dashboards:
         enabled: true
