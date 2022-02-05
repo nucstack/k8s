@@ -22,7 +22,6 @@ resources:
   - metrics-server.yaml
   - node-feature-discovery.yaml
   - prometheus-community.yaml
-  - ricoberger.yaml
   - rook-ceph.yaml
   - stakater.yaml
   - traefik.yaml
