@@ -37,6 +37,8 @@ spec:
       tag: 4.33.1
     persistence:
       enabled: true
+      storageClass: "longhorn"
+      size: 100Mi
     resources:
       limits:
         cpu: 400m
