@@ -35,6 +35,8 @@ spec:
       registry: ghcr.io
       repository: authelia/authelia
       tag: 4.33.1
+    persistence:
+      enabled: true
     resources:
       limits:
         cpu: 400m
@@ -81,6 +83,7 @@ spec:
         inactivity: 30m
         redis:
           enabled: false
+
   valuesFrom:
     - kind: Secret
       name: authelia-helm-values
