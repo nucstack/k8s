@@ -79,6 +79,10 @@ spec:
                           - "true"
           restartPolicy: OnFailure
           automountServiceAccountToken: false
+          securityContext:
+            runAsUser: 10000
+            runAsGroup: 10000
+            fsGroup: 10000
           containers:
             - name: unifi-downloader
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
@@ -103,8 +107,6 @@ spec:
                   cpu: "500m"
               securityContext:
                 allowPrivilegeEscalation: false
-                runAsUser: 10000
-                runAsGroup: 10000
           volumes:
             - name: cctv-path
               persistentVolumeClaim:
