@@ -29,6 +29,17 @@ spec:
           securityContext:
             runAsUser: 10000
             runAsGroup: 10000
+          initContainers:
+            - name: chown
+              image: alpine:3
+              command:
+                - chown
+                - -R
+                - 10000:10000
+                - /download
+              volumeMounts:
+                - name: download-path
+                  mountPath: /download
           containers:
             - name: unifi-downloader
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.6"
