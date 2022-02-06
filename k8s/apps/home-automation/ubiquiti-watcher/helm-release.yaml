@@ -35,10 +35,10 @@ spec:
       requests:
         cpu: 300m
         memory: 128Mi
-      securityContext:
-        allowPrivilegeEscalation: false
-        runAsUser: 10000
-        runAsGroup: 10000
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 10000
+      runAsGroup: 10000
     probes:
       liveness:
         enabled: false
