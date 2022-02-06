@@ -46,7 +46,6 @@ spec:
                 allowPrivilegeEscalation: false
                 runAsUser: 10000
                 runAsGroup: 10000
-                fsGroup: 10000
           volumes:
             - name: download-path
               persistentVolumeClaim:
@@ -82,7 +81,6 @@ spec:
           securityContext:
             runAsUser: 10000
             runAsGroup: 10000
-            fsGroup: 10000
           containers:
             - name: unifi-downloader
               image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/rclone:0.0.1"
