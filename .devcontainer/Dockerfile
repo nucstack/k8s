@@ -8,7 +8,7 @@ FROM docker.io/zegl/kube-score:v1.13.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.4.1 as kustomize
 FROM docker.io/hashicorp/packer:1.7.10 as packer
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
-FROM docker.io/prom/prometheus:v2.33.1 as prom
+FROM docker.io/prom/prometheus:v2.33.2 as prom
 FROM docker.io/hashicorp/terraform:1.1.5 as terraform
 FROM docker.io/aquasec/trivy:0.23.0 as trivy
 FROM docker.io/hashicorp/vault:1.9.3 as vault
