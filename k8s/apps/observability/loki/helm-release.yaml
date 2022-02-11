@@ -41,10 +41,10 @@ spec:
       pspEnabled: false
     resources:
       requests:
-        memory: 512Mi
+        memory: 1024Mi
         cpu: 200m
       limits:
-        memory: 768Mi
+        memory: 2048Mi
         cpu: 400m
     config:
       limits_config:
