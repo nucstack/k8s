@@ -173,7 +173,7 @@ spec:
       - camptocamp-prometheus-alertmanager-datasource
       - agenty-flowcharting-panel
     serviceMonitor:
-      enabled: true
+      enabled: false
     ingress:
       enabled: true
       annotations:
