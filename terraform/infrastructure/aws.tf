@@ -105,7 +105,7 @@ module "ec2-instances" {
 module "autoscaling-instances" {
   source                 = "terraform-aws-modules/autoscaling/aws"
   for_each               = {for service in var.services:  service.name => service if service.type == "autoscaling" && var.type == "aws"}
-  version                = "~> 4.0"
+  version                = "~> 5.0"
   name                   = each.value.name
   min_size               = each.value.count
   max_size               = each.value.count
