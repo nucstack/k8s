@@ -13,7 +13,7 @@ FROM docker.io/hashicorp/terraform:1.1.5 as terraform
 FROM docker.io/aquasec/trivy:0.23.0 as trivy
 FROM docker.io/hashicorp/vault:1.9.3 as vault
 FROM docker.io/velero/velero:v1.8.0 as velero
-FROM docker.io/mikefarah/yq:4.19.1 as yq
+FROM docker.io/mikefarah/yq:4.20.1 as yq
 
 # base image
 FROM docker:20.10.12-dind-rootless
