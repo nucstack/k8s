@@ -4,7 +4,7 @@ FROM docker.io/hadolint/hadolint:v2.8.0 as hadolint
 FROM docker.io/alpine/helm:3.8.0 as helm
 FROM docker.io/bitnami/kubectl:1.23.3 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
-FROM docker.io/zegl/kube-score:v1.13.0 as kube-score
+FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.2 as kustomize
 FROM docker.io/hashicorp/packer:1.7.10 as packer
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
