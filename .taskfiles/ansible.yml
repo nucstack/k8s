@@ -11,7 +11,7 @@ vars:
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.ini"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.name == \"ansible_inventory\") and .type == \"template_file\") | .instances[0].attributes.rendered' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.name == \"k3s_inventory\") and .type == \"template_file\") | .instances[0].attributes.rendered' {{.STATE_DIR}}/terraform.tfstate"
 
 tasks:
   export-ssh-keys:

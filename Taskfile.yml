@@ -12,7 +12,7 @@ vars:
   SSH_PUBLIC_KEY_PATH: "{{.SSH_PRIVATE_KEY_PATH}}.pub"
   # the terraform state used to build instances contains some useful things
   SSH_USER:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.type == \"null_resource\") and .name == \"instances\") | .instances[0].attributes.triggers.username' {{.STATE_DIR}}/terraform.tfstate"
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.type == \"null_resource\") and .name == \"hosts\") | .instances[0].attributes.triggers.username' {{.STATE_DIR}}/terraform.tfstate"
   SSH_PRIVATE_KEY:
     sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select(.type == \"tls_private_key\") | .instances[0].attributes.private_key_pem' {{.STATE_DIR}}/terraform.tfstate"
   SSH_PUBLIC_KEY:
