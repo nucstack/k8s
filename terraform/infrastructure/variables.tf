@@ -3,11 +3,6 @@ variable "environment" {
   type        = string
 }
 
-variable "type" {
-  description = "infrastructure type. e.g. physical/aws/gcp"
-  type        = string
-}
-
 variable "masters" {
   description = "masters count"
   type        = string
