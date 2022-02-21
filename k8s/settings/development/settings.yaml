@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cluster-settings
-  namespace: flux-system
-data:
-  METALLB_LB_RANGE: 192.168.9.70-192.168.9.75
-  ENVIRONMENT: development

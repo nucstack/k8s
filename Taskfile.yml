@@ -7,7 +7,6 @@ vars:
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/k8s/clusters"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform/infrastructure"
-  PACKER_DIR: "{{.PROJECT_DIR}}/packer"
   STATE_DIR: "{{.TERRAFORM_DIR}}/terraform.tfstate.d/{{.ENVIRONMENT}}"
   SSH_PRIVATE_KEY_PATH: "/home/${LOGNAME}/.ssh/{{.ENVIRONMENT}}.id_rsa"
   SSH_PUBLIC_KEY_PATH: "{{.SSH_PRIVATE_KEY_PATH}}.pub"
@@ -27,7 +26,6 @@ includes:
   checkov: .taskfiles/checkov.yml
   flux: .taskfiles/flux.yml
   kustomizer: .taskfiles/kustomizer.yml
-  packer: .taskfiles/packer.yml
   terraform: .taskfiles/terraform.yml
   tftp: .taskfiles/tftp.yml
   vault: .taskfiles/vault.yml

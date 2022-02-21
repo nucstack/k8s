@@ -9,6 +9,5 @@ Thumbs.db
 .decrypted~*.yaml
 # terraform
 .terraform
-.terraform.lock.hcl
 *.env
 tftp/

@@ -6,7 +6,6 @@ FROM docker.io/bitnami/kubectl:1.23.4 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.2 as kustomize
-FROM docker.io/hashicorp/packer:1.7.10 as packer
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
 FROM docker.io/prom/prometheus:v2.33.3 as prom
 FROM docker.io/hashicorp/terraform:1.1.6 as terraform
@@ -74,7 +73,6 @@ COPY --from=kubeval    /usr/bin/kubeval                 /usr/local/bin/kubeval
 COPY --from=kube-score /kube-score                      /usr/local/bin/kube-score
 COPY --from=kustomize  /app/kustomize                   /usr/local/bin/kustomize
 COPY --from=terraform  /bin/terraform                   /usr/local/bin/terraform
-COPY --from=packer     /bin/packer                      /usr/local/bin/packer
 COPY --from=prom       /bin/promtool                    /usr/local/bin/promtool
 COPY --from=prom-am    /bin/amtool                      /usr/local/bin/amtool
 COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
