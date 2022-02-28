@@ -11,21 +11,49 @@ vars:
   ANSIBLE_PLAYBOOK: "k3s"
   ANSIBLE_HOSTS_FILE: "{{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}/hosts.ini"
   ANSIBLE_HOSTS:
-    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.name == \"ansible_inventory\") and .type == \"template_file\") | .instances[0].attributes.rendered' {{.STATE_DIR}}/terraform.tfstate"
-
+    sh: "[ ! -f {{.STATE_DIR}}/terraform.tfstate ] || jq '.resources[] | select((.name == \"k3s_inventory\") and .type == \"template_file\") | .instances[0].attributes.rendered' {{.STATE_DIR}}/terraform.tfstate"
 tasks:
-  export-keys:
-    deps: [init]
+  export-ssh-keys:
+    desc: fetch cluster ssh keys from terraform state
     cmds:
       - "[ -f {{.SSH_PRIVATE_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PRIVATE_KEY}} > {{.SSH_PRIVATE_KEY_PATH}} && chmod 0600 {{.SSH_PRIVATE_KEY_PATH}}"
       - "[ -f {{.SSH_PUBLIC_KEY_PATH}} ] || mkdir -p /home/${LOGNAME}/.ssh && echo -e {{.SSH_PUBLIC_KEY}} > {{.SSH_PUBLIC_KEY_PATH}} && chmod 0600 {{.SSH_PUBLIC_KEY_PATH}}"
     silent: true
 
   export-kubeconfig:
+    desc: export service account kubeconfig
+    deps: [export-ssh-keys]
+    vars:
+      NAME: ""
+      SA_NAME:
+        sh: "kubectl -n kube-system get serviceaccount {{.NAME}} -o json | jq -r '.secrets[].name'"
+      CA:
+        sh: "kubectl -n kube-system get secret {{.SA_NAME}} -o json | jq -r '.data.\"ca.crt\"'"
+      TOKEN:
+        sh: "kubectl -n kube-system get secret {{.SA_NAME}} -o json | jq -r '.data.token'| base64 -d"
+    cmds:
+      - "KUBECONFIG_CA={{.CA}} KUBECONFIG_TOKEN={{.TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/{{.NAME}}-{{.ENVIRONMENT}}.kubeconfig"
+    silent: true
+
+  export-synology-dns-kubeconfig:
+    desc: fetch kubeconfig for synology dns
+    deps: [export-ssh-keys]
+    cmds:
+      - "ansible:export-kubeconfig NAME=synology-dns"
+    silent: true
+
+  export-home-dns-kubeconfig:
+    desc: fetch kubeconfig for home dns
+    deps: [export-ssh-keys]
+    cmds:
+      - "ansible:export-kubeconfig NAME=home-dns"
+    silent: true
+
+  fetch-kubeconfig:
     vars:
       KUBECONFIG_PATH:
         sh: if [[ "${ANSIBLE_PLAYBOOK}" = "kubespray" ]]; then echo '/etc/kubernetes/admin.conf'; else echo '/etc/rancher/k3s/k3s.yaml'; fi
-    deps: [export-keys]
+    deps: [export-ssh-keys]
     desc: fetch kubeconfig from bootstrap k8s master
     cmds:
       - "[ -f {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig ] || rsync -e \"ssh -i {{.SSH_PRIVATE_KEY_PATH}}\" --verbose --progress --partial --rsync-path='sudo rsync' {{.SSH_USER}}@192.168.9.25:{{.KUBECONFIG_PATH}} {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig"
@@ -33,47 +61,9 @@ tasks:
       - chmod go-r {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
     silent: true
 
-  export-home-dns-kubeconfig:
-    desc: fetch kubeconfig for coredns k8s_gateway
-    deps: [export-keys]
-    vars:
-      HOMEDNS_NAME:
-        sh: "kubectl -n kube-system get serviceaccount home-dns -o json | jq -r '.secrets[].name'"
-      HOMEDNS_CA:
-        sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.\"ca.crt\"'"
-      HOMEDNS_TOKEN:
-        sh: "kubectl -n kube-system get secret {{.HOMEDNS_NAME}} -o json | jq -r '.data.token'| base64 -d"
-    cmds:
-      - "KUBECONFIG_CA={{.HOMEDNS_CA}} KUBECONFIG_TOKEN={{.HOMEDNS_TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/home-dns-{{.ENVIRONMENT}}.kubeconfig"
-    silent: true
-
-  export-synology-dns-kubeconfig:
-    desc: fetch kubeconfig for synology dns
-    deps: [export-keys]
-    vars:
-      SYNODNS_NAME:
-        sh: "kubectl -n kube-system get serviceaccount synology-dns -n networking -o json | jq -r '.secrets[].name'"
-      SYNODNS_CA:
-        sh: "kubectl -n kube-system get secret {{.SYNODNS_NAME}} -n networking -o json | jq -r '.data.\"ca.crt\"'"
-      SYNODNS_TOKEN:
-        sh: "kubectl -n kube-system get secret {{.SYNODNS_NAME}} -n networking -o json | jq -r '.data.token'| base64 -d"
-    cmds:
-      - "KUBECONFIG_CA={{.SYNODNS_CA}} KUBECONFIG_TOKEN={{.SYNODNS_TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/synology-dns-{{.ENVIRONMENT}}.kubeconfig"
-    silent: true
-
-  init:
-    desc: Generate host inventory
-    env:
-      CONFIG_FILE: "{{.ANSIBLE_HOSTS_FILE}}"
-    cmds:
-      - mkdir -p {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
-      - cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample/group_vars {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}}
-      - "[ -f {{.ANSIBLE_HOSTS_FILE}} ] || cp -R {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/inventory/sample {{.ANSIBLE_INVENTORY_DIR}}/{{.ENVIRONMENT}} && echo -e {{.ANSIBLE_HOSTS}} > {{.ANSIBLE_HOSTS_FILE}} | sed -i '$ d' {{.ANSIBLE_HOSTS_FILE}}"
-    silent: true
-
   ping:
     desc: Ping all k8s nodes
-    deps: [export-keys]
+    deps: [export-ssh-keys]
     cmds:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m ping -v"
     silent: true
@@ -85,75 +75,11 @@ tasks:
       - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a uptime"
     silent: true
 
-  release:
-    desc: lsb_release of all k8s nodes
-    deps: [ping]
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'lsb_release -a'"
-    silent: true
-
-  rebuild-all:
-    desc: Reinstall OS on all hosts via PXE
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo rm -rf /boot' --become"
-    silent: true
-
-  clean-images:
-    desc: Clean up stale container images
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'k3s crictl rmi --prune' --become"
-    silent: true
-
-  clean-longhorn:
-    desc: Clean up longhorn
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/longhorn/*' --become"
-    silent: true
-
-  cleanup-pods:
-    desc: cleanup orphaned pod
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a \"rm -r /var/lib/kubelet/pods/$(journalctl -u k3s.service -n 20 2>&1 | grep 'orphaned pod' | tail -1 | awk '{print $23}'| sed 's/\\\"//g')\" --become"
-    silent: true
-
-  k3s-config-check:
-    desc: Config Check
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'k3s check-config' --become"
-    silent: true
-
-  clean-k3s:
-    desc: Clean up k3s
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /var/lib/rancher' --become"
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'rm -rf /etc/rancher' --become"
-    silent: true
-
-  reboot:
-    desc: reboot all k8s nodes
-    deps: [ping]
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -m reboot"
-    silent: true
-
   install:
     desc: Install k8s
     deps: [ping]
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/cluster.yml -v -b"
-      #- task ansible:export-kubeconfig
     silent: true
 
   reset:
@@ -162,12 +88,4 @@ tasks:
     cmds:
       - "ansible-playbook --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} {{.ANSIBLE_PLAYBOOK_DIR}}/{{.ANSIBLE_PLAYBOOK}}/reset.yml -v -b"
       - rm {{.PROJECT_DIR}}/{{.ENVIRONMENT}}.kubeconfig
-    silent: true
-
-  remount-root-rw:
-    desc: Remounts / as rw
-    deps: [ping]
-    dir: ansible
-    cmds:
-      - "ansible all --private-key {{.SSH_PRIVATE_KEY_PATH}} -i {{.ANSIBLE_HOSTS_FILE}} -u {{.SSH_USER}} --one-line -a 'sudo mount -o remount,rw UUID=$(sudo blkid /dev/sda2 -s UUID -o value) /' --become"
     silent: true

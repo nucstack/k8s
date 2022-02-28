@@ -1,19 +1,18 @@
 # dependencies
-FROM docker.io/fluxcd/flux-cli:v0.26.3 as flux
+FROM docker.io/fluxcd/flux-cli:v0.27.2 as flux
 FROM docker.io/hadolint/hadolint:v2.8.0 as hadolint
 FROM docker.io/alpine/helm:3.8.0 as helm
-FROM docker.io/bitnami/kubectl:1.23.3 as kubectl
+FROM docker.io/bitnami/kubectl:1.23.4 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
-FROM docker.io/zegl/kube-score:v1.13.0 as kube-score
-FROM k8s.gcr.io/kustomize/kustomize:v4.4.1 as kustomize
-FROM docker.io/hashicorp/packer:1.7.10 as packer
+FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
+FROM k8s.gcr.io/kustomize/kustomize:v4.5.2 as kustomize
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
-FROM docker.io/prom/prometheus:v2.33.2 as prom
-FROM docker.io/hashicorp/terraform:1.1.5 as terraform
-FROM docker.io/aquasec/trivy:0.23.0 as trivy
+FROM docker.io/prom/prometheus:v2.33.4 as prom
+FROM docker.io/hashicorp/terraform:1.1.6 as terraform
+FROM docker.io/aquasec/trivy:0.24.1 as trivy
 FROM docker.io/hashicorp/vault:1.9.3 as vault
-FROM docker.io/velero/velero:v1.7.1 as velero
-FROM docker.io/mikefarah/yq:4.19.1 as yq
+FROM docker.io/velero/velero:v1.8.0 as velero
+FROM docker.io/mikefarah/yq:4.21.1 as yq
 
 # base image
 FROM docker:20.10.12-dind-rootless
@@ -74,7 +73,6 @@ COPY --from=kubeval    /usr/bin/kubeval                 /usr/local/bin/kubeval
 COPY --from=kube-score /kube-score                      /usr/local/bin/kube-score
 COPY --from=kustomize  /app/kustomize                   /usr/local/bin/kustomize
 COPY --from=terraform  /bin/terraform                   /usr/local/bin/terraform
-COPY --from=packer     /bin/packer                      /usr/local/bin/packer
 COPY --from=prom       /bin/promtool                    /usr/local/bin/promtool
 COPY --from=prom-am    /bin/amtool                      /usr/local/bin/amtool
 COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
