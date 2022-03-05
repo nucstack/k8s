@@ -166,7 +166,7 @@ spec:
       admissionWebhooks:
         enabled: true
         patch:
-          enabled: false
+          enabled: true
     prometheus:
       ingress:
         enabled: true
