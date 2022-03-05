@@ -68,10 +68,6 @@ spec:
         local:
           enabled: true
           path: /config/db.sqlite3
-      totp:
-        disable: true
-      webauthn:
-        disable: true
       session:
         inactivity: 30m
         redis:
