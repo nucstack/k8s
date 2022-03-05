@@ -59,7 +59,7 @@ RUN apk --update --no-cache add \
 # install pip/ansible dependencies
 COPY pip-requirements.txt ansible-requirements.yml /tmp/
 RUN pip3 install --no-cache-dir --requirement /tmp/pip-requirements.txt && \
-    ansible-galaxy install -r /tmp/ansible-requirements.yml
+    ansible-galaxy install -r /tmp/ansible-requirements.yml --ignore-errors
 
 # install binary releases
 COPY binary-releases.sh /tmp/binary-releases.sh
@@ -83,8 +83,6 @@ COPY --from=yq         /usr/bin/yq                      /usr/local/bin/yq
 RUN wget https://github.com/doitintl/kube-no-trouble/releases/download/${KUBENT_VERSION}/kubent-${KUBENT_VERSION}-linux-amd64.tar.gz && \
     tar -xzf kubent-${KUBENT_VERSION}-linux-amd64.tar.gz -C /usr/local/bin && rm kubent-${KUBENT_VERSION}-linux-amd64.tar.gz
 
-RUN helm plugin install https://github.com/databus23/helm-diff
-
 # Setup user/profile
 RUN mkdir -p /etc/sudoers.d && \
     echo rootless ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/rootless && \
@@ -101,6 +99,9 @@ RUN git clone --single-branch --depth 1 https://github.com/robbyrussell/oh-my-zs
 
 WORKDIR /home/rootless
 USER rootless
+
+RUN helm plugin install https://github.com/databus23/helm-diff
+
 ENV DOCKER_HOST=unix:///var/run/user/1000/docker.sock
 
 HEALTHCHECK NONE
