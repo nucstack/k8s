@@ -122,7 +122,7 @@ spec:
       endpoints:
         - 192.168.9.25
         - 192.168.9.26
-        - 192.168.9.27
+        - 192.168.9.29
       service:
         enabled: true
         port: 10257
@@ -136,7 +136,7 @@ spec:
       endpoints:
         - 192.168.9.25
         - 192.168.9.26
-        - 192.168.9.27
+        - 192.168.9.29
       service:
         enabled: true
         port: 10259
@@ -150,13 +150,13 @@ spec:
       endpoints:
         - 192.168.9.25
         - 192.168.9.26
-        - 192.168.9.27
+        - 192.168.9.29
     kubeEtcd:
       enabled: false
       endpoints:
         - 192.168.9.25
         - 192.168.9.26
-        - 192.168.9.27
+        - 192.168.9.29
       service:
         enabled: true
         port: 2381
