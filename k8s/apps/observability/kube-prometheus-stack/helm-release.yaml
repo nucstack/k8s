@@ -164,9 +164,9 @@ spec:
     prometheusOperator:
       configReloaderCpu: 0
       admissionWebhooks:
-        enabled: true
+        enabled: false
         patch:
-          enabled: true
+          enabled: false
     prometheus:
       ingress:
         enabled: true
