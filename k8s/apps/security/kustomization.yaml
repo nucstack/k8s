@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - authelia
   - dex
-  - dex-k8s-authenticator
   - rbac
