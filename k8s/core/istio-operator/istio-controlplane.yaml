@@ -24,7 +24,7 @@ spec:
         enabled: false
     ingressGateways:
       - name: istio-ingressgateway
-        enabled: false
+        enabled: true
         k8s:
           service:
             type: LoadBalancer
