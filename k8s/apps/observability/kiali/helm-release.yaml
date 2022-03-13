@@ -22,6 +22,16 @@ spec:
       namespace: observability
   values:
     istio_namespace: istio-system
+    server:
+      web_fqdn: "kiali.${SECRET_DOMAIN}"
+    deployment:
+      ingress:
+        class_name: "traefik"
+        override_yaml:
+          metadata:
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+              traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
       prometheus:
         url: "http://prometheus-operated.observability.svc.cluster.local:9090/"
