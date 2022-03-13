@@ -27,7 +27,8 @@ spec:
         enabled: true
         k8s:
           service:
-            annotations:
-              coredns.io/hostname: "demo.${SECRET_DOMAIN}"
+            metadata:
+              annotations:
+                coredns.io/hostname: "demo.${SECRET_DOMAIN}"
             type: LoadBalancer
             loadBalancerIP: "${SECRET_ISTIO_LB_IP}"
