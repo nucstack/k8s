@@ -20,8 +20,6 @@ spec:
   components:
     pilot:
       enabled: true
-    telemetry:
-      enabled: false
     egressGateways:
       - name: istio-egressgateway
         enabled: false
