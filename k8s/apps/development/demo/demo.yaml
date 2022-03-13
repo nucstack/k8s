@@ -4,8 +4,6 @@ kind: Service
 metadata:
   name: demo
   namespace: development
-  annotations:
-    coredns.io/hostname: "demo.${SECRET_DOMAIN}"
 spec:
   selector:
     app: demo-app
