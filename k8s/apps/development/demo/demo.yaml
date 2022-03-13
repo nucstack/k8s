@@ -3,6 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: demo
+  namespace: development
 spec:
   host: demo.development.svc.cluster.local
   subsets:
