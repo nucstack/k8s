@@ -24,6 +24,7 @@ spec:
       strategy: "anonymous"
     deployment:
       accessible_namespaces:
+        - "istio-system"
         - "development"
       ingress:
         enabled: true
