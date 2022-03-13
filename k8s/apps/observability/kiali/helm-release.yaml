@@ -37,7 +37,7 @@ spec:
               #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
       prometheus:
-        url: "http://prometheus-operated.observability.svc.cluster.local:9090/"
+        url: "http://thanos-query.observability.svc.cluster.local:9090/"
       tracing:
         enabled: true
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
