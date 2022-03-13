@@ -5,11 +5,14 @@ metadata:
   name: demo
   namespace: development
 spec:
-  host: demo-v1.development.svc.cluster.local
+  host: demo.development.svc.cluster.local
   subsets:
     - name: v1
       labels:
         version: v1
+    - name: v2
+      labels:
+        version: v2
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -25,6 +28,10 @@ spec:
     - name: default
       route:
         - destination:
-            host: demo-v1.development.svc.cluster.local
+            host: demo.development.svc.cluster.local
             subset: v1
-          weight: 100
+          weight: 50
+        - destination:
+            host: demo.development.svc.cluster.local
+            subset: v2
+          weight: 50
