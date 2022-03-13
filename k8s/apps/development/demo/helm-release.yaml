@@ -28,6 +28,7 @@ spec:
     nameOverride: demo
     service:
       main:
+        nameOverride: demo
         ports:
           http:
             port: 8080
