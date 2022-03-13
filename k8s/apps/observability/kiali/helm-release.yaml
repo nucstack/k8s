@@ -23,6 +23,10 @@ spec:
     kiali_route_url: "https://kiali.${SECRET_DOMAIN}/"
     auth:
       strategy: "anonymous"
+    istio_component_namespaces:
+      prometheus: observability
+      tracing: observability
+      grafana: observability
     deployment:
       accessible_namespaces:
         - "istio-system"
@@ -38,7 +42,8 @@ spec:
               #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
       prometheus:
-        url: "http://thanos-query.observability.svc.cluster.local:9090/"
+        url: "http://thanos-query.observability.svc.cluster.local:9090"
+        custom_metrics_url: "http://thanos-query.observability.svc.cluster.local:9090"
       tracing:
         enabled: false
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
