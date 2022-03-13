@@ -15,8 +15,6 @@ spec:
         name: kiali-charts
         namespace: flux-system
       interval: 5m
-  install:
-    createNamespace: true
   values:
     istio_namespace: istio-system
     server:
