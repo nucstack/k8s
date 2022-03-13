@@ -48,8 +48,8 @@ spec:
           use_kiali_token: false
         component_status:
           namespace: 'observability'
-        in_cluster_url: "http://thanos-query.observability.svc.cluster.local:9090"
-        custom_metrics_url: "http://thanos-query.observability.svc.cluster.local:9090"
+        url: "http://prometheus-operated.observability.svc.cluster.local:9090"
+        custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
         enabled: false
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
