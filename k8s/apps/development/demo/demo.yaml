@@ -8,7 +8,7 @@ spec:
   hosts:
     - "demo.${SECRET_DOMAIN}"
   gateways:
-    - istio-ingressgateway
+    - istio-system/istio-ingressgateway
   http:
     - name: default
       route:
