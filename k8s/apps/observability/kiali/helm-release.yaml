@@ -29,6 +29,7 @@ spec:
     deployment:
       accessible_namespaces:
         - "istio-system"
+        - "observability"
         - "development"
       ingress:
         enabled: true
