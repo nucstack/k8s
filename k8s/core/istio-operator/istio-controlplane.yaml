@@ -26,8 +26,6 @@ spec:
       - name: istio-ingressgateway
         enabled: true
         k8s:
-          serviceAnnotations:
-            coredns.io/hostname: "demo.${SECRET_LOCAL_DOMAIN}"
           service:
             type: LoadBalancer
             loadBalancerIP: "${SECRET_ISTIO_LB_IP}"
