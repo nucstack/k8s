@@ -19,6 +19,8 @@ spec:
     enablePrometheusMerge: false
     accessLogFile: /dev/stdout
   components:
+    pilot:
+      enabled: true
     telemetry:
       enabled: false
     egressGateways:

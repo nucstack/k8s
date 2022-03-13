@@ -41,6 +41,8 @@ spec:
               traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
               #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
+      istio:
+        url_service_version: http://istio-pilot.istio-system:8080/version
       prometheus:
         auth:
           ca_file: ''
