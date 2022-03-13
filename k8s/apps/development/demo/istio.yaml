@@ -1,0 +1,30 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: demo
+  namespace: development
+spec:
+  host: demo.development.svc.cluster.local
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demo
+  namespace: development
+spec:
+  hosts:
+    - "demo.${SECRET_DOMAIN}"
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - name: default
+      route:
+        - destination:
+            host: demo.development.svc.cluster.local
+            subset: v1
+          weight: 100
