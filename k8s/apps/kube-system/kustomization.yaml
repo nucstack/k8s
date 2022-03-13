@@ -8,4 +8,5 @@ resources:
   - kube-cleanup-operator
   - node-feature-discovery
   - node-problem-detector
+  - reflector
   - reloader

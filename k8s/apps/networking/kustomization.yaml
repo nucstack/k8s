@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   - blocky
   - error-pages
-  - istio
   - traefik
   - wildcard-certificate
