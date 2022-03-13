@@ -29,3 +29,41 @@ spec:
           service:
             type: LoadBalancer
             loadBalancerIP: "${SECRET_ISTIO_LB_IP}"
+  addonComponents:
+    kiali:
+      enabled: true
+      k8s:
+        replicaCount: 1
+        overlays:
+          - kind: ConfigMap
+            name: kiali
+            patches:
+              - path: data
+                value: |
+                  config.yaml: |
+                      istio_component_namespaces:
+                        grafana: observability
+                        tracing: istio-system
+                        istiod: istio-system
+                        prometheus: obversability
+                      istio_namespace: istio-system
+                      auth:
+                        strategy: login
+                      deployment:
+                        accessible_namespaces: ['**']
+                      login_token:
+                        signing_key: "BOGUS123"
+                      server:
+                        port: 20001
+                        web_root: /kiali
+                      external_services:
+                        istio:
+                          url_service_version: http://istiod.istio-system:15014/version
+                        tracing:
+                          url:
+                          in_cluster_url: http://tracing/jaeger
+                        grafana:
+                          url:
+                          in_cluster_url: http://grafana.observability.svc.cluster.local:3000
+                        prometheus:
+                          url: http://prometheus-prometheus-oper-prometheus.observability.svc.cluster.local:9090
