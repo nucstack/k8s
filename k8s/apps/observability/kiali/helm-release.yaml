@@ -48,7 +48,7 @@ spec:
           use_kiali_token: false
         component_status:
           namespace: 'observability'
-        url: "http://thanos-query.observability.svc.cluster.local:9090"
+        in_cluster_url: "http://thanos-query.observability.svc.cluster.local:9090"
         custom_metrics_url: "http://thanos-query.observability.svc.cluster.local:9090"
       tracing:
         enabled: false
