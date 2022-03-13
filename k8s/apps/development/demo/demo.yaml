@@ -9,12 +9,9 @@ spec:
     istio: ingressgateway
   servers:
     - port:
-        number: 443
-        name: https
-        protocol: HTTPS
-      tls:
-        mode: MUTUAL
-        credentialName: "${SECRET_DOMAIN/./-}-tls"
+        number: 80
+        name: http
+        protocol: HTTP
       hosts:
         - "demo.${SECRET_DOMAIN}"
 ---
