@@ -54,8 +54,8 @@ spec:
           app_label: prometheus
           is_core: true
           namespace: 'observability'
-        url: "http://prometheus-operated.observability.svc.cluster.local:9090"
-        custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
+        url: "http://prometheus-prometheus.observability.svc.cluster.local:9090"
+        custom_metrics_url: "http://prometheus-prometheus.observability.svc.cluster.local:9090"
       tracing:
         enabled: false
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
