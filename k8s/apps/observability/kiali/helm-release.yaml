@@ -27,6 +27,8 @@ spec:
     auth:
       strategy: "anonymous"
     deployment:
+      accessible_namespaces:
+        - "development"
       ingress:
         class_name: "traefik"
         override_yaml:
