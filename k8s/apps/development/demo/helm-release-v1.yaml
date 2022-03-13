@@ -28,6 +28,8 @@ spec:
         value: test-v1
     service:
       main:
+        labels:
+          version: v1
         ports:
           http:
             port: 8080
