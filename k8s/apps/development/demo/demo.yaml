@@ -1,4 +1,16 @@
 ---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: demo
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      app: demo-app
+  endpoints:
+    - port: demo
+---
 apiVersion: v1
 kind: Service
 metadata:
