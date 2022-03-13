@@ -25,6 +25,6 @@ spec:
     - name: default
       route:
         - destination:
-            host: demo.development.svc.cluster.local
+            host: demo-v1.development.svc.cluster.local
             subset: v1
           weight: 100
