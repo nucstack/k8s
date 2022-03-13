@@ -20,6 +20,10 @@ metadata:
   name: "${SECRET_LOCAL_DOMAIN/./-}"
   namespace: networking
 spec:
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "istio-system"
   secretName: "${SECRET_LOCAL_DOMAIN/./-}-tls"
   issuerRef:
     name: letsencrypt-production
