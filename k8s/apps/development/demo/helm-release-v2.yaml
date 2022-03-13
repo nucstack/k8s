@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    nameOverride: demo-v1
+    nameOverride: demo-v2
     image:
       repository: ${SECRET_DOCKER_PRIVATE_REGISTRY}/demo
       tag: 0.0.1
