@@ -51,7 +51,7 @@ spec:
         url: "http://prometheus-operated.observability.svc.cluster.local:9090"
         custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
-        enabled: false
+        enabled: true
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
         use_grpc: true
         url: 'https://jaeger.${SECRET_DOMAIN}/jaeger'
