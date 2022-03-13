@@ -42,6 +42,18 @@ spec:
               #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
       prometheus:
+        auth:
+          ca_file: ''
+          insecure_skip_verify: false
+          password: ''
+          token: ''
+          type: none
+          use_kiali_token: false
+          username: ''
+        component_status:
+          app_label: prometheus
+          is_core: true
+          namespace: 'observability'
         url: "http://prometheus-operated.observability.svc.cluster.local:9090"
         custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
@@ -50,6 +62,18 @@ spec:
         use_grpc: true
         url: 'https://jaeger.${SECRET_DOMAIN}/jaeger'
       grafana:
+        auth:
+          ca_file: ''
+          component_status:
+            app_label: grafana
+            is_core: true
+            namespace: ''
+          insecure_skip_verify: false
+          # username: 'someuser@yopmail.com'
+          # password: 'secret:grafana-auth-secret:admin-password'
+          token: ''
+          type: basic
+          use_kiali_token: false
         enabled: true
         in_cluster_url: 'http://grafana.observability.svc.cluster.local:3000/'
         url: 'https://grafana.${SECRET_DOMAIN}/grafana'
