@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     istio: ingressgateway
-    istio.io/rev: stable
   servers:
     - port:
         number: 80

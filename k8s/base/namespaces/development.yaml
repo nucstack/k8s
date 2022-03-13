@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: development
   labels:
-    istio.io/rev: stable
+    istio-injection: enabled

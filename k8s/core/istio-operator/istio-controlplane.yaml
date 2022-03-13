@@ -6,7 +6,6 @@ metadata:
   name: istiocontrolplane-stable
 spec:
   profile: default
-  revision: stable
   values:
     global:
     cni:
