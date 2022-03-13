@@ -3,6 +3,7 @@ kind: service
 apiVersion: v1
 metadata:
   name: demo
+  namespace: development
 spec:
   selector:
     app: demo-app
@@ -16,6 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
+  namespace: development
   labels:
     app: demo-app
     version: v1
