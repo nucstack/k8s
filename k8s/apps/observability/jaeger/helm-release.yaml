@@ -30,12 +30,3 @@ spec:
       enabled: false
     query:
       enabled: false
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      hosts:
-        - "jaeger.${SECRET_DOMAIN}"
-      tls:
-        - secretName: jaeger-tls
-          hosts:
-            - "jaeger.${SECRET_DOMAIN}"
