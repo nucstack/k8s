@@ -14,8 +14,8 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - '${SECRET_DOMAIN}'
-        - '*.${SECRET_DOMAIN}'
+        - '${SECRET_LOCAL_DOMAIN}'
+        - '*.${SECRET_LOCAL_DOMAIN}'
       tls:
         httpsRedirect: true
     - port:
@@ -23,10 +23,10 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - '${SECRET_DOMAIN}'
-        - '*.${SECRET_DOMAIN}'
+        - '${SECRET_LOCAL_DOMAIN}'
+        - '*.${SECRET_LOCAL_DOMAIN}'
       tls:
-        credentialName: "${SECRET_DOMAIN/./-}-tls"
+        credentialName: "${SECRET_LOCAL_DOMAIN/./-}-tls"
         mode: SIMPLE
         minProtocolVersion: TLSV1_2
         maxProtocolVersion: TLSV1_3
