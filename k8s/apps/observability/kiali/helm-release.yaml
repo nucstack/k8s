@@ -42,7 +42,7 @@ spec:
               #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
       istio:
-        url_service_version: http://istio-pilot.istio-system:8080/version
+        url_service_version: http://istiod.istio-system:15014/version
       prometheus:
         auth:
           ca_file: ''
