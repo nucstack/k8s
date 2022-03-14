@@ -34,7 +34,9 @@ spec:
       ingress:
         enabled: true
         ingressClassName: traefik
-        annotations: {}
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
         hosts:
           - "jaeger.${SECRET_DOMAIN}"
         tls:
