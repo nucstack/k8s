@@ -33,10 +33,10 @@ spec:
         - "development"
       ingress:
         enabled: true
+        class_name: "traefik"
         override_yaml:
           metadata:
             annotations:
-              kubernetes.io/ingress.class: traefik
               traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
               traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
     external_services:
@@ -51,7 +51,7 @@ spec:
         url: "http://prometheus-operated.observability.svc.cluster.local:9090"
         custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
-        enabled: false
+        enabled: true
         in_cluster_url: "http://jaeger-query.istio-system.svc.cluster.local:16686/jaeger"
         url: "https://jaeger.${SECRET_DOMAIN}/jaeger"
       grafana:
