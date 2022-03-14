@@ -21,7 +21,7 @@ spec:
     provisionDataStore:
       cassandra: false
     allInOne:
-      enabled: true
+      enabled: false
     storage:
       type: none
     agent:
@@ -29,7 +29,7 @@ spec:
     collector:
       enabled: false
     query:
-      enabled: false
+      enabled: true
     service:
       ingress:
         enabled: true
