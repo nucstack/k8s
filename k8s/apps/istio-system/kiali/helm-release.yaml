@@ -51,7 +51,7 @@ spec:
         url: "http://prometheus-operated.observability.svc.cluster.local:9090"
         custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
-        enabled: true
+        enabled: false
         in_cluster_url: "http://jaeger-query.istio-system.svc.cluster.local:16686/jaeger"
         url: "https://jaeger.${SECRET_DOMAIN}/jaeger"
       grafana:
