@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: kiali
-  namespace: observability
+  namespace: istio-system
 spec:
   interval: 5m
   chart:
@@ -25,7 +25,7 @@ spec:
       strategy: "anonymous"
     istio_component_namespaces:
       prometheus: observability
-      tracing: observability
+      tracing: istio-system
       grafana: observability
     deployment:
       accessible_namespaces:
@@ -54,7 +54,7 @@ spec:
         custom_metrics_url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       tracing:
         enabled: true
-        in_cluster_url: "http://jaeger-query.observability.svc.cluster.local:16686/jaeger"
+        in_cluster_url: "http://jaeger-query.istio-system.svc.cluster.local:16686/jaeger"
         url: "https://jaeger.${SECRET_DOMAIN}/jaeger"
       grafana:
         auth:

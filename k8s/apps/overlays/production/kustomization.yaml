@@ -9,4 +9,5 @@ resources:
   - ../../home-automation
   - ../../security
   - ../../system-upgrade
+  - ../../istio-system
   - ../../development
