@@ -54,6 +54,7 @@ spec:
         enabled: true
         use_grpc: true
         in_cluster_url: "http://jaeger-query.istio-system.svc.cluster.local:16686/jaeger"
+        url: "https://jaeger.${SECRET_DOMAIN}/jaeger"
       grafana:
         auth:
           ca_file: ""
