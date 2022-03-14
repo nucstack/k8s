@@ -19,6 +19,7 @@ spec:
     istio_namespace: istio-system
     server:
       web_fqdn: "kiali.${SECRET_DOMAIN}"
+      web_root: "/"
     kiali_route_url: "https://kiali.${SECRET_DOMAIN}/"
     auth:
       strategy: "anonymous"
