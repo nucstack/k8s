@@ -7,7 +7,7 @@ FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.2 as kustomize
 FROM docker.io/prom/alertmanager:v0.23.0 as prom-am
-FROM docker.io/prom/prometheus:v2.33.5 as prom
+FROM docker.io/prom/prometheus:v2.34.0 as prom
 FROM docker.io/hashicorp/terraform:1.1.7 as terraform
 FROM docker.io/aquasec/trivy:0.24.2 as trivy
 FROM docker.io/hashicorp/vault:1.9.4 as vault
