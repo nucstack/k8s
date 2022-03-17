@@ -7,7 +7,6 @@
     ":semanticCommits",
     ":separatePatchReleases",
     "docker:enableMajor",
-    "github>nucstack/k8s//.github/renovate/autoMerge",
     "github>nucstack/k8s//.github/renovate/labels",
     "github>nucstack/k8s//.github/renovate/semanticCommits"
   ],
