@@ -1,42 +1,15 @@
 {
-  "extends": [
-    ":enableRenovate",
-    "config:base",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
-    ":semanticCommits",
-    ":separatePatchReleases",
-    "docker:enableMajor",
-    "github>nucstack/k8s//.github/renovate/autoMerge",
-    "github>nucstack/k8s//.github/renovate/labels",
-    "github>nucstack/k8s//.github/renovate/semanticCommits"
-  ],
-  "timezone": "America/New_York",
+  "enabled": true,
+  "semanticCommits": "enabled",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": [
-    "prIgnoreNotification"
-  ],
+  "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "docker-compose": {
-    "fileMatch": [
-      "(^|\/)docker-compose.*\.ya?ml$",
-    ]
-  },
   "helm-values": {
-    "fileMatch": [
-      "k8s/.+/helm-release\\.yaml$"
-    ]
-  },
-  "helmv3": {
-    "fileMatch": [
-      "k8s/charts/.+/Chart\\.yaml$"
-    ]
+    "fileMatch": ["k8s\/.+/helm-release.yaml$"]
   },
   "kubernetes": {
-    "fileMatch": [
-      "k8s/.+\\.yaml$"
-    ],
+    "fileMatch": ["k8s\/.+\.yaml$"],
     "ignorePaths": [
       "clusters",
       "charts"
@@ -45,142 +18,61 @@
   "regexManagers": [
     // regexManager to read and process HelmReleases and CRDs
     {
-      "fileMatch": [
-        "k8s/.+\\.yaml$"
-      ],
+      "fileMatch": ["k8s\/.+\.yaml$"],
       "matchStrings": [
         // helm releases
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    // regexManager to read and process cert-manager CRD's
-    {
-      "fileMatch": [
-        "k8s/crds/cert-manager/.+\\.yaml$"
-      ],
-      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
+        // cert-manager crd
         "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
       "datasourceTemplate": "helm"
     },
-    // regexManager to read and process kube-prometheus-stack and velero CRD's
-    {
-      "fileMatch": [
-        "k8s/crds/kube-prometheus-stack/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    // regexManager to read and process Traefik CRD's
-    {
-      "fileMatch": [
-        "k8s/crds/traefik/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    // regexManager to read and process External DNS CRD's
-    {
-      "fileMatch": [
-        "k8s/crds/external-dns/.+\\.yaml$"
-      ],
-      "matchStrings": [
-        "datasource=(?<datasource>.*?)\n *url: https:\/\/github\\.com\/(?<depName>.*?)\\.git\n *ref:\n *tag: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "github-releases"
-    }
   ],
   "packageRules": [
     // setup datasources
     {
-      "matchDatasources": [
-        "helm"
-      ],
+      "matchDatasources": ["helm"],
+      "separateMinorPatch": true,
       "ignoreDeprecated": true
     },
+    // global docker datasource settings
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "commitMessageExtra": "to {{newVersion}}"
+      "matchDatasources": ["docker"],
+      "enabled": true,
+      "commitMessageTopic": "container image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "matchUpdateTypes": ["major", "minor", "patch"],
     },
-    // custom versioning
+    // add labels according to package and update types
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "labels": [
-        "renovate/image",
-        "dep/major"
-      ]
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["renovate/image", "dep/major"]
     },
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "labels": [
-        "renovate/image",
-        "dep/minor"
-      ]
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["minor"],
+      "labels": ["renovate/image", "dep/minor"]
     },
     {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "labels": [
-        "renovate/image",
-        "dep/patch"
-      ]
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["patch"],
+      "labels": ["renovate/image", "dep/patch"]
     },
     {
-      "matchDatasources": [
-        "helm"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "labels": [
-        "renovate/helm",
-        "dep/major"
-      ]
+      "matchDatasources": ["helm"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["renovate/helm", "dep/major"]
     },
     {
-      "matchDatasources": [
-        "helm"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "labels": [
-        "renovate/helm",
-        "dep/minor"
-      ]
+      "matchDatasources": ["helm"],
+      "matchUpdateTypes": ["minor"],
+      "labels": ["renovate/helm", "dep/minor"]
     },
     {
-      "matchDatasources": [
-        "helm"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "labels": [
-        "renovate/helm",
-        "dep/patch"
-      ]
+      "matchDatasources": ["helm"],
+      "matchUpdateTypes": ["patch"],
+      "labels": ["renovate/helm", "dep/patch"]
     }
   ]
 }
