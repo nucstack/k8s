@@ -21,7 +21,7 @@ spec:
     image:
       registry: ghcr.io
       repository: authelia/authelia
-      tag: 4.34.4
+      tag: 4.34.5
     persistence:
       enabled: true
       storageClass: "longhorn"
