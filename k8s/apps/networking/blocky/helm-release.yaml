@@ -53,8 +53,6 @@ spec:
       prometheusRule:
         enabled: true
     config: |
-      default:
-        - tcp+udp:${SECRET_DNS_SERVER}
       upstream:
         externalResolvers:
         - tcp-tls:${SECRET_NEXTDNS_ID}.dns1.nextdns.io:853
