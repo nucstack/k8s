@@ -49,6 +49,21 @@ spec:
         "enableLocalMode": true,
         "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
       }
+    postgresql:
+      enabled: true
+      volumePermissions:
+        enabled: true
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 500Mi
+      persistence:
+        enabled: true
+        size: 2Gi
+        storageClass: longhorn
     ingress:
       main:
         enabled: true
@@ -67,5 +82,4 @@ spec:
             secretName: focalboard-tls # checkov:skip=CKV_SECRET_6 secret ref
     persistence:
       data:
-        enabled: true
-        existingClaim: focalboard
+        enabled: false
