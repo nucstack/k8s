@@ -52,6 +52,7 @@ spec:
       allowPrivilegeEscalation: false
       runAsUser: 1001
       runAsGroup: 1001
+      runAsNonRoot: true
     initContainers:
       ownership:
         name: take-data-dir-ownership
