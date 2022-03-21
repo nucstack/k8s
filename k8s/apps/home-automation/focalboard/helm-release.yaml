@@ -28,7 +28,6 @@ spec:
     image:
       repository: mattermost/focalboard
       tag: 0.15.0
-    # See the Administrator's Guide for config reference: https://www.focalboard.com/guide/admin/
     env:
       FOCALBOARD_PORT: "8000"
     enableServiceLinks: false
