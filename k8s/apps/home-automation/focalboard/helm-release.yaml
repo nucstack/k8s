@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: focalboard
+  namespace: home-automation
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: esphome
+      version: 4.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 10m
+  timeout: 10m
+  values:
+    resources:
+      limits:
+        cpu: 600m
+        memory: 1Gi
+      requests:
+        cpu: 300m
+        memory: 500Mi
+    image:
+      repository: mattermost/focalboard
+      tag: 0.15.0
+    # See the Administrator's Guide for config reference: https://www.focalboard.com/guide/admin/
+    config: |
+      {
+        "serverRoot": "http://localhost:8000",
+        "port": 8000,
+        "dbtype": "sqlite3",
+        "dbconfig": "/data/focalboard.db",
+        "postgres_dbconfig": "dbname=focalboard sslmode=disable",
+        "useSSL": false,
+        "webpath": "./pack",
+        "filespath": "/data/files",
+        "telemetry": true,
+        "session_expire_time": 2592000,
+        "session_refresh_time": 18000,
+        "localOnly": false,
+        "enableLocalMode": true,
+        "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
+      }
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          #traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hosts:
+          - host: "board.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "board.${SECRET_DOMAIN}"
+            secretName: focalboard-tls # checkov:skip=CKV_SECRET_6 secret ref
+    persistence:
+      data:
+        enabled: true
