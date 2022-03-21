@@ -48,9 +48,6 @@ spec:
         "enableLocalMode": true,
         "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
       }
-    securityContext:
-      allowPrivilegeEscalation: false
-      runAsNonRoot: true
     initContainers:
       ownership:
         name: chmod
