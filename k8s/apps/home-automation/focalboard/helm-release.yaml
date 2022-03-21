@@ -17,9 +17,6 @@ spec:
         namespace: flux-system
       interval: 10m
   timeout: 10m
-  valuesFrom:
-    - kind: Secret
-      name: focalboard-helm-values
   values:
     resources:
       limits:
@@ -34,21 +31,24 @@ spec:
     # See the Administrator's Guide for config reference: https://www.focalboard.com/guide/admin/
     env:
       FOCALBOARD_PORT: "8000"
-    postgresql:
-      enabled: true
-      volumePermissions:
-        enabled: true
-      resources:
-        limits:
-          cpu: 500m
-          memory: 1Gi
-        requests:
-          cpu: 250m
-          memory: 500Mi
-      persistence:
-        enabled: true
-        size: 2Gi
-        storageClass: longhorn
+    enableServiceLinks: false
+    config: |
+      {
+        "serverRoot": "http://localhost:8000",
+        "port": 8000,
+        "dbtype": "sqlite3",
+        "dbconfig": "/data/focalboard.db",
+        "postgres_dbconfig": "dbname=focalboard sslmode=disable",
+        "useSSL": false,
+        "webpath": "./pack",
+        "filespath": "/data/files",
+        "telemetry": true,
+        "session_expire_time": 2592000,
+        "session_refresh_time": 18000,
+        "localOnly": false,
+        "enableLocalMode": true,
+        "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
+      }
     ingress:
       main:
         enabled: true
@@ -69,4 +69,3 @@ spec:
       data:
         enabled: true
         existingClaim: focalboard
-        accessMode: ReadWriteOnce
