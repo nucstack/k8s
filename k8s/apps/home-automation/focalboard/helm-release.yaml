@@ -57,9 +57,9 @@ spec:
         image: alpine:3.15
         command: ['chmod']
         args:
-          - -R
-          - 0777
-          - /data
+          - '-R'
+          - '0777'
+          - '/data'
         volumeMounts:
           - name: data
             mountPath: /data
