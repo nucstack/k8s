@@ -48,6 +48,22 @@ spec:
         "enableLocalMode": true,
         "localModeSocketLocation": "/var/tmp/focalboard_local.socket"
       }
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 1001
+      runAsGroup: 1001
+    initContainers:
+      ownership:
+        name: take-data-dir-ownership
+        image: alpine:3.15
+        command: ['chown']
+        args:
+          - -R
+          - 1001:1001'
+          - /data'
+        volumeMounts:
+          - name: data
+            mountPath: /data
     ingress:
       main:
         enabled: true
