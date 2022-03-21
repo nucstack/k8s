@@ -52,7 +52,7 @@ spec:
       allowPrivilegeEscalation: false
       runAsNonRoot: true
     initContainers:
-      ownership:
+      fix-ownership:
         name: chmod
         image: alpine:3.15
         command: ['chmod']
