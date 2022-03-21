@@ -50,8 +50,8 @@ spec:
       }
     securityContext:
       allowPrivilegeEscalation: false
-      runAsUser: 1001
-      runAsGroup: 1001
+      runAsUser: 65534
+      runAsGroup: 65534
       runAsNonRoot: true
     initContainers:
       ownership:
@@ -60,7 +60,7 @@ spec:
         command: ['chown']
         args:
           - -R
-          - 1001:1001'
+          - 65534:65534'
           - /data'
         volumeMounts:
           - name: data
