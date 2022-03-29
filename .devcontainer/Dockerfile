@@ -5,7 +5,7 @@ FROM docker.io/alpine/helm:3.8.1 as helm
 FROM docker.io/bitnami/kubectl:1.23.5 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
-FROM k8s.gcr.io/kustomize/kustomize:v4.5.3 as kustomize
+FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.34.0 as prom
 FROM docker.io/hashicorp/terraform:1.1.7 as terraform
