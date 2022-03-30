@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - upgrade.secret.enc.yaml
   - server-k3s-update.yaml
+  - server-os-update.yaml
   - agent-k3s-update.yaml
   - agent-os-update.yaml
