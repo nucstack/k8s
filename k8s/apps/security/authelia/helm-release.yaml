@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
-      version: 0.8.18
+      version: 0.8.21
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -21,7 +21,7 @@ spec:
     image:
       registry: ghcr.io
       repository: authelia/authelia
-      tag: 4.34.5
+      tag: 4.34.6
     persistence:
       enabled: true
       storageClass: "longhorn"

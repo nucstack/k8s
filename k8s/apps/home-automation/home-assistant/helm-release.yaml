@@ -22,7 +22,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: home-assistant
-      version: 12.1.0
+      version: 12.2.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -42,7 +42,7 @@ spec:
         memory: 1500Mi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2022.3.5
+      tag: 2022.3.8
     env:
       TZ: "America/New_York"
     hostNetwork: false
@@ -127,7 +127,7 @@ spec:
     initContainers:
       extensions:
         name: extensions
-        image: codercom/code-server:4.1.0
+        image: codercom/code-server:4.2.0
         command: ['code-server']
         args:
           - --install-extension
@@ -154,7 +154,7 @@ spec:
         enabled: true
         image:
           repository: codercom/code-server
-          tag: 4.1.0
+          tag: 4.2.0
         workingDir: '/config'
         args:
           - --auth
