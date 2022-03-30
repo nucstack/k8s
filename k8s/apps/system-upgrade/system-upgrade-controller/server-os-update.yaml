@@ -11,13 +11,12 @@ spec:
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/master
-        operator: NotIn
+        operator: In
         values:
           - "true"
   drain:
     deleteLocalData: true
     ignoreDaemonSets: true
-    force: true
   secrets:
     - name: upgrade
       path: /host/run/system-upgrade/secrets/upgrade
