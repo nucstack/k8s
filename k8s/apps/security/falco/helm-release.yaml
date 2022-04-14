@@ -32,7 +32,7 @@ spec:
       jsonOutput: true
       jsonIncludeOutputProperty: true
       httpOutput:
-        enabled: false
+        enabled: true
         url: http://falco-sidekick-falcosidekick:2801
       grpc:
         enabled: true
