@@ -17,9 +17,24 @@
     "prIgnoreNotification"
   ],
   "rebaseWhen": "conflicted",
+  "commitBodyTable": true,
+  // set up ignored deps
+  "ignoreDeps": [
+    "ghcr.io/fluxcd/helm-controller",
+    "ghcr.io/fluxcd/image-automation-controller",
+    "ghcr.io/fluxcd/image-reflector-controller",
+    "ghcr.io/fluxcd/kustomize-controller",
+    "ghcr.io/fluxcd/notification-controller",
+    "ghcr.io/fluxcd/source-controller"
+  ],
   "docker-compose": {
     "fileMatch": [
       "(^|\/)docker-compose.*\.ya?ml$",
+    ]
+  },
+  "flux": {
+    "fileMatch": [
+      "k8s/.+\\.yaml$"
     ]
   },
   "helm-values": {
@@ -48,8 +63,8 @@
         "k8s/.+\\.yaml$"
       ],
       "matchStrings": [
-        // helm releases
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n",
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
       ],
       "datasourceTemplate": "helm"
     },
