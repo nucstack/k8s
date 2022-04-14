@@ -4,6 +4,4 @@ kind: Kustomization
 resources:
   - authelia
   - dex
-  - falco
-  - falco-sidekick
   - rbac
