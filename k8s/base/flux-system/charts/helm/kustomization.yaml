@@ -10,6 +10,7 @@ resources:
   - dex-charts.yaml
   - emberstack-charts.yaml
   - external-dns-charts.yaml
+  - falco-charts.yaml
   - github-actions-charts.yaml
   - grafana-loki-charts.yaml
   - influxdata-charts.yaml
