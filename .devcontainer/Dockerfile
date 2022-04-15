@@ -9,7 +9,7 @@ FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.34.0 as prom
 FROM docker.io/hashicorp/terraform:1.1.8 as terraform
-FROM docker.io/aquasec/trivy:0.25.4 as trivy
+FROM docker.io/aquasec/trivy:0.26.0 as trivy
 FROM docker.io/hashicorp/vault:1.10.0 as vault
 FROM docker.io/velero/velero:v1.8.1 as velero
 FROM docker.io/mikefarah/yq:4.24.5 as yq
