@@ -6,7 +6,7 @@ metadata:
   namespace: security
 spec:
   hosts:
-    - 'oauth.${secret_DOMAIN}'
+    - 'oauth.${SECRET_LOCAL_DOMAIN}'
   gateways:
     - istio-system/istio-ingressgateway
   http:
