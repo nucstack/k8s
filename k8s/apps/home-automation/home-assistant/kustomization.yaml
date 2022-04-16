@@ -6,3 +6,4 @@ resources:
   - home-assistant.configmap.yaml
   - prometheus.secrets.enc.yaml
   - helm-release.yaml
+  - virtualservice.yaml

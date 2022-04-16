@@ -1,0 +1,36 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: home-assistant
+  namespace: home-system
+spec:
+  hosts:
+    - 'hass.${DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8123
+            host: home-assistant.home-automation.svc.cluster.local
+          weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: home-assistant-code
+  namespace: home-system
+spec:
+  hosts:
+    - 'hass-code.${DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 12321
+            host: home-assistant-codeserver.home-automation.svc.cluster.local
+          weight: 100
