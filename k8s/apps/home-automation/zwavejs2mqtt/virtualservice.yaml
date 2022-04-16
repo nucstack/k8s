@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: zwave2mqtt
+  namespace: home-automation
+spec:
+  hosts:
+    - 'zwave2mqtt.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8091
+            host: zwave2mqtt.home-automation.svc.cluster.local
+          weight: 100

@@ -5,3 +5,4 @@ resources:
   - pvcs.yaml
   - frigate.secrets.enc.yaml
   - helm-release.yaml
+  - virtualservice.yaml

@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - zigbee2mqtt.secrets.enc.yaml
   - helm-release.yaml
+  - virtualservice.yaml

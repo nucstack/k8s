@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: esphome
+  namespace: home-automation
+spec:
+  hosts:
+    - 'esphome.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 6052
+            host: esphome.home-automation.svc.cluster.local
+          weight: 100
