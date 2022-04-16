@@ -8,7 +8,7 @@ spec:
   interval: 10m0s
   dependsOn:
   - name: crds
-  path: ./k8s/core/overlays/production
+  path: ./k8s/core/overlays/nucstack-2
   prune: true
   sourceRef:
     kind: GitRepository

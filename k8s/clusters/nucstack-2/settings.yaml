@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./k8s/settings/production
+  path: ./k8s/settings/nucstack-2
   prune: true
   decryption:
     provider: sops
