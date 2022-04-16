@@ -23,4 +23,4 @@ spec:
     - to:
         - operation:
             hosts:
-              - 'demo.feelingsmachine.com'
+              - 'demo.${SECRET_LOCAL_DOMAIN}'
