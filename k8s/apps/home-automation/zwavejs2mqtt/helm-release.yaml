@@ -42,7 +42,7 @@ spec:
                     - "true"
     ingress:
       main:
-        enabled: true
+        enabled: false
         annotations:
           kubernetes.io/ingress.class: traefik
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
