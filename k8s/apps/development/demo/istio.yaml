@@ -21,7 +21,7 @@ metadata:
   namespace: development
 spec:
   hosts:
-    - "demo.${SECRET_LOCAL_DOMAIN}"
+    - "demo.${SECRET_DOMAIN}"
   gateways:
     - istio-system/istio-ingressgateway
   http:

@@ -46,7 +46,7 @@ spec:
         provider = "oidc"
         oidc_issuer_url = "https://dex.${SECRET_DOMAIN}"
         auth_logging = true
-        cookie_domains = ".${SECRET_DOMAIN},.${SECRET_LOCAL_DOMAIN}"
+        cookie_domains = ".${SECRET_DOMAIN}"
         cookie_httponly = true
         cookie_name = "_nucstack_oauth"
         cookie_refresh = "1h"
@@ -66,4 +66,4 @@ spec:
         ssl_insecure_skip_verify = true
         standard_logging = true
         upstreams = [ "static://200" ]
-        whitelist_domains = ".${SECRET_DOMAIN},.${SECRET_LOCAL_DOMAIN}"
+        whitelist_domains = ".${SECRET_DOMAIN}"
