@@ -23,12 +23,19 @@ spec:
     accessLogFile: /dev/stdout
     trustDomain: cluster.local
     extensionProviders:
-      - name: authelia
+      # - name: authelia
+      #   envoyExtAuthzHttp:
+      #     service: authelia.security.svc.cluster.local
+      #     port: 80
+      #     includeHeadersInCheck: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
+      #     headersToUpstreamOnAllow: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
+      #     headersToDownstreamOnDeny: ["content-type", "set-cookie"]
+      - name: oauth2-proxy
         envoyExtAuthzHttp:
-          service: authelia.security.svc.cluster.local
+          service: oauth2-proxy.security.svc.cluster.local
           port: 80
-          includeHeadersInCheck: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
-          headersToUpstreamOnAllow: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
+          includeHeadersInCheck: ["authorization", "cookie"]
+          headersToUpstreamOnAllow: ["authorization", "path", "x-auth-request-user", "x-auth-request-email", "x-auth-request-access-token"]
           headersToDownstreamOnDeny: ["content-type", "set-cookie"]
 
   components:

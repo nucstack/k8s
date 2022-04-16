@@ -8,14 +8,14 @@ spec:
   # The selector applies to the ingress gateway in the istio-ingress namespace.
   selector:
     matchLabels:
-      app: demo-app
+      app: istio-gateway
   # The action "CUSTOM" delegates the access control to an external authorizer, this is different from
   # the ALLOW/DENY action that enforces the access control right inside the proxy.
   action: CUSTOM
   # The provider specifies the name of the external authorizer defined in the meshconfig, which tells where and how to
   # talk to the external auth service.
   provider:
-    name: 'authelia'
+    name: 'oauth2-proxy'
   # The rule specifies that the access control is triggered only if the request path has the prefix "/admin/".
   # This allows you to easily enable or disable the external authorization based on the requests, avoiding the external
   # check request if it is not needed.
@@ -23,4 +23,4 @@ spec:
     - to:
         - operation:
             paths:
-              - '*'
+              - 'demo.${SECRET_LOCAL_DOMAIN}'
