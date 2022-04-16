@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: auth
+  namespace: security
+spec:
+  hosts:
+    - 'oauth.${secret_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - match:
+        - port: 443
+      route:
+        - destination:
+            port:
+              number: 80
+            host: oauth2-proxy.security.svc.cluster.local
