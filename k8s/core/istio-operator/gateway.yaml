@@ -13,8 +13,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - '${SECRET_LOCAL_DOMAIN}'
-        - '*.${SECRET_LOCAL_DOMAIN}'
+        - 'demo.${SECRET_LOCAL_DOMAIN}'
       tls:
         httpsRedirect: true
     - port:
@@ -22,8 +21,7 @@ spec:
         name: https
         protocol: HTTPS
       hosts:
-        - '${SECRET_LOCAL_DOMAIN}'
-        - '*.${SECRET_LOCAL_DOMAIN}'
+        - 'demo.${SECRET_LOCAL_DOMAIN}'
       tls:
         credentialName: "${SECRET_LOCAL_DOMAIN/./-}-tls"
         mode: SIMPLE
