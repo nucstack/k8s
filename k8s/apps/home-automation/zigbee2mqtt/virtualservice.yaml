@@ -6,7 +6,7 @@ metadata:
   namespace: home-automation
 spec:
   hosts:
-    - 'esphome.${SECRET_DOMAIN}'
+    - 'zigbee2mqtt.${SECRET_DOMAIN}'
   gateways:
     - istio-system/istio-ingressgateway
   http:
