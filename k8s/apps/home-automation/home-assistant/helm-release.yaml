@@ -114,7 +114,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        enabled: true
+        enabled: false
         hosts:
           - host: "hass.${SECRET_DOMAIN}"
             paths:
@@ -168,7 +168,7 @@ spec:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          enabled: true
+          enabled: false
           hosts:
             - host: "vscode-hass.${SECRET_DOMAIN}"
               paths:
