@@ -24,3 +24,18 @@ spec:
     hub: docker.io/istio
     tag: 1.13.2
     watchedNamespaces: istio-system
+    meshConfig:
+      defaultConfig:
+        gatewayTopology:
+          # Always forward the XFCC header in the request, regardless of whether the client connection is mTLS.
+          forwardClientCertDetails: ALWAYS_FORWARD_ONLY
+      accessLogFile: /dev/stdout
+      trustDomain: cluster.local
+      extensionProviders:
+      - name: authelia
+        envoyExtAuthzHttp:
+          service: authelia.security.svc.cluster.local
+          port: 80
+          includeHeadersInCheck: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
+          headersToUpstreamOnAllow: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
+          headersToDownstreamOnDeny: ["content-type", "set-cookie"]
