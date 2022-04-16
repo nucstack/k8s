@@ -32,8 +32,6 @@ spec:
   dependsOn:
     - name: dex
       namespace: security
-    - name: cert-manager
-      namespace: security
   values:
     image:
       repository: quay.io/oauth2-proxy/oauth2-proxy
