@@ -6,3 +6,4 @@ resources:
   - istio-controlplane.yaml
   - gateway.yaml
   - authorization-policy.yaml
+  - network-policy.yaml
