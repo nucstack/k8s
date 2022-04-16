@@ -22,5 +22,5 @@ spec:
   rules:
     - to:
         - operation:
-            hosts:
-              - 'demo.${SECRET_LOCAL_DOMAIN}'
+            paths:
+              - '*'
