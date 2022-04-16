@@ -23,4 +23,8 @@ spec:
     - to:
         - operation:
             hosts:
-              - 'demo.${SECRET_LOCAL_DOMAIN}'
+              - 'esphome.${SECRET_DOMAIN}'
+              - 'focalboard.${SECRET_DOMAIN}'
+              - 'zigbee2mqtt.${SECRET_DOMAIN}'
+              - 'zwave2mqtt.${SECRET_DOMAIN}'
+              - 'cctv.${SECRET_DOMAIN}'
