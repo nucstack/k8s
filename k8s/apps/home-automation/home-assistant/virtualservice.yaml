@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: home-assistant
-  namespace: home-system
+  namespace: home-automation
 spec:
   hosts:
     - 'hass.${DOMAIN}'
@@ -21,7 +21,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: home-assistant-code
-  namespace: home-system
+  namespace: home-automation
 spec:
   hosts:
     - 'hass-code.${DOMAIN}'
