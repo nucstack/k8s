@@ -26,6 +26,7 @@ spec:
               - 'esphome.${SECRET_DOMAIN}'
               - 'focalboard.${SECRET_DOMAIN}'
               - 'hass-code.${SECRET_DOMAIN}'
+              - 'kiali.${SECRET_DOMAIN}'
               - 'zigbee2mqtt.${SECRET_DOMAIN}'
               - 'zwave2mqtt.${SECRET_DOMAIN}'
               - 'cctv.${SECRET_DOMAIN}'
