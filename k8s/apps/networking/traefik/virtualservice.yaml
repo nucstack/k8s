@@ -14,5 +14,5 @@ spec:
         - destination:
             port:
               number: 9000
-            host: traefik.observability.svc.cluster.local
+            host: traefik.networking.svc.cluster.local
           weight: 100
