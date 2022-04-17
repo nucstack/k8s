@@ -114,6 +114,14 @@ spec:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/v0.22.0/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
+        istio-contol-plane:
+          gnetId: 7645
+          revision: 114
+          datasource: Prometheus
+        istio-service:
+          gnetId: 7636
+          revision: 114
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/315
         kubernetes-cluster-monitoring:
           gnetId: 315
