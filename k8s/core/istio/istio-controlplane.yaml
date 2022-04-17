@@ -41,8 +41,6 @@ spec:
     ingressGateways:
       - name: istio-ingressgateway
         enabled: true
-        sds:
-          enabled: true
         k8s:
           hpaSpec:
             minReplicas: 3
