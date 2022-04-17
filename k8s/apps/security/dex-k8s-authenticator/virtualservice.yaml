@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dex-k8s-authenticator
+  namespace: security
+spec:
+  hosts:
+    - 'login.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 5555
+            host: dex-k8s-authenticator.security.svc.cluster.local
+          weight: 100
