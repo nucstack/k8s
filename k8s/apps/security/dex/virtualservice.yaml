@@ -1,0 +1,18 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dex
+  namespace: security
+spec:
+  hosts:
+    - 'dex.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 5556
+            host: dex.security.svc.cluster.local
+          weight: 100

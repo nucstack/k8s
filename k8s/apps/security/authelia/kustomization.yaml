@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - authelia.secret.enc.yaml
   - helm-release.yaml
+  - virtualservice.yaml

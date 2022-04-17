@@ -35,7 +35,7 @@ spec:
         memory: 256Mi
     domain: "${SECRET_DOMAIN}"
     ingress:
-      enabled: true
+      enabled: false
       tls:
         enabled: true
         secret: authelia-cert # checkov:skip=CKV_SECRET_6 secret ref
