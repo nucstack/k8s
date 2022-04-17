@@ -34,14 +34,6 @@ spec:
         - "development"
       ingress:
         enabled: false
-     
-
-
-
-
-
-
-
     external_services:
       istio:
         url_service_version: http://istiod.istio-system:15014/version
