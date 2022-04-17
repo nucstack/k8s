@@ -5,5 +5,5 @@ resources:
 - ../../metallb-system
 - ../../cert-manager
 - ../../longhorn-system
-- ../../istio-operator
+- ../../istio
 - ../../system-upgrade
