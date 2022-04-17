@@ -42,7 +42,16 @@ spec:
           secretName: dex-cert # checkov:skip=CKV_SECRET_6 secret ref
 
     config:
-      issuer: https://dex.${SECRET_DOMAIN}
+      staticClients:
+        - id: oauth2-proxy
+          redirectURIs:
+            - 'https://demo.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://esphome.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://hass-code.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://zwavejs2mqtt.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://zigbee2mqtt.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://cctv.${SECRET_DOMAIN}/oauth2/callback'
+            - 'https://focalboard.${SECRET_DOMAIN}/oauth2/callback'
 
       storage:
         type: kubernetes
