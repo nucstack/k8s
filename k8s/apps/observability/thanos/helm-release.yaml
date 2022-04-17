@@ -28,7 +28,7 @@ spec:
         sidecarsService: prometheus-thanos-discovery
         sidecarsNamespace: observability
       ingress:
-        enabled: true
+        enabled: false
         hostname: "thanos.${SECRET_DOMAIN}"
         annotations:
           kubernetes.io/ingress.class: traefik
