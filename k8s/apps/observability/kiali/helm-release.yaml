@@ -41,32 +41,32 @@ spec:
       ingress:
         enabled: false
     external_services:
-      istio:
-        url_service_version: http://istiod.istio-system:15014/version
+      # istio:
+      #   url_service_version: http://istiod.istio-system:15014/version
       prometheus:
-        auth:
-          use_kiali_token: false
+        # auth:
+        #   use_kiali_token: false
         component_status:
           namespace: 'observability'
-        url: "http://prometheus-operated.observability.svc.cluster.local:9090"
+        url: "http://prometheus-operated.observability.svc.cluster.local:9090/"
       tracing:
         enabled: true
         in_cluster_url: 'http://jaeger-query.observability.svc.cluster.local:16685/jaeger'
         use_grpc: true
-        url: 'https://jaeger.${SECRET_DOMAIN}/jaeger'
+        url: 'https://jaeger.${SECRET_DOMAIN}'
       grafana:
-        auth:
-          ca_file: ''
-          component_status:
-            app_label: grafana
-            is_core: true
-            namespace: ''
-          insecure_skip_verify: false
-          # username: 'someuser@yopmail.com'
-          # password: 'secret:grafana-auth-secret:admin-password'
-          token: ''
-          type: basic
-          use_kiali_token: false
+        # auth:
+        #   ca_file: ''
+        #   component_status:
+        #     app_label: grafana
+        #     is_core: true
+        #     namespace: ''
+        #   insecure_skip_verify: false
+        #   # username: 'someuser@yopmail.com'
+        #   # password: 'secret:grafana-auth-secret:admin-password'
+        #   token: ''
+        #   type: basic
+        #   use_kiali_token: false
         enabled: true
-        in_cluster_url: 'http://grafana.observability.svc.cluster.local:3000/'
-        url: 'https://grafana.${SECRET_DOMAIN}/grafana'
+        in_cluster_url: 'http://grafana.observability.svc.cluster.local:80/'
+        url: 'https://grafana.${SECRET_DOMAIN}'
