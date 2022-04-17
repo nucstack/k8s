@@ -5,7 +5,7 @@ resources:
   - basic-auth.secret.enc.yaml
   - helm-release.yaml
   - service-monitor.yaml
+  - virtualservice.yaml
   - prometheus-rule.yaml
   - tls-store
-  - dashboard
   - middlewares
