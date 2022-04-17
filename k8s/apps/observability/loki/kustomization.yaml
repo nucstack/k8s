@@ -6,3 +6,4 @@ resources:
   - loki.secrets.enc.yaml
   - helm-release.yaml
   - prometheus-rules.yaml
+  - virtualservice.yaml

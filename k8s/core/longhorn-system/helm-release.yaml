@@ -39,7 +39,7 @@ spec:
     defaultSettings:
       backupTarget: "nfs://${SECRET_NFS_HOST}:${SECRET_NFS_BACKUP_PATH}"
     ingress:
-      enabled: true
+      enabled: false
       host: longhorn.${SECRET_DOMAIN}
       tlsSecret: longhorn-cert # checkov:skip=CKV_SECRET_6 secret ref
       tls: true
