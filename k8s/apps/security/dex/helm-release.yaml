@@ -43,21 +43,6 @@ spec:
 
     config:
       issuer: https://dex.${SECRET_DOMAIN}
-      staticClients:
-        - id: oauth2-proxy
-          redirectURIs:
-            - 'https://demo.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://esphome.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://hass-code.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://kiali.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://zwavejs2mqtt.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://zigbee2mqtt.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://cctv.${SECRET_DOMAIN}/oauth2/callback'
-            - 'https://focalboard.${SECRET_DOMAIN}/oauth2/callback'
-        - id: dex-k8s-authenticator
-          redirectURIs:
-            - https://login.${SECRET_DOMAIN}/callback/
-
       storage:
         type: kubernetes
         config:
