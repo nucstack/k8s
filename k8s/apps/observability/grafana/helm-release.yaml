@@ -118,6 +118,10 @@ spec:
           gnetId: 7645
           revision: 114
           datasource: Prometheus
+        istio-mesh:
+          gnetId: 7639
+          revision: 114
+          datasource: Prometheus
         istio-service:
           gnetId: 7636
           revision: 114
