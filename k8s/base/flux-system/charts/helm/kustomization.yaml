@@ -17,6 +17,7 @@ resources:
   - infracloudio-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
+  - kiali-charts.yaml
   - kubernetes-stable-charts.yaml
   - longhorn-charts.yaml
   - lwolf-charts.yaml
