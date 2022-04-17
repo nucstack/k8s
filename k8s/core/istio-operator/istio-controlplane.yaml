@@ -34,7 +34,7 @@ spec:
   components:
     egressGateways:
       - name: istio-egressgateway
-        enabled: false
+        enabled: true
     ingressGateways:
       - name: istio-ingressgateway
         enabled: true
