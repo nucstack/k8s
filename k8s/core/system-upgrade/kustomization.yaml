@@ -6,3 +6,5 @@ resources:
 images:
   - name: rancher/system-upgrade-controller
     newTag: v0.9.1
+patchesStrategicMerge:
+  - ./patches.yaml
