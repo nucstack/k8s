@@ -30,6 +30,5 @@ spec:
       enabled: false
     query:
       enabled: false
-    service:
-      ingress:
-        enabled: false
+    ingress:
+      enabled: false
