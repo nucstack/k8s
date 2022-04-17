@@ -187,7 +187,7 @@ spec:
     serviceMonitor:
       enabled: false
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/ingress.class: traefik
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
