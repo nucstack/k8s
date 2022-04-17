@@ -29,9 +29,15 @@ spec:
       grafana: observability
     deployment:
       accessible_namespaces:
-        - "istio-system"
-        - "observability"
         - "development"
+        - "flux-system"
+        - "home-automation"
+        - "istio-system"
+        - "metallb-system"
+        - "networking"
+        - "observability"
+        - "security"
+        - "system-upgrade"
       ingress:
         enabled: false
     external_services:

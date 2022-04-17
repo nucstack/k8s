@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - grafana
   - influxdb
+  - jaeger
   - kiali
   - kube-prometheus-stack
   - loki
