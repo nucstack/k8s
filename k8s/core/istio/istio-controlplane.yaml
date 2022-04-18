@@ -42,6 +42,8 @@ spec:
           headersToDownstreamOnDeny: ["content-type", "set-cookie"]
 
   components:
+    telemetry:
+      enabled: true
     egressGateways:
       - name: istio-egressgateway
         enabled: true
