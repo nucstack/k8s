@@ -33,6 +33,9 @@ spec:
     - kind: Secret
       name: home-assistant-helm-values
   values:
+    controller:
+      annotations:
+        app: home-assistamt
     resources:
       limits:
         cpu: 1500m
