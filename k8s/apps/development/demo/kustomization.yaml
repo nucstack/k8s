@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - demo.yaml
   - istio.yaml
+  - podmonitor.yaml

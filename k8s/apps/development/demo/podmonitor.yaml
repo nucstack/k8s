@@ -1,0 +1,12 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: demo-istio
+spec:
+  selector:
+    matchLabels:
+      app: demo-app
+  podMetricsEndpoints:
+    - port: http-envoy-prom
+      path: /stats/prometheus
