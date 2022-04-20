@@ -93,4 +93,4 @@ spec:
           type: ClusterIP
           port: 1514
     serviceMonitor:
-      enabled: true
+      enabled: false
