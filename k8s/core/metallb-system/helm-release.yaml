@@ -31,7 +31,7 @@ spec:
         tag: v0.12.1
       prometheus:
         serviceMonitor:
-          enabled: true
+          enabled: false
     speaker:
       podAnnotations:
         linkerd.io/inject: enabled
@@ -47,7 +47,7 @@ spec:
         tag: v0.12.1
       prometheus:
         serviceMonitor:
-          enabled: true
+          enabled: false
     configInline:
       address-pools:
       - name: default
