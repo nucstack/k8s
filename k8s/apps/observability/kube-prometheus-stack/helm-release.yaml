@@ -229,7 +229,7 @@ spec:
       kubePrometheusNodeRecording: true
       kubernetesApps: true
       kubernetesResources: true
-      kubernetesStorage: true
+      kubernetesStorage: false
       kubernetesSystem: true
       kubeScheduler: true
       kubeStateMetrics: true
@@ -238,4 +238,4 @@ spec:
       nodeExporterAlerting: true
       nodeExporterRecording: true
       prometheus: true
-      prometheusOperator: true
+      prometheusOperator: false

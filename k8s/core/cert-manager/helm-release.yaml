@@ -53,7 +53,7 @@ spec:
     prometheus:
       enabled: true
       servicemonitor:
-        enabled: true
+        enabled: false
         prometheusInstance: observability
         targetPort: 9402
         path: /metrics
