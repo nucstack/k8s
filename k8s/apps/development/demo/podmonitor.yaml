@@ -3,6 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: demo-istio
+  namespace: development
 spec:
   selector:
     matchLabels:
