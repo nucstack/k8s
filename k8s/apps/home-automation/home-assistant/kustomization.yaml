@@ -7,3 +7,4 @@ resources:
   - prometheus.secrets.enc.yaml
   - helm-release.yaml
   - virtualservice.yaml
+  - podmonitor.yaml
