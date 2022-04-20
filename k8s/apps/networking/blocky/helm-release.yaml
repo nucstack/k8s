@@ -48,7 +48,7 @@ spec:
     metrics:
       enabled: true
       serviceMonitor:
-        interval: 30s
+        interval: 60s
         scrapeTimeout: 10s
       prometheusRule:
         enabled: true

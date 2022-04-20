@@ -28,4 +28,4 @@ spec:
       - --delete-orphaned-pods-after=0
       - --legacy-mode=false
     serviceMonitor:
-      enabled: true
+      enabled: false
