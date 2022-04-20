@@ -21,12 +21,12 @@ spec:
       name: unifi-poller-helm-values
   values:
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
         interval: 1m
         scrapeTimeout: 30s
       prometheusRule:
-        enabled: true
+        enabled: false
         rules:
           - alert: UnifiPollerAbsent
             annotations:
