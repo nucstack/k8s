@@ -2,23 +2,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - authelia-charts.yaml
-  - banzai-charts.yaml
   - bitnami-charts.yaml
   - deliveryhero-charts.yaml
   - descheduler-charts.yaml
   - dex-charts.yaml
   - emberstack-charts.yaml
   - external-dns-charts.yaml
-  - falco-charts.yaml
   - github-actions-charts.yaml
   - grafana-loki-charts.yaml
   - influxdata-charts.yaml
-  - infracloudio-charts.yaml
-  - jaeger-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
-  - kiali-charts.yaml
   - kubernetes-stable-charts.yaml
   - longhorn-charts.yaml
   - lwolf-charts.yaml
@@ -27,5 +21,4 @@ resources:
   - oauth2-proxy-charts.yaml
   - prometheus-community-charts.yaml
   - stakater-charts.yaml
-  - traefik-charts.yaml
   - vmware-tanzu-charts.yaml
