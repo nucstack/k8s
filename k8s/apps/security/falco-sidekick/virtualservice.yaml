@@ -15,5 +15,5 @@ spec:
       route:
         - destination:
             port:
-              number: 80
-            host: falco-sidekick.security.svc.cluster.local
+              number: 2802
+            host: falcosidekick.security.svc.cluster.local
