@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: falco-sidekick
+  namespace: security
+spec:
+  hosts:
+    - 'falco-sidekick.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - match:
+        - port: 443
+      route:
+        - destination:
+            port:
+              number: 80
+            host: falco-sidekick.security.svc.cluster.local
