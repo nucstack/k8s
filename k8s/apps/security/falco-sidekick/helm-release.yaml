@@ -15,6 +15,9 @@ spec:
         name: falco-charts
         namespace: flux-system
       interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: falco-sidekick-helm-values
   values:
     image:
       registry: public.ecr.aws
@@ -44,6 +47,7 @@ spec:
             - "falco-sidekick.${SECRET_DOMAIN}"
     webui:
       enabled: true
+      darkmode: true
       # image:
       #   registry: public.ecr.aws
       ingress:
