@@ -44,13 +44,6 @@ spec:
     # https://securityhub.dev/
     customRules:
       rules-admin-activities.yaml: |-
-        - rule: shell_in_container
-          desc: shell activity within a container
-          condition: spawned_process and container.id != host and proc.name in (bash, sh, zsh)
-          output: >
-            Shell run in container (user=%user.name container_id=%container.id container_name=%container.name shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)
-          priority: ERROR
-          tags: [shell]
         - rule: Detect su or sudo
           desc: detect sudo activities
           condition:
