@@ -69,7 +69,7 @@ spec:
               (evt.type in (recvfrom,recvmsg))) and ssh_port
           output: >
             Inbound SSH connection (user=%user.name client_ip=%fd.cip client_port=%fd.cport server_ip=%fd.sip)
-          priority: WARNING
+          priority: ERROR
           tags: [network]
         - rule: Outbound SSH Connection
           desc: Detect Outbound SSH Connection
@@ -78,7 +78,7 @@ spec:
               (evt.type in (sendto,sendmsg))) and ssh_port
           output: >
             Outbound SSH connection (user=%user.name server_ip=%fd.sip server_port=%fd.sport client_ip=%fd.cip)
-          priority: WARNING
+          priority: ERROR
           tags: [network]
       rules-file-integrity.yaml: |-
         # - rule: Detect New File
