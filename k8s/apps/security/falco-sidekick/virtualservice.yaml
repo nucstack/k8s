@@ -12,6 +12,8 @@ spec:
   http:
     - match:
         - port: 443
+      rewrite:
+        uri: /ui
       route:
         - destination:
             port:
