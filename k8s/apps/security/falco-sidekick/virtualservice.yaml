@@ -11,9 +11,12 @@ spec:
     - istio-system/istio-ingressgateway
   http:
     - match:
-        - port: 443
+        - uri:
+            exact: /
       rewrite:
         uri: /ui
+    - match:
+        - port: 443
       route:
         - destination:
             port:
