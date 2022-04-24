@@ -30,7 +30,7 @@ spec:
         - name: ALERTMANAGER_MINIMUMPRIORITY
           value: emergency
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/ingress.class: "traefik"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
