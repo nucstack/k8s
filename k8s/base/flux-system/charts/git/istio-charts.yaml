@@ -8,7 +8,7 @@ spec:
   interval: 24h
   url: https://github.com/istio/istio
   ref:
-    tag: 1.13.2
+    tag: 1.13.3
   ignore: |
     # exclude all
     /*
