@@ -15,18 +15,9 @@ spec:
     sidecarInjectorWebhook:
       rewriteAppHTTPProbe: true
   meshConfig:
-    enableTracing: true
+    enableTracing: false
     enablePrometheusMerge: false
     defaultConfig:
-      tracing:
-        zipkin:
-          address: jaeger-collector.observability.svc.cluster.local:9411
-        sampling: 100.0
-        max_path_tag_length: 256
-        custom_tags:
-          clusterID:
-            environment:
-              name: nucstack-2
       gatewayTopology:
         # Always forward the XFCC header in the request, regardless of whether the client connection is mTLS.
         forwardClientCertDetails: ALWAYS_FORWARD_ONLY
@@ -42,8 +33,6 @@ spec:
           headersToDownstreamOnDeny: ["content-type", "set-cookie"]
 
   components:
-    telemetry:
-      enabled: true
     egressGateways:
       - name: istio-egressgateway
         enabled: true
