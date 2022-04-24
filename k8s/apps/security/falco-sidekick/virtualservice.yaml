@@ -12,17 +12,6 @@ spec:
   http:
     - match:
         - port: 443
-        - uri:
-            exact: /
-      rewrite:
-        uri: /ui/#
-      route:
-        - destination:
-            port:
-              number: 2802
-            host: falco-sidekick-falcosidekick-ui.security.svc.cluster.local
-    - match:
-        - port: 443
       route:
         - destination:
             port:
