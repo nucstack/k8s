@@ -55,7 +55,7 @@ spec:
         - rule: Package Management Launched
           desc: detect package management launched
           condition: >
-            spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs
+            spawned_process and user.name != "_apt" and package_mgmt_procs and not package_mgmt_ancestor_procs and proc.cmdline != "/usr/lib/apt/apt systems.daily update"
           output: >
             Package management process launched in container (user=%user.name
             command=%proc.cmdline container_id=%container.id container_name=%container.name image=%container.image.repository:%container.image.tag)
