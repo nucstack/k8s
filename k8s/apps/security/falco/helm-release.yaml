@@ -23,7 +23,7 @@ spec:
       enabled: true
       socket: /var/run/k3s/containerd/containerd.sock
     docker:
-      enabled: false
+      enabled: true
     ebpf:
       enabled: true
       settings:
