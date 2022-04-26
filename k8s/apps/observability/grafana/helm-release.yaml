@@ -135,21 +135,6 @@ spec:
           gnetId: 315
           revision: 3
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/13032
-        longhorn:
-          gnetId: 13032
-          revision: 6
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/14127
-        metallb:
-          gnetId: 14127
-          revision: 1
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11462
-        traefik:
-          gnetId: 11462
-          revision: 1
-          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/11315
         unifi-client-insights:
           gnetId: 11315
