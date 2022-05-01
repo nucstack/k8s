@@ -17,7 +17,7 @@ spec:
       interval: 5m
   values:
     functionNamespace: development
-    basic_auth: false
+    basic_auth: true
     gateway:
       directFunctions: true
     oauth2Plugin:

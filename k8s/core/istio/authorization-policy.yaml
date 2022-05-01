@@ -24,7 +24,6 @@ spec:
         - operation:
             hosts:
               - 'esphome.${SECRET_DOMAIN}'
-              - 'openfaas.${SECRET_DOMAIN}'
               - 'hass-code.${SECRET_DOMAIN}'
               - 'kiali.${SECRET_DOMAIN}'
               - 'jaeger.${SECRET_DOMAIN}'
