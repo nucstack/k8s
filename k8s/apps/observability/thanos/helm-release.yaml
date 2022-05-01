@@ -30,10 +30,6 @@ spec:
       ingress:
         enabled: false
         hostname: "thanos.${SECRET_DOMAIN}"
-        annotations:
-          kubernetes.io/ingress.class: traefik
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         tls: true
     existingObjstoreSecret: thanos-objstore # checkov:skip=CKV_SECRET_6 secret ref
     queryFrontend:

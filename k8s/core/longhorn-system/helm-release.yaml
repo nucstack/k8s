@@ -43,7 +43,3 @@ spec:
       host: longhorn.${SECRET_DOMAIN}
       tlsSecret: longhorn-cert # checkov:skip=CKV_SECRET_6 secret ref
       tls: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.middlewares: "networking-authelia@kubernetescrd,networking-svc-longhorn-headers@kubernetescrd"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

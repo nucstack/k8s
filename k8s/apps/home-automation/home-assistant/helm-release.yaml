@@ -171,10 +171,6 @@ spec:
           - --extensions-dir
           - '~/.vscode'
         ingress:
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           enabled: false
           hosts:
             - host: "vscode-hass.${SECRET_DOMAIN}"
