@@ -6,6 +6,7 @@ FROM docker.io/bitnami/kubectl:1.23.6 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
+FROM docker.io/openfaas/faas-cli:0.12.14 as openfaas
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.35.0 as prom
 FROM docker.io/hashicorp/terraform:1.1.9 as terraform
@@ -73,6 +74,7 @@ COPY --from=kubeval    /usr/bin/kubeval                 /usr/local/bin/kubeval
 COPY --from=kube-score /kube-score                      /usr/local/bin/kube-score
 COPY --from=kustomize  /app/kustomize                   /usr/local/bin/kustomize
 COPY --from=terraform  /bin/terraform                   /usr/local/bin/terraform
+COPY --from=openfaas   /home/app/faas-cli               /usr/local/bin/faas-cli
 COPY --from=prom       /bin/promtool                    /usr/local/bin/promtool
 COPY --from=prom-am    /bin/amtool                      /usr/local/bin/amtool
 COPY --from=trivy      /usr/local/bin/trivy             /usr/local/bin/trivy
