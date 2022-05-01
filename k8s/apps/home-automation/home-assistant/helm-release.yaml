@@ -43,10 +43,6 @@ spec:
       requests:
         cpu: 1000m
         memory: 1500Mi
-    securityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      runAsNonRoot: true
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2022.4.7
@@ -77,7 +73,6 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
-        mountPath: ~/config
       vscode-config:
         enabled: true
         type: emptyDir
@@ -119,9 +114,6 @@ spec:
         storageClass: longhorn
     ingress:
       main:
-        ingressClassName: "traefik"
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         enabled: false
         hosts:
           - host: "hass.${SECRET_DOMAIN}"
@@ -150,9 +142,9 @@ spec:
           - '/.vscode'
         volumeMounts:
           - name: config
-            mountPath: ~/config
+            mountPath: /config
           - name: vscode-config
-            mountPath: ~/.vscode
+            mountPath: /.vscode
     lifecycle:
       postStart:
         exec:
@@ -163,14 +155,14 @@ spec:
         image:
           repository: codercom/code-server
           tag: 4.3.0
-        workingDir: '~/config'
+        workingDir: '/config'
         args:
           - --auth
           - 'none'
           - --user-data-dir
-          - '~/.vscode'
+          - '/.vscode'
           - --extensions-dir
-          - '~/.vscode'
+          - '/.vscode'
         ingress:
           enabled: false
           hosts:
@@ -183,10 +175,6 @@ spec:
                 - "vscode-hass.${SECRET_DOMAIN}"
         volumeMounts:
           - name: config
-            mountPath: ~/config
+            mountPath: /config
           - name: vscode-config
-            mountPath: ~/.vscode
-        securityContext:
-          runAsUser: 1001
-          runAsGroup: 1001
-          runAsNonRoot: true
+            mountPath: /.vscode
