@@ -11,4 +11,3 @@ resources:
   - notifications
   - rsyslog
   - thanos
-  - unifi-poller
