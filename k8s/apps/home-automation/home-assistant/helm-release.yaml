@@ -77,6 +77,7 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
+        mountPath: ~/config
       vscode-config:
         enabled: true
         type: emptyDir
@@ -149,9 +150,9 @@ spec:
           - '/.vscode'
         volumeMounts:
           - name: config
-            mountPath: /config
+            mountPath: ~/config
           - name: vscode-config
-            mountPath: /.vscode
+            mountPath: ~/.vscode
     lifecycle:
       postStart:
         exec:
@@ -162,7 +163,7 @@ spec:
         image:
           repository: codercom/code-server
           tag: 4.3.0
-        workingDir: '/config'
+        workingDir: '~/config'
         args:
           - --auth
           - 'none'
