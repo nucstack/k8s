@@ -16,6 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    functionNamespace: development
     basic_auth: false
     gateway:
       directFunctions: true
