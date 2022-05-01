@@ -43,6 +43,10 @@ spec:
       requests:
         cpu: 1000m
         memory: 1500Mi
+    securityContext:
+      runAsUser: 1001
+      runAsGroup: 1001
+      runAsNonRoot: true
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2022.4.7
