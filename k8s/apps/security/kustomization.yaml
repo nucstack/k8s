@@ -5,6 +5,6 @@ resources:
   - dex
   - dex-k8s-authenticator
   - falco
-  - falco-sidekick
+  - falco-exporter
   - oauth2-proxy
   - rbac

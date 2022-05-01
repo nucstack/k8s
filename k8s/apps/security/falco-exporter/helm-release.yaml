@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: falco-exporter
+  namespace: security
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: falco-exporter
+      version: 0.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: falco-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    falco:
+      grpcUnixSocketPath: "unix:///var/run/falco/falco.sock"
+      grpcTimeout: 2m
+
+    podSecurityContext:
+      fsGroup: 2000
+
+    securityContext: {}
+      # capabilities:
+      #   drop:
+      #   - ALL
+      # readOnlyRootFilesystem: true
+      # runAsNonRoot: true
+      # runAsUser: 1000
+
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+    serviceMonitor:
+      enabled: true
