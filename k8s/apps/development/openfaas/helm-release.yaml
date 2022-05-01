@@ -17,6 +17,7 @@ spec:
       interval: 5m
   values:
     basic_auth: false
+    gateway:
       directFunctions: true
     oauth2Plugin:
       enabled: false
