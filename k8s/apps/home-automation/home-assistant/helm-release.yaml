@@ -185,3 +185,8 @@ spec:
             mountPath: /config
           - name: vscode-config
             mountPath: /.vscode
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 2000
+          runAsNonRoot: true
