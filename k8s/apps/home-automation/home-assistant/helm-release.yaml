@@ -167,9 +167,9 @@ spec:
           - --auth
           - 'none'
           - --user-data-dir
-          - '/.vscode'
+          - '~/.vscode'
           - --extensions-dir
-          - '/.vscode'
+          - '~/.vscode'
         ingress:
           annotations:
             kubernetes.io/ingress.class: traefik
@@ -186,9 +186,9 @@ spec:
                 - "vscode-hass.${SECRET_DOMAIN}"
         volumeMounts:
           - name: config
-            mountPath: /config
+            mountPath: ~/config
           - name: vscode-config
-            mountPath: /.vscode
+            mountPath: ~/.vscode
         securityContext:
           runAsUser: 1001
           runAsGroup: 1001
