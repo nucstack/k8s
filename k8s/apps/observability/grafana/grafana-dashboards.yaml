@@ -8,6 +8,334 @@ metadata:
     grafana_dashboard: "1"
     namespace: observability
 data:
+  falco.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "Grafana dashboard for Falco output events",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "gnetId": 11914,
+      "graphTooltip": 0,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "links": []
+            },
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 11,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "hiddenSeries": false,
+          "id": 2,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "8.5.0",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "rate(falco_events[5m])",
+              "intervalFactor": 1,
+              "legendFormat": "{{rule}} ({{hostname}})",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeRegions": [],
+          "title": "Events rate",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            },
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false
+          }
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "displayMode": "auto",
+                "filterable": true,
+                "inspect": false
+              },
+              "decimals": 2,
+              "displayName": "",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Time"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Time"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "time: YYYY-MM-DD HH:mm:ss"
+                  },
+                  {
+                    "id": "custom.align"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/__name__|job|kubernetes_name|(__name|helm_|app_|pod_).*/"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 2
+                  },
+                  {
+                    "id": "custom.align"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Count"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  },
+                  {
+                    "id": "custom.align"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "priority"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "none"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": null
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": null
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 11
+          },
+          "id": 4,
+          "links": [],
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "8.5.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "expr": "falco_events{}",
+              "format": "table",
+              "instant": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Totals",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Value": false,
+                  "container": true,
+                  "endpoint": true,
+                  "instance": true,
+                  "namespace": true,
+                  "pod": true,
+                  "prometheus": true,
+                  "service": true,
+                  "source": true
+                },
+                "indexByName": {},
+                "renameByName": {}
+              }
+            },
+            {
+              "id": "merge",
+              "options": {
+                "reducers": []
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "refresh": "",
+      "schemaVersion": 36,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-30m",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Falco Dashboard",
+      "uid": "FvUFlfuZz",
+      "version": 1,
+      "weekStart": ""
+    }
   home-assistant.json: |-
     {
       "annotations": {
