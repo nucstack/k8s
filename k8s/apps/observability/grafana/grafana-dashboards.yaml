@@ -246,11 +246,44 @@ data:
                           "value": null
                         },
                         {
-                          "color": "rgba(237, 129, 40, 0.89)",
-                          "value": null
+                          "color": "rgba(237, 129, 40, 0.89)"
                         }
                       ]
                     }
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "index": 0,
+                            "text": "1"
+                          },
+                          "2": {
+                            "index": 1,
+                            "text": "2"
+                          },
+                          "3": {
+                            "index": 2,
+                            "text": "3"
+                          },
+                          "4": {
+                            "index": 3,
+                            "text": "4"
+                          },
+                          "5": {
+                            "index": 4,
+                            "text": "5"
+                          },
+                          "6": {
+                            "index": 5,
+                            "text": "6"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
                   }
                 ]
               }
@@ -294,9 +327,11 @@ data:
               "options": {
                 "excludeByName": {
                   "Value": false,
+                  "__name__": true,
                   "container": true,
                   "endpoint": true,
                   "instance": true,
+                  "job": true,
                   "namespace": true,
                   "pod": true,
                   "prometheus": true,
@@ -304,13 +339,14 @@ data:
                   "source": true
                 },
                 "indexByName": {},
-                "renameByName": {}
-              }
-            },
-            {
-              "id": "merge",
-              "options": {
-                "reducers": []
+                "renameByName": {
+                  "Time": "time",
+                  "Value": "count",
+                  "__name__": "",
+                  "endpoint": "",
+                  "k8s_ns_name": "namespace",
+                  "k8s_pod_name": "pod"
+                }
               }
             }
           ],
