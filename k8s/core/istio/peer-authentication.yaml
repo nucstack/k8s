@@ -7,18 +7,15 @@ metadata:
 spec:
   mtls:
     mode: STRICT
----
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: flux-system
-spec:
-  mtls:
-    mode: STRICT
-  portLevelMtls:
-    8080:
-      mode: DISABLE
+# ---
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: default
+#   namespace: flux-system
+# spec:
+#   mtls:
+#     mode: STRICT
 # ---
 # apiVersion: security.istio.io/v1beta1
 # kind: PeerAuthentication
