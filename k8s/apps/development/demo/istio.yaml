@@ -31,7 +31,25 @@ spec:
             host: demo.development.svc.cluster.local
             subset: v1
           weight: 50
+          headers:
+            response:
+              set:
+                Referrer-Policy: no-referrer
+                X-Content-Type-Options: nosniff
+                X-DNS-Prefetch-Control: 'off'
+                X-Download-Options: noopen
+                X-Frame-Options: deny
+                X-XSS-Protection: 1; mode=block
         - destination:
             host: demo.development.svc.cluster.local
             subset: v2
           weight: 50
+          headers:
+            response:
+              set:
+                Referrer-Policy: no-referrer
+                X-Content-Type-Options: nosniff
+                X-DNS-Prefetch-Control: 'off'
+                X-Download-Options: noopen
+                X-Frame-Options: deny
+                X-XSS-Protection: 1; mode=block

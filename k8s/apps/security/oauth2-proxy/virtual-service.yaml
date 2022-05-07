@@ -17,3 +17,12 @@ spec:
             port:
               number: 80
             host: oauth2-proxy.security.svc.cluster.local
+          headers:
+            response:
+              set:
+                Referrer-Policy: no-referrer
+                X-Content-Type-Options: nosniff
+                X-DNS-Prefetch-Control: 'off'
+                X-Download-Options: noopen
+                X-Frame-Options: deny
+                X-XSS-Protection: 1; mode=block
