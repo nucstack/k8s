@@ -37,9 +37,16 @@ tasks:
 
   export-synology-dns-kubeconfig:
     desc: fetch kubeconfig for synology dns
-    deps: [export-ssh-keys]
+    vars:
+      NAME: "synology-dns"
+      SA_NAME:
+        sh: "kubectl -n kube-system get serviceaccount {{.NAME}} -n networking -o json | jq -r '.secrets[].name'"
+      CA:
+        sh: "kubectl -n kube-system get secret {{.SA_NAME}} -n networking -o json | jq -r '.data.\"ca.crt\"'"
+      TOKEN:
+        sh: "kubectl -n kube-system get secret {{.SA_NAME}} -n networking -o json | jq -r '.data.token'| base64 -d"
     cmds:
-      - "ansible:export-kubeconfig NAME=synology-dns"
+      - "KUBECONFIG_CA={{.CA}} KUBECONFIG_TOKEN={{.TOKEN}}  envsubst < {{.PROJECT_DIR}}/tmpl/kubeconfig.tmpl > {{.PROJECT_DIR}}/{{.NAME}}-{{.ENVIRONMENT}}.kubeconfig"
     silent: true
 
   export-home-dns-kubeconfig:
