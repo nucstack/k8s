@@ -209,11 +209,11 @@ spec:
             name: thanos-objstore
             key: objstore.yml
         additionalScrapeConfigs:
-          - job_name: "coredns"
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "${SECRET_DNS_SERVER}:9153"
+          # - job_name: "coredns"
+          #   honor_timestamps: true
+          #   static_configs:
+          #     - targets:
+          #         - "${SECRET_DNS_SERVER}:9153"
           - job_name: 'istiod'
             kubernetes_sd_configs:
               - role: endpoints
