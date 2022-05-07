@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - openfaas.secrets.enc.yaml
   - helm-release.yaml
-  - virtualservice.yaml
+  - virtual-service.yaml

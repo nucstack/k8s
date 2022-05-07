@@ -5,4 +5,4 @@ resources:
   - grafana-ldap.secret.enc.yaml
   - grafana-dashboards.yaml
   - helm-release.yaml
-  - virtualservice.yaml
+  - virtual-service.yaml

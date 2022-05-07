@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - oauth2-proxy.secret.enc.yaml
   - helm-release.yaml
-  - virtualservice.yaml
+  - virtual-service.yaml

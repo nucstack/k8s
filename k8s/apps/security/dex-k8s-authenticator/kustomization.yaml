@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - dex-k8s-authenticator.secret.enc.yaml
   - helm-release.yaml
-  - virtualservice.yaml
+  - virtual-service.yaml
