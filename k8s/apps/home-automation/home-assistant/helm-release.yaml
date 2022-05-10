@@ -46,7 +46,7 @@ spec:
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: dev
-      pullPolicy: always
+      pullPolicy: Always
     env:
       TZ: "America/New_York"
     hostNetwork: false
