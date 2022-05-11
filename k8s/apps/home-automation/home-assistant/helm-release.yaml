@@ -45,7 +45,7 @@ spec:
         memory: 1500Mi
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: dev
+      tag: 2022.5.3
       pullPolicy: Always
     env:
       TZ: "America/New_York"
