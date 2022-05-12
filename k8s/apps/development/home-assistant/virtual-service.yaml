@@ -1,0 +1,36 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: home-assistant
+  namespace: development
+spec:
+  hosts:
+    - 'hassdev.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8123
+            host: home-assistant.development.svc.cluster.local
+          weight: 100
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hass-assistant-code
+  namespace: development
+spec:
+  hosts:
+    - 'hassdev-code.${SECRET_DOMAIN}'
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - route:
+        - destination:
+            port:
+              number: 12321
+            host: home-assistant-codeserver.development.svc.cluster.local
+          weight: 100

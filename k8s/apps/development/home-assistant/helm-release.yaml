@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: development
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 13.1.3
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 10m
+  timeout: 10m
+  values:
+    controller:
+      labels:
+        app: home-assistamt
+    resources:
+      limits:
+        cpu: 1500m
+        memory: 2500Mi
+      requests:
+        cpu: 1000m
+        memory: 1500Mi
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2022.5.3
+      pullPolicy: Always
+    env:
+      TZ: "America/New_York"
+    hostNetwork: false
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 4.4.0
+        workingDir: '/config'
+        args:
+          - --auth
+          - 'none'
