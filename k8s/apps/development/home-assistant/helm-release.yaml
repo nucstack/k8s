@@ -35,13 +35,3 @@ spec:
     env:
       TZ: "America/New_York"
     hostNetwork: false
-    addons:
-      codeserver:
-        enabled: true
-        image:
-          repository: codercom/code-server
-          tag: 4.4.0
-        workingDir: '/config'
-        args:
-          - --auth
-          - 'none'
