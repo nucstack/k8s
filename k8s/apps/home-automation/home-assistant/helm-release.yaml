@@ -178,9 +178,6 @@ spec:
             mountPath: /config
           - name: vscode-config
             mountPath: /.vscode
-          - name: deploykey
-            mountPath: /home/coder/.ssh/id_rsa
-            subPath: id_rsa
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
