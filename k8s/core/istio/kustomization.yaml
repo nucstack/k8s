@@ -7,3 +7,4 @@ resources:
   - gateway.yaml
   - authorization-policy.yaml
   - network-policy.yaml
+  - peer-authentication.yaml
