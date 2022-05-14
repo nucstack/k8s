@@ -76,7 +76,7 @@ spec:
         existingClaim: home-assistant
       vscode-config:
         enabled: true
-        type: emptyDir
+        size: 3Gi
       auth-scripts:
         enabled: true
         type: custom
