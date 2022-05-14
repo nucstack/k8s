@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - grafana
   - influxdb
-  - kiali
   - kube-prometheus-stack
   - loki
   - metrics-server
