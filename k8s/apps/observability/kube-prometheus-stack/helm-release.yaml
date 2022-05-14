@@ -90,6 +90,7 @@ spec:
                   storage: 1Gi
     nodeExporter:
       serviceMonitor:
+        scheme: https
         tlsConfig:
           caFile: /etc/prom-certs/root-cert.pem
           certFile: /etc/prom-certs/cert-chain.pem
@@ -114,6 +115,7 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
+        scheme: https
         tlsConfig:
           caFile: /etc/prom-certs/root-cert.pem
           certFile: /etc/prom-certs/cert-chain.pem
