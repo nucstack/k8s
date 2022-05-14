@@ -90,6 +90,11 @@ spec:
                   storage: 1Gi
     nodeExporter:
       serviceMonitor:
+        tlsConfig:
+          caFile: /etc/prom-certs/root-cert.pem
+          certFile: /etc/prom-certs/cert-chain.pem
+          keyFile: /etc/prom-certs/key.pem
+          insecureSkipVerify: true
         relabelings:
           - action: replace
             regex: (.*)
@@ -109,6 +114,11 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
+        tlsConfig:
+          caFile: /etc/prom-certs/root-cert.pem
+          certFile: /etc/prom-certs/cert-chain.pem
+          keyFile: /etc/prom-certs/key.pem
+          insecureSkipVerify: true
         metricRelabelings:
           - action: replace
             sourceLabels:
