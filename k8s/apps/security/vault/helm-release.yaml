@@ -43,4 +43,4 @@ spec:
         pullPolicy: IfNotPresent
       agentImage:
         repository: "hashicorp/vault"
-        tag: "1.9.3"
+        tag: "1.9.6"
