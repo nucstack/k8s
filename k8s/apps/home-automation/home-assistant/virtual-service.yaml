@@ -16,6 +16,16 @@ spec:
               number: 8123
             host: home-assistant.home-automation.svc.cluster.local
           weight: 100
+          headers:
+            response:
+              set:
+                Referrer-Policy: no-referrer
+                X-Content-Type-Options: nosniff
+                X-DNS-Prefetch-Control: 'off'
+                X-Download-Options: noopen
+                X-Frame-Options: deny
+                X-XSS-Protection: 1; mode=block
+
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -34,3 +44,12 @@ spec:
               number: 12321
             host: home-assistant-codeserver.home-automation.svc.cluster.local
           weight: 100
+          headers:
+            response:
+              set:
+                Referrer-Policy: no-referrer
+                X-Content-Type-Options: nosniff
+                X-DNS-Prefetch-Control: 'off'
+                X-Download-Options: noopen
+                X-Frame-Options: deny
+                X-XSS-Protection: 1; mode=block
