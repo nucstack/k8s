@@ -143,10 +143,6 @@ spec:
           - '/.vscode'
           - --extensions-dir
           - '/.vscode'
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 1000
-          runAsGroup: 1000
         volumeMounts:
           - name: config
             mountPath: /config
@@ -185,3 +181,7 @@ spec:
             mountPath: /config
           - name: vscode-config
             mountPath: /.vscode
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
