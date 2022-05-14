@@ -34,21 +34,21 @@ metadata:
 spec:
   mtls:
     mode: STRICT
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: default
-#   namespace: observability
-# spec:
-#   mtls:
-#     mode: STRICT
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: default
-#   namespace: metallb-system
-# spec:
-#   mtls:
-#     mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: observability
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  mtls:
+    mode: STRICT
