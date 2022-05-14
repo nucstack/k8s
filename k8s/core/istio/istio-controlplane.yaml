@@ -48,3 +48,4 @@ spec:
           service:
             type: LoadBalancer
             loadBalancerIP: "${SECRET_ISTIO_LB_IP}"
+            externalTrafficPolicy: Local
