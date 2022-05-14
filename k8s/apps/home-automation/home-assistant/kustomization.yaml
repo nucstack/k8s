@@ -7,5 +7,3 @@ resources:
   - prometheus.secrets.enc.yaml
   - helm-release.yaml
   - virtual-service.yaml
-patchesStrategicMerge:
-  - ./patches.yaml
