@@ -77,7 +77,7 @@ spec:
       vscode-config:
         enabled: true
         size: 3Gi
-        storageClass: longhorn/
+        storageClass: longhorn
         accessMode: "ReadWriteOnce"
       auth-scripts:
         enabled: true
