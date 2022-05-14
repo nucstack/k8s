@@ -178,7 +178,7 @@ spec:
             mountPath: /config
           - name: vscode-config
             mountPath: /.vscode
-          - name: deploykey
+          - name: deploykey-coder
             mountPath: /home/coder/.ssh/id_rsa
             subPath: id_rsa
         securityContext:
