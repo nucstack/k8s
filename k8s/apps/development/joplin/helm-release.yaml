@@ -16,6 +16,9 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: joplin-helm-values
   values:
     image:
       repository: joplin/server
@@ -24,23 +27,15 @@ spec:
       config:
         enabled: true
         size: 10Gi
-    # podSecurityContext:
-    #   runAsNonRoot: true
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
+    postgresql:
+      enabled: true
+      volumePermissions:
+        enabled: true
+      persistence:
+        enabled: true
+        size: 10Gi
+        storageClass: longhorn
     env:
       TZ: UTC
       APP_BASE_URL: "https://joplin.${SECRET_DOMAIN}"
       APP_PORT: 22300
-      # -- Use pg for postgres
-      # DB_CLIENT:  # pg
-      # # -- Postgres DB Host
-      # POSTGRES_HOST:  # joplin-postgresql
-      # # -- Postgres DB port
-      # POSTGRES_PORT:  # 5432
-      # # -- Postgres DB name
-      # POSTGRES_DATABASE:  # joplin
-      # # -- Postgres DB Username
-      # POSTGRES_USER:  # joplin
-      # # -- Postgres DB password
-      # POSTGRES_PASSWORD:  # joplin-pass
