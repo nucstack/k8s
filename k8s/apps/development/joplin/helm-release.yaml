@@ -20,6 +20,10 @@ spec:
     image:
       repository: joplin/server
       tag: 2.1.2
+    persistence:
+      config:
+        enabled: true
+        size: 10Gi
     # podSecurityContext:
     #   runAsNonRoot: true
     #   runAsUser: 1000
