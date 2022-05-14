@@ -77,7 +77,7 @@ spec:
       vscode-config:
         enabled: true
         size: 3Gi
-        storageClass: longhorn
+        storageClass: longhorn/
         accessMode: "ReadWriteOnce"
       auth-scripts:
         enabled: true
@@ -136,9 +136,6 @@ spec:
           - --install-extension
           - 'ms-python.python'
           - --force
-          - --install-extension
-          - 'keesschollaart.vscode-home-assistant'
-          - --force
           - --user-data-dir
           - '/.vscode'
           - --extensions-dir
@@ -181,6 +178,9 @@ spec:
             mountPath: /config
           - name: vscode-config
             mountPath: /.vscode
+          - name: deploykey
+            mountPath: /home/coder/.ssh/id_rsa
+            subPath: id_rsa
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
