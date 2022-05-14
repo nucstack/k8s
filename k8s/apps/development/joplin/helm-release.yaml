@@ -27,10 +27,7 @@ spec:
     initContainers:
       chmod:
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /data"]
-        volumeMounts:
-        - name: /config
-          mountPath: /config
+        command: ["sh", "-c", "chown -R 1000:1000 /home/joplin"]
     env:
       TZ: UTC
       APP_BASE_URL: "https://joplin.${SECRET_DOMAIN}"
