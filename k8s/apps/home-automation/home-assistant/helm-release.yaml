@@ -78,6 +78,7 @@ spec:
         enabled: true
         size: 3Gi
         storageClass: longhorn
+        accessMode: "ReadWriteOnce"
       auth-scripts:
         enabled: true
         type: custom
