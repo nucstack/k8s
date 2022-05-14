@@ -20,14 +20,21 @@ spec:
     image:
       repository: joplin/server
       tag: 2.1.2
-    env:
-      TZ: UTC
-      APP_BASE_URL: "https://joplin.${SECRET_DOMAIN}"
-      APP_PORT: 22300
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1000
       runAsGroup: 1000
+    initContainers:
+      chmod:
+        image: busybox
+        command: ["sh", "-c", "chown -R 1000:1000 /data"]
+        volumeMounts:
+        - name: /config
+          mountPath: /config
+    env:
+      TZ: UTC
+      APP_BASE_URL: "https://joplin.${SECRET_DOMAIN}"
+      APP_PORT: 22300
       # -- Use pg for postgres
       # DB_CLIENT:  # pg
       # # -- Postgres DB Host
