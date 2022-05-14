@@ -16,24 +16,24 @@ spec:
 # spec:
 #   mtls:
 #     mode: STRICT
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: default
-#   namespace: networking
-# spec:
-#   mtls:
-#     mode: STRICT
-# ---
-# apiVersion: security.istio.io/v1beta1
-# kind: PeerAuthentication
-# metadata:
-#   name: default
-#   namespace: security
-# spec:
-#   mtls:
-#     mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: networking
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: security
+spec:
+  mtls:
+    mode: STRICT
 # ---
 # apiVersion: security.istio.io/v1beta1
 # kind: PeerAuthentication
