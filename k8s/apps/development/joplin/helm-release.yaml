@@ -22,7 +22,7 @@ spec:
   values:
     image:
       repository: joplin/server
-      tag: 2.1.2
+      tag: 2.5.1
     persistence:
       config:
         enabled: true
