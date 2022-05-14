@@ -14,7 +14,7 @@ spec:
         - destination:
             port:
               number: 22300
-            host: joplin-server.development.svc.cluster.local
+            host: joplin-joplin-server.development.svc.cluster.local
           weight: 100
           headers:
             response:
