@@ -10,6 +10,7 @@ resources:
   - falco-charts.yaml
   - github-actions-charts.yaml
   - grafana-loki-charts.yaml
+  - hashicorp-charts.yaml
   - influxdata-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
