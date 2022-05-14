@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vault
+  namespace: security
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.releases.hashicorp.com
+      chart: hashicorp/vault
+      version: 0.19.0
+      sourceRef:
+        kind: HelmRepository
+        name: hashicorp-charts
+        namespace: flux-system
+      interval: 10m
+  test:
+    enable: false
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+  values:
+    injector:
+      enabled: true
+      externalVaultAddr: "https://vault.${SECRET_LOCAL_DOMAIN}"
+      logLevel: "debug"
+      metrics:
+        enabled: false
+      image:
+        repository: "hashicorp/vault-k8s"
+        tag: "0.14.2"
+        pullPolicy: IfNotPresent
+      agentImage:
+        repository: "hashicorp/vault"
+        tag: "1.9.3"

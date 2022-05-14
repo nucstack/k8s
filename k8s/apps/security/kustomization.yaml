@@ -8,3 +8,4 @@ resources:
   - falco-exporter
   - oauth2-proxy
   - rbac
+  - vault

@@ -20,14 +20,10 @@ spec:
     image:
       repository: joplin/server
       tag: 2.1.2
-    podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
-      runAsGroup: 1000
-    initContainers:
-      chmod:
-        image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /home/joplin"]
+    # podSecurityContext:
+    #   runAsNonRoot: true
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
     env:
       TZ: UTC
       APP_BASE_URL: "https://joplin.${SECRET_DOMAIN}"
