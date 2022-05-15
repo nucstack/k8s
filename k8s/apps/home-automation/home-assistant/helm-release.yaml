@@ -135,6 +135,8 @@ spec:
         args:
           - --install-extension
           - 'ms-python.python'
+          - --install-extension
+          - 'mtxr.sqltools'
           - --force
           - --user-data-dir
           - '/.vscode'

@@ -44,12 +44,12 @@ spec:
               number: 12321
             host: home-assistant-codeserver.home-automation.svc.cluster.local
           weight: 100
-          headers:
-            response:
-              set:
-                Referrer-Policy: no-referrer
-                X-Content-Type-Options: nosniff
-                X-DNS-Prefetch-Control: 'off'
-                X-Download-Options: noopen
-                X-Frame-Options: deny
-                X-XSS-Protection: 1; mode=block
+          # headers:
+          #   response:
+          #     set:
+          #       Referrer-Policy: no-referrer
+          #       X-Content-Type-Options: nosniff
+          #       X-DNS-Prefetch-Control: 'off'
+          #       X-Download-Options: noopen
+          #       X-Frame-Options: deny
+          #       X-XSS-Protection: 1; mode=block
