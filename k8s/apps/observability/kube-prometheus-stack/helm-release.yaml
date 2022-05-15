@@ -25,9 +25,6 @@ spec:
   timeout: 20m
   values:
     fullnameOverride: prometheus
-    kube-state-metrics:
-      podAnnotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     alertmanager:
       config:
         global:
@@ -84,9 +81,6 @@ spec:
           - hosts:
               - "alertmanager.${SECRET_DOMAIN}"
       alertmanagerSpec:
-        podMetadata:
-          annotations:
-            sidecar.istio.io/rewriteAppHTTPProbers: "true"
         storage:
           volumeClaimTemplate:
             spec:
@@ -94,12 +88,6 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-      serviceMonitor:
-        tlsConfig:
-          caFile: /etc/istio-certs/root-cert.pem
-          keyFile: /etc/istio-certs/key.pem
-          certFile: /etc/istio-certs/cert-chain.pem
-          insecureSkipVerify: true
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -121,6 +109,11 @@ spec:
     kubelet:
       enabled: true
       serviceMonitor:
+        tlsConfig:
+          caFile: /etc/prom-certs/root-cert.pem
+          certFile: /etc/prom-certs/cert-chain.pem
+          keyFile: /etc/prom-certs/key.pem
+          insecureSkipVerify: true
         metricRelabelings:
           - action: replace
             sourceLabels:
@@ -174,8 +167,6 @@ spec:
         port: 2381
         targetPort: 2381
     prometheusOperator:
-      podAnnotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
       configReloaderCpu: 0
       admissionWebhooks:
         enabled: false
@@ -196,30 +187,6 @@ spec:
       thanosService:
         enabled: true
       prometheusSpec:
-        volumeMounts:
-          - name: istio-certs
-            mountPath: /etc/istio-certs/
-            readOnly: true
-        podMetadata:
-          annotations:
-            sidecar.istio.io/rewriteAppHTTPProbers: "true"
-            sidecar.istio.io/userVolume: '[{"name": "istio-certs", "emptyDir": {"medium": "Memory"}}]'
-            sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-certs/"}]'
-            proxy.istio.io/config: |-
-              proxyMetadata:
-                OUTPUT_CERTS: /etc/istio-certs/
-        alertingEndpoints:
-          - name: prom-prometheus-operator-alertmanager
-            namespace: default
-            port: web
-            scheme: https
-            pathPrefix: /
-            apiVersion: v2
-            tlsConfig:
-              caFile: /etc/istio-certs/root-cert.pem
-              keyFile: /etc/istio-certs/key.pem
-              certFile: /etc/istio-certs/cert-chain.pem
-              insecureSkipVerify: true
         replicas: 1
         replicaExternalLabelName: "replica"
         resources: {}
