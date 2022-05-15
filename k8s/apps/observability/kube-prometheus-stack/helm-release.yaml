@@ -147,7 +147,7 @@ spec:
         port: 10259
         targetPort: 10259
       serviceMonitor:
-        enabled: false
+        enabled: true
         https: true
         insecureSkipVerify: true
     kubeProxy:
