@@ -51,7 +51,7 @@ spec:
         interval: 60s
         scrapeTimeout: 10s
       prometheusRule:
-        enabled: true
+        enabled: false
     config: |
       upstream:
         externalResolvers:
