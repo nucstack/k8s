@@ -137,6 +137,8 @@ spec:
           - 'ms-python.python'
           - --install-extension
           - 'mtxr.sqltools'
+          - --install-extension
+          - 'mtxr.sqltools-driver-pg'
           - --force
           - --user-data-dir
           - '/.vscode'
