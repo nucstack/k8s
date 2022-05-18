@@ -2,7 +2,7 @@
 FROM docker.io/fluxcd/flux-cli:v0.30.2 as flux
 FROM docker.io/hadolint/hadolint:v2.10.0 as hadolint
 FROM docker.io/alpine/helm:3.8.2 as helm
-FROM docker.io/bitnami/kubectl:1.23.6 as kubectl
+FROM docker.io/bitnami/kubectl:1.24.0 as kubectl
 FROM docker.io/cytopia/kubeval:0.16 as kubeval
 FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
@@ -10,7 +10,7 @@ FROM docker.io/openfaas/faas-cli:0.12.14 as openfaas
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.35.0 as prom
 FROM docker.io/hashicorp/terraform:1.1.9 as terraform
-FROM docker.io/aquasec/trivy:0.27.1 as trivy
+FROM docker.io/aquasec/trivy:0.28.0 as trivy
 FROM docker.io/hashicorp/vault:1.10.3 as vault
 FROM docker.io/velero/velero:v1.8.1 as velero
 FROM docker.io/mikefarah/yq:4.25.1 as yq
