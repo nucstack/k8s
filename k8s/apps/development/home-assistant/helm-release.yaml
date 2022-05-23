@@ -69,7 +69,6 @@ spec:
             mountPath: /etc/git-secret/ssh
     initContainers:
       git-sync:
-        enabled: true
         image:
           repository: k8s.gcr.io/git-sync
           tag: v3.1.3
