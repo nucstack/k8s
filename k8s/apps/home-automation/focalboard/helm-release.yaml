@@ -51,7 +51,7 @@ spec:
     initContainers:
       ownership:
         name: chmod
-        image: alpine:3.15
+        image: alpine:3.16
         command: ['chmod']
         args:
           - '-R'
