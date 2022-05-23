@@ -37,10 +37,10 @@ spec:
     env:
       TZ: "America/New_York"
     hostNetwork: false
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      runAsNonRoot: false
+    # securityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   runAsNonRoot: false
     lifecycle:
       postStart:
         exec:
