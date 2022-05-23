@@ -67,7 +67,7 @@ spec:
         subPath:
           - path: ssh
             mountPath: /etc/git-secret/ssh
-    addons:
+    initContainers:
       git-sync:
         enabled: true
         image:
