@@ -46,6 +46,9 @@ spec:
         exec:
           command: ["/sbin/apk", "add", "openldap-clients"]
     persistence:
+      config:
+        enabled: true
+        type: emptyDir
       auth-config:
         enabled: true
         type: custom
