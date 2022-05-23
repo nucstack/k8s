@@ -26,6 +26,10 @@ spec:
   values:
     fullnameOverride: prometheus
     alertmanager:
+      tplConfig: true
+      templateFiles:
+      ext_url.tmpl: |-
+        {{ define "cluster" }}{{ .ExternalURL | reReplaceAll ".*alertmanager\\.(.*)" "$1" }}{{ end }}
       config:
         global:
           slack_api_url: "${SECRET_ALERTMANAGER_SLACK_WEBHOOK}"
