@@ -67,18 +67,3 @@ spec:
         subPath:
           - path: ssh
             mountPath: /etc/git-secret/ssh
-    initContainers:
-      git-sync:
-        image: k8s.gcr.io/git-sync:v3.1.3
-        volumeMounts:
-          - name: config
-            mountPath: /tmp/git
-          - name: sshkey
-            mountPath: /etc/git-secret/ssh
-        env:
-          - name: GIT_SYNC_BRANCH
-            value: main
-          - name: GIT_SYNC_SSH
-            value: "true"
-          - name: GIT_KNOWN_HOSTS
-            value: "false"
