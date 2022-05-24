@@ -55,7 +55,6 @@ spec:
         volumeSpec:
           secret:
             secretName: hass-helm-values
-            defaultMode: 256
         subPath:
           - path: ldap.cfg
             mountPath: /ldap.cfg
@@ -65,6 +64,7 @@ spec:
         volumeSpec:
           secret:
             secretName: hass-ssh-key
+            defaultMode: 256
         subPath:
           - path: ssh
             mountPath: /etc/git-secret/ssh
