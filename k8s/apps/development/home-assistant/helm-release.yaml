@@ -55,6 +55,7 @@ spec:
         volumeSpec:
           secret:
             secretName: hass-helm-values
+            defaultMode: 256
         subPath:
           - path: ldap.cfg
             mountPath: /ldap.cfg
