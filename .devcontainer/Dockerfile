@@ -9,7 +9,7 @@ FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
 FROM docker.io/openfaas/faas-cli:0.12.14 as openfaas
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.35.0 as prom
-FROM docker.io/hashicorp/terraform:1.2.0 as terraform
+FROM docker.io/hashicorp/terraform:1.2.1 as terraform
 FROM docker.io/aquasec/trivy:0.28.0 as trivy
 FROM docker.io/hashicorp/vault:1.10.3 as vault
 FROM docker.io/velero/velero:v1.8.1 as velero
