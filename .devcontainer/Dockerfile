@@ -8,7 +8,7 @@ FROM docker.io/zegl/kube-score:v1.14.0 as kube-score
 FROM k8s.gcr.io/kustomize/kustomize:v4.5.4 as kustomize
 FROM docker.io/openfaas/faas-cli:0.12.14 as openfaas
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
-FROM docker.io/prom/prometheus:v2.35.0 as prom
+FROM docker.io/prom/prometheus:v2.36.0 as prom
 FROM docker.io/hashicorp/terraform:1.2.1 as terraform
 FROM docker.io/aquasec/trivy:0.28.0 as trivy
 FROM docker.io/hashicorp/vault:1.10.3 as vault
