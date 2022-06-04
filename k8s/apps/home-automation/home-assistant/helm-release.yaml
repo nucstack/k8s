@@ -101,7 +101,7 @@ spec:
     influxdb:
       enabled: false
     postgresql:
-      enabled: true
+      enabled: false
       volumePermissions:
         enabled: true
       resources:
