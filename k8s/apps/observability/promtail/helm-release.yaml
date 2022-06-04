@@ -25,7 +25,8 @@ spec:
         memory: 512Mi
         cpu: 250m
     config:
-      lokiAddress: "http://loki:3100/loki/api/v1/push"
+      clients:
+        - url: "http://loki:3100/loki/api/v1/push"
       snippets:
         extraScrapeConfigs: |
           - job_name: journal
