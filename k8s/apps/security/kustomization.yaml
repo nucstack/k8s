@@ -4,7 +4,5 @@ kind: Kustomization
 resources:
   - dex
   - dex-k8s-authenticator
-  - falco
-  - falco-exporter
   - oauth2-proxy
   - rbac
