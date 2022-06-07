@@ -101,7 +101,7 @@ spec:
     influxdb:
       enabled: false
     postgresql:
-      enabled: false
+      enabled: true
       volumePermissions:
         enabled: true
       resources:
@@ -115,6 +115,7 @@ spec:
         enabled: true
         size: 10Gi
         storageClass: longhorn
+        existingClaim: home-assistant-data
     ingress:
       main:
         enabled: false
