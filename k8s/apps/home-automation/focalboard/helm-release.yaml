@@ -27,7 +27,7 @@ spec:
         memory: 500Mi
     image:
       repository: mattermost/focalboard
-      tag: 7.0.0
+      tag: 7.0.1
     env:
       FOCALBOARD_PORT: "8000"
     enableServiceLinks: false
