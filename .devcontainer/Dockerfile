@@ -16,7 +16,7 @@ FROM docker.io/velero/velero:v1.8.1 as velero
 FROM docker.io/mikefarah/yq:4.25.2 as yq
 
 # base image
-FROM docker:20.10.16-dind-rootless
+FROM docker:20.10.17-dind-rootless
 
 ENV DEBIAN_FRONTEND=noninteractive \
     EDITOR=nano \
