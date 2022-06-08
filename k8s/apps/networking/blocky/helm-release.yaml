@@ -54,7 +54,7 @@ spec:
         enabled: false
     config: |
       upstream:
-        externalResolvers:
+        default:
         - tcp-tls:${SECRET_NEXTDNS_ID}.dns1.nextdns.io:853
         - tcp-tls:${SECRET_NEXTDNS_ID}.dns2.nextdns.io:853
       conditional:
