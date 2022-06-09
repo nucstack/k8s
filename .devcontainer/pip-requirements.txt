@@ -1,5 +1,5 @@
 ansible==5.9.0
-ansible-lint==6.2.2
+ansible-lint==6.3.0
 cffi==1.15.0
 checkov
 pre-commit==2.19.0
