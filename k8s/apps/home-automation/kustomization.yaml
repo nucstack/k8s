@@ -7,7 +7,6 @@ resources:
   - home-assistant
   - mosquitto
   - rtlamr-collect
-  - ubiquiti-watcher
   - unifi-downloader
   - zigbee2mqtt
   - zwavejs2mqtt
