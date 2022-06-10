@@ -68,3 +68,11 @@ spec:
           memory: 256M
         limits:
           memory: 5129M
+
+      extraVolumeMounts:
+        - name: hass
+          mountPath: /hass
+      extraVolumes:
+        - name: hass
+          persistentVolumeClaim:
+            claimName: hass-pg-data
