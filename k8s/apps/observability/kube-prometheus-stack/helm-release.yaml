@@ -203,6 +203,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
+              volumeName: prometheus-data
               accessModes: ["ReadWriteOnce"]
               storageClassName: "longhorn"
               resources:
