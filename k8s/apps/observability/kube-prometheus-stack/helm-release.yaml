@@ -203,12 +203,11 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              volumeName: prometheus-data
               accessModes: ["ReadWriteOnce"]
-              storageClassName: ""
+              storageClassName: "longhorn"
               resources:
                 requests:
-                  storage: 1Mi
+                  storage: 20Gi
         thanos:
           image: quay.io/thanos/thanos:v0.26.0
           version: v0.22.0
