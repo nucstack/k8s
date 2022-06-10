@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: databases
   labels:
-    istio-injection: enabled
+    istio-injection: disabled

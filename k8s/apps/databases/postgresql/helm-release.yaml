@@ -62,10 +62,6 @@ spec:
         size: 20Gi
         storageClass: longhorn
 
-      service:
-        type: LoadBalancer
-        loadBalancerIP: ${LB_POSTGRES}
-
       resources:
         requests:
           cpu: 22m
