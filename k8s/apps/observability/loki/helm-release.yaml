@@ -51,13 +51,13 @@ spec:
         enforce_metric_name: false
         reject_old_samples: true
         reject_old_samples_max_age: 168h
-        ingestion_rate_mb: 8
-        ingestion_burst_size_mb: 12
+        ingestion_rate_mb: 4
+        ingestion_burst_size_mb: 6
       storage_config:
         boltdb_shipper:
           active_index_directory: /data/loki/index
           cache_location: /data/loki/cache
-          resync_interval: 5s
+          resync_interval: 5m
           shared_store: s3
       ruler:
         storage:
