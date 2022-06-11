@@ -50,6 +50,8 @@ spec:
       serviceMonitor:
         interval: 60s
         scrapeTimeout: 10s
+        labels:
+          release: kube-prometheus-stack
       prometheusRule:
         enabled: false
     config: |
