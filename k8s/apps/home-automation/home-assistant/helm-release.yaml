@@ -4,18 +4,6 @@ kind: HelmRelease
 metadata:
   name: home-assistant
   namespace: home-automation
-  annotations:
-    checkov.io/skip1: CKV_K8S_20=TODO
-    checkov.io/skip2: CKV_K8S_37=TODO
-    checkov.io/skip3: CKV_K8S_43=TODO
-    checkov.io/skip4: CKV_K8S_13=TODO
-    checkov.io/skip5: CKV_K8S_11=TODO
-    checkov.io/skip6: CKV_K8S_10=TODO
-    checkov.io/skip7: CKV_K8S_28=TODO
-    checkov.io/skip8: CKV_K8S_15=TODO
-    checkov.io/skip9: CKV_K8S_30=TODO
-    checkov.io/skip10: CKV_K8S_12=TODO
-    checkov.io/skip11: CKV_K8S_22=TODO
 spec:
   interval: 5m
   chart:
@@ -28,10 +16,12 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 10m
-  timeout: 10m
   valuesFrom:
     - kind: Secret
       name: home-assistant-helm-values
+  dependsOn:
+    - name: postgresql
+      namespace: databases
   values:
     controller:
       labels:
@@ -50,26 +40,13 @@ spec:
     env:
       TZ: "America/New_York"
     hostNetwork: false
-    metrics:
-      enabled: true
-      serviceMonitor:
-        interval: 1m
-        scrapeTimeout: 30s
-        bearerTokenSecret: # checkov:skip=CKV_SECRET_6 secret ref
-          name: home-assistant-prometheus-token
-          key: prometheus-token
-      prometheusRule:
-        enabled: true
-        rules:
-          - alert: HomeAssistantAbsent
-            annotations:
-              description: Home Assistant has disappeared from Prometheus service discovery.
-              summary: Home Assistant is down.
-            expr: |
-              absent(up{job=~".*home-assistant.*"} == 1)
-            for: 5m
-            labels:
-              severity: critical
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
     persistence:
       config:
         enabled: true
