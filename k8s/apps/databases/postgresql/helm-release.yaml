@@ -59,9 +59,8 @@ spec:
 
       persistence:
         enabled: true
-        existingClaim: hass-pg-data
         #size: 20Gi
-        #storageClass: longhorn
+        storageClass: longhorn
 
       resources:
         requests:
@@ -70,10 +69,10 @@ spec:
         limits:
           memory: 5129M
 
-      # extraVolumeMounts:
-      #   - name: hass
-      #     mountPath: /hass
-      # extraVolumes:
-      #   - name: hass
-      #     persistentVolumeClaim:
-      #       claimName: hass-pg-data
+      extraVolumeMounts:
+        - name: hass
+          mountPath: /hass
+      extraVolumes:
+        - name: hass
+          persistentVolumeClaim:
+            claimName: hass-pg-data
