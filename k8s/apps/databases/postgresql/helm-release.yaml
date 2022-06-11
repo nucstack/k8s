@@ -39,9 +39,9 @@ spec:
       database: "postgres"
 
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
-        enabled: true
+        enabled: false
 
       resources:
         requests:
