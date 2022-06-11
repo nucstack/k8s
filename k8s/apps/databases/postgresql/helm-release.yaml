@@ -59,7 +59,7 @@ spec:
 
       persistence:
         enabled: true
-        #size: 20Gi
+        size: 20Gi
         storageClass: longhorn
 
       resources:
