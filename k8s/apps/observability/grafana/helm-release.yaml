@@ -114,6 +114,10 @@ spec:
         flux-control-plane:
           url: https://raw.githubusercontent.com/fluxcd/flux2/v0.29.5/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
+        postgresql:
+          gnetId: 9628
+          revision: 7
+          datasource: Prometheus
         istio-contol-plane:
           gnetId: 7645
           revision: 114
