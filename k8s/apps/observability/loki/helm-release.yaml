@@ -36,7 +36,7 @@ spec:
         - hosts:
             - "loki.${SECRET_DOMAIN}"
     serviceMonitor:
-      enabled: false
+      enabled: true
     rbac:
       pspEnabled: false
     resources:
