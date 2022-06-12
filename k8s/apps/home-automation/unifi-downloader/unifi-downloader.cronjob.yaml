@@ -35,7 +35,7 @@ spec:
             fsGroup: 10000
           containers:
             - name: unifi-downloader
-              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.6"
+              image: "${SECRET_DOCKER_PRIVATE_REGISTRY}/unifi-downloader:0.0.7"
               envFrom:
                 - secretRef:
                     name: unifi-downloader
