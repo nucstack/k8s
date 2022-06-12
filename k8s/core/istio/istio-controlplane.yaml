@@ -21,7 +21,7 @@ spec:
       gatewayTopology:
         # Always forward the XFCC header in the request, regardless of whether the client connection is mTLS.
         forwardClientCertDetails: ALWAYS_FORWARD_ONLY
-    accessLogFile: /dev/stdout
+    accessLogFile: ""
     trustDomain: cluster.local
     extensionProviders:
       - name: oauth2-proxy
@@ -38,13 +38,13 @@ spec:
         enabled: true
         k8s:
           hpaSpec:
-            minReplicas: 3
+            minReplicas: 1
     ingressGateways:
       - name: istio-ingressgateway
         enabled: true
         k8s:
           hpaSpec:
-            minReplicas: 3
+            minReplicas: 1
           service:
             type: LoadBalancer
             loadBalancerIP: "${SECRET_ISTIO_LB_IP}"
