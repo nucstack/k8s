@@ -240,23 +240,23 @@ spec:
           #       regex: '.*-envoy-prom'
     defaultRules:
       alertmanager: true
-      etcd: true
-      configReloaders: true
+      etcd: false
+      configReloaders: false
       general: true
       k8s: true
-      kubeApiserver: true
+      kubeApiserver: false
       kubeApiserverAvailability: false
-      kubeApiserverSlos: true
+      kubeApiserverSlos: false
       kubelet: true
-      kubeProxy: true
-      kubePrometheusGeneral: true
-      kubePrometheusNodeRecording: true
-      kubernetesApps: true
-      kubernetesResources: true
+      kubeProxy: false
+      kubePrometheusGeneral: false
+      kubePrometheusNodeRecording: false
+      kubernetesApps: false
+      kubernetesResources: false
       kubernetesStorage: false
       kubernetesSystem: true
       kubeScheduler: true
-      kubeStateMetrics: true
+      kubeStateMetrics: false
       network: true
       node: true
       nodeExporterAlerting: true
