@@ -10,7 +10,7 @@ spec:
   serviceAccountName: system-upgrade
   concurrency: 1
   channel: https://update.k3s.io/v1-release/channels/v1.24
-  version: v1.24.1+k3s1
+  version: v1.24.2+k3s1
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/master
