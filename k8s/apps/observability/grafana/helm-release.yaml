@@ -136,9 +136,9 @@ spec:
           revision: 3
           datasource: Prometheus
     sidecar:
-      labelValue: false
       dashboards:
         enabled: true
+        labelValue: false
         searchNamespace: ALL
       datasources:
         enabled: true
