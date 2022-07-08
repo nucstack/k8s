@@ -35,6 +35,9 @@ spec:
           "380870",
           "+quit"
         ]
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
         volumeMounts:
           - mountPath: "/data"
             name: data
