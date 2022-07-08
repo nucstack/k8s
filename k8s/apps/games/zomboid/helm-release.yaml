@@ -14,6 +14,9 @@ spec:
         name: flux-system
         namespace: flux-system
       interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: zomboid-helm-values
   values:
     image:
       repository: openjdk
@@ -45,15 +48,7 @@ spec:
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
-    #command: /data/start-server.sh
-    command: [
-      "/bin/bash",
-      "-c",
-      "--"
-    ]
-    args: [
-      "while true; do sleep 30; done;"
-    ]
+    command: /data/start-server.sh
     service:
       main:
         enabled: false
