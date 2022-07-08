@@ -45,7 +45,15 @@ spec:
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
-    command: /data/start-server.sh
+    #command: /data/start-server.sh
+    command: [
+      "/bin/bash",
+      "-c",
+      "--"
+    ]
+    args: [
+      "while true; do sleep 30; done;"
+    ]
     service:
       main:
         enabled: false
