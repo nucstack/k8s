@@ -5,6 +5,7 @@ resources:
   - cert-manager.yaml
   - databases.yaml
   - development.yaml
+  - games.yaml
   - home-automation.yaml
   - istio-system.yaml
   - longhorn-system.yaml

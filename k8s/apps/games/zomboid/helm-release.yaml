@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: zomboid
+  namespace: games
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: k8s/charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: steamcmd/steamcmd
+      tag: alpine
+    controller:
+      replicas: 1
+    nameOverride: zomboid
+    initContainers:
+      download:
+        name: download
+        image: steamcmd/steamcmd:alpine
+        command: ["steamcmd"]
+        args: [
+          "+login",
+          "anonymous",
+          "+force_install_dir",
+          "/data",
+          "+app_update",
+          "380870",
+          "+quit"
+        ]
+        volumeMounts:
+          - mountPath: "/data"
+            name: data
+    persistence:
+      data:
+        enabled: true
+        mountPath: /data
+        size: 10Gi
+        storageClass: longhorn
+        accessMode: "ReadWriteOnce"
+    command: /data/start-server.sh
+    service:
+      main:
+        enabled: false
+        primary: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 300m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 1001
+      runAsGroup: 1001
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
