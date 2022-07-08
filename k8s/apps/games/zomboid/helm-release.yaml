@@ -55,11 +55,11 @@ spec:
         primary: true
     resources:
       limits:
-        cpu: 500m
-        memory: 512Mi
+        cpu: 1000m
+        memory: 2Gi
       requests:
-        cpu: 300m
-        memory: 256Mi
+        cpu: 500m
+        memory: 1Gi
     securityContext:
       allowPrivilegeEscalation: false
       runAsUser: 1001
