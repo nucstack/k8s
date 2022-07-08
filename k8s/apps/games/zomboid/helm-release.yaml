@@ -16,8 +16,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: steamcmd/steamcmd
-      tag: alpine
+      repository: openjdk
+      tag: 20
     controller:
       replicas: 1
     nameOverride: zomboid
