@@ -64,6 +64,8 @@ spec:
           - path: test_spawnregions.lua
             mountPath: /root/Zomboid/Server/test_spawnregions.lua
     command: /data/start-server.sh
+    podAnnotations:
+      secret.reloader.stakater.com/reload: zomboid-settings
     service:
       main:
         primary: true
