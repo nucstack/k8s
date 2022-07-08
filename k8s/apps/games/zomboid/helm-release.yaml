@@ -74,9 +74,6 @@ spec:
           - "${SECRET_ZOMBOID_LB_IP}"
         externalTrafficPolicy: Local
     resources:
-      limits:
-        cpu: 1000m
-        memory: 2Gi
       requests:
         cpu: 500m
         memory: 1Gi
