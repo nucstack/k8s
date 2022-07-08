@@ -51,8 +51,12 @@ spec:
     command: /data/start-server.sh
     service:
       main:
-        enabled: false
         primary: true
+        type: LoadBalancer
+        loadBalancerIP: "${SECRET_ZOMBOID_LB_IP}"
+        externalIPs:
+          - "${SECRET_ZOMBOID_LB_IP}"
+        externalTrafficPolicy: Local
     resources:
       limits:
         cpu: 1000m
