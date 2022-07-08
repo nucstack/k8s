@@ -38,17 +38,6 @@ spec:
         volumeMounts:
           - name: data
             mountPath: "/data"
-      chown:
-        name: chown
-        image: busybox
-        command: [
-          "sh",
-          "-c",
-          "chown -R 1001:1001 /data"
-        ]   
-        volumeMounts:
-          - name: data
-            mountPath: "/data"
     persistence:
       data:
         enabled: true
@@ -68,10 +57,6 @@ spec:
       requests:
         cpu: 500m
         memory: 1Gi
-    securityContext:
-      allowPrivilegeEscalation: false
-      runAsUser: 1001
-      runAsGroup: 1001
     probes:
       liveness:
         enabled: false
