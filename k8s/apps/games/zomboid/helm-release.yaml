@@ -35,12 +35,20 @@ spec:
           "380870",
           "+quit"
         ]
-        securityContext:
-          runAsUser: 1001
-          runAsGroup: 1001
         volumeMounts:
-          - mountPath: "/data"
-            name: data
+          - name: data
+            mountPath: "/data"
+      chown:
+        name: chown
+        image: busybox
+        command: [
+          "sh",
+          "-c",
+          "chown -R 1001:1001 /data"
+        ]   
+        volumeMounts:
+          - name: data
+            mountPath: "/data"
     persistence:
       data:
         enabled: true
