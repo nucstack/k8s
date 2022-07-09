@@ -19,8 +19,8 @@ spec:
       name: zomboid-helm-values
   values:
     image:
-      repository: openjdk
-      tag: "20"
+      repository: "${SECRET_DOCKER_PRIVATE_REGISTRY}/openjdk"
+      tag: 0.0.1
     controller:
       replicas: 1
     nameOverride: zomboid
@@ -44,7 +44,7 @@ spec:
     persistence:
       data:
         enabled: true
-        mountPath: /data
+        mountPath: /opt/zomboid
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
@@ -56,8 +56,8 @@ spec:
             name: zomboid-settings
         subPath:
           - path: test.ini
-            mountPath: /root/Zomboid/Server/test.ini
-    #command: /data/start-server.sh
+            mountPath: /home/jdk/Zomboid/Server/test.ini
+    #command: /opt/zomboid/start-server.sh
     command: [
       "/bin/bash",
       "-c",
