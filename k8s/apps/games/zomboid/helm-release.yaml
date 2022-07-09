@@ -27,8 +27,7 @@ spec:
     initContainers:
       download:
         name: download
-        image: steamcmd/steamcmd:alpine
-        command: ["steamcmd"]
+        image: cm2network/steamcmd:steam
         args: [
           "+login",
           "anonymous",
@@ -48,6 +47,15 @@ spec:
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
+      settings:
+        enabled: true
+        type: custom
+        volumeSpec:
+          configMap:
+            name: zomboid-settings
+        subPath:
+          - path: test.ini
+            mountPath: /home/steam/Zomboid/Server/test.ini
     command: /data/start-server.sh
     podAnnotations:
       secret.reloader.stakater.com/reload: zomboid-settings
@@ -57,7 +65,7 @@ spec:
         loadBalancerIP: "${SECRET_ZOMBOID_LB_IP}"
         externalIPs:
           - "${SECRET_ZOMBOID_LB_IP}"
-        externalTrafficPolicy: Local      
+        externalTrafficPolicy: Local
         ports:
           http:
             enabled: false
@@ -69,6 +77,10 @@ spec:
       requests:
         cpu: 500m
         memory: 1Gi
+    securityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+      runAsGroup: 1000
     probes:
       liveness:
         enabled: false
