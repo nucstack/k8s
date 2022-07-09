@@ -5,6 +5,7 @@ resources:
   - ../../databases
   - ../../kube-system
   - ../../flux-system
+  - ../../games
   - ../../istio-system
   - ../../networking
   - ../../observability
