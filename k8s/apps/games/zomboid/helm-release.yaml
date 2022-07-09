@@ -28,7 +28,7 @@ spec:
       download:
         name: download
         image: cm2network/steamcmd:steam
-        command: ./steamcmd.sh
+        command: ["./steamcmd.sh"]
         args: [
           "+login",
           "anonymous",
