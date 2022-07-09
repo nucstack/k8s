@@ -57,7 +57,15 @@ spec:
         subPath:
           - path: test.ini
             mountPath: /root/Zomboid/Server/test.ini
-    command: /data/start-server.sh
+    #command: /data/start-server.sh
+    command: [
+      "/bin/bash",
+      "-c",
+      "--"
+    ]
+    args: [
+      "while true; do sleep 30; done;"
+    ]
     podAnnotations:
       secret.reloader.stakater.com/reload: zomboid-settings
     service:
