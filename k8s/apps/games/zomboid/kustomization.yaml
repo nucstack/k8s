@@ -3,5 +3,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - zomboid.secrets.enc.yaml
-  - settings.configmap.yaml
+
   - helm-release.yaml
