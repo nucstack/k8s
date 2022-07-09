@@ -63,6 +63,7 @@ spec:
             enabled: false
           game:
             enabled: true
+            protocol: udp
             port: 16261
     resources:
       requests:
