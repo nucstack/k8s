@@ -48,17 +48,6 @@ spec:
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
-      settings:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: zomboid-settings
-        subPath:
-          - path: test.ini
-            mountPath: /root/Zomboid/Server/test.ini
-          - path: test_SandboxVars.lua
-            mountPath: /root/Zomboid/Server/test_SandboxVars.lua
     command: /data/start-server.sh
     podAnnotations:
       secret.reloader.stakater.com/reload: zomboid-settings
