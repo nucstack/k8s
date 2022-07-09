@@ -46,24 +46,24 @@ spec:
         size: 10Gi
         storageClass: longhorn
         accessMode: "ReadWriteOnce"
-      settings:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: zomboid-settings
-        subPath:
-          - path: test.ini
-            mountPath: /home/jdk/Zomboid/Server/test.ini
-    #command: /opt/zomboid/start-server.sh
-    command: [
-      "/bin/bash",
-      "-c",
-      "--"
-    ]
-    args: [
-      "while true; do sleep 30; done;"
-    ]
+      # settings:
+      #   enabled: true
+      #   type: custom
+      #   volumeSpec:
+      #     configMap:
+      #       name: zomboid-settings
+      #   subPath:
+      #     - path: test.ini
+      #       mountPath: /home/jdk/Zomboid/Server/test.ini
+    command: /opt/zomboid/start-server.sh
+    # command: [
+    #   "/bin/bash",
+    #   "-c",
+    #   "--"
+    # ]
+    # args: [
+    #   "while true; do sleep 30; done;"
+    # ]
     podAnnotations:
       secret.reloader.stakater.com/reload: zomboid-settings
     service:
