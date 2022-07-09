@@ -52,7 +52,7 @@ spec:
         volumeSpec:
           configMap:
             name: zomboid-settings
-            defaultMode: 777
+            defaultMode: 0777
         subPath:
           - path: test.ini
             mountPath: /home/jdk/Zomboid/Server/test.ini
