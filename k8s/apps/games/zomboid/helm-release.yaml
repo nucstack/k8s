@@ -52,6 +52,7 @@ spec:
         volumeSpec:
           configMap:
             name: zomboid-settings
+            defaultMode: 777
         subPath:
           - path: test.ini
             mountPath: /home/jdk/Zomboid/Server/test.ini
@@ -88,7 +89,6 @@ spec:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
     probes:
       liveness:
         enabled: false
