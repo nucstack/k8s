@@ -27,20 +27,19 @@ spec:
     initContainers:
       download:
         name: download
-        image: cm2network/steamcmd:steam
-        command: ["./steamcmd.sh"]
+        image: steamcmd/steamcmd:alpine
         args: [
           "+login",
           "anonymous",
           "+force_install_dir",
-          "/home/steam/zomboid",
+          "/data",
           "+app_update",
           "380870",
           "+quit"
         ]
         volumeMounts:
           - name: data
-            mountPath: "/home/steam/zomboid"
+            mountPath: "/data"
     persistence:
       data:
         enabled: true
