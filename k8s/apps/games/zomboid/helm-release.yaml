@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: "${SECRET_DOCKER_PRIVATE_REGISTRY}/openjdk"
-      tag: 0.0.2
+      tag: 0.0.3
     controller:
       replicas: 1
     nameOverride: zomboid
@@ -52,7 +52,6 @@ spec:
         volumeSpec:
           configMap:
             name: zomboid-settings
-            defaultMode: 0777
         subPath:
           - path: test.ini
             mountPath: /home/jdk/Zomboid/Server/test.ini
