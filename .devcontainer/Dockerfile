@@ -10,7 +10,7 @@ FROM docker.io/openfaas/faas-cli:0.12.14 as openfaas
 FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.37.0 as prom
 FROM docker.io/hashicorp/terraform:1.2.5 as terraform
-FROM docker.io/aquasec/trivy:0.29.2 as trivy
+FROM docker.io/aquasec/trivy:0.30.0 as trivy
 FROM docker.io/hashicorp/vault:1.11.0 as vault
 FROM docker.io/velero/velero:v1.9.0 as velero
 FROM docker.io/mikefarah/yq:4.26.1 as yq
