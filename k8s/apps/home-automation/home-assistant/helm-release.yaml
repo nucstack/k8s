@@ -108,7 +108,7 @@ spec:
     initContainers:
       extensions:
         name: extensions
-        image: codercom/code-server:4.5.0
+        image: codercom/code-server:4.5.1
         command: ['code-server']
         args:
           - --install-extension
@@ -136,7 +136,7 @@ spec:
         enabled: true
         image:
           repository: codercom/code-server
-          tag: 4.5.0
+          tag: 4.5.1
         workingDir: '/config'
         args:
           - --auth
