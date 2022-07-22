@@ -9,6 +9,7 @@ resources:
   - emberstack-charts.yaml
   - falco-charts.yaml
   - github-actions-charts.yaml
+  - gitlab-charts.yaml
   - grafana-loki-charts.yaml
   - influxdata-charts.yaml
   - jetstack-charts.yaml
