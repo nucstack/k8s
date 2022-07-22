@@ -24,7 +24,7 @@ spec:
     global:
       hosts:
         domain:
-          "git.${SECRET_DOMAIN}"
+          "${SECRET_DOMAIN}"
       ingress:
         configureCertmanager: false
     gitlab:
