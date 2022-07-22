@@ -17,6 +17,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    service:
+      loadBalancerIP: "${SECRET_GITLAB_LB_IP}"
     certmanager:
       install: false
     global:
