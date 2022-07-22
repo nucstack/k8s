@@ -27,8 +27,6 @@ spec:
           "git.${SECRET_DOMAIN}"
       ingress:
         configureCertmanager: false
-        tls:
-          enabled: false
     gitlab:
       webservice:
         ingress:
