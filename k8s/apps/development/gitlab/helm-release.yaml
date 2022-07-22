@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      # renovate: registryUrl=https://charts.gitlab.io/
       chart: gitlab
       version: 6.2.0
       sourceRef:
