@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: gitlab/gitlab
+      chart: gitlab
       version: 6.2.0
       sourceRef:
         kind: HelmRepository
