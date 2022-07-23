@@ -55,3 +55,10 @@ spec:
       enabled: true
       controller:
         replicaCount: 1
+    gitlab-shell:
+      enabled: false
+    webservice:
+      enabled: true
+      replicaCount: 1
+    kas:
+      replicaCount: 1
