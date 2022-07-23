@@ -39,6 +39,7 @@ spec:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
     registry:
+      enabled: false
       ingress:
         tls:
           secretName: "${SECRET_DOMAIN/./-}-tls"
