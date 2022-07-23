@@ -50,5 +50,3 @@ spec:
       install: false
     prometheus:
       install: false
-    redis:
-      install: false
