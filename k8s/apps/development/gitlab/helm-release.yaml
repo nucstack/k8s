@@ -27,6 +27,8 @@ spec:
           "${SECRET_DOMAIN}"
       ingress:
         configureCertmanager: false
+      grafana:
+        enabled: false
     gitlab:
       webservice:
         ingress:
@@ -44,3 +46,9 @@ spec:
       ingress:
         tls:
           secretName: "${SECRET_DOMAIN/./-}-tls"
+    gitlab-runner:
+      install: false
+    prometheus:
+      install: false
+    redis:
+      install: false
