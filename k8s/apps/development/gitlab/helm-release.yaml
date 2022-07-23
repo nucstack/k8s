@@ -31,13 +31,20 @@ spec:
         enabled: false
     gitlab:
       webservice:
+        enabled: true
+        replicaCount: 1
         ingress:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
       kas:
+        enabled: true
+        minReplicas: 1
         ingress:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
+      gitlab-shell:
+        enabled: true
+        replicaCount: 1
     registry:
       enabled: false
       ingress:
@@ -55,11 +62,3 @@ spec:
       enabled: true
       controller:
         replicaCount: 1
-    gitlab-shell:
-      enabled: true
-      replicaCount: 1
-    webservice:
-      enabled: true
-      replicaCount: 1
-    kas:
-      minReplicas: 1
