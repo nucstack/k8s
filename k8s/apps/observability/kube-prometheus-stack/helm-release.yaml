@@ -252,7 +252,7 @@ spec:
       kubePrometheusGeneral: false
       kubePrometheusNodeRecording: false
       kubernetesApps: false
-      kubernetesResources: false
+      kubernetesResources: true
       kubernetesStorage: false
       kubernetesSystem: true
       kubeScheduler: true
