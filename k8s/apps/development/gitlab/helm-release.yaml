@@ -33,6 +33,8 @@ spec:
       webservice:
         enabled: true
         replicaCount: 1
+        hpa:
+          minReplicas: 1
         ingress:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
