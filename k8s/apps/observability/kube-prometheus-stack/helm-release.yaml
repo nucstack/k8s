@@ -250,7 +250,7 @@ spec:
       kubelet: true
       kubeProxy: true
       kubePrometheusGeneral: true
-      kubePrometheusNodeRecording: false
+      kubePrometheusNodeRecording: true
       kubernetesApps: true
       kubernetesResources: true
       kubernetesStorage: false
