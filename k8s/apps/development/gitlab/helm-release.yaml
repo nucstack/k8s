@@ -50,3 +50,7 @@ spec:
       install: false
     prometheus:
       install: false
+    nginx-ingress:
+      enabled: true
+      controller:
+        replicaCount: 1
