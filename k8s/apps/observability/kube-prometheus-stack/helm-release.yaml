@@ -249,9 +249,9 @@ spec:
       kubeApiserverSlos: false
       kubelet: true
       kubeProxy: false
-      kubePrometheusGeneral: false
+      kubePrometheusGeneral: true
       kubePrometheusNodeRecording: false
-      kubernetesApps: false
+      kubernetesApps: true
       kubernetesResources: true
       kubernetesStorage: false
       kubernetesSystem: true
