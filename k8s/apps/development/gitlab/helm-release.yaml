@@ -57,8 +57,9 @@ spec:
         replicaCount: 1
     gitlab-shell:
       enabled: false
+      replicaCount: 1
     webservice:
       enabled: true
       replicaCount: 1
     kas:
-      replicaCount: 1
+      minReplicas: 1
