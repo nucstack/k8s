@@ -38,14 +38,12 @@ spec:
         replicaCount: 1
         hpa:
           minReplicas: 1
-          maxReplicas: 1
         ingress:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
       kas:
         enabled: true
         minReplicas: 1
-        maxReplicas: 1
         ingress:
           tls:
             secretName: "${SECRET_DOMAIN/./-}-tls"
