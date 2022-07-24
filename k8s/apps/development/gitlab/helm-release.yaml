@@ -55,6 +55,9 @@ spec:
           size: 20Gi
     registry:
       enabled: true
+      hpa:
+        minReplicas: 1
+        maxReplicas: 2
       ingress:
         tls:
           secretName: "${SECRET_DOMAIN/./-}-tls"
