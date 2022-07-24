@@ -54,7 +54,7 @@ spec:
         persistence:
           size: 20Gi
     registry:
-      enabled: false
+      enabled: true
       ingress:
         tls:
           secretName: "${SECRET_DOMAIN/./-}-tls"
@@ -63,7 +63,7 @@ spec:
         tls:
           secretName: "${SECRET_DOMAIN/./-}-tls"
     gitlab-runner:
-      install: false
+      install: true
     prometheus:
       install: false
     nginx-ingress:
