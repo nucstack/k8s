@@ -51,7 +51,6 @@ spec:
         enabled: true
         replicaCount: 1
       gitaly:
-        enabled: true
         persistence:
           size: 20Gi
     registry:
