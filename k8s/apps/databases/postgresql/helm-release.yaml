@@ -47,10 +47,10 @@ spec:
 
       resources:
         requests:
-          cpu: 11m
+          cpu: 20m
           memory: 32M
         limits:
-          cpu: 11m
+          cpu: 50m
           memory: 32M
 
     primary:
