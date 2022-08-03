@@ -11,7 +11,7 @@ FROM docker.io/prom/alertmanager:v0.24.0 as prom-am
 FROM docker.io/prom/prometheus:v2.37.0 as prom
 FROM docker.io/hashicorp/terraform:1.2.6 as terraform
 FROM docker.io/aquasec/trivy:0.30.4 as trivy
-FROM docker.io/hashicorp/vault:1.11.1 as vault
+FROM docker.io/hashicorp/vault:1.11.2 as vault
 FROM docker.io/velero/velero:v1.9.0 as velero
 FROM docker.io/mikefarah/yq:4.26.1 as yq
 
